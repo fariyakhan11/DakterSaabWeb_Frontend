@@ -1,0 +1,164 @@
+#Medicinesdashboard{
+display: flex;
+flex-direction: row;
+ padding: 0.5em;
+width: 100%;
+
+}
+.contentarea{
+    align-items: flex-start;
+    width: 95%;
+    
+}
+.contentareatitle{
+font-size: 2.5em;
+font-family: Fraunces;
+text-align: center;
+margin: 0.1em 0;
+}
+.searchbar{
+display: flex;
+
+justify-content: center;
+margin:0.4em 0;
+ flex-direction: row;
+}
+.search {
+  border: none;
+  background-color: transparent;
+  font-size: 1.2em;
+font-family: Raleway;
+  margin-right: 0.5em;
+border: 3px solid #75c5c08a;
+padding: 0.5em 3.8em 0.5em 0.5em;
+border-radius:2em ;
+}
+
+.optionscategory {
+  font-size: 1.2em;
+font-family: Raleway;
+  padding: 0.5em;
+    margin: 0 0.5em;
+  border: 1px solid #ccc;
+  border-radius: 0.5em;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+.searchbtn{
+  font-size: 1.2em;
+font-family: Raleway;
+  padding: 0.5em 1.2em;
+  border: none;
+  border-radius: 0.3em;
+ margin: 0 0.5em;
+  background-color: #56aca6ab;;
+  color: #fff;
+  cursor: pointer;
+}
+.searchbtn:hover{
+ background-color: #56aca6;
+    transform: scale(1.15);
+}
+.stockoptitle{
+text-shadow: 2px 2px 4px rgba(209, 207, 207, 0.822);
+opacity: 0;
+transition:opacity 0.5s ease-in-out 0.01ms;
+}
+.stockoptitle>h4{
+width: 11em;
+z-index: 1000;
+
+}
+.controlbtns{
+display: flex;
+flex-direction: column;
+margin-top: 8%;
+
+width:4%;
+padding-right: 2%;
+}
+.stockoperation{
+display: flex;
+flex-direction: row-reverse;
+font-size: 1.2em;
+font-family: Raleway;
+margin-bottom: 2em;
+width: 98%;
+align-items: center;
+
+padding-right: 2%;
+}
+.stockopicon{
+background-color:#56aca6;
+border-radius: 50%;
+padding: 0 0.43em;
+height: 1.4em;
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 2em;
+box-shadow: 2px 2px 7px rgba(59, 59, 59, 0.507);
+cursor: pointer;
+margin-left: 0.5em;
+}
+.stockopicon>h4{
+transition: transform 2.5s ease-in  ;
+}
+.stockopicon>h4{
+color: white;
+font-family: Fraunces;
+
+}
+
+.stockopicon:hover + .stockoptitle  {
+  opacity: 1;
+
+}
+.stockopicon:hover> h4{
+transform: rotate(180deg);
+}
+#delMedicines{
+transform:rotate(45deg)
+}
+.medscontainer{
+ display: flex;
+  flex-wrap: wrap;
+margin-left: 2em;
+align-items: center;
+ overflow-y: scroll;
+}
+.medsdiv{
+  background-color: #f2f2f2;
+  text-align: center;
+  flex-basis: 15em;
+  height: 15em;
+  margin:2em 2em 2em 0;
+cursor: pointer;
+}
+.topareamed{
+height: 70%;
+padding-top:5% ;
+display: flex;
+}
+.bottomareamed{
+height: 35%;
+
+}
+
+.medimg{
+width: 80%;
+display: flex;
+justify-content: center;
+align-items: center;
+}
+.medimg>img{
+width:70%;
+height:80%;
+margin-left: 20%;
+}
+
+.sideareamed{
+width: 20%;
+
+}

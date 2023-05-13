@@ -1,0 +1,18 @@
+#AboutContainer{
+text-align: center;
+padding: 4em 15em;
+padding-bottom: 2.4em;
+}
+#AboutContainer>h2{
+font-family: Preside;
+font-size: 4.5em;
+margin-bottom: 0.4em;
+text-shadow:  5px 2px 14px rgba(36, 35, 35, 0.5);
+color: rgb(36, 42, 100);
+}
+#AboutContainer>table{
+font-family: Raleway;
+font-size: 1.2em;
+line-height: 1.5em;
+border-spacing:3em 0;
+}

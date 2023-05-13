@@ -1,0 +1,183 @@
+
+#dashboardcontainer{
+    display: flex;
+    flex-direction: row;
+    text-decoration: none;
+    width: 99vw;
+    
+}
+#dashboardarea{
+    width: 85%;
+    display:flex;
+    flex-direction: column;
+}
+.secondnav{
+    width: 99%;
+    background-color: white;
+    margin-top: 0.5em;
+    border: 3px solid #75c5c08a;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.7em 0.2em;
+    border-top-right-radius:3em ;
+    border-bottom-right-radius:3em ;
+    box-shadow: 0 2px 30px rgba(53, 52, 52, 0.247);
+    
+}
+.adminname{
+    text-decoration: none;
+    font-family: Fraunces;
+    padding-left: 2%;
+    word-spacing: 5px;
+}
+.icon{
+margin-left: 1em;
+cursor: pointer;
+font-size:1.5em;
+}
+.links{
+    display: flex;
+    flex-direction: row;
+    margin-right: 2%;
+}
+.admindiv{
+    display: flex;
+flex-direction: row;
+width: 20%;
+justify-items: center;
+align-items: center;
+cursor: pointer;
+}
+.infoareadashboard{
+display: flex;
+flex-direction: column;
+margin: 1em 0.6em 0em 1.2em;
+
+height: 80vh;
+border-radius: 2em;
+box-shadow: 0 2px 30px rgba(53, 52, 52, 0.247);
+padding: 0.7em;
+
+}
+.Summarybar{
+display: flex;
+flex-direction: row;
+height:37%;
+width: 100%;
+justify-items: space-between;
+justify-content: space-between;
+}
+.summarytiles{
+display: flex;
+flex-direction: column;
+border: 3px solid #75c5c08a;
+align-items: center;
+border-radius: 2em;
+box-shadow: 0 2px 30px rgba(53, 52, 52, 0.13);
+height:100%;
+width:18%;
+padding: 0 2em;
+font-size: 1.1em;
+text-align: center;
+font-family: Fraunces;
+margin: 0 0.3%;
+}
+.tilename{
+display: flex;
+align-items: flex-end;
+text-align: center;
+justify-self: center;
+padding-top: 1em;
+width:fit-content;
+height:50%;
+border-bottom: 2px solid black;
+font-family: Raleway;
+}
+.tilevalue{
+margin: 0.5em ;
+font-size: 1.9em;
+width: 100%;
+height:50%;
+}
+.section1{
+width: 100%;
+height: 62%;
+display: flex;
+flex-direction: row;
+padding-bottom:1em;
+}
+.subsec1{
+width: 70%;
+}
+.performancegraph{
+border: 3px solid #75c5c08a;
+align-items: center;
+
+box-shadow: 0 2px 30px rgba(53, 52, 52, 0.089);
+height:61%;
+width:99.4%;
+margin: 0.9em 0.1em;
+}
+.subsec2{
+height: 2em;
+width: 37%;
+padding: 0 0;
+margin: 0 0.3em 0 0.9em;
+height: 100%;
+
+box-shadow: 0 2px 30px rgba(53, 52, 52, 0.247);
+border: 3px solid #75c5c08a;
+border-top-right-radius: 2em;
+}
+.section2{
+margin-left: 0.2em;
+width: 99.5%;
+height: 37%;
+display: flex;
+flex-direction: row;
+justify-items: space-between;
+justify-content: space-between;
+}
+.section2sub{
+box-shadow: 0 2px 30px rgba(53, 52, 52, 0.247);
+border: 3px solid #75c5c08a;
+height: 92%;
+width:24%;
+padding: 0.5% 0;
+}
+.DateSelector{
+display: flex;
+flex-direction: row;
+justify-items: center;
+align-items: center;
+width: 80%;
+justify-content: center;
+padding: 2% 12%;
+font-size: 1.8em;
+font-family: Raleway;
+}
+.calendar-container{
+height: 2.4em;
+width: 90%;
+border-radius: 0.9em;
+margin-left: 4%;
+font-family: Raleway;
+font-weight: bolder;
+font-size: 0.6em;
+cursor: pointer;
+text-align: center;
+outline: none;
+border: 3px solid #75c5c08a;
+}
+.booktitlediv{
+font-size: 1.4em;
+font-family: Raleway;
+text-align: center;
+padding:  0.4em 0;
+width: 100%;
+background-color:#75c5c08a ;
+cursor: pointer;
+}
+

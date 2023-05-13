@@ -1,0 +1,89 @@
+.MAIN{
+height: 90vh;
+width: 100vw;
+background-image: url('../../images/wall2.jpg');
+
+top:0;
+left: 0;
+margin: 0 0;
+padding: 0 0;
+background-repeat: no-repeat ;
+background-position: center;
+background-size:cover ;
+}
+.contrast{
+display: flex;
+height: 90vh;
+width: 100vw;
+background-color: rgba(75, 73, 73, 0.103);
+font-size: 2em;
+top:0;
+left: 0;
+margin: 0 0;
+}
+
+.Name{
+width: 98vw;
+padding: 4em;
+display: flex;
+flex-direction: column;
+}
+
+.slogan{
+color: rgb(30, 38, 110);
+text-shadow:  12px 4px 14px rgba(132, 137, 145, 0.849);
+font-size: 1.3em;
+color: rgb(243, 237, 237);
+}
+.wordCarousel {
+  font-size: 2.5em;  
+  padding: 0%;
+  margin: 0;
+}
+
+.wordCarousel div {
+  overflow: hidden;
+  position: relative;
+margin: 0.2em 0em;
+padding: 0em 1em;
+  height: 1.5em;
+}
+
+.wordCarousel li { 
+  display: block;
+    padding-bottom: 0.5em;
+font-weight: 400;
+text-shadow:  5px 2px 14px rgb(138, 138, 138);
+}
+
+.flip {
+  animation: flip 13s cubic-bezier(0.23, 1, 0.32, 1.2) infinite;
+}
+@keyframes flip {
+  0% {
+    margin-top: 0px;
+  }
+  25%{ margin-top: -2em;}
+    50%{margin-top: -4em;}
+75%{margin-top: -2em;}  
+100%{margin-top: 0em;}
+}
+.downloadbtn{
+background-color: black;
+color: white;
+align-items: center;
+justify-content: center;
+justify-items: center;
+display: flex;
+border-radius: 1em;
+width: 20em;
+font-size: 0.5em;
+height: 3.5em;
+font-family: 'Raleway';
+align-self: center;
+margin-top: 5%;
+transition: 2s ease-in-out 2ms;
+}
+.downloadbtn:hover{
+transform: scale(1.1);
+}

@@ -1,0 +1,82 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background: rgba(145, 168, 197, 0.664);
+  backdrop-filter: blur(10px); /* apply a blur effect to the navbar */
+  -webkit-backdrop-filter: blur(10px); /* for Safari */
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.247); 
+  padding: 1.5em 1em;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  text-decoration: none;
+}
+
+.navbar-toggler {
+  display: none;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.nav-menu {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-menu.active {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 70px;
+  left: 0;
+  width: 100%;
+  background-color: rgba(183, 153, 218, 0.205);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.nav-item {
+  margin: 0 10px;
+}
+
+.nav-link {
+  font-size: 18px;
+  color: #333;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+  color: #007bff;
+}
+
+@media (max-width: 768px) {
+  .navbar-toggler {
+    display: block;
+  }
+
+  .nav-menu {
+    display: none;
+  }
+}
+
+.title{
+font-size: 0.9em;
+color: rgb(3, 3, 3);
+text-shadow:  5px 2px 14px rgba(231, 224, 224, 0.5);
+
+}

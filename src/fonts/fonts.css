@@ -1,0 +1,12 @@
+@font-face {
+  font-family: 'Preside'; /* replace with your font family name */
+  src: url('./Preside.ttf'); /* replace with the path to your font file */
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Raleway'; /* replace with your font family name */
+  src: url('./Raleway-VariableFont_wght.ttf'); /* replace with the path to your font file */
+  font-weight: normal;
+  font-style: normal;
+}

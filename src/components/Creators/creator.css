@@ -1,0 +1,47 @@
+#CreatorContainer{
+display: flex;
+flex-direction: column;
+text-align: center;
+padding: 0 10%;
+margin-bottom: 2em;
+}
+.creators{
+display: flex;
+flex-direction: row;
+align-items: center;
+justify-content: space-around;
+}
+.creatorPicture{
+border-radius: 50%;
+border: 2px solid black;
+width: 12em;
+height: 12em;
+}
+#CreatorContainer>h2
+{font-family: Preside;
+font-size: 4.5em;
+margin-bottom: 0.7em;
+text-shadow:  5px 2px 14px rgba(36, 35, 35, 0.5);
+color: rgb(36, 42, 100);}
+
+.creatorName{
+font-size: 1.7em;
+font-family: Raleway;
+margin-top: 0.5em ;
+}
+.creatorContact>a>img{
+width:2.4em;
+height: 2.4em;
+transition: 2s ease-in-out 0.2s;
+cursor: pointer;
+}
+.creatorContact>a>img:hover{
+transform: scale(1.25);
+}
+.creatorContact{
+display: flex;
+flex-direction: row;
+align-items: center;
+justify-content: space-around;
+margin:0.8em 0 ;
+}

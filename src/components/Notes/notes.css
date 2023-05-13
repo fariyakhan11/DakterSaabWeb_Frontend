@@ -1,0 +1,137 @@
+#Notesdashboard
+{display: flex;
+flex-direction: row;
+ padding: 0.5em;
+width: 100%;
+}
+.Notestitle{
+font-family: Raleway;
+cursor: pointer;
+}
+.noteimg{
+width: 80%;
+display: flex;
+justify-content: center;
+align-items: center;
+}
+.noteimg>img{
+width:100%;
+height:100%;
+margin-left: 20%;
+cursor: pointer;
+}
+.topareanote{
+height: 85%;
+display: flex;
+
+}
+.notesdiv{
+  text-align: center;
+  flex-basis: 15em;
+  height: 15em;
+  margin:2em 2em 2em 0;
+}
+#notesdisplay{
+background-color: rgba(153, 150, 150, 0.438);
+z-index: 2000;
+position: fixed;
+overflow: hidden;
+top:0;
+left: 0;
+width: 100vw;
+height: 100vh;
+display: flex;
+justify-content: center;
+align-items: center;
+display: none;
+}
+.notesdisplay{
+background-color: #f2f2f2;
+width: 50%;
+height: 90%;
+overflow-y: hidden;
+border: 4px solid rgb(196, 195, 195);
+box-shadow: 0 2px 30px rgba(12, 11, 11, 0.507);
+}
+#closebtn{
+height: 3em;
+width: 3em;
+background-color: #f2f2f2;
+position: absolute;
+top: 2vw;
+right: 2vw;
+border-radius: 50%;
+box-shadow: 0 2px 30px rgba(12, 11, 11, 0.507);
+display: flex;
+align-items:center;
+rotate: 45deg;
+justify-content: center;
+font-size: 1em;
+cursor: pointer;
+transition: all 1s ease-in-out;
+}
+#closebtn>h2{
+color: black;
+}
+#closebtn:hover{
+background-color: black;
+box-shadow: 0 2px 30px rgba(236, 229, 229, 0.507);
+transform: scale(1.2);
+}
+#closebtn:hover h2{
+color: #f2f2f2;
+}
+#notetitle{
+outline: none;
+border: none;
+background-color: transparent;
+font-size: 2.4em;
+margin: 1em 1em 0.4em 1em;
+width: 90%;
+font-weight: bold;
+font-family: Fraunces;
+}
+.topnotebar{
+
+height: 10%;
+}
+.notearea{
+overflow-x: hidden;
+height: 80%;
+overflow-y: scroll;
+}
+.bottomnotebar{
+display: flex;
+flex-direction: row;
+height: 10%;
+justify-content: flex-end;
+padding-right: 2%;
+align-items: center;
+}
+.bottomnotebar>button{
+width: fit-content;
+height: fit-content;
+color: white;
+background-color:#56aca6;
+font-size: 1.2em;
+padding: 0.5em;
+outline: none;
+border: none;
+margin-right: 3%;
+border-radius: 7px;
+box-shadow: 2px 2px 7px rgba(59, 59, 59, 0.507);
+cursor: pointer;
+}
+.bottomnotebar>button:hover{
+
+background-color:#367a75 ;
+}
+#notecontent{
+height: 95%;
+margin: 1%;
+width: 99%;
+outline: none;
+border: none;
+font-size: 1.6em;
+font-family:'Courier New', Courier, monospace;
+}
