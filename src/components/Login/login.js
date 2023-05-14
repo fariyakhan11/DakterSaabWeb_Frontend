@@ -21,6 +21,8 @@ function Login(){
 // selected option for login
     const [identitytitle, setidentitytitle] = useState('');
     const [identitypic, setidentitypic] = useState('');
+//locations for the organizations
+    const [hospitalbranches, setbranches] = useState('');
 
 //for constant dynamic changes 
     useEffect(()=>{
@@ -42,50 +44,94 @@ function Login(){
 //values being entered in the signup form
 
     const [formValue, setformValue] = React.useState({
-        email: '',
         password: '',
-        address: '',
+        branch: '',
         name: '',
-        phone: '',
-        city: '',
-        timings: { open: '', close: '' }
+        org:identitytitle
     });
 
 // to validate the form values while entering
     function handleUserInput(e) {
         console.log("the form values are ",formValue)
       
-        setformValue(formstate => ({ ...formstate, timings: { ...formstate.timings, [e.target.id]: e.target.value } }))   
+        setformValue({
+                ...formValue,
+                [e.target.name]: e.target.value
+        });
+        if (e.target.name === "name") {
+          let api = (
+            "http://localhost:5000/api/"+{identitytitle}+"/branch/" + e.target.value
+          ).toString();
+          try {
+            console.log(e.target.value)
+            fetch(api)
+              .then((response) => response.json()) // get response, convert to json
+              .then((json) => {
+                setbranches(json.branches);
+                document.getElementById('branch_notice').style.display='none'
+              });
+          }
+          catch (err) {
+            console.log("error in requesting branches information", err);
+            setbranches("");
+            document.getElementById('branch_notice').textContent="No such "+{identitytitle}+"exist";
+          }
+        }
        
     }
-// to submit the Register form
-    const submitRegisterForm = async (e) => {
+//signin form submission
+    const SignIn = (e) => {
         e.preventDefault();
-        let dataset=formValue
-        try {
-            fetch('http://localhost:5000/api/'+identitytitle+'/add', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(dataset)
-            }).then(res => {
-                    if (res.status === 200) {
-                        document.getElementsByClassName('errordescription').style.display="none";
-                        alert("you master key has been sent to you by email")
-                    }
-                    else if (res.status === 430) { document.getElementsByClassName('errordescription').style.display="block"; }
-
-                    else { console.log("error in sending data", res.data) }
-                });
-            } catch (err) { console.log(err); }
+        if (formValue.name === "") {
+          document.getElementById("err").innerHTML = "Name cannot be empty";
+        } else if (formValue.password === "") {
+          document.getElementById("err").innerHTML =
+            "Please enter your password";
+        } 
+        else if(formValue.branch===''){
+          document.getElementById("err").innerHTML =
+            "Please select your location";
         }
+        else {
+          
+          console.log("the info is ", formValue);
+          try {
+            fetch("http://localhost:5000/api/login/user/", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(formValue),
+            })
+              .then((response) => response.json())
+              .then((json) => {
+                document.getElementById("errorstatus").innerHTML = json.error;
+                if (!json.error) {
+                  setformValue({
+                    name: "",
+                    branch: "",
+                    password: "",
+                    org: identitytitle,
+                  });
+                  document.getElementById("errorstatus").innerHTML = "";
+                  console.log(json.user);
+
+                }
+              });
+          } catch (err) {
+            console.log(err);
+          }
+        }
+    };
+
+
+
 //which option u want to sign in as
     function opt_select(event) {
         const divId = event.target.id;
         setidentitytitle(options[divId].opt_titles);
         setidentitypic(options[divId].opt_imgs);
-        
+        document.getElementById('branch_notice').textContent="Enter your organization name to search for locations.";
         
     }
 return(
@@ -133,7 +179,19 @@ return(
                                       
                                       <div className="form-fields">
                                           <label>Branches: </label>
-                                          <h6>Enter your organization name to search for locations.</h6>
+                                          <h6 id="branch_notice">Enter your organization name to search for locations.</h6>
+                                          {hospitalbranches && (
+                                              <div className="labeldiv">
+                                                {hospitalbranches.map((element, index) => {
+                                                  return (
+                                                    <div className='radiobtn'>
+                                                      <input className='radiobtn' type="radio" key={index} id={index} name="branch" value={element}  />
+                                                      <label htmlFor={index}>{element}</label>
+                                                    </div>
+                                                  );
+                                                })}
+                                              </div>
+                                            )}
                                       </div>
                                       <div className="form-fields">
                                           <label>Password: </label>
@@ -147,7 +205,7 @@ return(
                                       </div>
                                   </div>
                                   <div className="btndiv">
-                                      <button id="signupsubmit" className="formbtn" onClick={submitRegisterForm}>Sign In</button>
+                                      <button id="signupsubmit" className="formbtn" onClick={SignIn}>Sign In</button>
                                   </div>
                               </form>
                           </div>

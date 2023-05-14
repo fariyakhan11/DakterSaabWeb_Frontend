@@ -24,12 +24,11 @@ function Dashboard(){
     const [tab, settab]=useState('Notes');
 
     const handlestate=(msg)=>{
-        setexpandedstate(msg)
+        settab(msg.tab)
+        setexpandedstate(msg.expanded)
     }
 
-    const selectedtab=(t)=>{
-        settab(t);
-    }
+    
 
     useEffect(()=>{
         if(!expandedstate){
@@ -46,7 +45,9 @@ return(
 <>
 <Navbar/>
 <div id="dashboardcontainer">
-<Sidenav expandedmsg={handlestate} tabb={selectedtab}/>
+
+<Sidenav msg={handlestate} />
+
 <div id="dashboardarea">
     <div className="secondnav">
         <div className="admindiv">
@@ -142,11 +143,26 @@ return(
             </div>
         </div>
       </>
-
 }
-{(tab==='Medicine') && 
+
+
+{(tab==='Medicines') && 
       <>
 <Medicines/>
+      </>
+}
+
+
+
+{(tab==='Transactions') && 
+      <>
+<h1>Transactions</h1>
+      </>
+}
+
+{(tab==='Orders') && 
+      <>
+<h1>Orders</h1>
       </>
 }
 

@@ -8,30 +8,56 @@ import {BiPurchaseTag,BiExpand,BiCollapse} from "react-icons/bi";
 import { useState ,useEffect} from "react";
 
 
-function Sidenav({expandedmsg }){
-    const [expanded,setexpanded]=useState(false);
-    const [tabb,settab]=useState('Home');
+function Sidenav({msg }){
+    const [expanded,setexpanded]=useState(true);
+    
+    useEffect(() => {
+        sessionStorage.setItem('current_tab', 'Home');
+        let elements=document.querySelectorAll('.Home');
+        elements.forEach(e => {
+            e.classList.add('selectedtab');
+        });
+        msg({expanded:expanded,tab:sessionStorage.getItem('current_tab')})
+    },[])
+
+    useEffect(()=>{
+        let select_tab="."+sessionStorage.getItem('current_tab')
+        let sel=document.querySelectorAll(select_tab);
+        sel.forEach(s => {
+            s.classList.add('selectedtab');
+        });
+        msg({expanded:expanded,tab:sessionStorage.getItem('current_tab')})
+    })
 
     const expandhandler=()=>{
         if(expanded){
             setexpanded(false)
-            expandedmsg(false)
+            msg({expanded:false,tab:sessionStorage.getItem('current_tab')})
+
         }
         else{
             setexpanded(true)
-            expandedmsg(true)
+            msg({expanded:true,tab:sessionStorage.getItem('current_tab')})
         }
     }
 
-    const activehandler=(e)=>{
-        let active=document.getElementsByClassName('tabscollapsed')
-        if(active){
-            active.classList.remove('tabdiv-active')
+    const selectedtab=(e)=>{
+        if(e.target.id){
+            sessionStorage.setItem('current_tab', e.target.id);
+            let active=document.querySelectorAll('.selectedtab');
+            active.forEach(a=>{
+                a.classList.remove('selectedtab');
+            })
+            
+            let sel=document.querySelectorAll("."+sessionStorage.getItem('current_tab'));
+            sel.forEach(s => {
+                s.classList.add('selectedtab');
+            });
+            msg({expanded:expanded,tab:sessionStorage.getItem('current_tab')})
         }
-        if (!e.target.classList.contains("tabsicon")){e.target.classList.add('tabdiv-active')}
-        else{e.target.parentNode.classList.add('tabdiv-active');}
-        
-    }    
+    }
+    
+   
 return(
 <>
 {expanded &&
@@ -45,43 +71,47 @@ return(
     </div>
     
     <div className="tabscontainer">
-        <div className="tabsdiv"  onClick={()=>{settab('Home')}}>
-            <AiOutlineHome className="tabsicon"/>
-            <h4 className="tabsname">Home</h4>
+        
+        <div className="tabsdiv Home "  onClick={selectedtab} id="Home">
+            <AiOutlineHome className="tabsicon" id="Home"/>
+            <h4 className="tabsname" id="Home">Home</h4>
         </div>
-        <div className="tabsdiv"  onClick={()=>{settab('Transactions')}}>
-            <BiPurchaseTag className="tabsicon"/>
-            <h4 className="tabsname">Transactions</h4>
+        <div className="tabsdiv Transactions "  onClick={selectedtab} id="Transactions">
+            <BiPurchaseTag className="tabsicon" id="Transactions"/>
+            <h4 className="tabsname" id="Transactions">Transactions</h4>
         </div>
-        <div className="tabsdiv"  onClick={()=>{settab('Orders')}}>
-            <FiPackage className="tabsicon"/>
-            <h4 className="tabsname">Orders</h4>
+        <div className="tabsdiv Orders" id="Orders" onClick={selectedtab}>
+            <FiPackage className="tabsicon" id="Orders"/>
+            <h4 className="tabsname" id="Orders">Orders</h4>
         </div>
  
-        <div className="tabsdiv"  onClick={()=>{settab('Medicine')}}>
-            <GiMedicines className="tabsicon"/>
-            <h4 className="tabsname">Medicines</h4>
+        <div className="tabsdiv Medicines" id="Medicines" onClick={selectedtab}>
+            <GiMedicines className="tabsicon" id="Medicines"/>
+            <h4 className="tabsname" id="Medicines">Medicines</h4>
         </div>
     </div>
 
 <BiCollapse id="collapsebtn" onClick={expandhandler}/>
 </div>
  }
+
+
+
 {!expanded && 
 <div id="sidecollapsedcontainer">
 <img className="orglogo" src={PharmP}></img>
 <div className="tabsrow">
-<div className="tabscollapsed" onClick={activehandler}>
-<AiOutlineHome className="tabsicon" />
+<div className="tabscollapsed Home " onClick={selectedtab} id="Home">
+<AiOutlineHome className="tabsicon" id="Home"/>
 </div>
-<div className="tabscollapsed" onClick={activehandler}>
-<BiPurchaseTag className="tabsicon"/>
+<div className="tabscollapsed Transactions" onClick={selectedtab} id="Transactions">
+<BiPurchaseTag className="tabsicon" id="Transactions"/>
 </div>
-<div className="tabscollapsed" onClick={activehandler}>
- <FiPackage className="tabsicon"/>
+<div className="tabscollapsed Orders" onClick={selectedtab} id="Orders">
+ <FiPackage className="tabsicon" id="Orders"/>
 </div>
-<div className="tabscollapsed" onClick={activehandler}>
-<GiMedicines className="tabsicon"/>
+<div className="tabscollapsed Medicines" onClick={selectedtab} id="Medicines">
+<GiMedicines className="tabsicon" id="Medicines"/>
 </div>
 </div>
 

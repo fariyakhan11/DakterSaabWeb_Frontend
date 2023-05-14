@@ -2,11 +2,12 @@ import React from "react";
 import './medicines.css';
 import { useState } from "react";
 import MedImg from '../../images/medicine.png'
+import Addmedicines from "./addmedicines";
 
 function Medicines(){
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
-
+  const [close_add_view, set_add_view] = useState(true);
   const handleSearchTermChange = (event) => {
     setSearchTerm(event.target.value);
   };
@@ -21,8 +22,14 @@ function Medicines(){
     // Do something with search term and selected category
   };
 
+  const handle_add=(close)=>{
+    set_add_view(close)
+  }
 return(
 <>
+{!close_add_view &&
+<Addmedicines close={handle_add}/>
+}
         <div id="Medicinesdashboard">
           <div className="contentarea">
                     <h3 className="contentareatitle">Our Medicines</h3>
@@ -89,7 +96,7 @@ return(
           </div>
 
           <div className="controlbtns">
-              <div id="addstock" className="stockoperation">
+              <div id="addstock" className="stockoperation" onClick={()=>{set_add_view(false)}}>
                 <div id="addMedicines" className="stockopicon">
                 <h4>+</h4>
                 </div>

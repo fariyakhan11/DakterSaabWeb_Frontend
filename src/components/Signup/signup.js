@@ -43,7 +43,8 @@ function Signup(){
         name: '',
         phone: '',
         city: '',
-        timings: { open: '', close: '' }
+        timings: { open: '', close: '' },
+        org:identitytitle
     });
 
 // to validate the form values while entering
