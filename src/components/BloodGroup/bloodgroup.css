@@ -1,0 +1,211 @@
+#BloodGroupdashboard{
+display: flex;
+flex-direction: row;
+ padding: 0.5em;
+width: 100%;
+height: 100%;
+}
+/*All the styles below are defined in the medicine.css file primarily*/
+.contentarea{
+    align-items: flex-start;
+    width: 95%;
+    height: 100%;
+}
+.contentareatitle{
+font-size: 2.5em;
+font-family: Fraunces;
+text-align: center;
+margin: 0.1em 0;
+
+}
+/* All the styles above are defined in the medicine.css file primarily*/
+
+.bloodgroupsdiv{
+ display: flex;
+  flex-wrap: wrap;
+margin-left: 2em;
+align-items: center;
+ overflow-y: scroll;
+}
+.stockopiconbloodbank{
+background-color:#e47676;
+border-radius: 50%;
+padding: 0 0.43em;
+height: 1.4em;
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 2em;
+box-shadow: 2px 2px 7px rgba(59, 59, 59, 0.507);
+cursor: pointer;
+margin-left: 0.5em;
+}
+.stockopiconbloodbank>h4{
+transition: transform 2.5s ease-in  ;
+}
+.stockopiconbloodbank>h4{
+color: white;
+font-family: Fraunces;
+
+}
+
+.stockopiconbloodbank:hover + .stockoptitle  {
+  opacity: 1;
+
+}
+.stockopiconbloodbank:hover> h4{
+transform: rotate(180deg);
+}
+
+/*for add blood group */
+.active_tabblood{
+background-color: #f1efef !important;
+border: 3px solid #d94d4e !important;
+border-bottom: 1px solid #f1efef !important;
+margin-bottom: -3px !important ;
+z-index: 1000 !important;
+
+}
+.active_tabblood>h2{
+color: black ;
+font-size: 1.5em ;
+}
+#addmedcontentblood{
+border-radius: 2em;
+box-shadow: 0 2px 30px rgba(53, 52, 52, 0.247);
+padding: 0.7em;
+background-color: #f1efef;
+border: 4px solid #d94d4e;
+overflow: scroll;
+height: 90%;
+}
+
+#addmedcontentblood>div>h3{
+font-family: Fraunces;
+text-align: center;
+}
+.submitbtnmedblood{
+font-size: 1.2em;
+color: black;
+background-color: #d94d4e;
+margin-right: 1.5em;
+padding: 0.8% 1.5%;
+border: none;
+border-radius: 1em;
+transition: all 0.5s ease-in-out;
+cursor: pointer;
+font-family: Raleway;
+box-shadow: 0 2px 2px rgba(12, 11, 11, 0.233);
+}
+.submitbtnmedblood:hover{
+transform: scale(1.1);
+color: #d94d4e;
+border: 1.5px solid #d94d4e;
+background-color: transparent;
+font-weight: 700;
+}
+.idle_tabblood{
+background-color: #cf6b6bb9;
+border: 1px solid #f1efef ;
+border-bottom: transparent;
+transition: all 1s ease-in-out 0s;
+}
+.idle_tabblood>h2{
+color: white;
+font-size: 1.2em;
+}
+.idle_tabblood:hover{
+transform: scale(1.1);
+}
+
+.med-divblood{
+ background-color: #e4898981;
+  text-align: center;
+  flex-basis: 28em;
+  height: 27em;
+  margin:2em 2em 2em 0;
+border-radius: 2em;
+border-right: 1.5em solid transparent;
+overflow: hidden;
+padding: 1em 0;
+}
+.more-btnblood{
+border-radius: 50%;
+height: 1.4em;
+width: 1.4em;
+font-size: 2.3em;
+transition: all 0.5s ease-in-out;
+font-family: Fraunces;
+border:3px solid  #cf6b6bb9;
+font-weight: bolder;
+color: #cf6b6bb9;
+cursor: pointer;
+box-shadow: 0 2px 2px rgba(12, 11, 11, 0.233);
+}
+.more-btnblood:hover{
+color: white;
+background-color: #cf6b6bb9;
+transform: scale(1.15);
+border: none;
+}
+.top_bar_add_medblood{
+display: flex;
+flex-direction: row;
+align-items: center;
+padding: 0.5em 2em;
+border-bottom: 2px solid black;
+height: 10%;
+}
+.top_bar_add_medblood>h3{
+width: 100%;
+text-align: center;
+font-size: 1.5em;
+font-family: Fraunces;
+}
+.top_bar_add_medblood>div>.icon{
+width: 100%;
+background-color: #cf6b6bb9;
+height: 3em;
+width: 3em;
+border-radius: 50%;
+box-shadow: 0 2px 2px rgba(12, 11, 11, 0.233);
+display: flex;
+align-items:center;
+justify-content: center;
+font-size: 0.5em;
+cursor: pointer;
+transition: all 0.5s ease-in-out;
+padding: 0.7em;
+}
+.top_bar_add_medblood>div>.icon:hover{
+transform: scale(1.1);
+border: 1.5px solid #cf6b6bb9;
+background-color: transparent;
+color: #cf6b6bb9;
+}
+.upload_btnblood{
+font-size: 1.2em;
+font-family: Fraunces;
+cursor: pointer;
+padding: 0.4em 1em;
+border-radius: 2em;
+width: 50%;
+background-color: #d17d7d91;
+color: white;
+border: #133331;
+box-shadow: 0 2px 2px rgba(12, 11, 11, 0.233);
+transition: all 0.5s ease-in-out;
+}
+.upload_btnblood:hover{
+transform: scale(1.1);
+background-color: #cf6b6b;
+color: black;
+}
+#topbarmedsblood>h1{
+background-color: #f1efef;
+padding: 0.7em 14vw;
+font-family: Fraunces;
+border-radius: 2em;
+border: 4px solid #cf6b6b;
+font-size: 1.3em;
+}

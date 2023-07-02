@@ -1,9 +1,22 @@
 #FooterContainer{
-
-background-color:black;
+margin-top: 2em;
+background-color: rgba(166, 211, 253, 0.568);
 width:100%;
 height: 30vh;
 }
 #FooterContainer> h6 {
 color: white;
+}
+#FooterContainer>div>.logo>img{
+width: 6em !important;
+height: 6em !important;
+}
+#FooterContainer>div{
+display: flex;
+align-items: center;
+justify-content: space-between;
+margin: 0 4em 0 2em;
+}
+#FooterContainer>div>p{
+text-align: center;
 }

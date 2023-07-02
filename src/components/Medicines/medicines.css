@@ -15,6 +15,7 @@ font-size: 2.5em;
 font-family: Fraunces;
 text-align: center;
 margin: 0.1em 0;
+
 }
 .searchbar{
 display: flex;
@@ -23,7 +24,7 @@ justify-content: center;
 margin:0.4em 0;
  flex-direction: row;
 }
-.search {
+.searchmedicine {
   border: none;
   background-color: transparent;
   font-size: 1.2em;
@@ -58,7 +59,7 @@ font-family: Raleway;
 }
 .searchbtn:hover{
  background-color: #56aca6;
-    transform: scale(1.15);
+    
 }
 .stockoptitle{
 text-shadow: 2px 2px 4px rgba(209, 207, 207, 0.822);
@@ -70,13 +71,53 @@ width: 11em;
 z-index: 1000;
 
 }
+#hiddendiv{
+display: flex;
+flex-direction: row;
+width: 100%;
+font-family: Fraunces;
+display: none;
+
+margin-bottom: 0.7em;
+}
+#hiddendiv>h2{
+width: 50%;
+padding: 0.5em 0;
+text-align: center;
+font-size: 01em;
+cursor: pointer;
+box-shadow: 2px 2px 5px rgba(121, 119, 119, 0.295);
+transition: all 0.5s ease-in-out;
+}
+#hiddendiv>h2:nth-child(1){
+border-right: 2px solid black;
+}
+#hiddendiv>h2:hover{
+background-color: #a9eefa7e;
+}
 .controlbtns{
 display: flex;
 flex-direction: column;
-margin-top: 8%;
+align-items: end;
 
 width:4%;
 padding-right: 2%;
+}
+.closetabbtn{
+width: 2em;
+height: 2em;
+border-radius: 50%;
+box-shadow: 3px 2px 9px rgba(59, 59, 59, 0.507);
+cursor: pointer;
+margin-bottom: 9em;
+display: flex;
+align-items: center;
+justify-content: center;
+font-family: Fraunces;
+font-size: 1.4em;
+rotate: 45deg;
+font-weight: 600;
+padding: 0 !important;
 }
 .stockoperation{
 display: flex;
@@ -89,7 +130,7 @@ align-items: center;
 
 padding-right: 2%;
 }
-.stockopicon{
+.stockopiconmedicine{
 background-color:#56aca6;
 border-radius: 50%;
 padding: 0 0.43em;
@@ -102,20 +143,20 @@ box-shadow: 2px 2px 7px rgba(59, 59, 59, 0.507);
 cursor: pointer;
 margin-left: 0.5em;
 }
-.stockopicon>h4{
+.stockopiconmedicine>h4{
 transition: transform 2.5s ease-in  ;
 }
-.stockopicon>h4{
+.stockopiconmedicine>h4{
 color: white;
 font-family: Fraunces;
 
 }
 
-.stockopicon:hover + .stockoptitle  {
+.stockopiconmedicine:hover + .stockoptitle  {
   opacity: 1;
 
 }
-.stockopicon:hover> h4{
+.stockopiconmedicine:hover> h4{
 transform: rotate(180deg);
 }
 #delMedicines{
@@ -128,29 +169,68 @@ margin-left: 2em;
 align-items: center;
  overflow-y: scroll;
 }
+.no_med{
+
+font-family: Fraunces;
+font-size: 1.6em;
+width: 100%;
+text-shadow: 2px 2px 4px rgba(209, 207, 207, 0.822);
+text-align: center;
+margin-top: 20%;
+}
 .medsdiv{
-  background-color: #f2f2f2;
+  border:3px solid #f2f2f2;
   text-align: center;
   flex-basis: 15em;
   height: 15em;
   margin:2em 2em 2em 0;
-cursor: pointer;
+  cursor: pointer;
+  border-radius: 2em;
 }
-.topareamed{
+.medsdivspecial{
+width:25em !important;
+flex-basis: 35em !important;
+border:3px solid #f2f2f2;
+text-align: center;
+height: 15em;
+margin:2em 2em 2em 0;
+cursor: pointer;
+border-radius: 2em;
+}
+
+.medsdiv>.topareamed{
 height: 70%;
+padding-top:0% ;
+display: flex;
+}
+.medsdivspecial>.topareamed{
+height: 70% !important;
 padding-top:5% ;
 display: flex;
 }
-.bottomareamed{
+.medsdiv>.bottomareamed{
 height: 35%;
-
+font-family: Fraunces;
+display: block;
 }
-
+.medsdivspecial>.bottomareamed{
+height: 0%;
+display: none;
+font-family: Fraunces;
+}
+.bottomareamed>h3{
+font-size: 1.5em;
+}
 .medimg{
-width: 80%;
 display: flex;
 justify-content: center;
 align-items: center;
+}
+.medsdivspecial>.topareamed>.medimg{
+width: 35% !important;
+}
+.medsdiv>.topareamed>.medimg{
+width: 80%;
 }
 .medimg>img{
 width:70%;
@@ -158,9 +238,61 @@ height:80%;
 margin-left: 20%;
 }
 
-.sideareamed{
-width: 20%;
-
+.medsdiv>.topareamed>.sideareamed{
+width: 15%;
+display: block;
+padding-top: 4%;
+}
+.medsdivspecial>.topareamed>.sideareamed{
+display: none;
+}
+.medsdiv>.topareamed>.expandable-div{
+display: none;
+}
+.medsdivspecial>.topareamed>.expandable-div{
+width: 60%;
+display: flex;
+flex-direction: column;
+align-items:flex-start;
+justify-content: space-evenly;
+font-family: Raleway;
+font-size: 1.3em;
+padding-left: 2em;
+border-left: 2px solid rgba(139, 130, 130, 0.514);
+}
+.medsdivspecial>.topareamed>.expandable-div>div>input{
+border: none;
+outline: none;
+border-bottom: 2px solid black;
+}
+.expandable-div>div>input{
+font-family: Raleway;
+font-size: 0.8em;
+}
+.medsdivspecial>.topareamed>.sideareamed{
+display: none;
+}
+#update-btn-div{
+align-self: flex-end;
+display: flex;
+}
+#update-btn-div>button{
+height: 3em;
+width: 9em;
+font-size: 0.6em;
+font-family: Raleway;
+border-radius: 1em;
+outline: none;
+border: 3px solid #56aca6;
+background-color: transparent;
+margin: 5%;
+box-shadow: 2px 2px 7px rgba(12, 11, 11, 0.507);
+font-weight: 500;
+cursor: pointer;
+}
+#update-btn-div>button:hover{
+background-color: #56aca6 ;
+color: white;
 }
 .grayarea{
 background-color: rgba(139, 130, 130, 0.514);
@@ -209,22 +341,23 @@ display: flex;
 flex-direction: column;
 justify-content: center;
 align-items: center;
+
 }
-#topbarmeds>h1{
+#topbarmedsmedicine>h1{
 background-color: #f1efef;
-padding: 0.7em 25vw;
+padding: 0.7em 14vw;
 font-family: Fraunces;
 border-radius: 2em;
 border: 4px solid #25817b8a;
-font-size: 1.5em;
+font-size: 1.3em;
 }
 #addmeds_area{
 
-width: 80%;
-height: 75%;
+width: 54%;
+height: 70%;
 display: flex;
 flex-direction: column;
-margin-top: 2em;
+margin-top: 4%;
 
 }
 #tabs_add{
@@ -240,24 +373,22 @@ margin-left: 1.5em;
 font-family: Fraunces;
 border-top-left-radius: 1.2em;
 border-top-right-radius: 1.2em;
-
-
 cursor: pointer;
 }
-.idle_tab{
+.idle_tabmedicine{
 background-color: #25817b60;
 border: 1px solid #f1efef ;
 border-bottom: transparent;
 transition: all 1s ease-in-out 0s;
 }
-.idle_tab>h2{
+.idle_tabmedicine>h2{
 color: white;
 font-size: 1.2em;
 }
-.idle_tab:hover{
+.idle_tabmedicine:hover{
 transform: scale(1.1);
 }
-.active_tab{
+.active_tabmedicine{
 background-color: #f1efef !important;
 border: 3px solid #25817b8a !important;
 border-bottom: 1px solid #f1efef !important;
@@ -265,11 +396,11 @@ margin-bottom: -3px !important ;
 z-index: 1000 !important;
 
 }
-.active_tab>h2{
+.active_tabmedicine>h2{
 color: black ;
 font-size: 1.5em ;
 }
-#addmedcontent{
+#addmedcontentmedicine{
 border-radius: 2em;
 box-shadow: 0 2px 30px rgba(53, 52, 52, 0.247);
 padding: 0.7em;
@@ -279,14 +410,14 @@ overflow: scroll;
 height: 90%;
 }
 
-#addmedcontent>div>h3{
+#addmedcontentmedicine>div>h3{
 font-family: Fraunces;
 text-align: center;
 }
 #area{
 height: 100%;
 }
-.top_bar_add_meds{
+.top_bar_add_medsmedicine{
 display: flex;
 flex-direction: row;
 align-items: center;
@@ -294,14 +425,33 @@ padding: 0.5em 2em;
 border-bottom: 2px solid black;
 height: 10%;
 }
-.top_bar_add_meds>h3{
+.top_bar_add_medsmedicine>h3{
 width: 100%;
 text-align: center;
 font-size: 1.5em;
 font-family: Fraunces;
 }
-.top_bar_add_meds>div>.icon{
-background-color: pink;
+.submitbtnmedmedicine{
+font-size: 1.2em;
+color: black;
+background-color: #25817b8a;
+margin-right: 1.5em;
+padding: 0.8% 1.5%;
+border: none;
+border-radius: 1em;
+transition: all 0.5s ease-in-out;
+cursor: pointer;
+font-family: Raleway;
+box-shadow: 0 2px 2px rgba(12, 11, 11, 0.233);
+}
+.submitbtnmedmedicine:hover{
+transform: scale(1.1);
+color: #25817be3;
+border: 1.5px solid #25817b8a;
+background-color: transparent;
+font-weight: 700;
+}
+.top_bar_add_medsmedicine>div>.icon{
 width: 100%;
 background-color: #25817b8a;
 height: 3em;
@@ -313,11 +463,14 @@ align-items:center;
 justify-content: center;
 font-size: 0.5em;
 cursor: pointer;
-transition: all 1s ease-in-out;
+transition: all 0.5s ease-in-out;
 padding: 0.7em;
 }
-.top_bar_add_meds>div>.icon:hover{
+.top_bar_add_medsmedicine>div>.icon:hover{
 transform: scale(1.1);
+border: 1.5px solid #25817b8a;
+background-color: transparent;
+color: #25817be3;
 }
 .add_area_meds{
 display: flex;
@@ -350,7 +503,7 @@ padding: 1em 0;
 font-weight: bolder;
 font-family: Fraunces;
 }
-.upload_btn{
+.upload_btnmedicine{
 font-size: 1.2em;
 font-family: Fraunces;
 cursor: pointer;
@@ -363,7 +516,7 @@ border: #133331;
 box-shadow: 0 2px 2px rgba(12, 11, 11, 0.233);
 transition: all 0.5s ease-in-out;
 }
-.upload_btn:hover{
+.upload_btnmedicine:hover{
 transform: scale(1.1);
 background-color: #388b85fb;
 color: black;
@@ -371,44 +524,117 @@ color: black;
 .fplink{
 cursor: pointer;
 }
-.med>.form-fields>.inputf{
-
-}
 .med{
 font-family: Fraunces;
 }
 .med>h6{
-color: red;
 display: none;
+font-family: Fraunces;
 }
 .med{
 width:100%;
-height: 100%;
+height: 80%;
 font-size: 1.4em;
 padding: 1em;
 display: flex;
 flex-direction: column;
 justify-content: space-between;
-border: 2px solid black;
+
 border-radius: 1em;
 }
-.med-div{
-width: 30%;
-height: 50%;
-
+.super_med_div{
+width:100%;
+height: 100%;
+display: flex;
+align-items: center;
+justify-content: center;
+  flex-wrap: wrap;
+ overflow-y: scroll;
 }
-.med-div>h3{
-font-size: 1.8em;
-font-family: Raleway;
-text-align: center;
-width: 50%;
-margin: 0 30%;
-z-index: 300000;
-margin-bottom: -0.5em;
+.med-div-container{
 
+width:100%;
+height: 85%;
+display: flex;
+flex-direction: row;
 }
+.more-btnmedicine{
+border-radius: 50%;
+height: 1.4em;
+width: 1.4em;
+font-size: 2.3em;
+transition: all 0.5s ease-in-out;
+font-family: Fraunces;
+border:3px solid  #2a8f889f;
+font-weight: bolder;
+color: #2a8f889f;
+cursor: pointer;
+box-shadow: 0 2px 2px rgba(12, 11, 11, 0.233);
+}
+.more-btnmedicine:hover{
+color: white;
+background-color: #2a8f889f;
+transform: scale(1.15);
+border: none;
+}
+.med-divmedicine{
+ background-color: #2a8f8841;
+  text-align: center;
+  flex-basis: 28em;
+  height: 27em;
+  margin:2em 2em 2em 0;
+border-radius: 2em;
+border-right: 1.5em solid transparent;
+overflow: hidden;
+padding: 1em 0;
+}
+.inputm{
+font-size: 1.3em;
+outline: none;
+border: none;
+width: 80%;
+overflow-x: scroll;
+border-bottom: 2px solid black;
+border-radius: 0;
+background-color: transparent;
+}
+.inputm:focus{
+background-color: rgb(213, 234, 241);
+}
+
 form{
 width: 100%;
 height: 100%;
-
+}
+.medno{
+font-size: 1.6em;
+font-family: Fraunces;
+text-align: center;
+width: 70%;
+margin: 0 30%;
+display: flex;
+flex-direction: row;
+justify-content: space-between;
+}
+.closebtn{
+rotate: 45deg;
+border-radius: 50%;
+background-color: white;
+font-size: 1.2em;
+font-weight: 600;
+font-family: Fraunces;
+height: 1.2em;
+width: 1.2em;
+display:flex;
+align-items: center;
+cursor: pointer;
+box-shadow: 0 2px 2px rgba(12, 11, 11, 0.233);
+justify-content: center;
+}
+.disabledbtn{
+opacity: 0.5;
+pointer-events: none;
+}
+.add_med_btns>input{
+display: none;
 }

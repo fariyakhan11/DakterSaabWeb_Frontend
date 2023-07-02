@@ -1,0 +1,392 @@
+
+
+#dashboardarea{
+    width: 85%;
+    display:flex;
+    flex-direction: column;
+}
+.secondnavpharmacy{
+    width: 99%;
+    background-color: white;
+    margin-top: 1em;
+    border: 3px solid #75c5c08a;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.3em 0.2em;
+    border-top-right-radius:3em ;
+    border-bottom-right-radius:3em ;
+    box-shadow: 0 2px 30px rgba(53, 52, 52, 0.247);
+    
+}
+.active-overlaypharmacy{
+border-bottom: 4px solid  #75c5c0f5 !important;
+
+
+}
+.adminname{
+    text-decoration: none;
+    font-family: Fraunces;
+    padding-left: 2%;
+    word-spacing: 5px;
+}
+.icon{
+margin-left: 1em;
+cursor: pointer;
+font-size:1.3em;
+padding: 0.4em;
+border-bottom: 4px solid transparent;
+}
+.links{
+    display: flex;
+    flex-direction: row;
+    margin-right: 2%;
+}
+.admindiv{
+    display: flex;
+flex-direction: row;
+width: 20%;
+justify-items: center;
+align-items: center;
+cursor: pointer;
+}
+.infoareadashboard{
+display: flex;
+flex-direction: column;
+margin: 1em 0.6em 0em 1.2em;
+
+height: 83vh;
+border-radius: 2em;
+box-shadow: 0 2px 30px rgba(53, 52, 52, 0.247);
+padding: 0.7em;
+
+}
+.Summarybar{
+font-family: Fraunces;
+display: flex;
+flex-direction: column;
+width: 100%;
+justify-items: space-evenly;
+
+justify-content: space-evenly;
+}
+.Summarybar>h4{
+text-align: center;
+width: 100%;
+font-size: 1.4em;
+padding-top: 0.5em;
+margin-bottom: 1em;
+}
+#statisticsdiv:nth-child(3){
+margin: 0.5em 0;
+}
+#statisticsdiv{
+padding: 2em 0;
+box-shadow: 2px 2px 7px rgba(66, 65, 65, 0.541);
+display: flex;
+flex-direction: row;
+width: 100%;
+justify-content: space-evenly;
+align-items: center;
+
+}
+#statisticsdiv>div>img{
+width: 3.5em;
+height: 3.5em;
+margin-right: 1em;
+}
+.summarytilespharmacy{
+display: flex;
+flex-direction: column;
+border: 3px solid #75c5c08a;
+align-items: center;
+box-shadow: 0 2px 30px rgba(53, 52, 52, 0.13);
+height:100%;
+width:18%;
+padding: 0 2em;
+font-size: 0.8em;
+text-align: center;
+font-family: Fraunces;
+margin: 0 0.3%;
+}
+.tilename{
+display: flex;
+letter-spacing: 0.05em;
+font-size: 1em;
+font-family: Raleway;
+}
+.bookdiv2{
+padding: 0 0;
+margin: 0 0.3em 0 0.9em;
+box-shadow: 2px 2px 7px rgba(53, 52, 52, 0.247);
+font-family: Raleway;
+height: 40%;
+overflow-y: scroll;
+overflow-x: hidden;
+}
+.bookdiv3{
+padding: 0 0;
+margin: 0 0.3em 0 0.9em;
+box-shadow: 2px 2px 7px rgba(53, 52, 52, 0.247);
+font-family: Raleway;
+height: 17%;
+overflow-y: hidden;
+overflow-x: hidden;
+}
+.bookdiv5{
+padding: 0 0;
+margin: 0 0.3em 0 0.9em;
+box-shadow: 2px 2px 7px rgba(53, 52, 52, 0.247);
+font-family: Raleway;
+height: 22%;
+}
+.bookdiv3>div{
+padding: 2em;
+display: flex;
+flex-direction: row;
+justify-content: space-between;
+height: 60%;
+}
+.bookdiv3>div>div:nth-child(1){
+display: flex;
+flex-direction: row;
+width: 60%;
+}
+.bookdiv3>div>div:nth-child(2){
+display: flex;
+height: 100%;
+flex-direction: column;
+width: 40%;
+border-left: 2px solid rgb(102, 101, 101);
+overflow-x: hidden;
+overflow-y: scroll;
+}
+.bookdiv3>div>div:nth-child(2)>div{
+display: flex;
+flex-direction: row;
+justify-content: space-between;
+padding-left: 1em;
+
+}
+.bookdiv3>div>div:nth-child(2)>div>h5{
+font-size: 1.2em;
+font-weight: bolder;
+}
+.bookdiv3>div>div>img{
+width: 4.5em;
+height: 4.5em;
+margin-right: 0.7em;
+}
+.bookdiv3>div>div>div>h2{
+font-size: 1.4em;
+font-family: Raleway;
+}
+.bookdiv3>div>div>div>h3{
+font-size: 1em;
+font-family: Fraunces;
+}
+.bookdiv3>div>div>div>h4{
+font-size: 1.2em;
+font-family: Fraunces;
+}
+.tilevalue{
+font-size: 1.9em;
+width: 100%;
+height:50%;
+}
+.section1{
+width: 100%;
+height: 100%;
+display: flex;
+flex-direction: row;
+padding-bottom:1em;
+
+}
+.subsec1{
+width: 70%;
+
+}
+.performancegraphpharmacy{
+border: 3px solid #75c5c08a;
+align-items: center;
+box-shadow: 0 2px 30px rgba(53, 52, 52, 0.089);
+height:53%;
+width:99.4%;
+margin: 0.3em 0.1em;
+}
+.performacetitle{
+font-family: Fraunces;
+width: 100%;
+text-align: center;
+letter-spacing: 0.05em;
+font-size: 1.4em;
+padding: 1em 0 0 0;
+}
+.subsec2pharmacy{
+width: 45%;
+padding: 0 0;
+height: 100%;
+border-top-right-radius: 2em;
+
+}
+
+.booktitledivpharmacy{
+font-size: 1.4em;
+font-family: Fraunces;
+text-align: center;
+padding:  0.4em 0;
+width: 100%;
+
+}
+
+#headpharmacy{
+display: flex;
+flex-direction: row;
+padding: 1em 2em;
+width: 92%;
+font-size: 0.8em;
+
+color: whitesmoke;
+font-weight: bolder !important;
+font-family: Raleway;
+align-items: center;
+border-bottom: 3px solid rgba(190, 174, 174, 0.37);
+}
+#headpharmacy>h3{
+font-weight: lighter;
+}
+.pharmacyinfo>h3:nth-child(1){
+width: 35%;
+}
+.pharmacyinfo>h3:nth-child(2){
+width: 20%;
+text-align: center;
+
+}
+.pharmacyinfo>h3:nth-child(3){
+width: 35%;
+text-align: center;
+}
+.pharmacyinfo>h3:nth-child(4){
+width: 17%;
+text-align: center;
+}
+.pharmacycontent{
+display: flex;
+flex-direction: row;
+padding: 1em 2em;
+width: 96%;
+font-size: 0.8em;
+align-items: center;
+font-weight: lighter !important;
+border-bottom: 3px solid rgba(190, 174, 174, 0.37);
+}
+.pharmacycontent:nth-child(1){
+background-color: rgba(252, 213, 234, 0.39);
+}
+.pharmacycontent:nth-child(2){
+background-color: rgba(175, 195, 238, 0.39);
+}
+.pharmacycontent>h3{
+font-size: 1.3em;
+
+}
+.pharmacycontent>h3:nth-child(2){
+font-family: Ysabeau;
+}
+.pharmacycontent>h3:nth-child(3){
+font-family: Ysabeau;
+}
+.pharmacycontent>h3:nth-child(4){
+font-family: Ysabeau;
+letter-spacing: 0.1em;
+}
+#contentinfopharmacy{
+overflow-y: scroll;
+overflow-x: hidden;
+}
+#colorcodeboxes{
+display: flex;
+flex-direction: row;
+padding: 0.5em 1em;
+justify-content: flex-end;
+font-size: 0.7em;
+font-family: Fraunces;
+}
+#pendingbox{
+width: 1em;
+height: 1em;
+border: 2px solid black;
+background-color: rgba(252, 213, 234, 0.39);
+margin: 0 0.7em ;
+}
+#filledbox{
+width: 1em;
+height: 1em;
+border: 2px solid black;
+background-color: rgba(175, 195, 238, 0.39);
+margin:0 0.7em;
+}
+#headinventory{
+display: flex;
+flex-direction: row;
+height: fit-content;
+padding: 0 0;
+width: 100%;
+font-size: 0.8em;
+color: whitesmoke;
+font-weight: bolder !important;
+background-color:rgba(253, 43, 43, 0.979);
+font-family: Raleway;
+align-items: center;
+border-bottom: 3px solid rgba(190, 174, 174, 0.37);
+}
+#headinventory>h3{
+margin: 1em 2em;
+color: white;
+font-size: 1.4em;
+letter-spacing: 0.1em;
+}
+#headinventory>h3:nth-child(1){
+width: 70%;
+
+}
+#headinventory>h3:nth-child(2){
+width: 30%;
+text-align: center;
+
+}
+#inventorycontentdiv{
+overflow-y: scroll ;
+height: 60%;
+margin: 0.5em;
+overflow-x: hidden ;
+margin: 0;
+display: flex;
+flex-direction: column;
+padding: 0;
+width: 100%;
+
+}
+.inventorycontent{
+border-bottom: 2px solid rgba(116, 115, 115, 0.377);
+margin: 0;
+padding: 0.5em 2em !important;
+width: 100% !important;
+display: flex;
+flex-direction: row;
+}
+
+.inventorycontent>h6{
+font-family: Fraunces;
+font-size: 1.1em;
+
+}
+.inventorycontent>h6:nth-child(1){
+width: 87%;
+}
+.inventorycontent>h6:nth-child(2){
+
+text-align: center;
+}

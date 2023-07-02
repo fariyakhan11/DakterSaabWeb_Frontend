@@ -7,26 +7,36 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px;
-  background: rgba(145, 168, 197, 0.664);
+background-color: rgba(166, 211, 253, 0.432);
   backdrop-filter: blur(10px); /* apply a blur effect to the navbar */
   -webkit-backdrop-filter: blur(10px); /* for Safari */
   box-shadow: 0 0 30px rgba(0, 0, 0, 0.247); 
-  padding: 1.5em 1em;
+  padding: 0.5em 1em;
+position: fixed;
+width: 98vw;
 }
 
 .logo {
-  font-size: 24px;
+  font-size: 1.7em;
   font-weight: bold;
   color: #333;
   text-decoration: none;
+display: flex;
+flex-direction: row;
+align-items: center;
+letter-spacing: 0.2em;
 }
-
+.logo >img{
+margin:0 1em;
+}
 .navbar-toggler {
   display: none;
   background-color: transparent;
   border: none;
   cursor: pointer;
+margin-right: 2em;
+margin-top: 0.3em;
+font-size: 1.4em;
 }
 
 .nav-menu {
@@ -47,21 +57,30 @@
   width: 100%;
   background-color: rgba(183, 153, 218, 0.205);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+font-family: Fraunces;
 }
 
 .nav-item {
-  margin: 0 10px;
+  margin: 0 1.5em;
+font-family: Fraunces;
+transition: all 0.5s ease-in-out;
+width: 5.5em;
+padding: 0 1.2em;
+text-align: center;
 }
 
 .nav-link {
   font-size: 18px;
   color: #333;
   text-decoration: none;
-  transition: color 0.3s ease;
+  transition: all 0.5s ease-in-out;
+
 }
 
 .nav-link:hover {
-  color: #007bff;
+  color: rgb(89, 32, 155);
+font-weight: bolder;
+font-size: 1.6em;
 }
 
 @media (max-width: 768px) {

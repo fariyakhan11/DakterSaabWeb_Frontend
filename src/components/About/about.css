@@ -2,17 +2,25 @@
 text-align: center;
 padding: 4em 15em;
 padding-bottom: 2.4em;
+
 }
 #AboutContainer>h2{
-font-family: Preside;
-font-size: 4.5em;
-margin-bottom: 0.4em;
-text-shadow:  5px 2px 14px rgba(36, 35, 35, 0.5);
+font-family: Fraunces;
+font-size: 2.5em;
+margin-bottom: 1em;
+text-shadow:  2px 2px 7px rgba(112, 111, 111, 0.5);
 color: rgb(36, 42, 100);
+letter-spacing: 0.1em;
 }
-#AboutContainer>table{
+#AboutContainer>table>tr>td>p{
 font-family: Raleway;
-font-size: 1.2em;
-line-height: 1.5em;
+font-size: 1.3rem;
+line-height: 1.8em;
 border-spacing:3em 0;
+border-radius: 2em;
+box-shadow: 2px 2px 14px rgba(70, 69, 69, 0.671);
+padding: 1.2em;
+background-color: rgba(210, 172, 241, 0.308);
+color: rgb(60, 28, 87);
+font-weight: bolder;
 }

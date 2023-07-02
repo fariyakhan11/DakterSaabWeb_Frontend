@@ -1,0 +1,248 @@
+#dashboardcontainer{
+    display: flex;
+    flex-direction: row;
+    text-decoration: none;
+    width: 100vw;
+height: 97vh;
+    padding-top: 1.6em;
+    background-image: url('../../images/wall1.jpg');
+    
+}
+#dashboardarea{
+    width: 85%;
+    display:flex;
+    flex-direction: column;
+
+}
+.adminname{
+    text-decoration: none;
+    font-family: Fraunces;
+    padding-left: 2%;
+    word-spacing: 5px;
+}
+.icon{
+margin-left: 1em;
+cursor: pointer;
+font-size:1.3em;
+padding: 0.4em;
+border-bottom: 4px solid transparent;
+}
+.links{
+    display: flex;
+    flex-direction: row;
+    margin-right: 2%;
+}
+.admindiv{
+    display: flex;
+flex-direction: row;
+width: 20%;
+justify-items: center;
+align-items: center;
+cursor: pointer;
+}
+.infoareadashboard{
+display: flex;
+flex-direction: column;
+margin: 1em 0.6em 0em 1.2em;
+background-color: white;
+height: 83vh;
+border-radius: 2em;
+box-shadow: 0 2px 30px rgba(53, 52, 52, 0.247);
+padding: 0.7em;
+
+}
+/**/
+.secondnavbloodbank{
+    width: 99%;
+    background-color: white;
+    margin-top: 1em;
+    border: 3px solid #f78e8eda;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.3em 0.2em;
+    border-top-right-radius:3em ;
+    border-bottom-right-radius:3em ;
+    box-shadow: 0 2px 30px rgba(53, 52, 52, 0.247);
+    
+}
+.active-overlaybloodbank{
+border-bottom: 4px solid  #e06464da !important;
+}
+.summarytilesbloodbank{
+font-family: Fraunces;
+display: flex;
+flex-direction: row;
+align-items: center;
+justify-content: center;
+}
+#eventsdiv{
+box-shadow: 2px 2px 7px rgba(105, 105, 105, 0.623);
+height: 86%;
+border-bottom-right-radius:1.5em ;
+padding: 1em 2em;
+font-family: Raleway;
+overflow-y: scroll;
+}
+.eventinfo{
+border-bottom: 3px solid rgba(190, 174, 174, 0.37);
+margin: 0 0 0.5em 0 ;
+}
+.eventinfo>h3{
+font-weight: bolder;
+font-size: 1.3em;
+color:#e06464;
+text-shadow: 2px 2px 5px rgba(110, 107, 107, 0.342);
+}
+.eventinfo>h5{
+font-family: Ysabeau;
+font-size: 1em;
+width:100%;
+display: flex;
+justify-content: flex-end;
+}
+#stockdiv{
+box-shadow: 2px 2px 7px rgba(105, 105, 105, 0.623);
+height: 96%;
+}
+#stockdiv>#stockhead{
+display: flex;
+flex-direction: row;
+font-family: Raleway;
+padding: 0.9em 2em;
+font-size: 0.9em;
+border-bottom: 3px solid rgba(190, 174, 174, 0.37);
+justify-content: space-between;
+}
+#stockhead>h3{
+font-weight: lighter;
+}
+#stockcontent{
+display: flex;
+font-family: Ysabeau;
+flex-direction: row;
+padding: 0.1em 2em;
+justify-content: space-between;
+}
+#stockcontent>h3{
+width: 46%;
+text-align: center;
+}
+#stockcontent:nth-child(2n){
+background-color: rgba(247, 123, 123, 0.315);
+}
+.performancegraphbloodbank{
+border: 3px solid #f78e8eda;
+align-items: center;
+box-shadow: 0 2px 30px rgba(53, 52, 52, 0.089);
+height:64%;
+width:99.4%;
+margin: 0.9em 0.1em;
+}
+.subsec2bloodbank{
+height: 100%;
+width: 45%;
+padding: 0 0;
+margin: 0 0.3em 0 0em;
+border-top-right-radius: 2em;
+}
+#headdonor{
+display: flex;
+flex-direction: row;
+padding: 1em 2em;
+width: 92%;
+font-size: 0.8em;
+background-color:  rgba(247, 123, 123, 0.315);
+color: whitesmoke;
+font-weight: bolder !important;
+font-family: Raleway;
+align-items: center;
+border-bottom: 3px solid rgba(190, 174, 174, 0.37);
+}
+#headdonor>h3{
+font-weight: lighter;
+}
+.donorinfo>h3:nth-child(1){
+width: 35%;
+}
+.donorinfo>h3:nth-child(2){
+width: 21%;
+}
+.donorinfo>h3:nth-child(3){
+width: 21%;
+}
+.donorinfo>h3:nth-child(4){
+width: 24%;
+}
+.donorcontent{
+display: flex;
+flex-direction: row;
+padding: 1em 2em;
+width: 92%;
+font-size: 0.8em;
+align-items: center;
+font-weight: lighter !important;
+border-bottom: 3px solid rgba(190, 174, 174, 0.37);
+}
+.donorcontent>h3{
+font-size: 1.3em;
+
+}
+.donorcontent>h3:nth-child(2){
+font-family: Ysabeau;
+}
+.donorcontent>h3:nth-child(3){
+font-family: Ysabeau;
+}
+.donorcontent>h3:nth-child(4){
+font-family: Ysabeau;
+letter-spacing: 0.1em;
+}
+#contentinfodonor{
+overflow-y: scroll;
+overflow-x: hidden;
+}
+.section2subbloodbank{
+height: 100%;
+width:49%;
+padding: 0.5% 0;
+}
+.bookdiv{
+margin: 1em 0.2em 0.7em 0.7em;
+height: 47%;
+overflow-x: hidden;
+overflow-y: scroll;
+box-shadow: 2px 2px 7px rgba(53, 52, 52, 0.247);
+}
+#bottomcontentbloodbank{
+width: 97%;
+height: 40%;
+margin: 0.9em;
+display: flex;
+flex-direction: row;
+justify-content: space-between;
+}
+.calendar-containerbloodbank{
+height: 2.4em;
+width: 90%;
+border-radius: 0.9em;
+margin-left: 4%;
+font-family: Raleway;
+font-weight: bolder;
+font-size: 0.6em;
+cursor: pointer;
+text-align: center;
+outline: none;
+border: 3px solid #f78e8eda;
+}
+.booktitledivbloodbank{
+text-align: center;
+width: 100%;
+font-size: 1.4em;
+padding-top: 0em;
+margin-bottom: 0.5em;
+font-weight: lighter;
+font-family: Fraunces;
+cursor: pointer;
+}

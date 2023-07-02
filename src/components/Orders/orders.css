@@ -1,0 +1,246 @@
+#Ordersdashboard{
+display: flex;
+flex-direction: row;
+ padding: 0.5em;
+width: 100%;
+height: 100%;
+}
+/*All the styles below are defined in the medicine.css file primarily*/
+.contentarea{
+    align-items: flex-start;
+    width: 95%;
+    height: 100%;
+}
+.contentareatitle{
+font-size: 2.5em;
+font-family: Fraunces;
+text-align: center;
+margin: 0.1em 0;
+
+}
+/* All the styles above are defined in the medicine.css file primarily*/
+#mainorderdiv{
+display: flex;
+flex-direction: row;
+height: 92%;
+width: 100%;
+}
+#sidebarorder{
+display: flex;
+flex-direction: column;
+padding: 1em;
+width: 25%;
+}
+.filterbar{
+display: flex;
+flex-direction: column;
+align-items: center;
+
+}
+.filterbar>h6 {
+font-size: 1.4em;
+font-family: Fraunces;
+text-align: left;
+width: 100%;
+}
+
+.searchorder{
+outline: none;
+border: 3px solid #56aca6;
+border-radius: 1em;
+width: 96%;
+font-size: 1.2em;
+padding: 0.5em;
+margin-bottom: 1em;
+}
+.filterbar>div>h6{
+font-size: 1.4em;
+font-family: Fraunces;
+text-align: left;
+}
+.filterbar>#datesearch{
+display: flex;
+flex-direction: row;
+align-items: center;
+justify-content: space-between;
+width: 100%;
+margin-bottom: 0.2em;
+}
+#togglebtndiv{
+background-color:white;
+box-shadow: inset 1px 2px 7px rgba(160, 157, 157, 0.507);
+border-radius: 1em;
+width: 3.5em;
+border: 3px solid #56aca6;
+height: 1em;
+display: flex;
+align-items: center;
+justify-content: flex-start;
+transition: all 0.5s ease-in-out 0.5s;
+}
+
+#togglebtncircle{
+border-radius: 50%;
+box-shadow:  1px 2px 7px rgba(160, 157, 157, 0.507);
+width: 2em;
+cursor: pointer;
+height: 2em;
+transition: all 0.5s ease-in-out;
+}
+.activetogglebtn{
+background-color: #6cd6cf;
+}
+.idletogglebtn{
+background-color: #b0b3b3;
+}
+
+.calendar-containerfilter{
+padding: 0.5em;
+width: 96%;
+border-radius: 1em;
+margin-left: 4%;
+font-family: Raleway;
+font-weight: bolder;
+font-size: 1.2em;
+cursor: pointer;
+text-align: center;
+outline: none;
+border: 3px solid #56aca6;
+margin-left: 0;
+margin-bottom: 1em;
+cursor: pointer;
+}
+.filterbar>h5{
+background-color: transparent;
+
+border-radius: 1.5em;
+font-family: Fraunces;
+width: 80%;
+cursor: pointer;
+padding: 0.3em 0;
+box-shadow: 1px 2px 7px rgba(59, 59, 59, 0.507);
+transition: all 0.5s ease-in-out 0s;
+font-size: 1.2em;
+text-align: center;
+opacity: 0.7;
+margin-bottom: 0.5em;
+}
+
+.filterbar>h5:hover{
+transform: scale(1.05);
+background-color: #56aca6;
+color: white;
+}
+.selectedstatus{
+opacity: 1 !important;
+border: 3px solid #56aca6 !important;
+}
+
+#ordersdiv{
+height:90%;
+width: 70%;
+padding:1%;
+border-radius: 1.5em;
+border: 2px solid gray;
+overflow-x: hidden;
+overflow-y: scroll;
+margin: 1em;
+}
+.orderbox{
+width: 100%;
+box-shadow: 1px 1px 7px rgba(59, 59, 59, 0.507);
+margin: 1em 0;
+transition: all 0.5s ease-in-out 0s;
+
+
+}
+.order_container{
+width: 96%;
+height: 3.5em;
+background-color:#e097e6;
+display: flex;
+flex-direction: row;
+align-items: center;
+padding: 0 2%;
+font-family: Fraunces;
+font-size: 1em;
+justify-content: space-evenly;
+cursor: pointer;
+
+}
+.orderbox:hover{
+
+transform: scale(1.008);
+}
+.order_container:hover>.order_title{
+color: white;
+}
+.Order_symbol{
+}
+.order_title{
+width: 60%;
+
+}
+.expand_icon{
+cursor: pointer;
+transition: all 0.5s ease-in-out 0s;
+}
+.expand_icon:hover{
+font-size: 1.5em;
+}
+.order_date{
+font-size: 1.2em;
+}
+.status{
+font-size: 1.2em;
+}
+.transact_icon{
+cursor: pointer;
+transition: all 0.5s ease-in-out 0s;
+}
+.transact_icon:hover{
+font-size: 2em;
+}
+.orderdetail{
+width: 100%;
+height:7.5em;
+font-family:Raleway;
+
+overflow-x: hidden;
+overflow-y: scroll;
+font-size: 1.1em;
+font-weight: 100;
+display: flex;
+justify-content: space-evenly;
+display: none;
+}
+.detail_table{
+border-collapse: collapse;
+width: 96%;
+padding: 1em;
+margin: 1% 0;
+}
+.headings{
+background-color: #56aca670;
+text-align: center;
+}
+.detail_table>tr{
+text-align: center;
+
+}
+.total{
+background-color: #56aca670;
+padding-right: 2em;
+font-weight: 700;
+border: 3px solid #56aca670;
+}
+.totalamount{
+font-weight: 700;
+border: 3px solid #56aca670;
+}
+tr:last-child{
+
+padding: 1em 0;
+font-size: 1.1em;
+
+}

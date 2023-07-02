@@ -1,7 +1,7 @@
 import React from 'react';
 import Home from './components/Home/home'
 import Navbar from './components/Navbar/navbar';
-
+import Dashboarddoctor from './components/Dashboard/dashboarddoctor';
 import './App.css';
 
 
@@ -12,8 +12,7 @@ function App() {
     <div className="App">
 
     
-        <Navbar/>
-        <Home/>
+    <Home/>
 
 
 

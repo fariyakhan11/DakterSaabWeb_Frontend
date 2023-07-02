@@ -1,0 +1,226 @@
+#Departmentdashboard{
+display: flex;
+flex-direction: row;
+ padding: 0.5em;
+width: 100%;
+height: 100%;
+}
+/*All the styles below are defined in the medicine.css file primarily*/
+.contentarea{
+    align-items: flex-start;
+    width: 95%;
+    height: 100%;
+}
+.contentareatitle{
+font-size: 2.5em;
+font-family: Fraunces;
+text-align: center;
+margin: 0.1em 0;
+
+}
+/* All the styles above are defined in the medicine.css file primarily*/
+.stockopiconhospital{
+background-color:#8db2f8;
+border-radius: 50%;
+padding: 0 0.43em;
+height: 1.4em;
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 2em;
+box-shadow: 2px 2px 7px rgba(59, 59, 59, 0.507);
+cursor: pointer;
+margin-left: 0.5em;
+}
+.stockopiconhospital>h4{
+transition: transform 2.5s ease-in;
+}
+.stockopiconhospital>h4{
+color: white;
+font-family: Fraunces;
+}
+.stockopiconhospital:hover + .stockoptitle  {
+  opacity: 1;
+
+}
+.stockopiconhospital:hover> h4{
+transform: rotate(180deg);
+}
+
+.depscontainer{
+ display: flex;
+  flex-wrap: wrap;
+margin-left: 3em;
+align-items: center;
+ overflow-y: scroll;
+padding: 0 1em;
+
+}
+.depsdiv{
+transition: all 1s ease-in-out 0s;
+  text-align: center;
+  flex-basis: 47%;
+  height: 15em;
+  margin:2em 2em 1em 0;
+  cursor: pointer;
+border: 3px solid #8db2f8;
+}
+.depsdiv:hover{
+transform: scale(1.05);
+}
+.deptitle{
+background-color: #8db2f8;
+padding: 0.5em 1em;
+font-family: Raleway;
+text-align: left;
+display: flex;
+font-size: 1.2em;
+align-items: center;
+justify-content: space-between;
+}
+.depinfo>h4{
+font-size: 1.3em;
+font-family: Fraunces;
+text-align: left;
+padding: 0.5em 1em;
+font-weight: 100;
+}
+.icondep:hover{
+background-color: white;
+border-radius: 50%;
+}
+.icondep{
+box-shadow: 0 2px 30px rgba(53, 52, 52, 0.247);
+width: 1.5em;
+height: 1.5em;
+}
+.more-btnhospital{
+border-radius: 50%;
+height: 1.4em;
+width: 1.4em;
+font-size: 2.3em;
+transition: all 0.5s ease-in-out;
+font-family: Fraunces;
+border:3px solid  #294f96;
+font-weight: bolder;
+color: #294f96;
+cursor: pointer;
+box-shadow: 0 2px 2px rgba(12, 11, 11, 0.233);
+margin-left: 48%;
+}
+.more-btnhospital:hover{
+color: white;
+background-color: #294f96;
+transform: scale(1.15);
+border: none;
+}
+.nulldata{
+margin-top: 20%;
+font-size: 1.3em;
+font-family: Raleway;
+text-align: center;
+text-shadow: 2px 2px 4px rgba(209, 207, 207, 0.822);
+font-weight: 500;
+justify-content: center;
+display: flex;
+width: 100%;
+margin-bottom: 2em;
+}
+/*add department info*/
+#topbarmedshospital>h1{
+background-color: #f1efef;
+padding: 0.7em 14vw;
+font-family: Fraunces;
+border-radius: 2em;
+border: 4px solid #294f96;
+font-size: 1.3em;
+}
+#addmedcontenthospital{
+border-radius: 2em;
+box-shadow: 0 2px 30px rgba(53, 52, 52, 0.247);
+padding: 0.7em;
+background-color: #f1efef;
+border: 4px solid #294f96;
+overflow: scroll;
+height: 90%;
+}
+
+#addmedcontenthospital>div>h3{
+font-family: Fraunces;
+text-align: center;
+}
+#depheading{
+font-size: 1.4em;
+font-family: Raleway;
+padding: 1em;
+border-bottom: 1px solid black;
+display: flex;
+flex-direction: row;
+align-items: center;
+height: 10%;
+}
+#depheading>input{
+background-color: transparent;
+border: none;
+margin-left: 1em;
+border-bottom: 2px solid #294f96;
+outline: none;
+width: 70%;
+font-size: 1.4em;
+font-family: Raleway;
+}
+#depcontent{
+height: 76%;
+width: 96%;
+padding: 0.5em;
+display: flex;
+flex-direction: column;
+justify-content: space-evenly;
+font-family: Fraunces;
+font-size: 1.4em;
+}
+.inputerror{
+color: red;
+font-size: 1em;
+text-align: center;
+width: 100%;
+margin: 0;
+padding: 0;
+display: none;
+}
+.dep-info-field>input{
+outline: none;
+border: none;
+border-bottom: 2px solid #294f96;
+font-family: Fraunces;
+font-size: 1.1em;
+background-color: transparent;
+margin-left: 1em;
+width: 70%;
+}
+#btndiv{
+width: 100%;
+display: flex;
+justify-content: center;
+align-items: center;
+}
+.depsubmit{
+width: 9em;
+border-radius: 2em;
+box-shadow: 2px 2px 7px rgba(59, 59, 59, 0.507);
+padding: 0.3em 0;
+border:3px solid  #8db2f8;
+font-weight: bolder;
+color: black;
+font-size: 1em;
+transition: all 0.5s ease-in-out;
+font-family: Raleway;
+}
+.depsubmit:hover{
+transform: scale(1.05);
+color: white;
+background-color: #8db2f8;
+}
+.disablebtn{
+opacity: 0.5;
+}

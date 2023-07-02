@@ -10,7 +10,7 @@ font-weight: 400;
 text-shadow: 2px 2px 4px rgb(172, 169, 169);
 }
 .LoginContainer h4{
-color: rgb(36, 42, 100);
+color: rgb(97, 61, 133);
 text-shadow: 2px 3px 4px rgb(129, 126, 126);
 padding: 0.2em;
 font-size: 1.9em;
@@ -42,7 +42,7 @@ transform: scale(1.2);
 display: flex;
 flex-direction: column;
 align-items: flex-start;
-font-size: 1.2em;
+font-size: 0.8em;
 
 }
 .labeldiv label{
@@ -66,30 +66,6 @@ margin: 0.5em 0;
 border-radius: 0.2em;
 outline: none;
 }
-.buttons{
-margin-top: 2em;
-width:25%;
-height: 2.2em;
-border-radius: 18px;
-justify-self: center;
-align-self: center;
-font-size: 0.9em;
-outline: none;
-border:2px solid rgb(36, 42, 100);
-box-shadow: 4px 4px 10px rgba(80, 71, 71, 0.589);
-background-color: rgba(147, 180, 199, 0.151);
-color: rgb(36, 42, 100);
-font-weight: 600;
-font-family: Fraunces;
-margin-bottom: 1.5em;
-cursor: pointer;
-transition: .7s ease-in-out 0.1s;
-}
-.buttons:hover{
-background-color: rgb(36, 42, 100);
-color: beige;
-transform: scale(1.25);
-}
 
 
 
@@ -99,7 +75,7 @@ transform: scale(1.25);
 #logincontainer{
 height: 100vh;
 width: 100vw;
-background-image: url('../../images/wall2.jpg');
+background-image: url('../../images/wall1.jpg');
 top:0;
 left: 0;
 margin: 0 0;
@@ -130,7 +106,7 @@ font-weight: bolder;
 font-family: Raleway;
 }
 .fplink:hover{
-color: rgb(36, 30, 107);
+color: rgb(97, 61, 133);
 }
 .login_type_container{
 display:flex;
@@ -150,7 +126,7 @@ border-radius: 50%;
 font-family:"Fraunces";
 font-size:1.2em ;
 margin-left:0.5em;
-color:   rgb(36, 42, 100);
+color: rgb(97, 61, 133);
 }
 #login_forms{
 display: flex;
@@ -161,16 +137,24 @@ height: 100%;
 overflow: hidden;
 align-items: center;
 }
+#login_forms>h1{
+letter-spacing: 0.2em;
+color: rgb(97, 61, 133);
+text-shadow: 2px 2px 5px rgba(22, 22, 22, 0.274);
+margin-bottom: 0.5em;
+font-family: Fraunces;
+font-size: 1.4em;
+}
 #login_and_form{
 display: flex;
 flex-direction: row;
 width: 57%;
 height: 56%;
 justify-content: center;
-margin-top: 2em;
+
 }
 .loginform{
-background-color: rgba(206, 206, 206, 0.329);
+background-color: rgba(210, 172, 241, 0.315);
 border-radius: 1em;
 box-shadow: 4px 2px 14px rgb(75, 74, 74);
 display: flex;
@@ -180,7 +164,7 @@ height: 100%;
 align-self: center;
 overflow: hidden;
 padding: 1em;
-
+margin-top: 2em;
 }
 
 #bookmarks_login{
@@ -191,7 +175,7 @@ width: 2em;
 }
 #bookmarks_login>div{
 display: flex;
-background-color: rgb(184, 199, 221);
+background-color: #fdbecb7a;
 transform: rotate(-90deg);
 width: 20em;
 height: 4em;
@@ -205,28 +189,24 @@ transition:all 0.1s ease-in-out 0.1ms ;
 margin-left: -8em;
 }
 #bookmarks_login>div>h1{
-color: white;
+color: black;
 transition:all 0.5s ease-in-out 0.01ms;
 }
 #bookmarks_login>div:hover{
-border: 4px solid  rgb(36, 42, 100);
-color: rgb(36, 42, 100);
+border: 4px solid  rgb(97, 61, 133);
+color: rgb(97, 61, 133);
 }
 #bookmarks_login>div:hover  h1{
-color: rgb(36, 42, 100);
+color: rgb(97, 61, 133);
 }
 
-.selected_bookmark{
-background-color: rgb(40, 66, 102) !important ;
-}
-.selected_bookmark:hover h1{
-color: white !important;
-}
+
+
 .inputsdiv{
 display: flex;
 flex-direction: column;
-justify-content: space-between;
-height: 100%;
+justify-content: space-evenly;
+height: 80%;
 }
 #login_form{
 height: 100%;
@@ -249,27 +229,27 @@ width: 100%;
 overflow-x: scroll;
 border-bottom: 2px solid black;
 border-radius: 0;
-background-color: #f2f2f27a;
+background-color: rgba(210, 172, 241, 0.315);
 }
 .inputf:focus{
-background-color: rgb(213, 234, 241);
+background-color: rgba(210, 172, 241, 0.315);
 }
 .formbtn{
-padding: 0.7em 1.5em;
+padding: 0.7em 3.5em;
 font-size: 0.6em;
 border-radius: 2em;
 font-family: Raleway;
-border:3px solid  rgb(36, 42, 100) ;
+border:3px solid rgb(97, 61, 133);
 transition: all 0.5s ease-in-out 0.01ms;
 }
 .formbtn:hover{
 transform: scale(1.2);
-border: 3px solid  #f2f2f2a9;
-background-color:  rgb(36, 42, 100) ;
-color: #f2f2f2b0;
+border: transparent;
+background-color:  rgb(97, 61, 133);
+color: white
 }
 .btndiv{
-height: 20%;
+
 display: flex;
 justify-content: center;
 align-items: flex-end;
@@ -291,4 +271,10 @@ text-align: center;
 font-family: Fraunces;
 display: none;
 }
-
+.radio-btn-label-branch{
+font-family: Fraunces;
+font-size: 1em;
+text-shadow: none !important;
+font-weight: 100;
+cursor: pointer;
+}

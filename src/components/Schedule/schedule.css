@@ -1,0 +1,214 @@
+#Scheduledashboard{
+display: flex;
+flex-direction: row;
+ padding: 0.5em;
+width: 100%;
+height: 100%;
+}
+/*All the styles below are defined in the medicine.css file primarily*/
+.contentarea{
+    align-items: flex-start;
+    width: 95%;
+    height: 100%;
+}
+.contentareatitle{
+font-size: 2.5em;
+font-family: Fraunces;
+text-align: center;
+margin: 0.1em 0;
+
+}
+/* All the styles above are defined in the medicine.css file primarily*/
+#schedulediv{
+width: 100%;
+height: 90%;
+display: flex;
+flex-direction: row;
+}
+#colorcode{
+width: 98%;
+padding: 0.5em;
+height: 1.5em;
+
+display: flex;
+flex-direction: row;
+align-items: flex-end;
+justify-content: flex-end;
+padding-right: 1em;
+}
+
+.colordiv{
+border: 1px solid black;
+width: 1em;
+height: 1em;
+background-color: pink;
+}
+.colorcodediv{
+display: flex;
+flex-direction: row;
+align-items: center;
+justify-content: center;
+}
+.colorhead{
+margin-left: 0.5em;
+font-family: Fraunces;
+font-size: 1em;
+}
+#subschedulediv1{
+height:93%;
+width:75%;
+display: flex;
+flex-direction: row;
+padding: 1em;
+
+}
+#datecol{
+
+height: 100%;
+
+}
+#datecol>div{
+height: 13.9%;
+display: flex;
+flex-direction: column;
+padding-right:1em ;
+font-family: Fraunces;
+justify-content: center;
+}
+#daydiv{
+height: 100%;
+width: 20%;
+border-right: 2px solid black;
+font-family: Fraunces;
+
+}
+#daydiv>div{
+
+height: 13.9%;
+justify-content: center;
+align-items: center;
+display: flex;
+flex-direction: column;
+
+}
+#daydiv>div>h4{
+font-size: 1.3em;
+width: 100%;
+text-align: center
+}
+#daydiv>div>h3{
+font-size: 1em;
+width: 100%;
+text-align: center;
+}
+
+#dayschedulediv{
+height: 100%;
+width: 80%;
+}
+
+#dayschedulediv>div{
+border-bottom: 1px solid black;
+height: 13.9%;
+display: flex;
+flex-direction: column;
+padding-left:1em ;
+font-family: Fraunces;
+
+}
+#Sundayschedule{
+border: none !important;
+}
+#dayschedulediv>div>h4{
+margin: 0.3em;
+background-color: pink;
+border-radius: 1em;
+padding: 0.7em 1em;
+width: fit-content;
+justify-content: flex-start;
+display: flex;
+}
+#subschedulediv2{
+height: 94%;
+width: 23%;
+padding-left: 5em;
+font-family: Fraunces;
+display: flex;
+flex-direction: column;
+
+}
+#datechooser{
+
+width: 100%;
+font-family: Fraunces;
+}
+#datechooser>h5{
+font-size: 1.35em;
+padding: 0.5em ;
+align-items: center;
+border-bottom: 2px solid rgba(136, 134, 134, 0.692);
+width: 100%;
+
+}
+#selecteddatefilter{
+display: flex;
+flex-direction: row;
+justify-content: space-evenly;
+width: 105%;
+font-size: 1.2em;
+margin-top: 0.5em;
+}
+#selecteddatefilter>select{
+cursor: pointer;
+font-size: 1.05em;
+padding: 0.2em 0.6em;
+font-family: Fraunces;
+border: 4px solid #c29de0;
+border-radius: 1em;
+}
+.divhead{
+display: flex;
+flex-direction: row;
+width: 98%;
+padding: 0.5em;
+justify-content: space-between;
+font-size: 1.15em;
+align-items: center;
+border-bottom: 2px solid rgba(136, 134, 134, 0.692);
+}
+.divcontentarea{
+padding: 0.7em;
+min-height: 3em;
+}
+.scheduleediticon{
+cursor: pointer;
+transition: all 0.5s ease-in-out;
+width: 1.3em;
+padding: 0.4em;
+height: 1.3em;
+border-radius: 50%;
+}
+.scheduleediticon:hover{
+background-color: #c29de0;
+box-shadow: 3px 2px 9px rgba(59, 59, 59, 0.507);
+
+}
+#workplacecontent>h4{
+margin-bottom: 0.3em;
+cursor: pointer;
+text-align: center;
+border-radius: 1em;
+padding: 0.5em;
+background-color: pink;
+opacity: 0.5;
+border: none;
+}
+#workplacecontent>h4:hover{
+opacity: 1;
+}
+.selectedworkplace{
+border: 3px solid pink !important;
+background-color: white !important;
+opacity: 1 !important;
+font-size: 1.1em;
+}

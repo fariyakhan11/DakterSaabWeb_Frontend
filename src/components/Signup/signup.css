@@ -1,7 +1,7 @@
 .registercontainer{
 height: 100vh;
 width: 100vw;
-background-image: url('../../images/wall2.jpg');
+background-image: url('../../images/wall1.jpg');
 top:0;
 left: 0;
 margin: 0 0;
@@ -11,8 +11,8 @@ background-size:cover ;
 display: flex;
 justify-content: center;
 text-align: center;
-font-size: 2em;
-font-family: Preside;
+font-size: 1.5em;
+font-family: Fraunces;
 overflow: hidden;
 align-items: center;
 }
@@ -23,7 +23,7 @@ align-items: center;
 justify-content: center;
 display: flex;
 flex-direction: column;
-background-color: rgba(206, 206, 206, 0.329);
+background-color: rgba(210, 172, 241, 0.315);
 border-radius: 1em;
 box-shadow: 4px 2px 14px rgb(75, 74, 74);
 width: 60%;
@@ -31,8 +31,11 @@ height: 70%;
 display: flex;
 }
 .initials>h1{
-color: rgb(36, 42, 100);
-text-shadow: 2px 3px 4px rgb(129, 126, 126);
+letter-spacing: 0.2em;
+font-size: 2.5em;
+line-height: 2em;
+color: rgb(97, 61, 133);
+text-shadow: 2px 2px 5px rgba(22, 22, 22, 0.274);
 }
 .initials>h2{
 margin: 2%;
@@ -74,7 +77,7 @@ opacity: 1;
 }
 .optdivs>img:hover{
 transform: scale(1.25);
-border: 4px solid  rgb(36, 42, 100);
+border: 4px solid  rgb(97, 61, 133);
 }
 .buttons{
 width:10%;
@@ -84,17 +87,17 @@ justify-self: center;
 align-self: center;
 font-size: 0.7em;
 outline: none;
-border:2px solid rgb(36, 42, 100);
+border:2px solid rgb(97, 61, 133);
 box-shadow: 4px 4px 10px rgba(80, 71, 71, 0.589);
-background-color: rgba(147, 180, 199, 0.151);
-color: rgb(36, 42, 100);
-font-weight: 600;
+background-color: rgba(194, 127, 207, 0.151);
+color:rgb(97, 61, 133);
+
 font-family: Fraunces;
 cursor: pointer;
 transition: .7s ease-in-out 0.1s;
 }
 .buttons:hover{
-background-color: rgb(36, 42, 100);
+background-color: rgb(97, 61, 133);
 color: beige;
 transform: scale(1.2);
 }
@@ -128,9 +131,10 @@ width: 17%;
 }
 #bookmarks>div{
 display: flex;
-background-color: rgb(184, 199, 221);
+background-color: #fdbecb7a;
 transform: rotate(-90deg);
 width: 24em;
+box-shadow: 2px 2px 14px rgba(105, 104, 104, 0.548);
 height: 4em;
 font-size: 0.8rem;
 font-family: Fraunces;
@@ -141,18 +145,22 @@ cursor: pointer;
 transition:all 0.1s ease-in-out 0.1ms ;
 }
 #bookmarks>div>h1{
-color: white;
+
 transition:all 0.5s ease-in-out 0.01ms;
 }
 #bookmarks>div:hover{
-border: 4px solid  rgb(36, 42, 100);
-color: rgb(36, 42, 100);
+border: 4px solid  rgb(97, 61, 133);
+color:rgb(97, 61, 133);
 }
 #bookmarks>div:hover  h1{
-color: rgb(36, 42, 100);
+color: rgb(97, 61, 133);
 }
 .selected_bookmark{
-background-color: rgb(40, 66, 102) !important ;
+background-color: rgb(97, 61, 133) !important ;
+
+}
+.selected_bookmark>h1{
+color: white !important;
 }
 .selected_bookmark:hover h1{
 color: white !important;
@@ -166,7 +174,7 @@ align-items: flex-end;
 justify-content: flex-end;
 }
 .signupform{
-background-color: rgba(206, 206, 206, 0.329);
+background-color: rgba(210, 172, 241, 0.315);
 border-radius: 1em;
 box-shadow: 4px 2px 14px rgb(75, 74, 74);
 display: flex;
@@ -174,13 +182,13 @@ flex-direction: column;
 width: 80%;
 height: 90%;
 align-self: center;
-overflow: hidden;
+overflow: scroll;
 padding: 1em;
-
 }
 #authorization_forms>h1{
-color: rgb(36, 42, 100);
-text-shadow: 2px 3px 4px rgb(129, 126, 126);
+color: rgb(97, 61, 133);
+text-shadow: 2px 3px 4px rgba(129, 126, 126, 0.555);
+letter-spacing: 0.2em;
 }
 .as{
 display:flex;
@@ -200,7 +208,7 @@ border-radius: 50%;
 font-family:"Fraunces";
 font-size:1.2em ;
 margin-left:0.5em;
-color:   rgb(36, 42, 100);
+color:  rgb(97, 61, 133);
 }
 #authorization_forms>.as>h2{
 margin:0.5%;
@@ -218,10 +226,11 @@ justify-content: center;
 }
 
 .optitle{
-text-shadow: 2px 2px 4px rgba(209, 207, 207, 0.822);
 opacity: 0;
 transition:opacity 0.5s ease-in-out 0.01ms;
-background-color: rgb(36, 42, 100);
+background-color: rgb(97, 61, 133);
+letter-spacing: 0.2em;
+font-family: Fraunces;
 border-bottom-left-radius: 1em;
 border-top-left-radius:1em ;
 box-shadow: 4px 2px 14px rgb(75, 74, 74);
@@ -232,7 +241,7 @@ margin-right: -0.3em;
 width: 9em;
 z-index: 1000;
 color: white;
-font-size: 0.8em;
+font-size: 1.2em;
 }
 .operation{
 display: flex;
@@ -270,7 +279,7 @@ width :3rem;
 transform: scale(1.12);
 }
 .opicon:hover{
-border: 3px solid rgb(36, 42, 100);
+border: 3px solid rgb(97, 61, 133);
 }
 .form-fields{
 display: flex;
@@ -290,39 +299,42 @@ width: 100%;
 overflow-x: scroll;
 border-bottom: 2px solid black;
 border-radius: 0;
-background-color: #f2f2f27a;
+background-color: rgba(210, 172, 241, 0.315);
 }
 .inputf:focus{
-background-color: rgb(213, 234, 241);
+background-color: rgba(210, 172, 241, 0.315);
 }
 .formbtn{
-padding: 0.7em 1.5em;
+padding: 0.7em 2.5em;
 font-size: 0.6em;
 border-radius: 2em;
 font-family: Raleway;
-border:3px solid  rgb(36, 42, 100) ;
+border:3px solid  rgb(97, 61, 133);
 transition: all 0.5s ease-in-out 0.01ms;
+cursor: pointer;
 }
 .formbtn:hover{
 transform: scale(1.2);
-border: 3px solid  #f2f2f2a9;
-background-color:  rgb(36, 42, 100) ;
-color: #f2f2f2b0;
+border: 3px solid  rgba(210, 172, 241, 0.315);
+background-color:  rgb(97, 61, 133);
+color: rgba(210, 172, 241, 0.315);
 }
 .inputsdiv{
 
 display: flex;
 flex-direction: column;
 justify-content: space-around;
-height: 80%;
+height: 90%;
 }
-.btndiv{
-
-height: 20%;
+.signupform>form>.btndiv{
 display: flex;
+margin-top: 1em;
 justify-content: center;
 align-items: flex-end;
 
+}
+.formbtn{
+box-shadow: 5px 2px 14px rgba(0, 0, 0, 0.466);
 }
 .signupform>form{
 
@@ -339,9 +351,10 @@ background-color: rgb(236, 213, 213);
 border: 3px solid red;
 color: red;
 width: 100%;
-padding: 0.5em 0.2em;
+padding: 0.3em 0.2em;
 text-align: center;
 font-family: Fraunces;
+font-size: 1em;
 display: none;
 }
 #repw{
@@ -352,8 +365,18 @@ font-family: Fraunces;
 color: red;
 text-align: end;
 padding-right: 1em;
-font-size: 0.5em;
+font-size: 0.8em;
 display: none;
+}
+.inputsdiv>h4{
+font-family: Fraunces;
+font-size: 0.6em;
+font-weight: 600;
+color: blue;
+text-align: center;
+display: flex;
+align-items: center;
+justify-content: center;
 }
 #showpw{
 padding: 0 0.5em;

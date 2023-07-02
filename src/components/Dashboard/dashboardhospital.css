@@ -1,0 +1,204 @@
+
+#dashboardarea{
+    width: 85%;
+    display:flex;
+    flex-direction: column;
+}
+.adminname{
+    text-decoration: none;
+    font-family: Fraunces;
+    padding-left: 2%;
+    word-spacing: 5px;
+}
+.icon{
+margin-left: 1em;
+cursor: pointer;
+font-size:1.3em;
+padding: 0.4em;
+border-bottom: 4px solid transparent;
+}
+.links{
+    display: flex;
+    flex-direction: row;
+    margin-right: 2%;
+}
+.admindiv{
+    display: flex;
+flex-direction: row;
+width: 20%;
+justify-items: center;
+align-items: center;
+cursor: pointer;
+}
+.infoareadashboard{
+display: flex;
+flex-direction: column;
+margin: 1em 0.6em 0em 1.2em;
+
+height: 83vh;
+border-radius: 2em;
+box-shadow: 0 2px 30px rgba(53, 52, 52, 0.247);
+padding: 0.7em;
+
+}
+/**/
+.secondnavhospital{
+    width: 99%;
+    background-color: white;
+    margin-top: 1em;
+    border: 3px solid #adc7f7d2;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.3em 0.2em;
+    border-top-right-radius:3em ;
+    border-bottom-right-radius:3em ;
+    box-shadow: 0 2px 30px rgba(53, 52, 52, 0.247);
+    
+}
+.active-overlayhospital{
+border-bottom: 4px solid  #8db2f8 !important;
+}
+.summarytileshospital{
+display: flex;
+flex-direction: column;
+border: 3px solid #adc7f7d2;
+align-items: center;
+border-radius: 2em;
+box-shadow: 0 2px 30px rgba(53, 52, 52, 0.13);
+height:100%;
+width:18%;
+padding: 0 2em;
+font-size: 1.1em;
+text-align: center;
+font-family: Fraunces;
+margin: 0 0.3%;
+}
+.performancegraphhospital{
+border: 3px solid #adc7f7d2;
+align-items: center;
+box-shadow: 0 2px 30px rgba(53, 52, 52, 0.089);
+height:61%;
+width:99.4%;
+margin: 0.2em 0.1em;
+}
+.bookdiv6{
+padding: 0 0;
+margin: 0 0.3em 0 0.9em;
+box-shadow: 2px 2px 7px rgba(53, 52, 52, 0.247);
+font-family: Raleway;
+height: 44%;
+}
+.subsec2hospital{
+height: 2em;
+width: 37%;
+padding: 0 0;
+margin: 0 0.3em 0 0.9em;
+height: 100%;
+
+box-shadow: 0 2px 30px rgba(53, 52, 52, 0.247);
+border: 3px solid #adc7f7d2;
+border-top-right-radius: 2em;
+}
+.section2subhospital{
+box-shadow: 0 2px 30px rgba(53, 52, 52, 0.247);
+border: 3px solid #adc7f7d2;
+height: 92%;
+width:24%;
+padding: 0.5% 0;
+}
+.calendar-containerhospital{
+height: 2.4em;
+width: 90%;
+border-radius: 0.9em;
+margin-left: 4%;
+font-family: Raleway;
+font-weight: bolder;
+font-size: 0.6em;
+cursor: pointer;
+text-align: center;
+outline: none;
+border: 3px solid #adc7f7d2;
+}
+.booktitledivhospital{
+font-size: 1.4em;
+font-family: Raleway;
+text-align: center;
+padding:  0.4em 0;
+width: 100%;
+background-color:#adc7f7d2 ;
+cursor: pointer;
+}
+#docdutystats{
+display: flex;
+flex-direction: row;
+justify-content: space-evenly;
+height: 40%;
+width: 100%;
+}
+#docdutystats>div{
+height: 100%;
+display: flex;
+flex-direction: row;
+align-items: center;
+}
+#docdutystats>div>img{
+height: 2.5em;
+width: 2.5em;
+margin-right: 1em;
+}
+#docdutystats>div>div>h3{
+font-size: 0.9em;
+}
+#docdutystats>div>div>h2{
+font-size: 1.5em;
+}
+#CNRstats{
+display: flex;
+flex-direction: column;
+height: 96%;
+width: 97%;
+padding: 0.5em;
+overflow-x: hidden;
+overflow-y: scroll;
+}
+#CNRstats>div{
+padding: 1em 2em;
+margin: 0.5em;
+display: flex;
+flex-direction: row;
+align-items: center;
+
+box-shadow: 2px 2px 7px rgba(66, 65, 65, 0.541);
+border-radius: 1.2em;
+}
+.complaintstats{
+background-color: rgba(255, 192, 203, 0.644);
+}
+.newstats{
+background-color: rgba(255, 238, 192, 0.644);
+}
+.requeststats{
+background-color: rgba(192, 221, 255, 0.644);
+}
+#CNRstats>div>img{
+height: 2.5em;
+width: 2.5em;
+margin-right: 1em;
+}
+#CNRstats>div>div:nth-child(2){
+width: 50%;
+
+}
+#CNRstats>div>div:nth-child(2)>h3{
+font-size: 0.8em;
+}
+#CNRstats>div>div:nth-child(2)>h2{
+font-size: 1.3em;
+}
+.depnamestats{
+width: 40%;
+
+text-align: end;
+}

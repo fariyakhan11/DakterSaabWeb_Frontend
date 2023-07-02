@@ -1,0 +1,161 @@
+
+#sidenavcontainerhospital{
+    width:15%;
+    height: 95vh;
+    background-color: #8db2f8;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.247); 
+    margin-top: 0.2em;
+    border-top-right-radius:1em ;
+    z-index: 1000;
+    border-bottom-right-radius: 1em;
+}
+.organizationLogo{
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    justify-items: center;
+    align-items: center;
+    width: 100%;
+    flex-direction: row;
+    color: #294f96;
+    font-weight: 800;
+    text-shadow: 2px 2px 4px rgba(209, 207, 207, 0.822);
+    padding: 2.5em 0em;
+    font-size: 1.2em;
+    font-family:Fraunces ;
+    flex-direction: column;
+    box-shadow: 1px 1px 19px rgba(219, 214, 214, 0.623);
+}
+.organizationLogo>p{
+    font-size: 0.8em;
+    color: rgb(10, 10, 10);
+    margin-top: 0.4em;
+    padding: 0 0.9em;
+    text-shadow: none;
+}
+.orglogo{
+    width:15%;
+    margin-bottom: 4%;
+}
+.orgname{
+    color: #e7eeed;
+    font-weight: 800;
+    text-shadow: 2px 2px 4px rgba(65, 62, 62, 0.822);
+    margin-bottom: 0.6em;
+    font-size: 1.4em;
+   
+}
+.tabsdiv{
+    display: flex;
+    flex-direction: row;
+    margin-top: 1em;
+    margin-left: 5%;
+    padding-left: 5%;
+    font-size: 1.1em;
+    font-family: Raleway;
+    cursor: pointer;
+    height: 3em;
+    align-items: center;
+    border-bottom-left-radius: 1.5em;
+    transition: all 0.5s ease-in-out 0s;
+}
+.tabsicon{
+    margin-right: 0.7em;
+    font-size: 1.2em;
+}
+.tabsnamehospital{
+    color: #294f96;
+    font-weight: 800;
+    text-shadow: 2px 2px 4px rgba(209, 207, 207, 0.562);
+    transition: 2s ease-in-out 0;
+}
+
+.tabsdiv:hover .tabsnamehospital{
+color: rgb(247, 244, 244);
+font-size: 1.1em;
+text-shadow: 2px 2px 4px rgb(61, 60, 60);
+}
+.tabsdiv:hover .tabsicon{
+font-size: 1.4em;
+color: white;
+}
+.tabdiv-active{
+background-color: white
+}
+.selectedtab{
+background-color:white;
+}
+.selectedtab:hover .tabsnamehospital{
+color: black;
+}
+#expandbtn{
+    font-size: 1.8em;
+    cursor: pointer;
+    margin-top: 100%;
+    text-shadow: 2px 2px 4px rgba(209, 207, 207, 0.822);
+}
+#collapsebtn{
+    position: fixed;
+    margin-top: 25vh;
+    margin-left: 11%;
+    font-size: 1.7em;
+    cursor: pointer;
+
+}
+#sidecollapsedcontainerhospital{
+    display: flex;
+    justify-items: center;
+    flex-direction: column;
+    width:3.5%;
+    height: 95vh;
+    background-color: #8db2f8;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.247); 
+    margin-top: 0.2em;
+    border-top-right-radius:1em ;
+    z-index: 1000;
+    border-bottom-right-radius: 1em;
+    align-items: center; 
+
+}
+.tabsrow{
+display: flex;
+height: 60%;
+flex-direction: column;
+justify-content: center;
+margin-bottom: 80%;
+width: 100%;
+}
+.tabscollapsed>.tabsicon{
+margin-right: 0em;
+font-size: 1.6em;
+text-shadow: 2px 2px 4px rgba(209, 207, 207, 0.822);
+padding: 0.3em 0;
+}
+.tabscollapsed{
+display: flex;
+align-items: center;
+margin: 1.4em 0;
+padding: 0.5em;
+width: 76%;
+justify-content: center;
+}
+.hovercontent{
+font-size: 1.3em;
+font-family: Raleway;
+background-color: #294f96;
+position: relative;
+display: none;
+}
+#sidecollapsedcontainerhospital>.orglogo{
+width: 60%;
+height: 5%;
+padding: 2em 0;
+}
+.tabscollapsed:hover .tabsicon{
+font-size: 2em;
+}
+.tabscollapsed:hover{
+
+background-color: rgba(255, 255, 255, 0.473);
+}
+

@@ -1,0 +1,36 @@
+//to disable or enable the signup btn on the basis of values
+    useEffect(()=>{
+        if(
+            formValue.email===''||
+            formValue.password===''||
+            (formValue.address===''&&formValue.org!='Doctor')||
+            formValue.name===''||
+            formValue.phone===''||
+            (formValue.city===''&&formValue.org!='Doctor')||
+//            (!(formValue.time.open===''^formValue.time.close==='')&&formValue.org!='Doctor')||
+            (formValue.education===''&&formValue.org==='Doctor')||
+            (formValue.experience===''&&formValue.org==='Doctor')||
+            (formValue.speciality===''&&formValue.org==='Doctor')||
+            !(document.getElementById('nameerr').style.display==='none')||
+            !(document.getElementById('experr').style.display==='none')||
+            !(document.getElementById('speerr').style.display==='none')||
+            !(document.getElementById('eduerr').style.display==='none')||
+            !(document.getElementById('adderr').style.display==='none')||
+            !(document.getElementById('emailerr').style.display==='none')||
+            !(document.getElementById('pwerr').style.display==='none')
+            )
+                {document.getElementById('signupsubmit').style.opacity='0.6';
+                document.getElementById('signupsubmit').style.pointerEvents='none';
+                    }
+        else{document.getElementById('signupsubmit').style.opacity='1';
+                document.getElementById('signupsubmit').style.pointerEvents='all';}
+
+
+    },[formValue])
+
+//initially setting the state of the signup btn
+    useEffect(()=>{
+        document.getElementById('signupsubmit').style.opacity='0.6';
+        document.getElementById('signupsubmit').style.pointerEvents='none';
+
+    },[])

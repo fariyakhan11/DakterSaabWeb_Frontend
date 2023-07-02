@@ -1,0 +1,76 @@
+#alertarea{
+width: 100vw;
+height: 100vh;
+display: flex;
+background-color: rgba(114, 113, 113, 0.329);
+position: fixed;
+margin: 0;
+padding: 0;
+z-index: 8000000;
+justify-content: center;
+align-items: center;
+}
+#alertcontainer{
+background-color: rgba(145, 168, 197, 0.904);
+width: 30%;
+height: 25%;
+border-radius: 1.3em;
+font-family: Fraunces;
+box-shadow: 3px 2px 9px rgba(102, 101, 101, 0.315);
+font-size: 1.1em;
+font-weight: 100;
+}
+#closealert{
+background-color: white;
+display: flex;
+justify-content: center;
+align-items: center;
+font-size: 1em;
+transform: rotate(45deg);
+width: 2em;
+height: 2em;
+border-radius: 50%;
+box-shadow: 3px 2px 9px rgba(59, 59, 59, 0.507);
+cursor: pointer;
+transition: all 1s ease-in-out;
+}
+#closealert:hover{
+transform: scale(1.15);
+}
+#topalertbar{
+display: flex;
+flex-direction: row;
+justify-content: space-between;
+align-items: center;
+padding: 1em;
+}
+#topalertbar>h1{
+font-size: 1.2em;
+color: red;
+}
+#contentareaalert{
+display: flex;
+flex-direction: column;
+justify-content: space-between;
+text-align: center;
+align-items: center;
+}
+#contentareaalert>button{
+margin-top: 2em;
+width: 30%;
+padding: 0.5em 0;
+border-radius: 1em;
+box-shadow: 3px 2px 9px rgba(59, 59, 59, 0.507);
+outline: none;
+font-family: Fraunces;
+font-weight: 600;
+color: rgba(29, 54, 85, 0.973);
+font-size: 1.1em;
+border: 2px solid  rgba(29, 54, 85, 0.973);
+transition: all 1s ease-in-out;
+cursor: pointer;
+}
+#contentareaalert>button:hover{
+background-color: rgba(29, 54, 85, 0.973);
+color: white;
+}
