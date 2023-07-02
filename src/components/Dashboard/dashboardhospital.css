@@ -79,7 +79,7 @@ margin: 0 0.3%;
 border: 3px solid #adc7f7d2;
 align-items: center;
 box-shadow: 0 2px 30px rgba(53, 52, 52, 0.089);
-height:61%;
+height:36%;
 width:99.4%;
 margin: 0.2em 0.1em;
 }
@@ -123,35 +123,45 @@ border: 3px solid #adc7f7d2;
 }
 .booktitledivhospital{
 font-size: 1.4em;
-font-family: Raleway;
+font-family: Fraunces;
 text-align: center;
-padding:  0.4em 0;
 width: 100%;
-background-color:#adc7f7d2 ;
-cursor: pointer;
+margin: 0.2em 0;
 }
 #docdutystats{
 display: flex;
 flex-direction: row;
-justify-content: space-evenly;
-height: 40%;
+height: 17%;
 width: 100%;
+font-family: Raleway;
 }
 #docdutystats>div{
+display: flex;
+flex-direction: row;
+height: 30%;
+justify-content: space-evenly;
+width: 100%;
+}
+#docdutystats>div:nth-child(1){
 height: 100%;
 display: flex;
 flex-direction: row;
 align-items: center;
+width: 95%;
+margin: 1em;
+padding: 0 2em;
+border-radius: 1.2em;
+box-shadow: 2px 2px 7px rgba(66, 65, 65, 0.541);
 }
-#docdutystats>div>img{
+#docdutystats>div:nth-child(1)>img{
 height: 2.5em;
 width: 2.5em;
 margin-right: 1em;
 }
-#docdutystats>div>div>h3{
+#docdutystats>div:nth-child(1)>div>h3{
 font-size: 0.9em;
 }
-#docdutystats>div>div>h2{
+#docdutystats>div:nth-child(1)>div>h2{
 font-size: 1.5em;
 }
 #CNRstats{
@@ -201,4 +211,62 @@ font-size: 1.3em;
 width: 40%;
 
 text-align: end;
+}
+#doctorsonduty{
+display: flex;
+flex-direction: row;
+height: 25%;
+box-shadow: 2px 2px 7px rgba(66, 65, 65, 0.541);
+width: 96%;
+margin: 2em 1em 1em 1em;
+}
+.bookdiv7{
+height: 27%;
+box-shadow: 2px 2px 7px rgba(66, 65, 65, 0.541);
+width:97%;
+margin: 0.5em 0.2em;
+border-bottom-left-radius: 1.5em;
+padding: 1em 0.5em 1em 1em;
+display: flex;
+flex-wrap: wrap;
+overflow-y: scroll;
+}
+.depstatsdivtokens{
+font-family: Raleway;
+flex-basis: 18em;
+margin:1em ;
+}
+.depstatsdivtokens>h1{
+font-family: Raleway;
+font-size: 1.2em;
+font-weight: bolder;
+}
+.depstatsdivtokensdetails{
+display: flex;
+flex-direction: row;
+align-items: center;
+}
+.depstatsdivtokensdetails>div:nth-child(1){
+width: 2em;
+height: 3em;
+background-color: rgb(153, 236, 236);
+margin-right: 1em;
+}
+.depstatsdivtokensdetails>div:nth-child(2){
+display: flex;
+flex-direction: column;
+}
+.depstatsdivtokensdetails>div:nth-child(2)>h2{
+font-weight: lighter;
+font-size: 1.3em;
+}
+
+.depstatsdivtokensdetails>div:nth-child(2)>h3{
+font-size: 1.2em;
+font-family: Raleway;
+align-items: center;
+}
+
+.depstatsdivtokensdetails>div:nth-child(2)>h3>span{
+font-family: Fraunces;
 }

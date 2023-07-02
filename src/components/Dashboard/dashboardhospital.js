@@ -171,26 +171,82 @@ return(
                 </div>
                 <h2 className="booktitledivpharmacy">Departmental Overview</h2>
                 <div className="performancegraphhospital">
+
+                </div>
+                
+                <div className="bookdiv7">
+                    <div className="depstatsdivtokens">
+                        <h1>ENT Department</h1>
+                        <div className="depstatsdivtokensdetails">
+                        <div></div>
+                        <div>
+                            <h2>Dr Raza Aftab</h2>
+                            <h3><span>Current Token: </span> 4</h3>
+                        </div>
+                        </div>
+                    </div>
+                    <div className="depstatsdivtokens">
+                        <h1>ENT Department</h1>
+                        <div className="depstatsdivtokensdetails">
+                        <div></div>
+                        <div>
+                            <h2>Dr Raza Aftab</h2>
+                            <h3><span>Current Token: </span> 4</h3>
+                        </div>
+                        </div>
+                    </div>
+                    <div className="depstatsdivtokens">
+                        <h1>ENT Department</h1>
+                        <div className="depstatsdivtokensdetails">
+                        <div></div>
+                        <div>
+                            <h2>Dr Raza Aftab</h2>
+                            <h3><span>Current Token: </span> 4</h3>
+                        </div>
+                        </div>
+                    </div>
+                    <div className="depstatsdivtokens">
+                        <h1>ENT Department</h1>
+                        <div className="depstatsdivtokensdetails">
+                        <div></div>
+                        <div>
+                            <h2>Dr Raza Aftab</h2>
+                            <h3><span>Current Token: </span> 4</h3>
+                        </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div className="subsec2pharmacy">
 
                 
-                <h2 className="booktitledivpharmacy"> Doctors on Duty</h2>
+                <h2 className="booktitledivhospital"> Doctors on Duty</h2>
                 
-                <div className="bookdiv6">
+                
                     <div id="docdutystats">
                         <div >
                             <img src={DocDuty}></img>
                             <div>
-                                <h3 >Doctors on Duty</h3>
+                                <h4 >Total Doctors </h4>
                                 <h2 >20</h2>
+                            </div>
+                            <div>
+                                <h4>Senior Doctor</h4>
+                                <h2>5</h2>
+                            </div>
+                            <div>
+                                <h4>Surgeons</h4>
+                                <h2>3</h2>
                             </div>
                         </div>
                     </div>
-
-                </div>
-                <h2 className="booktitledivpharmacy"> Complaints News and Requests</h2>
+                    <div id="doctorsonduty">
+                        <div className="dod">
+                            
+                        </div>
+                    </div>
+                
+                <h2 className="booktitledivhospital"> Complaints News and Requests</h2>
                 
                 <div className="bookdiv6">
                     <div id="CNRstats">

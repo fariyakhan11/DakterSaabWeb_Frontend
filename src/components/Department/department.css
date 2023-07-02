@@ -106,7 +106,7 @@ font-weight: bolder;
 color: #294f96;
 cursor: pointer;
 box-shadow: 0 2px 2px rgba(12, 11, 11, 0.233);
-margin-left: 48%;
+margin-left: 48% !important;
 }
 .more-btnhospital:hover{
 color: white;

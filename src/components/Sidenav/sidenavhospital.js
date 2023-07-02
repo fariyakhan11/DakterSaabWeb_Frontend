@@ -86,7 +86,7 @@ return(
         </div>
         <div className="tabsdiv News" id="News" onClick={selectedtab}>
             <MdOutlineFeedback className="tabsicon" id="News"/>
-            <h4 className="tabsnamehospital" id="News">News and Reports</h4>
+            <h4 className="tabsnamehospital" id="News">Complaints News and Requests</h4>
         </div>
  
 

@@ -13,7 +13,7 @@ import Alert from './components/Alert/alert';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <Dashboardhospital/>
+    <App/>
   </React.StrictMode>
 );
 

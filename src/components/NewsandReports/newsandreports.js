@@ -10,7 +10,7 @@ return(
 <>
         <div id="Newsandreportsdashboard">
             <div className="contentarea" >
-                    <h3 className="contentareatitle">News and Reports</h3>
+                    <h3 className="contentareatitle">Complaints, News and Requests</h3>
                     <hr/>
 
                 <div id="appointmentsdiv"></div>

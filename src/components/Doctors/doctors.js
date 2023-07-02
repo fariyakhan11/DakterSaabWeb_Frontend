@@ -285,7 +285,7 @@ return(
 )})}
 {
                         !doctor_list.length&&
-                        <h2 className="no_med">No doctors added yet</h2>
+                        <h2 className="nulldata">No doctors added yet</h2>
 }
                       </div>
                     </div>                     

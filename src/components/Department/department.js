@@ -147,10 +147,21 @@ return(
 
                         
                       </div>
-                        <button className="more-btnhospital" onClick={addmoredeps}>+</button>
-                </div>
-            </div>
 
+                        
+                </div>
+
+            </div>
+            <div className="controlbtns">
+              
+              <div id="addstock" className="stockoperation" onClick={addmoredeps}>
+                  <div id="addMedicines" className="stockopiconhospital">
+                  <h4>+</h4>
+                  </div>
+                  <div className="stockoptitle"><h4>Add Departments</h4></div>
+              </div>
+
+            </div>
         </div>
 </>
 )
