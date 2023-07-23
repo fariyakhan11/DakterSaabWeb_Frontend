@@ -111,21 +111,23 @@ const submitadddep=(e)=>{
     try{
 
         const api='http://localhost:5000/api/hospital/adddep';
-        let data={org_name:sessionStorage.getItem('org_name'),org_address:sessionStorage.getItem('org_address'),depinfo:data}
+        let datasending={org_name:sessionStorage.getItem('org_name'),org_address:sessionStorage.getItem('org_address'),depinfo:data}
         fetch(api, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(data)
+            body: JSON.stringify(datasending)
         }).then(res => {
                 if (res.status === 200) {
-                    alert('blood groups added successfully')
                     
+                    setdata([{name:'',admin_name:'',phone:'',password:'',repw:''}]);                   
+                    var btn = document.getElementById('closebtn');
+                    btn.click();
                 }
                 else if (res.status === 430) { alert(res.error) }
 
-                else {  alert('Problem adding blood groups', res.error) }
+                else {  alert('Problem adding department', res.error) }
             });
     }catch(err){
         console.log(err);
@@ -169,7 +171,7 @@ return(
                     <h6  className="inputerror" id='pwerr'>Passwords donot match</h6>
                     <div className="dep-info-field">
                         <label htmlFor="repw">Retype Password: </label>
-                        <input type="text" name="repw" id='repw' onChange={inputhandler} value={data.repw} />
+                        <input type="password" name="repw" id='repw' onChange={inputhandler} value={data.repw} />
                     </div>
                     <div id="btndiv">
                         <button className="depsubmit" onClick={submitadddep}>Submit</button>

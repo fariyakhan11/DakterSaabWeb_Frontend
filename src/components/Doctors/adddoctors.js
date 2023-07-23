@@ -9,19 +9,19 @@ import validator from "validator";
 
 function Adddoctors({close}){
 
-//auto medicine name    
+//auto doctor name    
     const [auto_file, setauto_file]=useState('');
-//auto medicines data
+//auto doctors data
     const [autodoc, setautodoc]=useState([{name:'',email:'',fee:'',education:'',experience:'',speciality:'',department:'',availability:[{day:'Monday',time:''},{day:'Tuesday',time:''},{day:'Wednesday',time:''},{day:'Thursday',time:''},{day:'Friday',time:''},{day:'Saturday',time:''},{day:'Sunday',time:''}]}]);
 
 //Method in which the data shall be entered by default Manual so true otherwise false   
     const [add_manual, set_manual_tab]=useState(true);
 
-//manual medicines data
+//manual doctor data
     const [manualdoc,setmanualdoc]=useState([{name:'',email:'',fee:'',education:'',experience:'',speciality:'',department:'',availability:[{day:'Monday',time:''},{day:'Tuesday',time:''},{day:'Wednesday',time:''},{day:'Thursday',time:''},{day:'Friday',time:''},{day:'Saturday',time:''},{day:'Sunday',time:''}]}])
 
 
-//initially set manual medicine add tab to active    
+//initially set manual doctor add tab to active    
 useEffect(()=>{
     document.getElementById('manual_add').classList.add('active_tabhospital');
     document.getElementsByClassName('submitbtnmedhospital')[0].classList.add('disabledbtn')
@@ -81,36 +81,41 @@ const addmoredivs = (e) => {
 //update the info for the medicines input    
 const changeinfo = (e) => {
   const { id, name, value } = e.target;
-    if(name==='availability'){
-console.log("i amm here",e.target.className)
-        setmanualdoc((prevState)=>{
-            
-            return prevState.map((item, index) => {
-            if (index === parseInt(id)) {
-                for (var j=0;j<item.availability.length;j++){
-                
-                    
-                    if(item.availability[j].day===e.target.className){
-                        return { ...item.availability[j], time: value };
-                    }
-                }
-            }
-            return item;
-            });
-        })
-}
-    else{
-  setmanualdoc((prevState) => {
-    return prevState.map((item, index) => {
-      if (index === parseInt(id)) {
-        return { ...item, [name]: value };
-      }
-      return item;
+  if (name === 'availability') {
+    setmanualdoc((prevState) => {
+      return prevState.map((item, index) => {
+        if (index === parseInt(id)) {
+          return {
+            ...item,
+            [name]: item.availability.map((i, ind) => {
+              if (i.day === e.target.className) {
+                return { ...i, ['time']: value };
+              }
+              return i;
+            }),
+          };
+        }
+        return item;
+      });
     });
-  });
-    verify(name,value,id);
-}console.log(manualdoc)
+  } else {
+    setmanualdoc((prevState) => {
+      return prevState.map((item, index) => {
+        if (index === parseInt(id)) {
+          return { ...item, [name]: value };
+        }
+        return item;
+      });
+    });
+    verify(name, value, id);
+  }
+
 };
+
+useEffect(()=>{
+  console.log(manualdoc);
+},[manualdoc])
+
 
 //close the medicine div if the close btn is clicked
 const closebtn = (e) => {
@@ -195,7 +200,7 @@ const submit_data=(e)=>{
             doc_list=autodoc;
         }
         const api='http://localhost:5000/api/hospital/adddoc';
-        let data={pharmacyname:sessionStorage.getItem('org_name'),address:sessionStorage.getItem('org_address'),doc_list:doc_list}
+        let data={org_name:sessionStorage.getItem('org_name'),org_address:sessionStorage.getItem('org_address'),doc_list:doc_list}
         fetch(api, {
             method: 'POST',
             headers: {
@@ -205,11 +210,15 @@ const submit_data=(e)=>{
         }).then(res => {
                 if (res.status === 200) {
                     alert('Doctors added successfully')
-                    
+            setmanualdoc([{name:'',email:'',fee:'',education:'',experience:'',speciality:'',department:'',availability:[{day:'Monday',time:''},{day:'Tuesday',time:''},{day:'Wednesday',time:''},{day:'Thursday',time:''},{day:'Friday',time:''},{day:'Saturday',time:''},{day:'Sunday',time:''}]}])
+            set_manual_tab(false);
+            setautodoc([{name:'',email:'',fee:'',education:'',experience:'',speciality:'',department:'',availability:[{day:'Monday',time:''},{day:'Tuesday',time:''},{day:'Wednesday',time:''},{day:'Thursday',time:''},{day:'Friday',time:''},{day:'Saturday',time:''},{day:'Sunday',time:''}]}])
+                    var btn = document.getElementById('closebtn');
+                    btn.click();
                 }
-                else if (res.status === 430) { alert(res.error) }
+                
 
-                else {  alert('Problem adding doctors', res.error) }
+                else {  alert('Problem adding doctors') }
             });
     }catch(err){
         console.log(err);
@@ -377,7 +386,7 @@ return(
                                                 </div>
                                                 <div className="form-fields">
                                                     <label>Department: </label>
-                                                    <input className="inputm" type="number" name="quantity" value={i.quantity} onChange={changeinfo} id={index} />
+                                                    <input className="inputm" type="text" name="department" value={i.department} onChange={changeinfo} id={index} />
                                                 </div>
                                             </div>
                                             <div className="submed">

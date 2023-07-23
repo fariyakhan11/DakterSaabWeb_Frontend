@@ -215,6 +215,7 @@ color: black;
 font-size: 1em;
 transition: all 0.5s ease-in-out;
 font-family: Raleway;
+cursor: pointer;
 }
 .depsubmit:hover{
 transform: scale(1.05);
@@ -223,4 +224,39 @@ background-color: #8db2f8;
 }
 .disablebtn{
 opacity: 0.5;
+}
+#deletealertgray{
+width: 80%;
+height: 80%;
+display: flex;
+align-items: center;
+justify-content: center;
+display: none;
+position: absolute;
+}
+#deletealert{
+width:35em;
+height: 18em;
+border-radius: 2em;
+border: 3px solid red;
+background-color: #f5dddddc;
+position: absolute;
+box-shadow: 6px 6px 10px rgba(122, 122, 122, 0.644) ;
+}
+#deletealert>div{
+width: 100%;
+background-color: transparent !important ;
+box-shadow: none !important;
+}
+#deletealert>#alertcontainer>#contentareaalert{
+font-size: 0.8em;
+
+}
+#deletealert>#alertcontainer>#contentareaalert>h2{
+margin-bottom: 0.9em;
+
+}
+#deletealert>#alertcontainer>#contentareaalert>input{
+font-size: 1.5em;
+text-align: center;
 }

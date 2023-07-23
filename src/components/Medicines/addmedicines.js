@@ -200,7 +200,7 @@ const submit_data=(e)=>{
             body: JSON.stringify(data)
         }).then(res => {
                 if (res.status === 200) {
-                    alert('medicines added successfully')
+                    
                     setmanualmed([{ name: '', price: '', quantity: '', category: '' }]);                   
                     var btn = document.getElementById('closebtn');
                     btn.click();

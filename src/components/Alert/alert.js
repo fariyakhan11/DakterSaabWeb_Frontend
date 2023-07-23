@@ -1,7 +1,7 @@
 import React from "react";
 import './alert.css'
 
-function Alert(props,{msg}){
+function Alert(props){
 
 const closediv=(e)=>{
 document.getElementById('alertarea').style.display='none'

@@ -1,0 +1,139 @@
+                    <div className="NRC-SUB">
+                        <div>
+                            <h2 className="booktitledivhospital"> Complaints News and Requests</h2>
+                            
+                            <div className="bookdiv6">
+                                <div id="CNRstats">
+                                    <div className="complaintstats">
+                                        <img src={Complaints}></img>
+                                        <div>
+                                            <h3 >Complaint</h3>
+                                            <h2 >Broken Roof </h2>
+                                        </div>
+                                        <div className="depnamestats">
+                                            <h4 >ENT Department</h4>
+                                            <h4 >12/5/2023 7:00PM</h4>
+                                        </div>
+                                    </div>
+                                    <div className="requeststats">
+                                        <img src={Requests}></img>
+                                        <div>
+                                            <h3 >Request</h3>
+                                            <h2 >Broken Roof </h2>
+                                        </div>
+                                        <div className="depnamestats">
+                                            <h4 >ENT Department</h4>
+                                            <h4 >12/5/2023 7:00PM</h4>
+                                        </div>
+                                    </div>
+                                    <div className="newstats">
+                                        <img src={News}></img>
+                                        <div>
+                                            <h3 >News</h3>
+                                            <h2 >Broken Roof </h2>
+                                        </div>
+                                        <div className="depnamestats">
+                                            <h4 >ENT Department</h4>
+                                            <h4 >12/5/2023 7:00PM</h4>
+                                        </div>
+                                    </div>
+                                    <div className="requeststats">
+                                        <img src={Requests}></img>
+                                        <div>
+                                            <h3 >Request</h3>
+                                            <h2 >Broken Roof </h2>
+                                        </div>
+                                        <div className="depnamestats">
+                                            <h4 >ENT Department</h4>
+                                            <h4 >12/5/2023 7:00PM</h4>
+                                        </div>
+                                    </div>
+                                    <div className="newstats">
+                                        <img src={News}></img>
+                                        <div>
+                                            <h3 >News</h3>
+                                            <h2 >Broken Roof </h2>
+                                        </div>
+                                        <div className="depnamestats">
+                                            <h4 >ENT Department</h4>
+                                            <h4 >12/5/2023 7:00PM</h4>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                            </div> 
+                        </div>
+                        <div>
+                            <h2 className="booktitledivhospital"> Complaints News and Requests</h2>
+                            
+                            <div className="bookdiv6">
+                                <div id="CNRstats">
+                                    <div className="complaintstats">
+                                        <img src={Complaints}></img>
+                                        <div>
+                                            <h3 >Complaint</h3>
+                                            <h2 >Broken Roof </h2>
+                                        </div>
+                                        <div className="depnamestats">
+                                            <h4 >ENT Department</h4>
+                                            <h4 >12/5/2023 7:00PM</h4>
+                                        </div>
+                                    </div>
+                                    <div className="requeststats">
+                                        <img src={Requests}></img>
+                                        <div>
+                                            <h3 >Request</h3>
+                                            <h2 >Broken Roof </h2>
+                                        </div>
+                                        <div className="depnamestats">
+                                            <h4 >ENT Department</h4>
+                                            <h4 >12/5/2023 7:00PM</h4>
+                                        </div>
+                                    </div>
+                                    <div className="newstats">
+                                        <img src={News}></img>
+                                        <div>
+                                            <h3 >News</h3>
+                                            <h2 >Broken Roof </h2>
+                                        </div>
+                                        <div className="depnamestats">
+                                            <h4 >ENT Department</h4>
+                                            <h4 >12/5/2023 7:00PM</h4>
+                                        </div>
+                                    </div>
+                                    <div className="requeststats">
+                                        <img src={Requests}></img>
+                                        <div>
+                                            <h3 >Request</h3>
+                                            <h2 >Broken Roof </h2>
+                                        </div>
+                                        <div className="depnamestats">
+                                            <h4 >ENT Department</h4>
+                                            <h4 >12/5/2023 7:00PM</h4>
+                                        </div>
+                                    </div>
+                                    <div className="newstats">
+                                        <img src={News}></img>
+                                        <div>
+                                            <h3 >News</h3>
+                                            <h2 >Broken Roof </h2>
+                                        </div>
+                                        <div className="depnamestats">
+                                            <h4 >ENT Department</h4>
+                                            <h4 >12/5/2023 7:00PM</h4>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                            </div> ``
+
+                        </div>
+                    </div>
+                    <div>
+                        <div></div>
+                        <div></div>
+                    </div>

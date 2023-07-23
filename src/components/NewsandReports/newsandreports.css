@@ -19,3 +19,383 @@ margin: 0.1em 0;
 
 }
 /* All the styles above are defined in the medicine.css file primarily*/
+#NRC{
+height: 96%;
+width: 100%;
+
+}
+
+#NRC>div{
+display: flex;
+flex-direction: row;
+margin-bottom: 0.2%;
+width: 100%;
+height:94%;
+padding: 1%;
+justify-content: space-evenly;
+}
+
+#NRC>div>div{
+width: 45%;
+margin-bottom: 0.5%;
+margin-right: 0.5%;
+height:100%;
+}
+
+#NRC>div>div>.bookdiv6{
+height: 91%;
+}
+#NRC>div>div>.bookdiv6>#CNRstats>div{
+transition: all 0.5s ease-in-out;
+}
+#NRC>div>div>.bookdiv6>#CNRstats>div:hover{
+transform: scale(1.05);
+
+}
+#NRC_secondDiv{
+display: flex;
+flex-direction: column;
+justify-content: space-evenly;
+}
+#filterbaricons{
+width: 100%;
+padding: 0.5em;
+display: flex;
+flex-direction: row;
+justify-content: center;
+border-radius: 2em;
+height: 10%;
+}
+#filterbaricons>div{
+width: 3em;
+height: 3em;
+border-radius: 50%;
+margin-left: 4em;
+box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.507);
+padding: 0.5em;
+transition: all 0.5s ease-in-out;
+cursor: pointer;
+}
+#filterbaricons>div:hover{
+transform: scale(1.1);
+}
+#filterbaricons>div:nth-child(1){
+margin-left: 0;
+}
+#filterbaricons>div>img{
+width: 100%;
+height: 100%;
+}
+#NRC_formArea{
+
+width: 100%;
+height: 85%;
+}
+#NRC_formArea>h1{
+font-family: Fraunces;
+font-weight: bold;
+font-size: 1.5em;
+padding-left: 1em;
+padding-bottom: 0.2em;
+text-align: center;
+}
+
+
+#NRC_formAreaFormContainer{
+box-shadow: 2px 2px 5px rgba(66, 66, 66, 0.507);
+height: 89%;
+padding: 1em;
+display: flex;
+justify-content: space-between;
+flex-direction: column;
+}
+#NRC_formAreaFormContainer>div{
+display: flex;
+width:100%;
+height: 10%;
+font-size: 1.1em;
+align-items: center;
+}
+#NRC_formAreaFormContainer>div:nth-last-child(2){
+height: 25% !important;
+align-items: flex-start;
+
+}
+#NRC_formAreaFormContainer>div:nth-last-child(1){
+align-items: center;
+padding: 0 5%;
+width: 90%;
+justify-content: flex-end !important;
+}
+#form_identification{
+justify-content: space-between;
+width: 95% !important;
+border-bottom: 1px solid rgba(185, 185, 185, 0.411);
+}
+#form_identification>div{
+display: flex;
+align-items: center;
+}
+#form_identification>div>label{
+margin-right: 1em;
+}
+#null_values_alert{
+height: 10% !important;
+background-color: rgba(253, 5, 5, 0.11);
+}
+.null_values_alert_hide{
+display: none !important;
+}
+#null_values{
+width: 100%;
+font-size: 1.2em;
+font-family: Raleway;
+text-align: center;
+
+letter-spacing: 0.1em;
+
+}
+#NRC_formAreaFormContainer>div>label{
+margin-right: 1em;
+width: 20%;
+}
+#form_identification>label{
+margin-right: 0em !important;
+}
+#NRC_formAreaFormContainer>div>input{
+width: 70%;
+font-size: 1.1em;
+padding: 0.5em 0.5em 0 0.5em;
+border: none;
+border-bottom: 1px solid rgb(158, 156, 156);
+outline: none;
+background-color: transparent;
+}
+#NRC_formAreaFormContainer>div>select{
+width: 73%;
+font-size: 1.1em;
+padding: 0.5em 0.5em 0 0.5em;
+outline: none;
+border: none;
+border-bottom: 1px solid rgb(167, 164, 164);
+cursor: pointer;
+outline: none;
+background-color: transparent;
+}
+#NRC_formAreaFormContainer>div:nth-last-child(2)>input{
+border: 1px solid rgb(138, 136, 136) !important;
+border-radius: 1em;
+height: 70%;
+padding-top: 5%;
+background-color: transparent;
+}
+#NRC_formAreaFormContainer>div:nth-last-child(1)>button{
+padding: 0.4em 1.5em;
+border-radius:1em;
+border: 3px solid #8db2f8;
+font-family: Raleway;
+text-align: center;
+outline: none;
+transition: all 0.5s ease-in-out;
+background-color: white;
+font-size: 1.1em;
+cursor: pointer;
+box-shadow: 3px 5px 10px rgba(131, 130, 130, 0.507);
+}
+#NRC_formAreaFormContainer>div:nth-last-child(1)>button:hover{
+color: white;
+background-color:#8db2f8;
+
+}
+#form_date{
+
+font-weight: bold;
+font-size: 1.1em;
+}
+#name-options>select>option{
+cursor: pointer;
+}
+#searchoptions{
+margin: 0 0.8em 01em 0.8em;
+display: flex;
+flex-direction: row;
+justify-content: space-between;
+align-items: center;
+}
+.options_cont>select{
+outline: none;
+font-family: Raleway;
+font-size: 1em;
+border: 3px solid #8db2f8;
+background-color: white;
+border-radius: 5px;
+padding: 0.5em 1.2em;
+
+}
+#detailandresolutiongrayarea{
+background-color: rgba(196, 193, 193, 0.3274);
+position: absolute;
+width: 84%;
+height: 86%;
+margin: -1%;
+z-index: 399;
+display: flex;
+justify-content: center;
+align-items: center;
+
+}
+#detailandresolution{
+height: 83%;
+background-color:#fffcfc;
+border-radius: 2em;
+width: 45%;
+box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.507);
+padding: 1em;
+}
+#detailandresolutiontopheader{
+width: 100%;
+height: 7%;
+display: flex;
+justify-content: center;
+align-items: center;
+font-family: Raleway;
+
+}
+#detailandresolutiontopheader>h2{
+font-weight: lighter;
+width: 90%;
+text-align: center;
+}
+#detailandresolutioncontent{
+height: 93%;
+
+}
+#entry-form-det{
+height: 52%;
+
+}
+#form-des-det{
+font-family: Raleway;
+display: flex;
+justify-content: space-evenly;
+font-size: 1em;
+}
+#form-des-det>div{
+border: 2px solid #8db2f8;
+box-shadow: 3px 5px 10px rgba(131, 130, 130, 0.507);
+border-radius: 1em;
+padding: 1em 1.5em;
+text-align: center;
+}
+#form-des-det>div>h2{
+font-family: Fraunces;
+}
+#entry-form-det>div{
+display: flex;
+flex-direction: row;
+width: 90%;
+padding: 0.8% 3%;
+margin: 0.2em 0;
+align-items: center;
+}
+#entry-form-det>div:nth-child(2) , #entry-form-det>div:nth-child(3){
+border-bottom: 2px solid rgba(185, 184, 184, 0.637);
+}
+#entry-form-det>div>label{
+width: 20%;
+margin-right: 2em;
+font-size: 1.1em;
+
+}
+#entry-form-det>div>h2{
+
+width: 75%;
+font-family: Raleway;
+
+font-size: 1.1em;
+}
+#entry-form-det>div:nth-last-child(1)>h2{
+height: 5rem;
+overflow: scroll !important;
+
+}
+#ResolutionForm{
+height: 43%;
+
+}
+#ResolutionForm>div{
+height: 100%;
+padding:0.3em 1em;
+width: 100%;
+display: flex;
+flex-direction: column;
+justify-content: space-between;
+
+}
+#ResolutionForm>div>div:nth-last-child(1)>button{
+padding: 0.4em 1.5em;
+border-radius:1em;
+border: 3px solid #8db2f8;
+font-family: Raleway;
+text-align: center;
+outline: none;
+transition: all 0.5s ease-in-out;
+background-color: white;
+font-size: 1.1em;
+cursor: pointer;
+margin-right: 2em;
+box-shadow: 3px 5px 10px rgba(131, 130, 130, 0.507);
+}
+#ResolutionForm>div>div:nth-last-child(1)>button:hover{
+color: white;
+background-color:#8db2f8;
+
+}
+#ResolutionForm>div>div:nth-last-child(1){
+align-items: center;
+padding: 0% 5%;
+width: 90%;
+justify-content: flex-end !important;
+}
+#ResolutionForm>div>div{
+display: flex;
+width:100%;
+height: 10%;
+font-size: 1.1em;
+align-items: center;
+}
+#ResolutionForm>div>div:nth-last-child(2){
+height: 35% !important;
+align-items: flex-start;
+
+}
+#ResolutionForm>div>div:nth-last-child(2)>input{
+border: 1px solid rgb(138, 136, 136) !important;
+border-radius: 1em;
+height: 70%;
+align-items: flex-start !important;
+outline: none;
+
+display: flex;
+outline: none;
+outline: none;
+background-color: transparent;
+}
+#ResolutionForm>div>div>input{
+width: 65%;
+background-color: transparent;
+font-size: 1.1em;
+outline: none;
+padding: 0em 0.5em 0 0.5em;
+border: none;
+border-bottom: 1px solid rgb(158, 156, 156);
+}
+#ResolutionForm>div>div>label{
+
+width: 23%;
+
+}
+#ResolutionForm>div>div:nth-child(1)>h1{
+font-family: Raleway;
+font-size: 1.3em;
+}

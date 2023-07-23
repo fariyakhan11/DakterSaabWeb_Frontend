@@ -6,12 +6,11 @@ import AddDepartment from './adddepartment';
 
 function Department(){
     const [close_add_view, set_add_view] = useState(true);
-    const [viewmode,setviewmode]=useState(true)
     const [department_list,setdepartment_list]=useState([]);
     const [displayed_list,setdisplayed_list]=useState([])
 //selected medicines to delete
     const [selected_department,setselected_department]=useState([])
-
+    const [dep_pw,set_dep_pw]=useState('')
 //initial tasks on page load
   useEffect(()=>{
 fetchdepartments()
@@ -40,60 +39,34 @@ function fetchdepartments(){
     }
 }
 
-//activate the delete view
-const deletemodeon=(e)=>{
-    var cb_o=document.getElementsByClassName('checkbox-outline');
-    var deletebtn=document.getElementById('delMedicines');
-    if(viewmode){
 
-        document.getElementById('deletetitle').style.display='none';
-        document.getElementsByClassName('stockoptitle1')[0].style.display='block';
-        deletebtn.style.transform='rotate(5deg)';
-        deletebtn.classList.add('delMedicinesactive');
-        for(var c=0;c<cb_o.length;c++){
-            cb_o[c].style.display='flex';
-        }
-    }
-    else{
-        document.getElementById('deletetitle').style.display='flex';
-        document.getElementsByClassName('stockoptitle1')[0].style.display='none';
-        deletebtn.style.transform='rotate(-45deg)';
-        deletebtn.classList.remove('delMedicinesactive');
-        for(var c=0;c<cb_o.length;c++){
-            cb_o[c].style.display='none';
-        }
-        setselected_department([])
-        var cb=document.getElementsByClassName('checkbox-selected')
-        for(var c=0;c<cb.length;c++){
-            cb[c].style.display='none';
-        }
-    }
-    setviewmode(!viewmode)
-}
 
 //delete the selected departments
 const delete_selected=(e)=>{
     e.preventDefault();
     try{
-        var params=sessionStorage.getItem('org_name')+'/'+sessionStorage.getItem('org_address')+'/'+selected_department
-        fetch('http://localhost:5000/api/hospital/deldep/'+params,{
-            method: 'DELETE',
+        var data_to_delete={org_name:sessionStorage.getItem('org_name'),org_address:sessionStorage.getItem('org_address'),dep_name:selected_department[0],password:dep_pw}
+        
+        fetch('http://localhost:5000/api/hospital/deldep/', {
+            method: 'POST',
             headers: {
-            'Content-Type': 'application/json'}
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data_to_delete)
         }).then(res=>{
 
             res.json();
             console.log("the response is ",res);
             setselected_department([])
-            var cb=document.getElementsByClassName('checkbox-selected')
-            for(var c=0;c<cb.length;c++){
-                cb[c].style.display='none';
-            }
+            set_dep_pw('')
             if(res.status===200){
                 fetchdepartments()    
                 alert('Departments deleted successfully')
+                document.getElementById('deletealertgray').style.display='none'
             }
-                
+            else{
+                alert('Problem deleting this department . Please check if you have provided the correct password for it.')
+            }   
             }
         )
 
@@ -102,20 +75,58 @@ const delete_selected=(e)=>{
     }
 }
 
-//add more manual medicine add divs
-const addmoredeps = (e) => {
 
-    e.preventDefault();
-    set_add_view(false)
-};
 
 //open the add view tab
+const open_add=(e)=>{
+        set_add_view(false)
+        
+    
+    
+        setselected_department([])
+        
+        
+}
+
+//close the add view tab
 const handle_add=(close)=>{
   set_add_view(close)
+    fetchdepartments()
+}
 
+//close delete alert
+const closedeletediv=(e)=>{
+document.getElementById('deletealertgray').style.display='none'
+
+}
+
+const deleteselect=(e)=>{
+
+var id=e.target.id;
+id=parseInt(id);
+setselected_department([department_list[id]['name']])
+document.getElementById('deletealertgray').style.display='flex';
 }
 return(
 <>
+<div id="deletealertgray">
+<div id="deletealert">
+        <div id="alertcontainer">
+        <div id="topalertbar">
+            <h1>Alert</h1>
+            <div id="closealert" onClick={closedeletediv} >
+                <h2>+</h2>
+            </div>
+        </div>
+
+        <div id="contentareaalert">
+            <h2>Do you want to delete {selected_department[0]} department?<br/>Enter its password to confirm </h2>
+            <input type="password" id="departmentalpwdel" ></input>
+            <button onClick={delete_selected}>Delete</button>
+        </div>
+    </div>
+</div>
+</div>
 {!close_add_view &&
 <AddDepartment close={handle_add}/>
 }
@@ -129,9 +140,9 @@ return(
 {displayed_list.map((i,index)=>{return(
                         <div className="depsdiv" id={'depsdiv'+index}>
                             <div className="deptitle" id={'deptitle'+index}>
-                                <h3 id={index}>hi</h3>
-                                <AiOutlineDelete className="icondep"/>
-                                    <input type="checkbox"  name="selected-delete" id={'cbd'+index} className="selectedcbd"/>
+                                <h3 id={index}>{i.name}</h3>
+                                <AiOutlineDelete className="icondep" id={index+'deldep'} onClick={deleteselect}/>
+                                    
                                 
                             </div>
                             <div className="depinfo" id={'depinfo'+index}>
@@ -142,9 +153,9 @@ return(
                             </div>
                         </div>
 )})}
-
+{!department_list.length &&
                         <h5 className="nulldata">No departments added yet . Click to add departments</h5>
-
+}
                         
                       </div>
 
@@ -154,7 +165,7 @@ return(
             </div>
             <div className="controlbtns">
               
-              <div id="addstock" className="stockoperation" onClick={addmoredeps}>
+              <div id="addstock" className="stockoperation" onClick={open_add}>
                   <div id="addMedicines" className="stockopiconhospital">
                   <h4>+</h4>
                   </div>

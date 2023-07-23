@@ -174,12 +174,31 @@ fetchmeds()
         
   }
 
-//open the add view tab
+//close the add view tab
 const handle_add=(close)=>{
   set_add_view(close)
-
+  fetchmeds()
 }
 
+//open the add view tab
+const open_add=(e)=>{
+        set_add_view(false)
+        var cb_o=document.getElementsByClassName('checkbox-outline');
+        var deletebtn=document.getElementById('delMedicines');
+        document.getElementById('deletetitle').style.display='flex';
+        document.getElementsByClassName('stockoptitle1')[0].style.display='none';
+        deletebtn.style.transform='rotate(-45deg)';
+        deletebtn.classList.remove('delMedicinesactive');
+        for(var c=0;c<cb_o.length;c++){
+            cb_o[c].style.display='none';
+        }
+        setselected_medicine([])
+        var cb=document.getElementsByClassName('checkbox-selected')
+        for(var c=0;c<cb.length;c++){
+            cb[c].style.display='none';
+        }
+        setviewmode(true)
+}
 //add to the selected medicines array when the delete mode is on
 const select_delete = (event) => {
   event.preventDefault();

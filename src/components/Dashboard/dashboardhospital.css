@@ -185,12 +185,15 @@ border-radius: 1.2em;
 }
 .complaintstats{
 background-color: rgba(255, 192, 203, 0.644);
+cursor: pointer;
 }
 .newstats{
 background-color: rgba(255, 238, 192, 0.644);
+cursor: pointer;
 }
 .requeststats{
 background-color: rgba(192, 221, 255, 0.644);
+cursor: pointer;
 }
 #CNRstats>div>img{
 height: 2.5em;
