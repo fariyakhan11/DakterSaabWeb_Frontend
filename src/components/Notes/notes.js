@@ -49,7 +49,7 @@ useEffect(() => {
 },[])
 
 //close the notes display
-const closenote=()=>{
+function closenote(){
     document.getElementById('notesdisplay').style.display='none'
     setnote_content('');
     setnote_title('');
@@ -86,6 +86,7 @@ const savenote=(e)=>{
                             alert("Note successfully updated")
                         }
                         fetch_saved_notes();
+                        closenote()
                     }
                     else if (res.status === 430) { alert('note already exist') }
 
@@ -270,7 +271,7 @@ return(
                                 <textarea id="notecontent" value={note_content} onChange={(e)=>{setnote_content(e.target.value)}}></textarea>
                             </div><hr/>
                             <div className="bottomnotebar">
-                                <button id="imguploadbtn">Upload Image</button>
+                                {/*<button id="imguploadbtn">Upload Image</button>*/}
                                 <button id="savebtn" onClick={savenote}>Save Note</button>
                             </div>
                             

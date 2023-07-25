@@ -154,10 +154,10 @@ transition: all 0.5s ease-in-out 0s;
 
 
 }
-.order_container{
+.order_containerdelivered{
 width: 96%;
 height: 3.5em;
-background-color:#e097e6;
+background-color:#a7e6c8c0;
 display: flex;
 flex-direction: row;
 align-items: center;
@@ -168,35 +168,59 @@ justify-content: space-evenly;
 cursor: pointer;
 
 }
+.order_containerdelivered:hover>.order_title{
+color: white;
+}
+.order_containerpending{
+width: 96%;
+height: 3.5em;
+background-color:#e697afc0;
+display: flex;
+flex-direction: row;
+align-items: center;
+padding: 0 2%;
+font-family: Fraunces;
+font-size: 1em;
+justify-content: space-evenly;
+cursor: pointer;
+
+}
+.order_containerpending:hover>.order_title{
+color: white;
+}
+
 .orderbox:hover{
 
 transform: scale(1.008);
 }
-.order_container:hover>.order_title{
-color: white;
-}
+
 .Order_symbol{
 }
 .order_title{
-width: 60%;
+width: 40%;
 
 }
 .expand_icon{
 cursor: pointer;
 transition: all 0.5s ease-in-out 0s;
+
+width:1.2em;
 }
 .expand_icon:hover{
 font-size: 1.5em;
 }
 .order_date{
 font-size: 1.2em;
+
+width: 10%;
 }
 .status{
-font-size: 1.2em;
+font-size: 1em;
 }
 .transact_icon{
 cursor: pointer;
 transition: all 0.5s ease-in-out 0s;
+
 }
 .transact_icon:hover{
 font-size: 2em;
@@ -221,7 +245,7 @@ padding: 1em;
 margin: 1% 0;
 }
 .headings{
-background-color: #56aca670;
+background-color: #70d3cc3b;
 text-align: center;
 }
 .detail_table>tr{
@@ -229,14 +253,14 @@ text-align: center;
 
 }
 .total{
-background-color: #56aca670;
+background-color: #70d3cc3b;
 padding-right: 2em;
 font-weight: 700;
-border: 3px solid #56aca670;
+border: 3px solid white;
 }
 .totalamount{
 font-weight: 700;
-border: 3px solid #56aca670;
+
 }
 tr:last-child{
 

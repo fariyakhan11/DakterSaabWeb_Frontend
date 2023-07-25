@@ -30,6 +30,9 @@ function Dashboardpharmacy(){
     const [oldtab,setoldtab]=useState('');
     const [overlay,setoverlay]=useState(false);
     const [logoutalert,setlogoutalert]=useState(false)
+    const [order_list,setorder_list]=useState([]);
+    const [last_transact,setlast_transact]=useState();
+    const [medicine_list,setmedicine_list]=useState([]);
 
 //navigate between tabs from the sidenav clicks and transitions
     const handlestate=(msg)=>{
@@ -50,24 +53,74 @@ function Dashboardpharmacy(){
         }
     }
 
-    useEffect(()=>{
+useEffect(()=>{
 
-        if(!expandedstate){
-            document.getElementById('dashboardarea').style.width='97%'
-        }
-        else{
-            document.getElementById('dashboardarea').style.width='85%'
-        }
+    if(!expandedstate){
+        document.getElementById('dashboardarea').style.width='97%'
+    }
+    else{
+        document.getElementById('dashboardarea').style.width='85%'
+    }
 
-
-    })
+    fetchorders()
+    fetchlasttransact()
+fetchlowmeds()
+})
 
 useEffect(()=>{
 sessionStorage.setItem('org_name', 'ABC Pharma'); 
 sessionStorage.setItem('org_address', 'R 143 sector 9 North Karachi, Karachi');
 sessionStorage.setItem('email', 'abcpharmacy@gmail.com'); 
 sessionStorage.setItem('phone', '03232626789');  
+
+
 },[])
+
+
+
+//fetch last stored transaction
+function fetchlasttransact(){
+    try{
+        const params=sessionStorage.getItem('org_name')+'/'+sessionStorage.getItem('org_address')
+        const api='http://localhost:5000/api/transactionandorder/getlasttransact/'+params;
+        fetch(api, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        }).then((response) => response.json()) // get response, convert to json
+        .then((json) => {
+        if(json.transaction){
+          setlast_transact(json.transaction);
+        }else{setlast_transact();}
+        if(json.error){console.log(json.error)}
+      });
+    }catch(err){
+      console.log(err)
+    }
+}
+
+//fetch orders from the database
+function fetchorders(){
+    try{
+        const params=sessionStorage.getItem('org_name')+'/'+sessionStorage.getItem('org_address')
+        const api='http://localhost:5000/api/transactionandorder/getorders/'+params;
+        fetch(api, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        }).then((response) => response.json()) // get response, convert to json
+        .then((json) => {
+        if(json.order){
+          setorder_list(json.order);
+        }else{setorder_list([]);}
+        if(json.error){console.log(json.error)}
+      });
+    }catch(err){
+      console.log(err)
+    }
+}
 
 function openoverlaytab(e){
     
@@ -89,7 +142,27 @@ function openoverlaytab(e){
     }
 }
 
-
+function fetchlowmeds(){
+try{
+        const params=sessionStorage.getItem('org_name')+'/'+sessionStorage.getItem('org_address')
+        const api='http://localhost:5000/api/pharmacy/lowmeds/'+params;
+        fetch(api, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        }).then((response) => response.json()) // get response, convert to json
+        .then((json) => {
+        if(json.medicines){
+          setmedicine_list(json.medicines);
+          
+        }else{setmedicine_list([]);}
+        if(json.error){console.log(json.error)}
+      });
+    }catch(err){
+      console.log(err)
+    }
+}
 
 return(
 <>
@@ -126,11 +199,7 @@ return(
               <GrHelp className="icon" id='Help' onClick={openoverlaytab}/>
             
           </li>
-          <li className="nav-item">
-            
-              <MdSettings className="icon" id='Settings' onClick={openoverlaytab}/>
-            
-          </li>
+
           <li className="nav-item">
             
               <FiLogOut className="icon" id='Logout' onClick={()=>{setlogoutalert(true)}}/>
@@ -216,38 +285,54 @@ return(
                         <h3>Quantity</h3>
                     </div>
                     <div id="contentinfopharmacy">
+{order_list.map((i,index)=>{return(<>
                         <div className="pharmacyinfo pharmacycontent">
-                            <h3>Alishba Arshad</h3>
-                            <h3>Rs 178</h3>
-                            <h3>Panadol<br/>Augmentin</h3>
-                            <h3>5 <br/>2</h3>
+                            <h3>{i.buyer_name}</h3>
+                            <h3>Rs {i.amount}</h3>
+<h3>
+
+                            {i.items.map((item,ind)=>{return(<>
+                                                        {item.name}
+                            <br/>
+                                                        
+                            </>)})}
+                            </h3>
+                            <h3>
+
+                            {i.items.map((item,ind)=>{return(<>
+                                                        {item.quantity}
+                            <br/>
+                                                        
+                            </>)})}
+                            </h3>
+
                         </div>
-                        <div className="pharmacyinfo pharmacycontent">
-                            <h3>Alishba Arshad</h3>
-                            <h3>Rs 178</h3>
-                            <h3>Panadol<br/>Augmentin</h3>
-                            <h3>5 <br/>2</h3>
-                        </div>
+
+</>)})}
                     </div>
 
                 </div>
                 <h2 className="booktitledivpharmacy">Last Transaction</h2>
                 <div className="bookdiv3">
+{last_transact&&
                     <div>
                         <div>
                             <img src={Trans}></img>
                             <div>
-                                <h2>Alishba Arshad</h2>
-                                <h3>15/05/2023 12:20 PM</h3>
-                                <h4>Rs 150</h4>
+                                <h2>{last_transact.buyer_name}</h2>
+                                <h3>{last_transact.date}</h3>
+                                <h4>Rs {last_transact.amount}</h4>
                             </div>
                         </div>
                         <div>
-                            <div><h5>Panadol</h5><h5>3</h5></div>
-                            <div><h5>Augmentin</h5><h5>2</h5></div>
+{last_transact.items.map((i,index)=>{return(<>
+                            <div><h5>{i.name}</h5><h5>{i.quantity}</h5></div>
+</>)})}
+
 
                         </div>
                     </div>
+}
                 </div>
                 <h2 className="booktitledivpharmacy">Low Inventory</h2>
                 <div className="bookdiv5">
@@ -257,18 +342,15 @@ return(
 
                     </div>
                     <div id="inventorycontentdiv">
+{medicine_list.map((item,index)=>{return(<>
                         <div className="inventorycontent">
-                            <h6>Panadol</h6>
-                            <h6>3</h6>
+                            <h6>{item.name}</h6>
+                            <h6>{item.quantity}</h6>
                         </div>
-                        <div className="inventorycontent">
-                            <h6>Panadol</h6>
-                            <h6>3</h6>
-                        </div>
-                        <div className="inventorycontent">
-                            <h6>Panadol</h6>
-                            <h6>3</h6>
-                        </div>
+
+
+</>)})}
+
                     </div>
                 </div>
             </div>

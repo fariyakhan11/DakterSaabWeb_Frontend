@@ -136,11 +136,7 @@ return(
               <GrHelp className="icon" id='Help' onClick={openoverlaytab}/>
             
           </li>
-          <li className="nav-item">
-            
-              <MdSettings className="icon" id='Settings' onClick={openoverlaytab}/>
-            
-          </li>
+
           <li className="nav-item">
             
               <FiLogOut className="icon" id='Logout' onClick={()=>{setlogoutalert(true)}}/>

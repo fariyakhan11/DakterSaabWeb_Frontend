@@ -1,11 +1,12 @@
 import React from "react";
 import './transactions.css';
-
+import HistoryP from '../../images/history.png'
 import { useState,useEffect } from "react";
+import Transactionhistory from "./transactionhistory";
 
 
 function Transactions(props){
-
+    const [close_history_view, set_history_view] = useState(true);
     const [transactioninfo,settransactioninfo]=useState({buyer_name:'',date:'',discount:'',amount:0,items:[]})
     const [displayed_list,setdisplayed_list]=useState([])
 
@@ -33,8 +34,8 @@ function fetchmeds(){
         }).then((response) => response.json()) // get response, convert to json
         .then((json) => {
         if(json.medicines){
-          
-          setdisplayed_list(json.medicines);
+          var meds=json.medicines.filter(medicine => medicine.quantity <0)
+          setdisplayed_list(meds);
         }else{setdisplayed_list([])}
         if(json.error){console.log(json.error)}
       });
@@ -56,7 +57,7 @@ function fetchblood(){
         }).then((response) => response.json()) // get response, convert to json
         .then((json) => {
         if(json.bloodgroups){
-          
+          var blood =json.bloodgroups.filter(b => b.quantity < 0)
           setdisplayed_list(json.bloodgroups);
         }else{setdisplayed_list([])}
         if(json.error){console.log(json.error)}
@@ -139,13 +140,74 @@ useEffect(()=>{
         document.getElementsByClassName('save-btn')[0].classList.remove('idlebtn');
     }
 })
+
+const transact_submit=()=>{
+    try{
+        var api;
+        if(props.class==='blood'){
+            api='http://localhost:5000/api/transactionandorder/transactionblood';
+        }
+        else if(props.class==='pharmacy'){
+        api='http://localhost:5000/api/transactionandorder/transactionmeds';
+        }
+
+        let data={org_name:sessionStorage.getItem('org_name'),address:sessionStorage.getItem('org_address'),transactioninfo:transactioninfo}
+        fetch(api, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        }).then(res => {
+                if (res.status === 200) {
+                    alert('transaction successful')
+                    if(props.class==='blood'){ 
+                        fetchblood()
+                    }
+                    else if(props.class==='pharmacy'){
+                        fetchmeds()
+                    }
+                    var currentDate = new Date();
+                    var formattedDate =currentDate.getDate() +'/' +(currentDate.getMonth() + 1) +'/' +currentDate.getFullYear();
+
+                    settransactioninfo({buyer_name: '',date: formattedDate,discount: '',amount: 0,items: []});
+
+                    var x = document.getElementsByClassName('checkboxtransact');
+                    for (var i = 0; i < x.length; i++) {
+                        if (x[i].checked) {
+                            x[i].checked = false;
+                        }
+                    }
+                }
+                else if (res.status === 430) { alert(res.error) }
+
+                else {  alert('Problem adding medicines', res.error) }
+            });
+    }catch(err){
+        console.log(err);
+    }
+}
+
+//close the history tab
+const handle_add=(close)=>{
+  set_history_view(close)
+  
+}
 return(
 <>
+{!close_history_view &&
+<Transactionhistory close={handle_add}/>
+}
         <div id="Transactionsdashboard">
             <div className="contentarea" >
                     <h3 className="contentareatitle">Transactions</h3>
                     <hr/>
-
+                    <div id="historybar">
+                        <div onClick={()=>{set_history_view(false)}}>
+                            <h3>Transaction History</h3>
+                            <img src={HistoryP}></img>
+                        </div>
+                    </div>
                 <div id="transactionsdiv">
                     <div id={"transact-div"+props.class}>
                         <div id='date'>
@@ -181,7 +243,7 @@ return(
                             </div>
                         </div>
                         <div id={"transact-divbottom"+props.class}>
-                            <button id={'savetransact'+props.class} className="save-btn">Save And Proceed</button>
+                            <button id={'savetransact'+props.class} className="save-btn" onClick={transact_submit}>Save And Proceed</button>
                         </div>
                     </div>
                     <div id={"side-transact-div"+props.class}>
@@ -198,7 +260,7 @@ return(
                                 </tr>
 {displayed_list.map((i,index)=>{return(
                                 <tr className={"entrydetail"+props.class}>
-                                    <td><input type="checkbox" id={index+"-cb"} onChange={handlechecks} name={props.class==='blood'?i.AvailableBloodGroup:i.name} ></input></td>                        
+                                    <td><input type="checkbox" id={index+"-cb"} onChange={handlechecks} name={props.class==='blood'?i.AvailableBloodGroup:i.name} className="checkboxtransact"></input></td>                        
                                     <td ><label htmlFor={index+"-cb"}>{props.class==='blood'?i.AvailableBloodGroup:i.name}</label></td>
                                     <td><label htmlFor={index+"-cb"}>{i.price}</label></td>
                                     <td><label htmlFor={index+"-cb"}>{i.quantity}</label></td>

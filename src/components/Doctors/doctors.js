@@ -13,15 +13,15 @@ function Doctors(){
     const [doctor_list,setdoctor_list]=useState([]);
     const [displayed_list,setdisplayed_list]=useState([])
 //selected medicines to delete
-    const [selected_medicine,setselected_medicine]=useState([])
+    const [selected_doctor,setselected_doctor]=useState([])
 //set whether an element is expanded or not
   const [expanded,setexpanded]=useState(false)
 //values to update medicine details
     const [viewdoc,setviewdoc]=useState({name:'',email:'',education:'',speciality:'',department:'',experience:'',availability:[{day:"",time:''}]})
 
 //initial tasks on page load
-  useEffect(()=>{
-fetchdoctors()
+useEffect(()=>{
+  fetchdoctors()
   },[])
 
   const handleSearchTermChange = (event) => {
@@ -32,16 +32,21 @@ fetchdoctors()
     setSelectedCategory(event.target.value);
   };
 
+
+//close the add view tab
 const handle_add=(close)=>{
-    set_add_view(close)
+  set_add_view(close)
+  fetchdoctors()
 }
+
 
 //set up the update view
 const detail_view=(e)=>{
     if(!expanded){
       var id=e.target.id;
-      document.getElementsByClassName('medsdiv')[id].classList.add('medsdivspecial');
-      document.getElementsByClassName('medsdivspecial')[0].classList.remove('medsdiv');
+      document.getElementsByClassName('medsdiv')[id].classList.add('docsdivspecial');
+      document.getElementsByClassName('docsdivspecial')[0].classList.remove('medsdiv');
+      console.log('the jdk',displayed_list[id].availability)
       setviewdoc({
         name:displayed_list[id].Name,
         email:displayed_list[id].email,
@@ -53,14 +58,15 @@ const detail_view=(e)=>{
 
       })
       setexpanded(true);
+      
     }
 }
-
+useEffect(()=>{console.log(viewdoc)},[viewdoc])
 //close the update view
 const close_detail_view=(e)=>{
     if(expanded){
-      document.getElementsByClassName('medsdivspecial')[0].classList.add('medsdiv');      
-      document.getElementsByClassName('medsdivspecial')[0].classList.remove('medsdivspecial'); 
+      document.getElementsByClassName('docsdivspecial')[0].classList.add('medsdiv');      
+      document.getElementsByClassName('docsdivspecial')[0].classList.remove('docsdivspecial'); 
       setviewdoc({
         name:'',
         email:'',
@@ -74,7 +80,7 @@ const close_detail_view=(e)=>{
     }     
 }
 
-//fetch medicines from the database
+//fetch doctors from the database
 function fetchdoctors(){
     try{
         const params=sessionStorage.getItem('org_name')+'/'+sessionStorage.getItem('org_address')
@@ -96,6 +102,7 @@ function fetchdoctors(){
       console.log(err)
     }
 }
+useEffect(()=>{console.log(displayed_list)},[displayed_list])
 
 //activate the delete view
 const deletemodeon=(e)=>{
@@ -119,7 +126,7 @@ const deletemodeon=(e)=>{
         for(var c=0;c<cb_o.length;c++){
             cb_o[c].style.display='none';
         }
-        setselected_medicine([])
+        setselected_doctor([])
         var cb=document.getElementsByClassName('checkbox-selected')
         for(var c=0;c<cb.length;c++){
             cb[c].style.display='none';
@@ -132,25 +139,29 @@ const deletemodeon=(e)=>{
 const delete_selected=(e)=>{
     e.preventDefault();
     try{
-        var params=sessionStorage.getItem('org_name')+'/'+sessionStorage.getItem('org_address')+'/'+selected_medicine
-        fetch('http://localhost:5000/api/pharmacy/delmed/'+params,{
-            method: 'DELETE',
+      let data={name:sessionStorage.getItem('org_name'),address:sessionStorage.getItem('org_address'),doc_list:selected_doctor}
+        
+        fetch('http://localhost:5000/api/hospital/deldoc/',{
+            method: 'POST',
             headers: {
-            'Content-Type': 'application/json'}
+            'Content-Type': 'application/json'},
+          body: JSON.stringify(data)
         }).then(res=>{
 
             res.json();
             console.log("the response is ",res);
-            setselected_medicine([])
+            setselected_doctor([])
             var cb=document.getElementsByClassName('checkbox-selected')
             for(var c=0;c<cb.length;c++){
                 cb[c].style.display='none';
             }
             if(res.status===200){
                 fetchdoctors()    
-                alert('Medicines deleted successfully')
+                alert('Doctors deleted successfully')
             }
-                
+            else{
+              alert('Problem deleting Doctors')
+            }    
             }
         )
 
@@ -168,17 +179,17 @@ const select_delete = (event) => {
 
   if (check.checked) {
     document.getElementById('cb' + id).style.display = 'block';
-    setselected_medicine((prevState) => [...prevState, check.value]);
+    setselected_doctor((prevState) => [...prevState, {name:check.value,department:check.name}]);
   } else {
     document.getElementById('cb' + id).style.display = 'none';
-    setselected_medicine((prevState) => prevState.filter((item) => item !== check.value));
+    setselected_doctor((prevState) => prevState.filter((item) => item.name !== check.value&&item.department!==check.name ));
   }  
 };
 
 //which medicines are selected for deletion
 useEffect(() => {
-  console.log(selected_medicine);
-}, [selected_medicine]);
+  console.log(selected_doctor);
+}, [selected_doctor]);
 
 return(
 <>
@@ -208,7 +219,8 @@ return(
                         
                     </div>
                     <div className="infomeds">
-                      <div className="medscontainer">
+<div id="scrollablecont">
+                      <div className="medscontainerhospitaldr">
 
 
 {
@@ -226,56 +238,66 @@ return(
                                     <div className="checkbox-outline" id={'co'+index}>
                                         <div className="checkbox-selected" id={'cb'+index}></div>
                                     </div>
-                                    <input type="checkbox" value={i.name} name="selected-delete" id={'cbd'+index} className="selectedcbd"/>
+                                    <input type="checkbox" value={i.Name} name={i.Department} id={'cbd'+index} className="selectedcbd"/>
                                     
                                 </div>
-                                <div className="expandable-div">
-                                    <div id='view-btn-div'>
+
+                                <div className="expandablediv">
+                                    <div className="expandabledivhead">
+                                    <div id=''>
                                       <button onClick={close_detail_view}>+</button>
 
                                     </div>
+                                    </div>
+                                    <div className="expandabledivcontent">
                                     <div>
+                                    <div className="expandabledivchild">
                                         <h3>Name: </h3>
                                         <h4>{viewdoc.name}</h4>
                                     </div>
-                                    <div>
+                                    <div className="expandabledivchild">
                                         <h3>Email: </h3>
                                         <h4>{viewdoc.email}</h4>
                                     </div>
-                                    <div>
+                                    <div className="expandabledivchild">
                                         <h3>Department: </h3>
                                         <h4>{viewdoc.department}</h4>
                                     </div>
-                                    <div>
+                                    <div className="expandabledivchild">
                                         <h3>Education: </h3>
                                         <h4>{viewdoc.education}</h4>
                                     </div>
-                                    <div>
+                                    <div className="expandabledivchild">
                                         <h3>Experience: </h3>
                                         <h4>{viewdoc.experience}</h4>
                                     </div>
-                                    <div>
+                                    <div className="expandabledivchild">
                                         <h3>Speciality: </h3>
                                         <h4>{viewdoc.speciality}</h4>
                                     </div>
+                                    </div>
+                                    <div>
                                     <div>
                                         <h3>Availability: </h3>
                                     </div>
-                                    {viewdoc.availability.map((i,index)=>{
+                                    {viewdoc.availability &&viewdoc.availability.map((i,index)=>{
+                                        if(i.time!=''){
                                         return(
                                             <>
-                                                <div>
-                                                    <h3>{i.day} : {i.time}</h3>
+                                                <div className="expandabledivchild">
+                                                    <h3>{i.day} : </h3>
+                                                      <h4>{i.time}</h4>
                                                 </div>
                                             </>
-                                        )
+                                        )}
 
                                     })}
-
+                                    </div>
+                                    </div>
                                 </div>
                             </div>
                             <div className="bottomareamed" id={index}>
-                                <h4 id={index}>Rs {i.Speciality}</h4>
+                                <h4 id={index}>{i.Speciality}</h4>
                                 <h3 id={index}>{i.Name}</h3>
                                 <h4 id={index}>{i.Department}</h4>
 
@@ -288,6 +310,7 @@ return(
                         <h2 className="nulldata">No doctors added yet</h2>
 }
                       </div>
+</div>
                     </div>                     
                 
             </div>

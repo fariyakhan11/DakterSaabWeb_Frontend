@@ -317,14 +317,14 @@ font-family: Fraunces;
 width: 1em;
 height: 1em;
 border: 2px solid black;
-background-color: rgba(252, 213, 234, 0.39);
+background-color: #e697afc0;
 margin: 0 0.7em ;
 }
 #filledbox{
 width: 1em;
 height: 1em;
 border: 2px solid black;
-background-color: rgba(175, 195, 238, 0.39);
+background-color: #a7e6c8c0;
 margin:0 0.7em;
 }
 #headinventory{

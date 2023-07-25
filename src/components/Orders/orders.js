@@ -21,11 +21,11 @@ function Orders(){
     setSearchTerm(event.target.value);
   };
 
-//fetch departments from the database
+//fetch orders from the database
 function fetchorders(){
     try{
         const params=sessionStorage.getItem('org_name')+'/'+sessionStorage.getItem('org_address')
-        const api='http://localhost:5000/api/order/getorders/'+params;
+        const api='http://localhost:5000/api/transactionandorder/getorders/'+params;
         fetch(api, {
             method: 'GET',
             headers: {
@@ -51,6 +51,11 @@ useEffect(()=>{
   const handleCategoryChange = (event) => {
     setSelectedCategory(event.target.value);
   };
+
+function formatdate(date){
+var months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
+
+}
 //data filter toggle on/off
 const handledatefilter = (e) => {
   var currentDate = new Date(); // Get the current date
@@ -61,13 +66,15 @@ const handledatefilter = (e) => {
     document.getElementById('togglebtndiv').style.justifyContent = 'flex-end';
     setSelectedDate(currentDate.toISOString().split('T')[0]); // Set selectedDate to current date
     setfilters((prevdata) => ({ ...prevdata, time: currentDate }));
-  
+    var filteredOrders=order_list.filter(o=>o.date===selectedDate)
+    setdisplayed_list(filteredOrders)
   } else {
     e.target.classList.add('idletogglebtn');
     e.target.classList.remove('activetogglebtn');
     document.getElementById('togglebtndiv').style.justifyContent = 'flex-start';
     setSelectedDate('');
     setfilters((prevdata) => ({ ...prevdata, time: '' }));
+    setdisplayed_list(order_list)
   }
 };
 //show or hide the order detail
@@ -85,6 +92,22 @@ const orderdetailhandler=(e)=>{
     }
 }
 
+const filterorders = (e) => {
+  if (e.target.id === 'all') {
+    setdisplayed_list(order_list);
+    document.getElementsByClassName('selectedstatus')[0].classList.remove('selectedstatus');
+    e.target.classList.add('selectedstatus');
+  } else {
+    var filteredOrders = order_list.filter((o) => o.status === e.target.id);
+    setdisplayed_list(filteredOrders);
+    document.getElementsByClassName('selectedstatus')[0].classList.remove('selectedstatus');
+    e.target.classList.add('selectedstatus');
+  }
+};
+
+const movetotransact=(e)=>{
+
+}
 return(
 <>
         <div id="Ordersdashboard">
@@ -103,15 +126,16 @@ return(
                             return(
 
                         <div className="orderbox" id={index}>
-                            <div className="order_container" id={index}>
+                            <div className={"order_container"+i.status} id={index}>
                                 <FiPackage className="tabsicon Order_symbol" id={index}/>
                                 <h2 className="order_title" id={index}>{i.buyer_name}</h2>
+
+                                <h2 className="order_date" id={index}>{i.date}</h2>
+                                <h2 className="status" id={index}>{i.status}</h2>
+                                <GrTransaction  className="tabsicon transact_icon" id={index} onClick={movetotransact}/>
                                 <div className="expand_icon" onClick={orderdetailhandler} id={index}>
                                     <AiFillCaretDown className="tabsicon " id={index}/>
                                 </div>
-                                <h2 className="order_date" id={index}>{i.date}</h2>
-                                <h2 className="status" id={index}>Pending</h2>
-                                <GrTransaction  className="tabsicon transact_icon" id={index}/>
                             </div>
                             <div className="orderdetail" id={index}>
                                 <table className="detail_table" id={index}>
@@ -166,9 +190,9 @@ return(
                             <input type="date" id="datepicker" className="calendar-containerfilter" value={selectedDate} onChange={(e) => setSelectedDate(e.target.value)}></input>                                
 
                             <h6>Order Status:</h6>
-                                <h5 className="selectedstatus">All</h5>
-                                <h5>Pending</h5>
-                                <h5>Delivered</h5>  
+                                <h5 id="all" className="selectedstatus" onClick={filterorders} >All</h5>
+                                <h5 id="pending" onClick={filterorders}>Pending</h5>
+                                <h5 id="delivered" onClick={filterorders}>Delivered</h5>
                         </div>
                     </div>
                 </div>
