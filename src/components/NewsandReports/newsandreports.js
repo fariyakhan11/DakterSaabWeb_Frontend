@@ -5,22 +5,23 @@ import News from '../../images/newspaper.png'
 import Requests from '../../images/request.png'
 import { useState,useEffect } from "react";
 import { Label } from "reactstrap";
-
+import All from '../../images/all.png'
 
 function Newsandreports(){
 
-const [entryform ,setentryform]=useState({form_no:'',form_date:'',form_type:'',name:'',form_title:'',form_description:'',form_department:'',resolution_description:'',resolution_date:'',resolver_name:''})
+    const [entryform ,setentryform]=useState({form_no:'',form_date:'',form_type:'',name:'',form_title:'',form_description:'',form_department:'',resolution_description:'',resolution_date:'',resolver_name:''})
 
-const [CNRlist ,setCNRlist ]=useState([
-    {form_no:'9092',form_date:'',form_type:'Complaint',name:'',form_title:'',form_description:'',form_department:'',resolution_description:'',resolution_date:'',resolver_name:''},
-    {form_no:'647',form_date:'',form_type:'News',name:'',form_title:'',form_description:'',form_department:'',resolution_description:'',resolution_date:'',resolver_name:''},
-    {form_no:'23',form_date:'',form_type:'Request',name:'',form_title:'',form_description:'',form_department:'',resolution_description:'',resolution_date:'',resolver_name:''}
+    const [CNRlist ,setCNRlist ]=useState([
+        {form_no:'9092',form_date:'',form_type:'Complaint',name:'',form_title:'',form_description:'',form_department:'',resolution_description:'',resolution_date:'',resolver_name:''},
+        {form_no:'647',form_date:'',form_type:'News',name:'',form_title:'',form_description:'',form_department:'',resolution_description:'',resolution_date:'',resolver_name:''},
+        {form_no:'23',form_date:'',form_type:'Request',name:'',form_title:'',form_description:'',form_department:'',resolution_description:'',resolution_date:'',resolver_name:''}
     ])
-const [resolution_window,set_resolution_window]=useState(false)
+    const [resolution_window,set_resolution_window]=useState(false)
+    const [fetched_list,setfetched_list]=useState([])
 
 useEffect(()=>{
     setentryform({form_no:'',form_date:generatenowdate(),form_type:'',name:'',form_title:'',form_description:'',form_department:'',resolution_description:'',resolution_date:generatenowdate(),resolver_name:''})
-
+    fetchforms()
 },[])
 
 function generatenowdate(){
@@ -46,6 +47,43 @@ const show_details_and_resolution=(e)=>{
     var id=e.target.id
     setentryform({form_no:CNRlist[id].form_no,form_date:CNRlist[id].form_date,form_type:CNRlist[id].form_type,entree_namename:CNRlist[id].entree_name,form_title:CNRlist[id].form_title,form_description:CNRlist[id].form_description,form_department:CNRlist[id].form_department,resolution_description:CNRlist[id].resolution_description,resolution_date:CNRlist[id].resolver_name!=''?CNRlist[id].resolution_date:generatenowdate(),resolver_name:CNRlist[id].resolver_name})
     set_resolution_window(true)
+}
+
+const filterNCR = (e) => {
+  if (e.target.id === 'All') {
+    setCNRlist(fetched_list)
+    document.getElementsByClassName('selectedformtype')[0].classList.remove('selectedformtype');
+    document.getElementsByClassName(e.target.id+'div')[0].classList.add('selectedformtype');
+  } else {
+    var filteredForms = fetched_list.filter((o) => o.formtype === e.target.id);
+    setCNRlist(filteredForms);
+    document.getElementsByClassName('selectedformtype')[0].classList.remove('selectedformtype');
+    document.getElementsByClassName(e.target.id+'div')[0].classList.add('selectedformtype');
+    
+  }
+};
+
+//fetch orders from the database
+function fetchforms(){
+    try{
+        const params=sessionStorage.getItem('org_name')+'/'+sessionStorage.getItem('org_address')
+        const api='http://localhost:5000/api/hospital/getforms/'+params;
+        fetch(api, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        }).then((response) => response.json()) // get response, convert to json
+        .then((json) => {
+        if(json.order){
+          setCNRlist(json.order);
+          setfetched_list(json.order);
+        }else{setCNRlist([]);setfetched_list([])}
+        if(json.error){console.log(json.error)}
+      });
+    }catch(err){
+      console.log(err)
+    }
 }
 return(
 <>
@@ -208,9 +246,10 @@ return(
 
                         <div id="NRC_secondDiv">
                             <div id="filterbaricons">
-                                <div><img src={Complaints}></img></div>
-                                <div><img src={Requests}></img></div>
-                                <div><img src={News}></img></div>
+                                <div id='All' className="Alldiv" onClick={filterNCR}><img src={All} id='All'></img></div>
+                                <div id='Complaint' className="Complaintdiv" onClick={filterNCR}><img src={Complaints} id='Complaint'></img></div>
+                                <div id="News" className="Newsdiv" onClick={filterNCR}><img src={Requests} id="News"></img></div>
+                                <div id="Request" className="Requestdiv" onClick={filterNCR}><img src={News} id="Requests"></img></div>
                             </div>
                             <div id="NRC_formArea">
                                 <h1>Entry Form</h1>

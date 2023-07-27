@@ -72,7 +72,7 @@ sessionStorage.setItem('org_name', 'ABC Pharma');
 sessionStorage.setItem('org_address', 'R 143 sector 9 North Karachi, Karachi');
 sessionStorage.setItem('email', 'abcpharmacy@gmail.com'); 
 sessionStorage.setItem('phone', '03232626789');  
-
+sessionStorage.setItem('password','********')
 
 },[])
 
@@ -177,9 +177,9 @@ return(
 <div id="dashboardarea">
     <div className="secondnavpharmacy">
         <div className="admindiv">
-        <BiUser  className="icon" />   
+        <BiUser  className="icon" onClick={openoverlaytab} id="Profile" />   
    
-        <h2  className='adminname'>Hi Alishba !</h2>
+        <h2  className='adminname' onClick={openoverlaytab} id="Profile">Hi Alishba !</h2>
         </div>
         <div className="links">
         <button

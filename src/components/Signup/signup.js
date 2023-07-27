@@ -273,7 +273,7 @@ return(
                                         <label>Education: </label>
                                         <input className="inputf" type="text" name="education" onChange={handleUserInput} />
                                     </div>
-                                    <h6 id="speerr">Name cannot contain special characters or numbers</h6>
+                                    <h6 id="speerr">Speciality cannot contain special characters or numbers</h6>
                                     <div className="form-fields" id="spe-div">
                                         <label>Speciality: </label>
                                         <input className="inputf" type="text" name="speciality" onChange={handleUserInput} />

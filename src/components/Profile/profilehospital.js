@@ -1,175 +1,14 @@
 import React from "react";
-import './profiledoctor.css';
-import EditP from '../../images/edit1.png'
+import './profilehospital.css';
+import HospitalP from '../../images/hospital1.png'
 import { useState,useEffect } from "react";
-import DocP from '../../images/doctor1.png'
-import validator from "validator";
-
-function Profiledoctor(){
-    const [edit_view, set_edit_view] = useState(false);
-    const [doctorinfo,setdoctorinfo]=useState({name:'',email:'',phone:'',education:'',speciality:'',password:'',experience:'',description:'',hospital:[''],ratings:''})
-
-useEffect(()=>{
-    enterdetails()
-
-},[])
-
-function enterdetails(){
-    
-    const arr = sessionStorage.getItem('hospital').split(", ").map(item => item.trim());
-    setdoctorinfo({name:sessionStorage.getItem('org_name'),email:sessionStorage.getItem('email'),phone:sessionStorage.getItem('phone'),education:sessionStorage.getItem('education'),password:sessionStorage.getItem('password'),speciality:sessionStorage.getItem('speciality'),experience:sessionStorage.getItem('experience'),description:sessionStorage.getItem('description'),hospital:arr,ratings:sessionStorage.getItem('ratings')})
-
-}
-
-const addhosdiv=()=>{
-    var h=doctorinfo.hospital
-    h.push('')
-    setdoctorinfo((prev) => ({
-          ...prev,
-          hospital:h
-    }))
-}
-
-const removehosdiv=(e)=>{
-
-    var h=doctorinfo.hospital
-    if(h.length>1)
-    
-    h.splice(parseInt(e.target.id), 1);
-    setdoctorinfo((prev) => ({
-          ...prev,
-          hospital:h
-    }))
-}
 
 
-useEffect(()=>{console.log(doctorinfo)},[doctorinfo])
+function Profilehospital(){
 
-const handleinput=(e)=>{
-        if (e.target.name === 'email') {
-            if (!validator.isEmail(e.target.value)) {
-                document.getElementById('emailerr').style.display="block";
-            }
-            else { 
-                document.getElementById('emailerr').style.display="none";
-                setdoctorinfo((prev) => ({
-                    ...prev,
-                    email:e.target.value
-                }))
-             }
-        }
-
-        else if (e.target.name ==='name'){
-            const name_expression =/^[A-Za-z]+$/;
-            if((name_expression.test(e.target.value[0]))){
-                document.getElementById('nameerr').style.display="none";
-                    setdoctorinfo((prev) => ({
-                    ...prev,
-                    name:e.target.value
-                }))
-            }
-            else{
-                document.getElementById('nameerr').style.display="block";
-            }
-        }
-        else if (e.target.name === 'password') {
-
-            if (!(e.target.value.length > 7)) {
-                document.getElementById('pwerr').textContent="Password is too short";
-                document.getElementById('pwerr').style.display="block";
-            }
-            else {
-                document.getElementById('pwerr').style.display="none";
-                    setdoctorinfo((prev) => ({
-                    ...prev,
-                    password:e.target.value
-                }))
-            }
-        }
-        else if (e.target.name ==='education'){
-            const name_expression =/^[A-Za-z]+$/;
-            if((name_expression.test(e.target.value[0]))){
-                document.getElementById('eduerr').style.display="none";
-                    setdoctorinfo((prev) => ({
-                    ...prev,
-                    education:e.target.value
-                }))
-            }
-            else{
-                document.getElementById('eduerr').style.display="block";
-            }
-        }
-        else if (e.target.name ==='speciality'){
-            const name_expression =/^[A-Za-z]+$/;
-            if((name_expression.test(e.target.value[0]))){
-                document.getElementById('speerr').style.display="none";
-                    setdoctorinfo((prev) => ({
-                    ...prev,
-                    speciality:e.target.value
-                }))
-            }
-            else{
-                document.getElementById('speerr').style.display="block";
-            }
-        }
-        else if (e.target.name ==='hospital'){
-            var id=parseInt(e.target.id)
-            const name_expression =/^[A-Za-z]+$/;
-            if((name_expression.test(e.target.value[0]))){
-                document.getElementById('hoserr').style.display="none";
-                    var h=doctorinfo.hospital
-                    h[id]=e.target.value
-                    setdoctorinfo((prev) => ({
-                    ...prev,
-                    hospital:h
-                }))
-            }
-            else{
-                document.getElementById('hoserr').style.display="block";
-            }
-        }
-        else{
-            setdoctorinfo((prev) => ({
-            ...prev,
-            [e.target.name]:e.target.value
-            }))
-
-        }
-}
-function updatingsession(varname,value){
-    sessionStorage.setItem(varname,value)
-}
-const editformsubmit=()=>{
-        try{
-        
-        const api='http://localhost:5000/api/doctor/update';
-        let data={old_name:sessionStorage.getItem('org_name'),old_email:sessionStorage.getItem('email'),doctorinfo:doctorinfo}
-        fetch(api, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        }).then(res => {
-                if (res.status === 200) {
-                    alert('Doctor updated successfully')
-                    res.json()
-                    console.log(res)
-                    console.log('doc is ',res.doctor)
-
-                    enterdetails()
-                }
-                else if (res.status === 430) { alert(res.error) }
-
-                else {  alert('Problem updating doctor', res.error) }
-            });
-    }catch(err){
-        console.log(err);
-    }
-}
 return(
 <>
-        <div id="Profiledoctordashboard">
+        <div id="Profilehospitaldashboard">
             <div className="contentarea" >
                     <h3 className="contentareatitle">My Profile</h3>
                     <hr/>
@@ -178,7 +17,7 @@ return(
                     <div>
                         <div id="boldinfodiv">
                             <div id="profimgdiv">
-                                <div><img src={DocP}></img></div>
+                                <div><img src={HospitalPP}></img></div>
                             </div>
 {edit_view&&
                             <div id="maincontentdiv">
@@ -285,23 +124,23 @@ return(
                         <div id="profinfodiv">
                             <div id="Passworddiv">
                             <h1>Password:</h1>
-                            <h2>{sessionStorage.getItem('password')}</h2>
+                            <h2>{sessionStorage.getItem('org_name')}</h2>
                             </div>
                             <div id="Specialitydiv">
                             <h1>Speciality:</h1>
-                            <h2>{sessionStorage.getItem('speciality')}</h2>
+                            <h2>{sessionStorage.getItem('org_name')}</h2>
                             </div>
                             <div id="Experiencediv">
                             <h1>Experience (in years):</h1>
-                            <h2>{sessionStorage.getItem('experience')}</h2>
+                            <h2>{sessionStorage.getItem('org_name')}</h2>
                             </div>
                             <div id="Descriptiondiv">
                             <h1>Description:</h1>
-                            <h2>{sessionStorage.getItem('description')}</h2>
+                            <h2>{sessionStorage.getItem('org_name')}</h2>
                             </div>
                             <div id="Ratingsdiv">
                             <h1>Ratings:</h1>
-                            <h2>{sessionStorage.getItem('ratings')}</h2>
+                            <h2>{sessionStorage.getItem('org_name')}</h2>
                             </div>
                             <div id="Hospitaldiv">
                             <h1>Hospitals:</h1>
@@ -320,9 +159,8 @@ return(
 }
                 </div>
             </div>
-
         </div>
 </>
 )
 }
-export default Profiledoctor;
+export default Profilehospital;

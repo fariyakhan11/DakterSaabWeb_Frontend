@@ -65,6 +65,7 @@ useEffect(()=>{
 sessionStorage.setItem('org_name', 'ABC Hospital'); 
 sessionStorage.setItem('org_address', 'R 143 sector 9 North Karachi, Karachi');
 sessionStorage.setItem('email', 'abchospital@gmail.com'); 
+sessionStorage.setItem('password','********')
 sessionStorage.setItem('phone', '03232626589');  
 },[])
 
@@ -100,9 +101,9 @@ return(
 <div id="dashboardarea">
     <div className="secondnavhospital">
         <div className="admindiv">
-        <BiUser  className="icon" />   
+        <BiUser  className="icon" onClick={openoverlaytab} id="Profile"/>   
    
-        <h2  className='adminname'>Hi Alishba !</h2>
+        <h2  className='adminname' onClick={openoverlaytab} id="Profile">Hi Alishba !</h2>
         </div>
         <div className="links">
         <button

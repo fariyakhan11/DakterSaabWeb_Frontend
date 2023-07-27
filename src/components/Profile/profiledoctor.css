@@ -19,3 +19,253 @@ margin: 0.1em 0;
 
 }
 /* All the styles above are defined in the medicine.css file primarily*/
+#editMedicines{
+background-color: #c29de0 !important;
+}
+#editMedicines>img{
+width: 0.8em;
+height: 0.8em;
+}
+#profilediv{
+width: 100%;
+height: 90%;
+display: flex;
+flex-direction: column;
+align-items: center;
+}
+#profilediv>div:nth-child(1){
+display: flex;
+flex-direction: column;
+align-items: center;
+width: 100%;
+height: 90%;
+
+}
+#profilediv>div:nth-child(2){
+display: flex;
+align-items: center;
+height: 7%;
+
+width: 100%;
+justify-content: flex-end;
+align-items: center;
+}
+#profilediv>div:nth-child(2)>button{
+outline: none;
+border-radius: 2em;
+border: 3px solid #8746bd;
+font-family: Fraunces;
+font-size: 1.2em;
+background-color: white;
+color: #763da5;
+transition: all 0.5s ease-in-out;
+box-shadow: 5px 5px 14px rgb(129, 128, 128);
+padding: 0.5em 1.3em;
+margin-right: 2em;
+cursor: pointer;
+}
+#profilediv>div:nth-child(2)>button:hover{
+background-color: #8746bd;
+color: white;
+}
+#boldinfodiv{
+border-bottom: 2px solid rgba(143, 141, 141, 0.575);
+width: 90%;
+padding: 0% 0% 1% 2% ;
+display: flex;
+height: 30%;
+align-items: center;
+margin-top: 1em;
+}
+#boldinfodiv>div>div{
+display: flex;
+align-items: center;
+font-family: Fraunces;
+}
+#boldinfodiv>div:nth-child(2){
+
+height: 100%;
+justify-content: space-evenly;
+display: flex;
+flex-direction: column;
+}
+#profimgdiv{
+margin-right: 4%;
+width: 16%;
+}
+#maincontentdiv{
+width: 80%;
+}
+#maincontentdiv>div>div>h6{
+font-size: 1em;
+color: red;
+font-family: Fraunces;
+text-shadow: 2px 2px 10px rgba(197, 194, 194, 0.411);
+display: none;
+}
+#profinfodiv>h6{
+font-size: 1em;
+color: red;
+font-family: Fraunces;
+text-shadow: 2px 2px 10px rgba(197, 194, 194, 0.411);
+display: none;
+}
+#maincontentdiv>div>div>input{
+outline: none;
+border: none;
+border-bottom: 2px solid black;
+font-size: 1.4em;
+font-family: Fraunces;
+}
+#Hospitaldiv>div:nth-child(1){
+width: 17%;
+}
+#Hospitaldiv>div:nth-child(2){
+width: 35%;
+}
+#Hospitaldiv>div>h1{
+font-size: 1.5em;
+color: #8746bd;
+text-shadow: 2px 2px 10px rgba(197, 194, 194, 0.466);
+}
+#Hospitaldiv>div>input{
+outline: none;
+border: none;
+border-bottom: 2px solid black;
+font-size: 1.2em;
+font-family: Fraunces;
+width: 100%;
+}
+#addhosbtn{
+display: flex;
+justify-content: flex-end;
+flex-direction: row-reverse;
+}
+#addhosbtn>div{
+width: 2em;
+
+height: 2em;
+border-radius: 50%;
+box-shadow: 5px 5px 14px rgba(143, 142, 142, 0.637);
+display: flex;
+align-items: center;
+cursor: pointer;
+background-color: #c29de0;
+transition: all 0.5s ease-in-out;
+}
+#addhosbtn>h4{
+font-family: Fraunces;
+width: 90%;
+font-size: 1.2em;
+transition: all 0.5s ease-in-out;
+text-shadow: 2px 2px 10px rgba(151, 150, 150, 0.767);
+margin-right: 0.8em;
+justify-content: flex-end;
+align-items: center;
+display: flex;
+opacity: 0;
+}
+#addhosbtn>div:hover{
+transform: scale(1.2);
+}
+#addhosbtn>div:hover + h4{
+opacity: 1;
+}
+#addhosbtn>div>h5{
+border-radius: 50%;
+text-align: center;
+width: 100%;
+font-size: 1.5em;
+font-weight: 800;
+color: white;
+font-family: Georgia, 'Times New Roman', Times, serif;
+}
+#profinfodiv>div>input{
+outline: none;
+border: none;
+border-bottom: 2px solid black;
+font-size: 1.4em;
+font-family: Fraunces;
+width: 35%;
+}
+#profinfodiv>div>textarea{
+outline: none;
+border: 2px solid rgb(129, 129, 129);
+font-size: 1.4em;
+font-family: Fraunces;
+width: 35%;
+border-radius: 0.5em;
+height: 4em;
+}
+#editsection{
+width: 4%;
+height: 100%;
+}
+#profimgdiv>div{
+border-radius: 50%;
+height: 10rem;
+width: 10rem;
+justify-content: center;
+align-items: center;
+display: flex;
+border: 6px solid #c29de0 ;
+}
+#profimgdiv>div>img{
+width: 90%;
+height: 90%;
+border-radius: 50%;
+border: 2px solid #c29de0 ;
+}
+#Namediv>h2{
+font-size: 1.5em;
+text-shadow: 2px 2px 10px rgba(197, 194, 194, 0.411);
+}
+#profinfodiv{
+width: 90%;
+padding: 1% 0%;
+height: 75% ;
+overflow: scroll;
+font-family: Fraunces;
+}
+#profinfodiv>div{
+display: flex;
+align-items: center;
+font-size: 1em;
+padding: 0.6em 0em;
+}
+#profinfodiv>div>h1{
+width: 17%;
+font-size: 1.5em;
+color: #8746bd;
+text-shadow: 2px 2px 10px rgba(197, 194, 194, 0.466);
+}
+#profinfodiv>div>h2{
+font-size: 1.3em;
+}
+.removehosbtn>div{
+width: 2em;
+rotate: 45deg;
+height: 2em;
+border-radius: 50%;
+box-shadow: 5px 5px 14px rgba(143, 142, 142, 0.637);
+display: flex;
+align-items: center;
+cursor: pointer;
+transition: all 0.5s ease-in-out;
+}
+.removehosbtn>div:hover{
+transform: scale(1.2);
+}
+.removehosbtn{
+display: flex;
+justify-content: center;
+}
+.removehosbtn>div>h5{
+border-radius: 50%;
+text-align: center;
+width: 100%;
+font-size: 1.5em;
+font-weight: 800;
+
+font-family: Georgia, 'Times New Roman', Times, serif;
+}

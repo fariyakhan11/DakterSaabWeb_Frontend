@@ -68,6 +68,7 @@ sessionStorage.setItem('org_name', 'ABC BloodBank');
 sessionStorage.setItem('org_address', 'R 595 sector 8 North Karachi, Karachi');
 sessionStorage.setItem('email', 'abcbank@gmail.com'); 
 sessionStorage.setItem('phone', '03330249895');  
+sessionStorage.setItem('password','********')
 },[])
 
 function openoverlaytab(e){
@@ -101,9 +102,9 @@ return(
     <div id="dashboardarea">
         <div className="secondnavbloodbank">
             <div className="admindiv">
-            <BiUser  className="icon" />   
+            <BiUser  className="icon" onClick={openoverlaytab} id="Profile"/>   
     
-            <h2  className='adminname'>Hi Alishba !</h2>
+            <h2  className='adminname' onClick={openoverlaytab} id="Profile">Hi Alishba !</h2>
             </div>
             <div className="links">
             <button

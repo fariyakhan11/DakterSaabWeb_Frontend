@@ -66,6 +66,8 @@ useEffect(()=>{
 sessionStorage.setItem('org_name', 'Alishba Arshad'); 
 sessionStorage.setItem('email', 'alishba@gmail.com'); 
 sessionStorage.setItem('phone', '03313423501');  
+sessionStorage.setItem('hospital','alishb , sk')
+sessionStorage.setItem('password','********')
 // Get the day information for each date
 const options = { weekday: 'long' };
 
@@ -114,9 +116,9 @@ return(
 <div id="dashboardarea">
     <div className="secondnavdoctor">
         <div className="admindiv">
-        <BiUser  className="icon" />   
+        <BiUser  className="icon"  onClick={openoverlaytab} id="Profile"/>   
    
-        <h2  className='adminname'>Hi Alishba !</h2>
+        <h2  className='adminname' onClick={openoverlaytab} id="Profile">Hi Alishba !</h2>
         </div>
         <div className="links">
         <button
