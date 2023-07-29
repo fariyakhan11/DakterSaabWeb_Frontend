@@ -20,6 +20,7 @@ import Week from '../../images/week.png';
 import OrdersI from '../../images/order (1).png'
 import OrdersP from '../../images/box.png'
 import Trans from '../../images/card-payment.png'
+import Profilepharmacy from "../Profile/profilepharmacy";
 
 function Dashboardpharmacy(){
     const currentDate = new Date()
@@ -372,6 +373,10 @@ return(
 
 {(tab==='Orders') && 
 <Orders></Orders>
+}
+
+{(tab==='Profile')&&
+<Profilepharmacy/>
 }
 
 {(tab==='Notes') && 

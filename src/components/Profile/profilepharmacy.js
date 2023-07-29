@@ -2,10 +2,143 @@ import React from "react";
 import './profilepharmacy.css';
 import PharmP from '../../images/drugs1.png'
 import { useState,useEffect } from "react";
-
+import validator from "validator";
+import EditP from '../../images/edit1.png'
 
 function Profilepharmacy(){
+    const [edit_view, set_edit_view] = useState(false);
+    const [pharmacyinfo,setpharmacyinfo]=useState({pharmacyname:'',email:'',phone:'',address:'',time:{open:'',close:''},password:''})
 
+useEffect(()=>{
+    enterdetails()
+
+},[])
+
+function enterdetails(){
+    
+    
+    setpharmacyinfo({pharmacyname:sessionStorage.getItem('org_name'),email:sessionStorage.getItem('email'),phone:sessionStorage.getItem('phone'),address:sessionStorage.getItem('org_address'),password:sessionStorage.getItem('password'),time:sessionStorage.getItem('time')})
+
+}
+
+useEffect(()=>{console.log(pharmacyinfo)},[pharmacyinfo])
+
+const handleinput=(e)=>{
+        if (e.target.name === 'email') {
+            if (!validator.isEmail(e.target.value)) {
+                document.getElementById('emailerr').style.display="block";
+            }
+            else { 
+                document.getElementById('emailerr').style.display="none";
+                setpharmacyinfo((prev) => ({
+                    ...prev,
+                    email:e.target.value
+                }))
+             }
+        }
+
+        else if (e.target.name ==='name'){
+            const name_expression =/^[A-Za-z]+$/;
+            if((name_expression.test(e.target.value[0]))){
+                document.getElementById('nameerr').style.display="none";
+                    setpharmacyinfo((prev) => ({
+                    ...prev,
+                    pharmacyname:e.target.value
+                }))
+            }
+            else{
+                document.getElementById('nameerr').style.display="block";
+            }
+        }
+        else if (e.target.name === 'password') {
+
+            if (!(e.target.value.length > 7)) {
+                document.getElementById('pwerr').textContent="Password is too short";
+                document.getElementById('pwerr').style.display="block";
+            }
+            else {
+                document.getElementById('pwerr').style.display="none";
+                    setpharmacyinfo((prev) => ({
+                    ...prev,
+                    password:e.target.value
+                }))
+            }
+        }
+        else if (e.target.name ==='address'){
+            const name_expression =/^[A-Za-z]+$/;
+            if((name_expression.test(e.target.value[0]))){
+                document.getElementById('addresserr').style.display="none";
+                    setpharmacyinfo((prev) => ({
+                    ...prev,
+                    address:e.target.value
+                }))
+            }
+            else{
+                document.getElementById('addresserr').style.display="block";
+            }
+        }
+        else if (e.target.name === 'time') {
+            if (e.target.id === 'open') {
+                setpharmacyinfo((prev) => ({
+                ...prev,
+                time: {
+                    ...prev.time,
+                    open: e.target.value
+                }
+                }));
+            } else if (e.target.id === 'close') {
+                setpharmacyinfo((prev) => ({
+                ...prev,
+                time: {
+                    ...prev.time,
+                    close: e.target.value
+                }
+                }));
+            }
+        }
+        else{
+            setpharmacyinfo((prev) => ({
+            ...prev,
+            [e.target.name]:e.target.value
+            }))
+
+        }
+}
+
+const editformsubmit=()=>{
+        try{
+
+        const api='http://localhost:5000/api/pharmacy/update';
+        let data={old_name:sessionStorage.getItem('org_name'),old_address:sessionStorage.getItem('org_address'),pharmacyinfo:pharmacyinfo}
+        fetch(api, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        }).then(res => {
+                if (res.status === 200) {
+                    alert('Pharmacy updated successfully')
+                    res.json().then(data => {
+                        console.log('doc is ',data.pharmacy)
+                        sessionStorage.setItem('org_name',data.pharmacy.pharmacyname)
+                        sessionStorage.setItem('org_address',data.pharmacy.address)
+                        sessionStorage.setItem('phone',data.pharmacy.phone)
+                        sessionStorage.setItem('email',data.pharmacy.email)
+                        sessionStorage.setItem('time',data.pharmacy.time)
+                    })
+
+
+                    enterdetails()
+                }
+                else if (res.status === 430) { alert(res.error) }
+
+                else {  alert('Problem updating Pharmacy', res.error) }
+            });
+    }catch(err){
+        console.log(err);
+    }
+}
 return(
 <>
         <div id="Profilepharmacydashboard">
@@ -13,59 +146,52 @@ return(
                     <h3 className="contentareatitle">My Profile</h3>
                     <hr/>
 
-                <div id="profilediv">
+                <div id="profiledivpharmacy">
                     <div>
-                        <div id="boldinfodiv">
-                            <div id="profimgdiv">
+                        <div id="boldinfodivpharmacy">
+                            <div id="profimgdivpharmacy">
                                 <div><img src={PharmP}></img></div>
                             </div>
 {edit_view&&
-                            <div id="maincontentdiv">
+                            <div id="maincontentdivpharmacy">
 
                                 <div id="Namediv">
                                     <div>
                                         <h6 id="nameerr">Name cannot contain special characters or numbers</h6>
-                                        <input type='text' placeholder="Enter Name" value={doctorinfo.name} onChange={handleinput} name="name"/>
+                                        <input type='text' placeholder="Enter Name" value={pharmacyinfo.pharmacyname} onChange={handleinput} name="name"/>
+                                    </div>
+                                </div>
+                                <div id="Addressdiv">
+                                    <div>
+                                        <h6 id="addresserr">Address cannot be empty</h6>
+                                        <input type='text' placeholder="Enter Address" value={pharmacyinfo.address} onChange={handleinput} name="adddress"/>
                                     </div>
                                 </div>
                                 <div id="Phonediv">
                                     <div>
-                                    <   input  value={doctorinfo.phone} onChange={handleinput} name="phone" type="number" minLength={10} placeholder="3** *******" />
+                                    <   input  value={pharmacyinfo.phone} onChange={handleinput} name="phone" type="number" minLength={10} placeholder="3** *******" />
                                     </div>
                                 </div>
-                                <div id="Emaildiv">
-                                    <div>
-                                        <h6 id="emailerr">Email is not valid</h6>
-                                        <input type="email" placeholder="Enter Email" value={doctorinfo.email} onChange={handleinput} name="email"/>
-                                    </div>
-                                </div>
-                                <div id="Educationdiv">
-                                    <div>
-                                        <h6 id="eduerr">Education cannot contain special characters or numbers</h6>
-                                        <input type='text' placeholder="Enter Education" value={doctorinfo.education} onChange={handleinput} name="education"/>
-                                    </div>
-                                </div>
+
+
                             </div>
 }
 {!edit_view&&
-                            <div id="maincontentdiv">
+                            <div id="maincontentdivpharmacy">
                                 <div id="Namediv">
                                 <h2>{sessionStorage.getItem('org_name')}</h2>
+                                </div>
+                                <div id="Addressdiv">
+                                <h2>{sessionStorage.getItem('org_address')}</h2>
                                 </div>
                                 <div id="Phonediv">
                                 <h2>{sessionStorage.getItem('phone')}</h2>
                                 </div>
-                                <div id="Emaildiv">
-                                <h2>{sessionStorage.getItem('email')}</h2>
-                                </div>
-                                <div id="Educationdiv">
-                                <h2>{sessionStorage.getItem('Education')}</h2>
-                                </div>
                             </div>
 }
-                            <div id="editsection">
+                            <div id="editsectionpharmacy">
                                 <div id="editstock" className="stockoperation" onClick={()=>{set_edit_view(true)}}>
-                                    <div id="editMedicines" className="stockopiconmedicine">
+                                    <div id="editMedicinespharmacy" className="stockopiconmedicine">
                                     <img src={EditP}></img>
                                     </div>
                                     <div className="stockoptitle"><h4>Edit Information</h4></div>
@@ -73,80 +199,50 @@ return(
                             </div>
                         </div>
 {edit_view&&
-                        <div id="profinfodiv">
+                        <div id="profinfodivpharmacy">
                             <h6 id='pwerr'>Password is too short</h6>
                             <div id="Passworddiv">
                                 <h1>Password:</h1>
-                                <input value={doctorinfo.password} onChange={handleinput} name="password" minLength={8} type="password" placeholder="Enter password"/>
+                                <input value={pharmacyinfo.password} onChange={handleinput} name="password" minLength={8} type="password" placeholder="Enter password"/>
                             </div>
-                            <h6 id="speerr">Speciality cannot contain special characters or numbers</h6>
-                            <div id="Specialitydiv">
-                                <h1>Speciality:</h1>
-                                <input value={doctorinfo.speciality} onChange={handleinput} name="speciality" placeholder="Enter speciality" type="text"/>
+                            <h6 id="emailerr">Email is not valid</h6>
+                            <div id="Emaildiv">
+                                
+                                <h1>Email:</h1>
+                                <input type="email" placeholder="Enter Email" value={pharmacyinfo.email} onChange={handleinput} name="email"/>
                             </div>
-                            <h6 id="experr">Experience cannot be empty and only contain numbers</h6>
-                            <div id="Experiencediv">
-                                <h1>Experience (in years):</h1>
-                                <input value={doctorinfo.experience} onChange={handleinput} name="experience" placeholder="Enter experience" type="text"/>
-                            </div>
-                            <div id="Descriptiondiv">
-                                <h1>Description:</h1>
-                                <textarea value={doctorinfo.description} onChange={handleinput} name="description" placeholder="Enter description" type="text"/>
-                                </div>
-                            <h6 id="hoserr">Hospital Name cannot contain special characters or numbers</h6>
-                            <div id="Hospitaldiv">
-                                <div>
-                                    <h1>Hospitals:</h1>
-                                </div>
-                                <div>
-                                    <div id="addhosbtn" onClick={addhosdiv}><div><h5>+</h5></div><h4>Add Hospitals</h4></div>
-                                </div>
-                            </div>
-{doctorinfo.hospital.map((i,index)=>{return(<>
-                            <div id="Hospitaldiv">
 
+                            <h6 id="timeerr">Time cannot be empty</h6>
+                            <div id="Timediv">
+                                
+                                    <h1>Timings:</h1>
+                                
                                 <div>
-{doctorinfo.hospital.length>1&&
-                                    <div className="removehosbtn" id={index} onClick={removehosdiv}><div id={index} ><h5 id={index} >+</h5></div></div>     
-}                               
+                                
+                                        
+                                        <input className="timingseditpharmacy" type="time" name="time" id="open" onChange={handleinput}/><h5>to</h5>
+                                        <input className="timingseditpharmacy" type="time" name="time" id="close" onChange={handleinput}/>
+                                    
                                 </div>
-
-                                <div>
-                                    <input value={i} onChange={handleinput} name="hospital" type="text" id={index} placeholder="Enter hospital name"/>
-                                </div>
-                            </div>  
-</>)})}
+                            </div>
  
          
                         </div>
 }
 {!edit_view&&
-                        <div id="profinfodiv">
+                        <div id="profinfodivpharmacy">
                             <div id="Passworddiv">
-                            <h1>Password:</h1>
-                            <h2>{sessionStorage.getItem('org_name')}</h2>
+                                <h1>Password:</h1>
+                                <h2>{sessionStorage.getItem('password')}</h2>
                             </div>
-                            <div id="Specialitydiv">
-                            <h1>Speciality:</h1>
-                            <h2>{sessionStorage.getItem('org_name')}</h2>
+                            <div id="Emaildiv">
+                                <h1>Email:</h1>
+                                <h2>{sessionStorage.getItem('email')}</h2>
                             </div>
-                            <div id="Experiencediv">
-                            <h1>Experience (in years):</h1>
-                            <h2>{sessionStorage.getItem('org_name')}</h2>
+                            <div id="Timediv">
+                                <h1>Timings:</h1>
+                                <h2>{sessionStorage.getItem('time')}</h2>
                             </div>
-                            <div id="Descriptiondiv">
-                            <h1>Description:</h1>
-                            <h2>{sessionStorage.getItem('org_name')}</h2>
-                            </div>
-                            <div id="Ratingsdiv">
-                            <h1>Ratings:</h1>
-                            <h2>{sessionStorage.getItem('org_name')}</h2>
-                            </div>
-                            <div id="Hospitaldiv">
-                            <h1>Hospitals:</h1>
-                            <h2>{sessionStorage.getItem('hospital')}</h2>
-                            </div>
-          
                         </div>
 }
                     </div>

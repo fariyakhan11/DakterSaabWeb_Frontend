@@ -2,6 +2,7 @@ import React from "react";
 import './schedule.css';
 import {BiEditAlt } from "react-icons/bi";
 import { useState,useEffect } from "react";
+import Scheduleenter from "./scheduleenter";
 
 
 function Schedule(){
@@ -9,6 +10,7 @@ function Schedule(){
     const [currentdates,setcurrentdates]=useState([])
     const [displayeddates,setdisplayeddates]=useState([])
     const [selected,setselected]=useState({date:'',month:'',year:''})
+    const [close_add_view, set_add_view] = useState(true);
 
       const months = [
         { name: "January", days: 31 },
@@ -139,8 +141,17 @@ const changehandler=(e)=>{
     }
 }
 
+//close the add view tab
+const handle_add=(close)=>{
+  set_add_view(close)
+
+}
+
 return(
 <>
+{!close_add_view &&
+<Scheduleenter close={handle_add}/>
+}
         <div id="Scheduledashboard">
             <div className="contentarea" >
                     <h3 className="contentareatitle">My Schedule</h3>
@@ -204,11 +215,12 @@ return(
                             </div>
                         </div>
                         <div id="holidays">
-                            <div id="holidayhead" className="divhead"><h3>Holidays</h3><BiEditAlt className="scheduleediticon"/></div>
+                            <div id="holidayhead" className="divhead"><h3>Schedule</h3><BiEditAlt className="scheduleediticon"/></div>
                             <div id="holidaycontent" className="divcontentarea">
-
+                                <button onClick={()=>{set_add_view(!close_add_view)}}>Import Schedule</button>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>

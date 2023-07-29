@@ -11,13 +11,16 @@ import '../../fonts/fonts.css'
 import './home.css';
 import PlayP from '../../images/playstore.png'
 import Navbar from './../Navbar/navbar';
+import { useNavigate } from 'react-router-dom';
+
 
 function Home() {
   const aboutSectionRef = useRef(null);
   const contactSectionRef = useRef(null);
   const homeSectionRef = useRef(null);
   const downloadSectionRef = useRef(null);
-  
+  const navigate = useNavigate();
+
 function scrollToSection(ref) {
     ref.current.scrollIntoView({ behavior: 'smooth' });
   }
@@ -40,9 +43,9 @@ function scrollToSection(ref) {
                 <h3>Provide the best of your Organization</h3>
                 <h4>Set up , manage and reach out your healing hands to the community </h4>
                 <div id="landingbtndiv">
-                    <button>Login</button>
+                    <button onClick={()=>{navigate('/Login')}}>Login</button>
                     <h5>OR</h5>
-                    <button>Signup</button>
+                    <button onClick={()=>{navigate('/Signup')}}>Signup</button>
                 </div>
             </div>
             <div id="bottomarealanding">

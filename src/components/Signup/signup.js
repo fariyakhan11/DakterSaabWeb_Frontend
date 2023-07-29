@@ -8,9 +8,10 @@ import { useState , useEffect } from "react";
 import validator from "validator";
 import { useNavigate, useLocation } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import LogoP from '../../images/logo.png'
 
 function Signup(){
-
+    const navigate=useNavigate()
     const options=[
         {opt_titles:'Doctor',opt_imgs:DocP},
         {opt_titles:'BloodBank',opt_imgs:BloodP},
@@ -223,6 +224,10 @@ function Signup(){
 return(
 <>
 <div className="registercontainer">
+    <a href="/" className="logo">
+    <img src={LogoP} style={{width:'2em',height:'2em'}}></img>
+    <h1 style={{fontFamily:'Fraunces'}} className='title'> DakterSaab</h1>
+    </a> 
     <div className="initials">
         <h1 >Signup with us </h1>
         <h2>as a</h2> 
@@ -238,7 +243,7 @@ return(
             })}
         </div>
         <h2>already a member ?</h2>
-        <button id="login_btn" className="buttons">Sign In</button>
+        <button id="login_btn" className="buttons" onClick={()=>{navigate('/Login')}}>Sign In</button>
     </div>
     <div id="authscreen">  
 
@@ -252,10 +257,10 @@ return(
             </div> 
             <div id="book_and_form">    
                     <div id="bookmarks">
-                        <div id="signin_mark">
+                        <div id="signin_mark" onClick={()=>{navigate('/Login')}}>
                             <h1>Sign In</h1>
                         </div>
-                            <div id="signup_mark" className="selected_bookmark">
+                            <div id="signup_mark" className="selected_bookmark" >
                             <h1>Sign Up</h1>
                         </div>
                     </div>                

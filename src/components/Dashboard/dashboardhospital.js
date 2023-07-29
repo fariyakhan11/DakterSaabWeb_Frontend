@@ -21,6 +21,7 @@ import Complaints from '../../images/chat.png'
 import News from '../../images/newspaper.png'
 import Requests from '../../images/request.png'
 import EventU from '../../images/calendar.png'
+import Profilehospital from "../Profile/profilehospital";
 
 
 function Dashboardhospital(){
@@ -312,6 +313,9 @@ return(
 }
 {(tab==='Departments')&&
 <Department/>
+}
+{(tab==='Profile')&&
+<Profilehospital/>
 }
 {(tab==='Doctors')&&
 <Doctors/>

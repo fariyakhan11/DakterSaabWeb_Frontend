@@ -42,7 +42,6 @@ const removehosdiv=(e)=>{
     }))
 }
 
-
 useEffect(()=>{console.log(doctorinfo)},[doctorinfo])
 
 const handleinput=(e)=>{
@@ -136,9 +135,7 @@ const handleinput=(e)=>{
 
         }
 }
-function updatingsession(varname,value){
-    sessionStorage.setItem(varname,value)
-}
+
 const editformsubmit=()=>{
         try{
         
@@ -153,9 +150,18 @@ const editformsubmit=()=>{
         }).then(res => {
                 if (res.status === 200) {
                     alert('Doctor updated successfully')
-                    res.json()
-                    console.log(res)
-                    console.log('doc is ',res.doctor)
+                    res.json().then(data => {
+                        console.log('doc is ',data.doctor)
+                        sessionStorage.setItem('org_name',data.doctor.Name)
+                        sessionStorage.setItem('education',data.doctor.Education)
+                        sessionStorage.setItem('phone',data.doctor.Phone)
+                        sessionStorage.setItem('email',data.doctor.email)
+                        sessionStorage.setItem('speciality',data.doctor.Speciality)
+                        sessionStorage.setItem('ratings',data.doctor.Ratings)
+                        sessionStorage.setItem('experience',data.doctor.Experience)
+                        sessionStorage.setItem('description',data.doctor.Description)
+                        sessionStorage.setItem('hospital',data.doctor.Hospitals)
+                    })
 
                     enterdetails()
                 }

@@ -5,12 +5,12 @@ import BloodP from '../../images/blood1.png'
 import HospitalP from '../../images/hospital1.png'
 import PharmP from '../../images/drugs1.png'
 import { useState , useEffect } from "react";
-import validator from "validator";
 import { useNavigate, useLocation } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import LogoP from '../../images/logo.png'
 
 function Login(){
-
+  const navigate=useNavigate();
     const options=[
         {opt_titles:'Doctor',opt_imgs:DocP},
         {opt_titles:'BloodBank',opt_imgs:BloodP},
@@ -195,7 +195,12 @@ function Login(){
 return(
 <>
   <div id="logincontainer">
-        <div id="login_screen">  
+        <a href="/" className="logo">
+          <img src={LogoP} style={{width:'2em',height:'2em'}}></img>
+          <h1 style={{fontFamily:'Fraunces'}} className='title'> DakterSaab</h1>
+        </a> 
+        <div id="login_screen">
+ 
 
           <div id="login_forms">
           
@@ -216,7 +221,7 @@ return(
                           <div id="signin_mark">
                               <h1>Sign In</h1>
                           </div>
-                              <div id="signup_mark">
+                              <div id="signup_mark" onClick={()=>{navigate('/Signup')}}>
                               <h1>Sign Up</h1>
                           </div>
                       </div>                

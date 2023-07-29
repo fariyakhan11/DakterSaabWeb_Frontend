@@ -17,6 +17,7 @@ import Transactions from "../Transactions/transactions";
 import Bloodgroup from "../BloodGroup/bloodgroup";
 import  Alert from '../Alert/alert';
 import Week from '../../images/week.png';
+import Profilebloodbank from '../Profile/profilebloodbank'
 
 function Dashboardbloodbank(){
     const currentDate = new Date()
@@ -282,7 +283,9 @@ return(
 {(tab==='Blood')&&
 <Bloodgroup/>
 }
-
+{(tab==='Profile')&&
+<Profilebloodbank/>
+}
 
 
 {(tab==='Notes') && 

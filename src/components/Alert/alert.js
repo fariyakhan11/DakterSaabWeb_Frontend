@@ -1,13 +1,22 @@
 import React from "react";
 import './alert.css'
-
+import { useNavigate } from "react-router-dom";
 function Alert(props){
+
+const navigate=useNavigate();
 
 const closediv=(e)=>{
 document.getElementById('alertarea').style.display='none'
 
 }
 
+const submitok=()=>{
+    if(props.alert=="Are you sure you want to logout?"){
+        sessionStorage.clear();
+        navigate('/')
+    }
+
+}
 return(
 <>
 <div id="alertarea">
@@ -21,7 +30,7 @@ return(
 
         <div id="contentareaalert">
             <h2>{props.alert}</h2>
-            <button>OK</button>
+            <button onClick={submitok}>OK</button>
         </div>
     </div>
 </div>

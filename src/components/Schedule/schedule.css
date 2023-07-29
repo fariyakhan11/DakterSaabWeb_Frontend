@@ -67,6 +67,25 @@ padding: 1em;
 height: 100%;
 
 }
+#holidaycontent>button{
+outline: none;
+border: 3px solid pink !important;
+background-color: white !important;
+opacity: 1 !important;
+font-size: 1.1em;
+width: 100%;
+border-radius: 2em;
+padding: 0.5em 1em;
+font-family: Fraunces;
+cursor: pointer;
+transition: all 0.5s ease-in-out;
+box-shadow: 5px 5px 14px rgba(129, 127, 127, 0.582);
+}
+#holidaycontent>button:hover{
+transform: scale(1.1);
+background-color: pink !important;
+
+}
 #datecol>div{
 height: 13.9%;
 display: flex;
@@ -199,16 +218,138 @@ cursor: pointer;
 text-align: center;
 border-radius: 1em;
 padding: 0.5em;
-background-color: pink;
+background-color: rgb(245, 243, 243);
 opacity: 0.5;
 border: none;
 }
 #workplacecontent>h4:hover{
 opacity: 1;
+background-color: pink;
 }
 .selectedworkplace{
 border: 3px solid pink !important;
 background-color: white !important;
 opacity: 1 !important;
 font-size: 1.1em;
+}
+#scheduleenterdiv{
+background-color: rgb(255, 255, 255);
+box-shadow: 5px 5px 14px rgba(126, 125, 125, 0.397);
+width: 50%;
+height: 80%;
+border-radius: 2em;
+}
+.grayareaschedule{
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+z-index: 3000;
+display: flex;
+justify-content: center;
+align-items: center;
+height: 100%;
+background-color: rgba(143, 141, 141, 0.356);
+}
+#scheduleenterdiv>div:nth-child(1){
+display: flex;
+justify-content: flex-end;
+padding: 1em;
+height: 7%;
+align-items: center;
+}
+#scheduleenterdiv>div:nth-child(1)>h1{
+font-family: Fraunces;
+width: 60%;
+}
+#scheduleenterdiv>div:nth-child(2){
+
+padding: 1em;
+height: 81%;
+
+padding: 1em;
+}
+#closebtnschedule{
+border-radius: 50%;
+width: 3em;
+height: 3em;
+rotate: 45deg;
+box-shadow: 4px 4px 14px rgba(133, 132, 132, 0.521);
+transition: all 0.5s ease-in-out;
+cursor: pointer;
+}
+
+#closebtnschedule>h1{
+color: #c29de0;
+width: 100%;
+height: 100%;
+border-radius: 50%;
+display:flex;
+justify-content: center;
+align-items: center;
+margin-top: -0.1em;
+font-weight: 400;
+}
+#closebtnschedule:hover{
+background-color: #c29de0;
+transform: scale(1.1);
+
+}
+#closebtnschedule:hover h1{
+color: beige;
+}
+#sheetschedule{
+display: flex;
+padding: 0.3em 1em;
+width: 90%;
+align-items: center;
+justify-content: space-between;
+font-family: Fraunces;
+border-bottom: 2px solid rgba(131, 130, 130, 0.507);
+}
+#sheetschedule>h2{
+font-size: 1.1em;
+}
+#sheetschedule>button{
+outline: none;
+border-radius: 1em;
+cursor: pointer;
+padding: 0.5em 2em;
+font-size: 1em;
+font-family: Fraunces;
+border: 3px solid #c29de0;
+transition: all 0.5s ease-in-out;
+box-shadow: 5px 5px 14px rgba(122, 122, 122, 0.473);
+background-color: transparent;
+}
+#sheetschedule>button:hover{
+background-color: #c29de0;
+transform: scale(1.1);
+color: beige;
+}
+#hospitalbar{
+width: 96%;
+display: flex;
+
+padding:1% 2%;
+align-items: center;
+overflow: scroll;
+}
+.actiivehospitaltab{
+background-color: rgba(255, 192, 203, 0.705) !important;
+}
+#hospitalbar>div{
+padding: 1em 1.5em;
+border: 3px solid rgba(255, 192, 203, 0.705);
+font-size: 0.7em;
+background-color: transparent;
+cursor: pointer;
+margin: 0em 1em;
+font-family: Fraunces;
+box-shadow: 5px 5px 14px rgba(173, 171, 171, 0.5);
+border-radius: 1em;
+transition: all 0.5s ease-in-out;
+}
+#hospitalbar>div:hover{
+transform: scale(1.1);
 }
