@@ -4,7 +4,7 @@ import {AiOutlineDelete} from "react-icons/ai";
 import { useState,useEffect } from "react";
 import EditP from '../../images/edit1.png'
 import DocP from '../../images/doctor1.png'
-
+import PatientI from '../../images/patient1.png'
 function Departmentexpand({close,department}){
     const [Department,setDepartment]=useState(department)
     const [dep,setdep]=useState({name:Department.name,admin_name:Department.admin_name,password:'',phone:Department.phone})
@@ -93,7 +93,7 @@ return(<>
     <div id="depexpnav">
 
         <div onClick={()=>{setnav('App')}} className={nav==='App'?'selectednav':''}><h2>Appointments</h2></div>
-        <div onClick={()=>{setnav('Pat')}} className={nav==='Pat'?'selectednav':''}><h2>Patients</h2></div>
+        
         <div className={nav==='Doc'?'selectednav':''} onClick={()=>{setnav('Doc')}}><h2>Department Doctors</h2></div>
         <div onClick={()=>{setnav('Prof')}} className={nav==='Prof'?'selectednav':''}><h2>Department Information</h2></div>
     </div>
@@ -277,6 +277,96 @@ return(<>
             </div>
         </div>
 }         
+    </div>
+
+}
+
+{nav==='App'&&
+    <div id="depexpcontent" className="appdivdep">
+<div>
+        <div className="docopddiv" >
+            <div id="Doctorappdet">
+                <h1>Doctor Name: </h1>
+                <h2>Alishba Arshad</h2>
+                <h1>Timings</h1>
+                <h2>7:30AM-3:00PM</h2>
+                <h1>Tokens Booked</h1>
+                <h2>20</h2>
+            </div>
+
+            <div id="tokenpatientstats">
+                <div>
+                    <h2>Previous Patient</h2>
+                    <img src={PatientI}></img>
+                    <h2>Shehla</h2>
+                    <h2>6</h2>
+                    <h2>9:15AM</h2>
+                </div>
+                <div>
+                    <h2>Current Patient</h2>
+                    <img src={PatientI}></img>
+                    <h2>Abdullah</h2>
+                    <h2>Token : 7</h2>
+                    <h2>10:00AM</h2>
+                </div>
+                <div>
+                    <h2>Next Patient</h2>
+                    <img src={PatientI}></img>
+                    <h2>Farah</h2>
+                    <h2>8</h2>
+                    <h2>10:30AM</h2>
+                </div>
+            </div>
+            <div id="tokencounter">
+                <h1>Starting Appointment Time: </h1>
+                <h2>10:00AM</h2>
+                <h1>Increase Token Number</h1>
+                <h2>7</h2>
+                <h3>+</h3>
+            </div>
+        </div>
+        <div className="docopddiv" >
+            <div id="Doctorappdet">
+                <h1>Doctor Name: </h1>
+                <h2>Alishba Arshad</h2>
+                <h1>Timings</h1>
+                <h2>7:30AM-3:00PM</h2>
+                <h1>Tokens Booked</h1>
+                <h2>20</h2>
+            </div>
+
+            <div id="tokenpatientstats">
+                <div>
+                    <h2>Previous Patient</h2>
+                    <img src={PatientI}></img>
+                    <h2>Shehla</h2>
+                    <h2>6</h2>
+                    <h2>9:15AM</h2>
+                </div>
+                <div>
+                    <h2>Current Patient</h2>
+                    <img src={PatientI}></img>
+                    <h2>Abdullah</h2>
+                    <h2>Token : 7</h2>
+                    <h2>10:00AM</h2>
+                </div>
+                <div>
+                    <h2>Next Patient</h2>
+                    <img src={PatientI}></img>
+                    <h2>Farah</h2>
+                    <h2>8</h2>
+                    <h2>10:30AM</h2>
+                </div>
+            </div>
+            <div id="tokencounter">
+                <h1>Starting Appointment Time: </h1>
+                <h2>10:00AM</h2>
+                <h1>Increase Token Number</h1>
+                <h2>7</h2>
+                <h3>+</h3>
+            </div>
+        </div>
+</div>
     </div>
 
 }

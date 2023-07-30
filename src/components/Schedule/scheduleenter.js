@@ -17,7 +17,7 @@ return(<>
             </div>
             <div>
                 <div id="hospitalbar">
-                    <div><h2>Agha Khan</h2></div>
+                    <div className="actiivehospitaltab"><h2>Agha Khan</h2></div>
                     <div><h2>Mehmooda Clinic</h2></div>
                     <div id="morehosbtn"><h2>+</h2></div>
                 </div>
@@ -26,39 +26,40 @@ return(<>
                     <div>
                         <h3>Monday</h3>
                         <input value='8:00 AM to 5:30 PM ' type="text" onChange={handleinput} name='monday' className="time"/>
-
+                        <button>+</button>
                     </div>
                     <div>
                         <h3>Tuesday</h3>
-                        <input value='8:00 AM to 5:30 PM ' type="text" onChange={handleinput} name='monday' className="time"/>
-
+                        <input value='10:00 AM to 6:30 PM  ' type="text" onChange={handleinput} name='monday' className="time"/>
+                        <button>+</button>
                     </div>
                     <div>
                         <h3>Wednesday</h3>
-                        <input value='8:00 AM to 5:30 PM ' type="text" onChange={handleinput} name='monday' className="time"/>
-
+                        <input value='' type="text" onChange={handleinput} name='monday' className="time"/>
+                        <button>+</button>
                     </div>
                     <div>
                         <h3>Thursday</h3>
-                        <input value='8:00 AM to 5:30 PM ' type="text" onChange={handleinput} name='monday' className="time"/>
-
+                        <input value='10:00 AM to 6:30 PM ' type="text" onChange={handleinput} name='monday' className="time"/>
+                        <button>+</button>
                     </div>
                     <div>
                         <h3>Friday</h3>
-                        <input value='8:00 AM to 5:30 PM ' type="text" onChange={handleinput} name='monday' className="time"/>
-
+                        <input value=' ' type="text" onChange={handleinput} name='monday' className="time"/>
+                        <button>+</button>
                     </div>
                     <div>
                         <h3>Saturday</h3>
                         <input value='8:00 AM to 5:30 PM ' type="text" onChange={handleinput} name='monday' className="time"/>
-
+                        <button>+</button>
                     </div>
                     <div>
                         <h3>Sunday</h3>
                         <input value='8:00 AM to 5:30 PM ' type="text" onChange={handleinput} name='sunday' className="time"/>
-
+                        <button>+</button>
                     </div>
                 </div>
+                <button id="schedulemanual">Upload</button>
             </div>
         </div>
     </div>
