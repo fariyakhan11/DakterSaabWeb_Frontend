@@ -63,7 +63,7 @@ transition: all 1s ease-in-out 0s;
   height: 15em;
   margin:2em 2em 1em 0;
   cursor: pointer;
-border: 3px solid #8db2f8;
+background-color: #c7dafc65;
 }
 .depsdiv:hover{
 transform: scale(1.05);
@@ -234,12 +234,30 @@ justify-content: center;
 display: none;
 position: absolute;
 }
+.deletealertgray{
+width: 80%;
+height: 80%;
+display: flex;
+align-items: center;
+justify-content: center;
+display: none;
+position: absolute;
+}
 #deletealert{
 width:35em;
 height: 18em;
 border-radius: 2em;
 border: 3px solid red;
 background-color: #f5dddddc;
+position: absolute;
+box-shadow: 6px 6px 10px rgba(122, 122, 122, 0.644) ;
+}
+#loginalert{
+width:35em;
+height: 18em;
+border-radius: 2em;
+border: 3px solid #8db2f8;
+background-color: #ddedf5dc;
 position: absolute;
 box-shadow: 6px 6px 10px rgba(122, 122, 122, 0.644) ;
 }
@@ -259,4 +277,212 @@ margin-bottom: 0.9em;
 #deletealert>#alertcontainer>#contentareaalert>input{
 font-size: 1.5em;
 text-align: center;
+}
+
+
+#loginalert>div{
+width: 100%;
+background-color: transparent !important ;
+box-shadow: none !important;
+}
+#loginalert>#alertcontainer>#contentareaalert{
+font-size: 0.8em;
+
+}
+#loginalert>#alertcontainer>#contentareaalert>h2{
+margin-bottom: 0.9em;
+
+}
+#loginalert>#alertcontainer>#contentareaalert>input{
+font-size: 1.5em;
+text-align: center;
+}
+/*kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk*/
+.depgray{
+position: absolute;
+top: 0;
+left: 0;
+background-color: rgba(146, 144, 144, 0.397);
+width: 100%;
+height: 100%;
+display: flex;
+z-index: 50000;
+justify-content: center;
+align-items: center;
+}
+#depexpdiv{
+background-color: white;
+border-radius: 2em;
+padding: 1em;
+box-shadow: 6px 6px 10px rgba(122, 122, 122, 0.644) ;
+width: 75%;
+height: 80%;
+border: 4px solid #8db2f8;
+}
+#depexpdivhead{
+display: flex;
+width: 95%;
+align-items: center;
+padding: 1em;
+justify-content: space-between;
+}
+#depexpdivhead>h1{
+font-family: Fraunces;
+font-size: 2em;
+}
+#depexpnav{
+border-bottom: 3px solid rgba(170, 166, 166, 0.397);
+width: 95%;
+align-items: flex-end;
+display: flex;
+flex-direction: row;
+height: 7%;
+font-family: Fraunces;
+overflow-x: scroll;
+overflow-y: hidden;
+}
+#depexpnav>div{
+overflow-x: hidden;
+margin: 0em 1em;
+font-size: 0.8em;
+border: 3px solid #8db2f8;
+box-shadow: -5px -5px 14px rgba(175, 173, 173, 0.308);
+border-bottom: none;
+width: 21%;
+transition: all 0.5s ease-in-out;
+cursor: pointer;
+height: 85%;
+overflow-y: hidden;
+color: black;
+}
+#depexpnav>div>h2{
+padding:0% 10%;
+width: 98%;
+display: flex;
+align-items: center;
+height: 90%;
+}
+#depexpnav>div:hover{
+transform: scale(1.1);
+}
+.selectednav{
+background-color: #8db2f8 !important;
+color: white !important;
+text-shadow: 2px 2px 7px rgba(173, 171, 171, 0.274);
+}
+.selectednav>h2{
+color: white !important;
+text-shadow: 2px 2px 7px rgba(173, 171, 171, 0.274);
+}
+#depexpcontent{
+
+height: 80%;
+width: 95%;
+}
+#depdoctorsdiv{
+width:100%;
+height: 45%;
+display: flex;
+flex-wrap: wrap;
+flex-direction: row;
+ overflow-x: scroll;
+align-items: center;
+
+}
+#depexpcontent>h3{
+width: 100%;
+font-family: Fraunces;
+text-align: center;
+margin-bottom: 0.5em;
+}
+.medsdivdep{
+  border:3px solid #f2f2f2;
+  text-align: center;
+  flex-basis: 17em;
+  height: 82%;
+
+  margin:0em 2em 1em 0;
+  cursor: pointer;
+  border-radius: 2em;
+}
+.medsdivdep>.topareamed{
+height: 52%;
+padding-top:0% ;
+display: flex;
+}
+
+.medsdivdep>.bottomareamed{
+height: 35%;
+font-family: Fraunces;
+display: block;
+}
+
+
+.medsdivdep>.topareamed>.medimg{
+width: 80%;
+}
+.depinfofield{
+width: 100%;
+display: flex;
+font-family: Fraunces;
+font-size: 1.1em;
+
+}
+.depinfofield>input{
+width: 80%;
+display: flex;
+font-family: Fraunces;
+font-size: 1.1em;
+border: none;
+outline: none;
+border-bottom: 2px solid #294f96;
+font-family: Fraunces;
+}
+.depinfofield>h2{
+width: 30%;
+color: #294f96;
+text-shadow: 2px 2px 7px rgba(163, 162, 162, 0.349) ;
+}
+.depinfofield>h3{
+width: 70%;
+}
+#profdivview{
+background: linear-gradient(#8db3f838, white);
+
+height: 80%;
+display: flex;
+flex-direction: column;
+justify-content: space-evenly;
+padding-left: 10%;
+}
+.editprof{
+height: 100% !important;
+}
+#profdivview>div:nth-child(1){
+margin-bottom: 0;
+}
+#profdivview>div:nth-last-child(1){
+justify-content: flex-end;
+
+display: flex;
+
+}
+#profdivview>div:nth-last-child(1)>button{
+outline: none;
+border: 3px solid #8db2f8;
+background-color: transparent;
+padding: 1em 2em;
+border-radius: 2em;
+font-family: Fraunces;
+transition: all 0.5s ease-in-out;
+box-shadow: 5px 5px 14px rgba(136, 136, 136, 0.541);
+cursor: pointer;
+text-align: center;
+margin: 1em;
+margin-top: 10%;
+}
+#profdivview>div:nth-last-child(1)>button:hover{
+background-color: #8db2f8;
+transform: scale(1.1);
+color: white;
 }

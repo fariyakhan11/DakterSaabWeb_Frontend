@@ -381,6 +381,9 @@ padding: 1em 0;
 overflow-y: scroll;
 overflow-x: scroll;
 }
+#transactionhistorycontent>div:nth-child(1){
+width: 93%;
+}
 #transactionhistorycontent>div{
 border-left: 2px solid rgba(173, 172, 172, 0.719);
 margin-left: 2em;

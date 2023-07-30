@@ -3,7 +3,8 @@ import './doctors.css';
 import DocP from '../../images/doctor1.png'
 import { useState,useEffect } from "react";
 import Adddoctors from "./adddoctors";
-
+import FrontP from '../../images/front.png'
+import BackP from '../../images/back.png'
 
 function Doctors(){
     const [searchTerm, setSearchTerm] = useState("");
@@ -12,6 +13,9 @@ function Doctors(){
     const [viewmode,setviewmode]=useState(true)
     const [doctor_list,setdoctor_list]=useState([]);
     const [displayed_list,setdisplayed_list]=useState([])
+    const [close_info_view, set_info_view] = useState(true);
+    const [updatepage,setupdatedpage]=useState('1')
+    const [department_list,setdepartment_list]=useState([]);
 //selected medicines to delete
     const [selected_doctor,setselected_doctor]=useState([])
 //set whether an element is expanded or not
@@ -22,6 +26,7 @@ function Doctors(){
 //initial tasks on page load
 useEffect(()=>{
   fetchdoctors()
+  fetchdepartments()
   },[])
 
   const handleSearchTermChange = (event) => {
@@ -102,6 +107,7 @@ function fetchdoctors(){
       console.log(err)
     }
 }
+
 useEffect(()=>{console.log(displayed_list)},[displayed_list])
 
 //activate the delete view
@@ -191,10 +197,156 @@ useEffect(() => {
   console.log(selected_doctor);
 }, [selected_doctor]);
 
+
+const openupdate=(e)=>{
+set_info_view(false)
+}
+//fetch departments from the database
+function fetchdepartments(){
+    try{
+        const params=sessionStorage.getItem('org_name')+'/'+sessionStorage.getItem('org_address')
+        const api='http://localhost:5000/api/hospital/getdeptdetail/'+params;
+        fetch(api, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        }).then((response) => response.json()) // get response, convert to json
+        .then((json) => {
+        if(json.department){
+          setdepartment_list(json.department);
+          
+        }else{setdepartment_list([]);}
+        if(json.error){console.log(json.error)}
+      });
+    }catch(err){
+      console.log(err)
+    }
+}
+
+const handleinputupdate=(e)=>{
+const { name, value } = e.target;
+    
+      
+      setviewdoc((prevViewdoc) => ({
+        ...prevViewdoc,
+        [name]: value,
+      }));
+    
+
+}
+const handleInputUpdate = (event) => {
+  const { id, value } = event.target;
+  const day = id; // Since the id attribute is set to the day name
+
+  // Check if the day already exists in the availability array
+  const existingDayIndex = viewdoc.availability.findIndex(
+    (item) => item.day.toLowerCase() === day.toLowerCase()
+  );
+
+  if (existingDayIndex !== -1) {
+    // If the day exists, update the time for that day
+    setviewdoc((prev) => ({
+      ...prev,
+      availability: prev.availability.map((item) =>
+        item.day.toLowerCase() === day.toLowerCase() ? { ...item, time: [value] } : item
+      ),
+    }));
+  } else {
+    // If the day does not exist, create a new object and insert it in the proper position
+    const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+    const newDayIndex = days.findIndex((d) => d.toLowerCase() === day.toLowerCase());
+
+    if (newDayIndex !== -1) {
+      setviewdoc((prev) => ({
+        ...prev,
+        availability: [
+          ...prev.availability.slice(0, newDayIndex),
+          { day, time: [value] },
+          ...prev.availability.slice(newDayIndex),
+        ],
+      }));
+    }
+  }
+};
+
 return(
 <>
 {!close_add_view &&
 <Adddoctors close={handle_add}/>
+}
+{!close_info_view &&
+    <div className="donorinfogray">
+        <div id="donorinfodiv">
+            <div><h1>Doctor Information</h1><div id="closebtndonor"  onClick={()=>{set_info_view(true)}}><h1>+</h1></div></div>
+            <div className="editinputcontent">
+{(updatepage==='1')&&<>
+                <div>
+                    <h1>Name: </h1>
+                    <input value={viewdoc.name} onChange={handleinputupdate} name="name"></input>
+                </div>
+                <div>
+                    <h1>Email: </h1>
+                    <input value={viewdoc.email} onChange={handleinputupdate} name="email"></input>
+                </div>
+                <div>
+                    <h1>Department: </h1>
+                      <select value={viewdoc.department} onChange={handleinputupdate} name="department" id="depinput">
+                        {department_list.map((department) => (
+                          <option key={department.name} value={department.name}>
+                            {department.name}
+                          </option>
+                        ))}
+                      </select>
+                </div>
+                <div>
+                    <h1>Education: </h1>
+                    <input value={viewdoc.education} onChange={handleinputupdate} name="education"></input>
+                </div>
+                <div>
+                    <h1>Speciality: </h1>
+                    <input value={viewdoc.speciality} onChange={handleinputupdate} name="speciality"></input>
+                </div>
+                <div>
+                    <h1>Experience: </h1>
+                    <input value={viewdoc.experience} onChange={handleinputupdate} name="experience"></input>
+                </div>
+</>}
+{(updatepage!='1' )&&
+<>
+              {["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"].map(day => (
+                  <div key={day}>
+                    <h1>{day}: </h1>
+                    <input
+                      value={
+                        viewdoc.availability.find(item => item.day.toLowerCase() === day.toLowerCase())?.time || ""
+                      }
+                      onChange={handleInputUpdate}
+                      name='availability'
+                      id={day}
+                    />
+                  </div>
+  ))}
+</>}
+                <div>
+
+                </div>
+
+            </div>
+            <div id="footerupdate">
+              <div>
+{(updatepage!='1' )&&
+                <img src={BackP} onClick={()=>{setupdatedpage('1')}}></img>
+}
+                <h2>Page : {updatepage} of 2</h2>
+{   (updatepage==='1' )&&             
+                <img src={FrontP} onClick={()=>{setupdatedpage('2')}}></img>
+}
+              </div>
+              <button>Submit</button>
+            </div>
+        </div>
+    </div>
 }
         <div id="Doctorsdashboard">
             <div className="contentarea" >
@@ -243,11 +395,11 @@ return(
                                 </div>
 
                                 <div className="expandablediv">
-                                    <div className="expandabledivhead">
-                                    <div id=''>
-                                      <button onClick={close_detail_view}>+</button>
-
-                                    </div>
+                                   
+                                    <div className="expandablediv_head">
+                                      <button onClick={openupdate}>Update</button>
+                                      <button id="update-ok" onClick={close_detail_view} >Cancel</button>
+                                    
                                     </div>
                                     <div className="expandabledivcontent">
                                     <div>
@@ -278,7 +430,7 @@ return(
                                     </div>
                                     <div>
                                     <div>
-                                        <h3>Availability: </h3>
+                                        <h3>Availability </h3>
                                     </div>
                                     {viewdoc.availability &&viewdoc.availability.map((i,index)=>{
                                         if(i.time!=''){

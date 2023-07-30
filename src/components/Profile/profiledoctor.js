@@ -7,7 +7,7 @@ import validator from "validator";
 
 function Profiledoctor(){
     const [edit_view, set_edit_view] = useState(false);
-    const [doctorinfo,setdoctorinfo]=useState({name:'',email:'',phone:'',education:'',speciality:'',password:'',experience:'',description:'',hospital:[''],ratings:''})
+    const [doctorinfo,setdoctorinfo]=useState({name:'',email:'',phone:'',education:'',speciality:'',password:'',experience:'',description:'',hospital:[{name:'',address:'',fees:""}],ratings:''})
 
 useEffect(()=>{
     enterdetails()
@@ -16,8 +16,9 @@ useEffect(()=>{
 
 function enterdetails(){
     
-    const arr = sessionStorage.getItem('hospital').split(", ").map(item => item.trim());
-    setdoctorinfo({name:sessionStorage.getItem('org_name'),email:sessionStorage.getItem('email'),phone:sessionStorage.getItem('phone'),education:sessionStorage.getItem('education'),password:sessionStorage.getItem('password'),speciality:sessionStorage.getItem('speciality'),experience:sessionStorage.getItem('experience'),description:sessionStorage.getItem('description'),hospital:arr,ratings:sessionStorage.getItem('ratings')})
+    var myArray = JSON.parse(sessionStorage.getItem('hospital'));
+    
+    setdoctorinfo({name:sessionStorage.getItem('org_name'),email:sessionStorage.getItem('email'),phone:sessionStorage.getItem('phone'),education:sessionStorage.getItem('education'),password:sessionStorage.getItem('password'),speciality:sessionStorage.getItem('speciality'),experience:sessionStorage.getItem('experience'),description:sessionStorage.getItem('description'),hospital:myArray,ratings:sessionStorage.getItem('ratings')})
 
 }
 
@@ -114,7 +115,7 @@ const handleinput=(e)=>{
         else if (e.target.name ==='hospital'){
             var id=parseInt(e.target.id)
             const name_expression =/^[A-Za-z]+$/;
-            if((name_expression.test(e.target.value[0]))){
+            
                 document.getElementById('hoserr').style.display="none";
                     var h=doctorinfo.hospital
                     h[id]=e.target.value
@@ -122,10 +123,7 @@ const handleinput=(e)=>{
                     ...prev,
                     hospital:h
                 }))
-            }
-            else{
-                document.getElementById('hoserr').style.display="block";
-            }
+
         }
         else{
             setdoctorinfo((prev) => ({
@@ -164,6 +162,7 @@ const editformsubmit=()=>{
                     })
 
                     enterdetails()
+                    document.getElementById('profcancel').click()
                 }
                 else if (res.status === 430) { alert(res.error) }
 
@@ -263,7 +262,7 @@ return(
                             <h6 id="hoserr">Hospital Name cannot contain special characters or numbers</h6>
                             <div id="Hospitaldiv">
                                 <div>
-                                    <h1>Hospitals:</h1>
+                                    <h1 style={{color:"#8746bd"}}>Hospitals:</h1>
                                 </div>
                                 <div>
                                     <div id="addhosbtn" onClick={addhosdiv}><div><h5>+</h5></div><h4>Add Hospitals</h4></div>
@@ -278,8 +277,10 @@ return(
 }                               
                                 </div>
 
-                                <div>
-                                    <input value={i} onChange={handleinput} name="hospital" type="text" id={index} placeholder="Enter hospital name"/>
+                                <div className="hospitalinputdiv">
+                                    <input value={i.name} onChange={handleinput} name="hospital" className="name" type="text" id={index} placeholder="Enter hospital name"/>
+                                    <input value={i.address} onChange={handleinput} className="address" name="hospital" type="text" id={index} placeholder="Enter hospital address"/>
+                                    <input value={i.fees} onChange={handleinput} className="fees" name="hospital" type="text" id={index} placeholder="fees"/>
                                 </div>
                             </div>  
 </>)})}
@@ -320,7 +321,7 @@ return(
 {edit_view&&
                     <div>
 
-                        <button onClick={()=>{set_edit_view(false)}}>Cancel</button>
+                        <button id="profcancel" onClick={()=>{set_edit_view(false)}}>Cancel</button>
                         <button onClick={editformsubmit}>Submit</button>
                     </div>
 }

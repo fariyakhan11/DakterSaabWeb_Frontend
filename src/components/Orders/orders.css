@@ -22,7 +22,7 @@ margin: 0.1em 0;
 #mainorderdiv{
 display: flex;
 flex-direction: row;
-height: 92%;
+height: 72%;
 width: 100%;
 }
 #sidebarorder{

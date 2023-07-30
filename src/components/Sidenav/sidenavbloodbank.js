@@ -5,7 +5,7 @@ import {AiOutlineHome} from "react-icons/ai";
 import {BiPurchaseTag,BiExpand,BiCollapse} from "react-icons/bi";
 import { useState ,useEffect} from "react";
 import {GrTransaction} from "react-icons/gr";
-import {SlPeople} from "react-icons/sl";
+import {BsPeople} from "react-icons/bs";
 import {MdOutlineBloodtype} from "react-icons/md";
 
 function Sidenavbloodbank({msg }){
@@ -84,7 +84,10 @@ return(
             <MdOutlineBloodtype className="tabsicon" id="Blood"/>
             <h4 className="tabsnamebloodbank" id="Blood">Blood Groups</h4>
         </div>
-
+        <div className="tabsdiv Donor" id="Donor" onClick={selectedtab}>
+            <BsPeople className="tabsicon" id="Donor"/>
+            <h4 className="tabsnamebloodbank" id="Donor">Donors</h4>
+        </div>
 
     </div>
 
@@ -107,7 +110,9 @@ return(
 <div className="tabscollapsed Blood" onClick={selectedtab} id="Blood">
  <MdOutlineBloodtype className="tabsicon" id="Blood"/>
 </div>
-
+<div className="tabscollapsed Donor" onClick={selectedtab} id="Donor">
+ <BsPeople className="tabsicon" id="Donor"/>
+</div>
 </div>
 
 <BiExpand id="expandbtn" onClick={expandhandler}/>

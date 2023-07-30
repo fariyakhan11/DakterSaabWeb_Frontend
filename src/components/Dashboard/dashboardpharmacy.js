@@ -63,9 +63,7 @@ useEffect(()=>{
         document.getElementById('dashboardarea').style.width='85%'
     }
 
-    fetchorders()
-    fetchlasttransact()
-fetchlowmeds()
+
 })
 
 useEffect(()=>{
@@ -74,7 +72,9 @@ sessionStorage.setItem('org_address', 'R 143 sector 9 North Karachi, Karachi');
 sessionStorage.setItem('email', 'abcpharmacy@gmail.com'); 
 sessionStorage.setItem('phone', '03232626789');  
 sessionStorage.setItem('password','********')
-
+    fetchorders()
+    fetchlasttransact()
+fetchlowmeds()
 },[])
 
 

@@ -196,7 +196,7 @@ const handle_add=(close)=>{
 return(
 <>
 {!close_history_view &&
-<Transactionhistory close={handle_add}/>
+<Transactionhistory close={handle_add} message={props.class}/>
 }
         <div id="Transactionsdashboard">
             <div className="contentarea" >

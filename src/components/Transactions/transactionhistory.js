@@ -2,8 +2,13 @@ import React from "react";
 import './transactions.css';
 import { useEffect,useState } from "react";
 import DropP from '../../images/arrow-down.png'
+import Med from '../../images/drugs1.png';
+import Week from '../../images/week.png';
+import Profit from '../../images/profits.png'
+import Bloodimg from '../../images/blood.png'
+import BloodGroup from '../../images/bloodgroup.png'
 
-function Transactionhistory({close}){
+function Transactionhistory({close,message}){
     const [transactionhistory,settransactionhistory]=useState([])
 
 function fetchtransactioninfo(){
@@ -57,6 +62,53 @@ return(
             <div id="closebtnhistory" onClick={()=>{close(true)}}><h2>+</h2></div>
         </div>
         <div id="transactionhistorycontent">
+<div>
+                            <div id="statisticsdiv">
+{(message==='blood')&&
+                                <div className="summarytilesbloodbank">
+                                    <img src={Bloodimg}></img>
+                                    <div>
+                                        <h3 className="tilename">Today <br/> Blood units sold</h3>
+                                        <h2 className="tilevalue">292</h2>
+                                    </div>
+                                </div>
+}
+{(message==='pharmacy')&&
+                                <div className="summarytilesbloodbank">
+                                    <img src={Med}></img>
+
+                                    <div>
+                                        <h3 className="tilename">Today <br/> Medicines sold</h3>
+                                        <h2 className="tilevalue">292</h2>
+                                    </div>
+                                </div>
+}
+                                <div className="summarytilesbloodbank">
+                                    <img src={Week}></img>
+                                    <div>
+                                        <h3 className="tilename">This Week<br/> Sales(Rupees)</h3>
+                                        <h2 className="tilevalue">8330</h2>
+                                    </div>
+                                </div> 
+                                <div className="summarytilesbloodbank">
+                                    <img src={Profit}></img>
+                                    <div>
+                                        <h3 className="tilename">Today <br/> Sales(Rupees)</h3>
+                                        <h2 className="tilevalue">1092</h2>
+                                    </div>
+                                </div>
+{(message==='blood')&&
+                                 <div className="summarytilesbloodbank">
+                                    <img src={BloodGroup}></img>
+                                    <div>
+                                        <h3 className="tilename">Popular<br/> Blood group</h3>
+                                        <h2 className="tilevalue">O+</h2>
+                                    </div>
+                                </div>      
+}                                
+                            </div>
+</div>
+
             <div>
             {transactionhistory.map((i,index)=>{
                 return(<>

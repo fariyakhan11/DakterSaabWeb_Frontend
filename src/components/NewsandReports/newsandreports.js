@@ -10,11 +10,11 @@ import All from '../../images/all.png'
 function Newsandreports(){
 
     const [entryform ,setentryform]=useState({form_no:'',form_date:'',form_type:'',name:'',form_title:'',form_description:'',form_department:'',resolution_description:'',resolution_date:'',resolver_name:''})
-
+    const [department_list,setdepartment_list]=useState([]);
     const [CNRlist ,setCNRlist ]=useState([
-        {form_no:'9092',form_date:'',form_type:'Complaint',name:'',form_title:'',form_description:'',form_department:'',resolution_description:'',resolution_date:'',resolver_name:''},
-        {form_no:'647',form_date:'',form_type:'News',name:'',form_title:'',form_description:'',form_department:'',resolution_description:'',resolution_date:'',resolver_name:''},
-        {form_no:'23',form_date:'',form_type:'Request',name:'',form_title:'',form_description:'',form_department:'',resolution_description:'',resolution_date:'',resolver_name:''}
+        {form_no:'9092',form_date:'16/6/2023',form_type:'Complaint',name:'Alishba',form_title:'Broken Toilet',form_description:'The bathrooms in the first floor are broken',form_department:'Cardiology',resolution_description:'',resolution_date:'',resolver_name:''},
+
+        {form_no:'23',form_date:'12/4/2023',form_type:'Request',name:'Alishba',form_title:'Shortage of Beds',form_description:'',form_department:'Gynecology',resolution_description:'',resolution_date:'',resolver_name:''}
     ])
     const [resolution_window,set_resolution_window]=useState(false)
     const [fetched_list,setfetched_list]=useState([])
@@ -22,12 +22,36 @@ function Newsandreports(){
 useEffect(()=>{
     setentryform({form_no:'',form_date:generatenowdate(),form_type:'',name:'',form_title:'',form_description:'',form_department:'',resolution_description:'',resolution_date:generatenowdate(),resolver_name:''})
     fetchforms()
+    fetchdepartments()
 },[])
 
 function generatenowdate(){
     var datenow=new Date();
     datenow=datenow.getDate()+'/'+datenow.getMonth()+'/'+datenow.getFullYear()
     return datenow
+}
+
+//fetch departments from the database
+function fetchdepartments(){
+    try{
+        const params=sessionStorage.getItem('org_name')+'/'+sessionStorage.getItem('org_address')
+        const api='http://localhost:5000/api/hospital/getdeptdetail/'+params;
+        fetch(api, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        }).then((response) => response.json()) // get response, convert to json
+        .then((json) => {
+        if(json.department){
+          setdepartment_list(json.department);
+          
+        }else{setdepartment_list([]);}
+        if(json.error){console.log(json.error)}
+      });
+    }catch(err){
+      console.log(err)
+    }
 }
 
 const handleentryformvalue = (e) => {
@@ -45,7 +69,7 @@ const close_resolution_area=()=>{
 
 const show_details_and_resolution=(e)=>{
     var id=e.target.id
-    setentryform({form_no:CNRlist[id].form_no,form_date:CNRlist[id].form_date,form_type:CNRlist[id].form_type,entree_namename:CNRlist[id].entree_name,form_title:CNRlist[id].form_title,form_description:CNRlist[id].form_description,form_department:CNRlist[id].form_department,resolution_description:CNRlist[id].resolution_description,resolution_date:CNRlist[id].resolver_name!=''?CNRlist[id].resolution_date:generatenowdate(),resolver_name:CNRlist[id].resolver_name})
+    setentryform({form_no:CNRlist[id].form_no,form_date:CNRlist[id].form_date,form_type:CNRlist[id].form_type,entree_name:CNRlist[id].name,form_title:CNRlist[id].form_title,form_description:CNRlist[id].form_description,form_department:CNRlist[id].form_department,resolution_description:CNRlist[id].resolution_description,resolution_date:CNRlist[id].resolver_name!=''?CNRlist[id].resolution_date:generatenowdate(),resolver_name:CNRlist[id].resolver_name})
     set_resolution_window(true)
 }
 
@@ -154,7 +178,7 @@ return(
             </div>
 }
             <div className="contentarea" >
-                    <h3 className="contentareatitle">Complaints, News and Requests</h3>
+                    <h3 className="contentareatitle">Complaints and Requests</h3>
                     <hr/>
 
                 <div id="NRC">
@@ -163,23 +187,29 @@ return(
                             <div id="searchoptions">
                                 <div id="name-options" className="options_cont">
                                     <select >
-                                        <option value='' disabled selected>Name</option>
+                                        <option value='' >Name</option>
                                         <option>All</option>
                                         <option>Sara</option>
                                         <option>Farooq</option>
                                     </select>
                                 </div>
                                 <div id="dep-options" className="options_cont">
-                                    <select >
-                                        <option value='' disabled selected>Department</option>
-                                        <option>All</option>
-                                        <option>Sara</option>
-                                        <option>Farooq</option>
+                                    
+
+                                    <select  name="department" id="depinputdiv">
+                                        <option key='' value='' >
+                                            Department
+                                        </option>
+                                        {department_list.map((department) => (
+                                        <option key={department.name} value={department.name}>
+                                            {department.name}
+                                        </option>
+                                        ))}
                                     </select>
                                 </div>
                                 <div id="date-options" className="options_cont">
                                     <select >
-                                        <option value='' disabled selected>Date</option>
+                                        <option value='' >Date</option>
                                         <option>All</option>
 {[...Array(31).keys()].map((num) => num + 1).map((i,index)=>{
                                         return(
@@ -191,7 +221,7 @@ return(
                                 </div>
                                 <div id="date-options" className="options_cont">
                                     <select >
-                                        <option value='' disabled selected> Month</option>
+                                        <option value='' > Month</option>
                                         <option>All</option>
 {['January','February','March','April','May','June','July','August','September','October','November','December'].map((i,index)=>{
                                         return(
@@ -205,7 +235,7 @@ return(
                                 </div>
                                 <div id="date-options" className="options_cont">
                                     <select >
-                                        <option value='' disabled selected>Year</option>
+                                        <option value='' >Year</option>
                                         <option>All</option>
 {[...Array(2034-1990+1).keys()].map((num) => num + 1990).map((i,index)=>{
                                         return(
@@ -222,8 +252,8 @@ return(
                                 <div className="bookdiv6">
                                     <div id="CNRstats">
 {CNRlist.map((i,index)=>{return(
-                                        <div className={i.form_type=='Complaint'?"complaintstats":i.form_type=='News'?'newstats':'requeststats'} id={index} onClick={show_details_and_resolution} >
-                                            <img src={i.form_type=='Complaint'?Complaints:i.form_type=='News'?News:Requests}id={index}></img>
+                                        <div className={i.form_type=='Complaint'?"complaintstats":'requeststats'} id={index} onClick={show_details_and_resolution} >
+                                            <img src={i.form_type=='Complaint'?Complaints:Requests}id={index}></img>
                                             <div id={index}>
                                                 <h3 id={index} >{i.form_type}</h3>
                                                 <h2 id={index} >{i.form_title}</h2>
@@ -246,9 +276,9 @@ return(
 
                         <div id="NRC_secondDiv">
                             <div id="filterbaricons">
-                                <div id='All' className="Alldiv" onClick={filterNCR}><img src={All} id='All'></img></div>
+                                <div id='All' className="Alldiv selectedformtype" onClick={filterNCR}><img src={All} id='All'></img></div>
                                 <div id='Complaint' className="Complaintdiv" onClick={filterNCR}><img src={Complaints} id='Complaint'></img></div>
-                                <div id="News" className="Newsdiv" onClick={filterNCR}><img src={Requests} id="News"></img></div>
+
                                 <div id="Request" className="Requestdiv" onClick={filterNCR}><img src={News} id="Requests"></img></div>
                             </div>
                             <div id="NRC_formArea">
@@ -257,7 +287,7 @@ return(
                                     <div id="form_identification">
                                         <div>
                                         <label>Form Number</label>
-                                        <h2>#{entryform.form_no}</h2>
+                                        <h2>#290</h2>
                                         </div>
                                         <div>
                                         <label>Date</label>
@@ -270,17 +300,23 @@ return(
                                     <div>
                                         <label>Form Type </label>
                                         <select value={entryform.form_type} onChange={handleentryformvalue} id="form_type">
+                                            <option value='Complaint'></option>
                                             <option value='Complaint'>Complaint</option>
                                             <option value='Request'>Request</option>
-                                            <option value='News'>News</option>
+
                                         </select>
                                     </div>
                                     <div>
                                         <label>Department </label>
                                         <select value={entryform.form_department} onChange={handleentryformvalue} id="form_department">
-                                            <option value='Complaint'>Complaint</option>
-                                            <option value='Request'>Request</option>
-                                            <option value='News'>News</option>
+                                            <option key='' value=''>
+                                            
+                                            </option>                                        
+                                            {department_list.map((department) => (
+                                            <option key={department.name} value={department.name}>
+                                                {department.name}
+                                            </option>
+                                            ))}
                                         </select>
                                     </div>
                                     <div>

@@ -127,10 +127,8 @@ const editformsubmit=()=>{
                         sessionStorage.setItem('time',data.bloodbank.time)
                     })
                     alert('Blood Bank updated successfully')
-                    
-                    
-
                     enterdetails()
+                    document.getElementById('profcancel').click()
                 }
                 else if (res.status === 430) { alert(res.error) }
 
@@ -250,7 +248,7 @@ return(
 {edit_view&&
                     <div>
 
-                        <button onClick={()=>{set_edit_view(false)}}>Cancel</button>
+                        <button id="profcancel" onClick={()=>{set_edit_view(false)}}>Cancel</button>
                         <button onClick={editformsubmit}>Submit</button>
                     </div>
 }

@@ -232,10 +232,14 @@ const handle_add=(close)=>{
 //open the add view tab
 const open_add=(e)=>{
         set_add_view(false)
+
+      if(document.getElementById('deletetitle')){
+        document.getElementById('deletetitle').style.display='flex';
+      }
         var cb_o=document.getElementsByClassName('checkbox-outline');
         var deletebtn=document.getElementById('delMedicines');
-        document.getElementById('deletetitle').style.display='flex';
-        document.getElementsByClassName('stockoptitle1')[0].style.display='none';
+        
+        
         deletebtn.style.transform='rotate(-45deg)';
         deletebtn.classList.remove('delMedicinesactive');
         for(var c=0;c<cb_o.length;c++){

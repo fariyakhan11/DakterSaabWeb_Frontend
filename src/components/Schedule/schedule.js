@@ -11,7 +11,7 @@ function Schedule(){
     const [displayeddates,setdisplayeddates]=useState([])
     const [selected,setselected]=useState({date:'',month:'',year:''})
     const [close_add_view, set_add_view] = useState(true);
-
+    const workplaceplaceno=['first','second','third','fourth','fifth']
       const months = [
         { name: "January", days: 31 },
         { name: "February", days: 28 },
@@ -157,10 +157,14 @@ return(
                     <h3 className="contentareatitle">My Schedule</h3>
                     <hr/>
                     <div id="colorcode">
-                        <div id="colourcode1" className="colorcodediv">
-                            <div className="colordiv"></div>
-                            <h4 className="colorhead">Abc Hospital</h4>
+{ JSON.parse(sessionStorage.getItem('hospital')).map((i,index)=>{
+                        return(<>
+                        <div id={index} className="colorcodediv ">
+                            <div id="colordiv" className={workplaceplaceno[index]}></div>
+                            <h4 className="colorhead">{i.name}</h4>
                         </div>
+</>)})
+}
                     </div>
                 <div id="schedulediv">
                     <div id="subschedulediv1">
@@ -170,15 +174,33 @@ return(
 )})}
                         </div>
                         <div id="dayschedulediv">
-                            <div id="Mondayschedule">
-                                <h4>8:00 PM to 10:30 PM </h4>
+                            <div className="schedule">
+                                <h4 className="first">8:00 AM to 5:30 PM </h4>
+                                <h4 className="second">8:00 AM to 10:30 PM </h4>
                             </div>
-                            <div id="Tuesdayschedule"><h4>Tuesday</h4></div>
-                            <div id="Wednesdayschedule"><h4>Wednesday</h4></div>
-                            <div id="Thursdayschedule"><h4>Thursday</h4></div>
-                            <div id="Fridayschedule"><h4>Friday</h4></div>
-                            <div id="Saturdayschedule"><h4>Saturday</h4></div>
-                            <div id="Sundayschedule"><h4>Sunday</h4></div>
+                            <div className="schedule">
+                                <h4 className="first">10:00 AM to 7:30 PM </h4>
+                                <h4 className="second">8:00 PM to 11:30 PM </h4>
+                            </div>
+                            <div className="schedule">
+                                <h4 className="first">10:00 AM to 5:30 PM</h4>
+                                <h4 className="second">6:00 PM to 10:30 PM </h4>
+                            </div>
+                            <div className="schedule">
+                                <h4 className="second">6:00 PM to 10:30 PM </h4>
+
+                            </div>
+                            <div className="schedule">
+                                <h4 className="first">10:00 AM to 4:30 PM </h4>
+                                <h4 className="second">6:00 PM to 10:30 PM  </h4>
+                            </div>
+                            <div className="schedule">
+                                <h4 className="first">8:00 AM to 5:30 PM </h4>
+                            </div>
+                            <div className="schedule">
+                                <h4 className="second">10:00 AM to 4:30 PM </h4>
+
+                            </div>
                         </div>
                     </div>
                     <div id="subschedulediv2">
@@ -204,18 +226,27 @@ return(
                             <div id="workplacehead" className="divhead"><h3>Places I work</h3><BiEditAlt className="scheduleediticon"/></div>
                             <div id="workplacecontent" className="divcontentarea">
                                 <h4 className="selectedworkplace">All</h4>
-                                <h4>ABC Hospital</h4>
-                                <h4>ABC Hospital</h4>
+{ JSON.parse(sessionStorage.getItem('hospital')).map((i,index)=>{
+                        return(<>
+                                <h4 className={workplaceplaceno[index]} id={index}>{i.name}</h4>
+                                
+                            </>)
+
+})}
+
+
                             </div>
                         </div>
+{/* 
                         <div id="workshopsAndEvents">
                             <div id="workshophead" className="divhead"><h3>Workshops and events</h3><BiEditAlt className="scheduleediticon"/></div>
                             <div id="workshopandeventscontent" className="divcontentarea">
 
                             </div>
                         </div>
+*/}
                         <div id="holidays">
-                            <div id="holidayhead" className="divhead"><h3>Schedule</h3><BiEditAlt className="scheduleediticon"/></div>
+                            <div id="holidayhead" className="divhead"></div>
                             <div id="holidaycontent" className="divcontentarea">
                                 <button onClick={()=>{set_add_view(!close_add_view)}}>Import Schedule</button>
                             </div>

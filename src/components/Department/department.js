@@ -3,14 +3,17 @@ import './department.css';
 import {AiOutlineDelete} from "react-icons/ai";
 import { useState,useEffect } from "react";
 import AddDepartment from './adddepartment';
+import Departmentexpand from "./departmentexpand";
 
 function Department(){
     const [close_add_view, set_add_view] = useState(true);
+    const [close_expand_view, set_expand_view] = useState(true);
     const [department_list,setdepartment_list]=useState([]);
     const [displayed_list,setdisplayed_list]=useState([])
+    const [loggedindep,setloggedindep]=useState()
 //selected medicines to delete
-    const [selected_department,setselected_department]=useState([])
-    const [dep_pw,set_dep_pw]=useState('')
+    const [selected_department,setselected_department]=useState({depname:'',password:''})
+    
 //initial tasks on page load
   useEffect(()=>{
 fetchdepartments()
@@ -45,7 +48,7 @@ function fetchdepartments(){
 const delete_selected=(e)=>{
     e.preventDefault();
     try{
-        var data_to_delete={org_name:sessionStorage.getItem('org_name'),org_address:sessionStorage.getItem('org_address'),dep_name:selected_department[0],password:dep_pw}
+        var data_to_delete={org_name:sessionStorage.getItem('org_name'),org_address:sessionStorage.getItem('org_address'),dep_name:selected_department.depname,password:selected_department.password}
         
         fetch('http://localhost:5000/api/hospital/deldep/', {
             method: 'POST',
@@ -57,11 +60,12 @@ const delete_selected=(e)=>{
 
             res.json();
             console.log("the response is ",res);
-            setselected_department([])
-            set_dep_pw('')
+            setselected_department({depname:'',password:''})
+            
             if(res.status===200){
-                fetchdepartments()    
+                   
                 alert('Departments deleted successfully')
+                fetchdepartments() 
                 document.getElementById('deletealertgray').style.display='none'
             }
             else{
@@ -80,12 +84,7 @@ const delete_selected=(e)=>{
 //open the add view tab
 const open_add=(e)=>{
         set_add_view(false)
-        
-    
-    
-        setselected_department([])
-        
-        
+        setselected_department({depname:'',password:''})
 }
 
 //close the add view tab
@@ -94,21 +93,91 @@ const handle_add=(close)=>{
     fetchdepartments()
 }
 
+//close the department view tab
+const handle_expand=(close)=>{
+  set_expand_view(close)
+    fetchdepartments()
+}
 //close delete alert
 const closedeletediv=(e)=>{
 document.getElementById('deletealertgray').style.display='none'
-
+document.getElementsByClassName('deletealertgray')[0].style.display='none'
 }
 
 const deleteselect=(e)=>{
-
-var id=e.target.id;
-id=parseInt(id);
-setselected_department([department_list[id]['name']])
-document.getElementById('deletealertgray').style.display='flex';
+    var id=parseInt(e.target.id);
+    setselected_department((prev)=>({...prev,depname:department_list[id]['name']}))
+    document.getElementById('deletealertgray').style.display='flex';
 }
+
+useEffect(()=>{
+console.log(selected_department)
+},[selected_department])
+
+const handleChange = (e) => {
+ 
+  setselected_department((prev) => ({
+    ...prev,
+    [e.target.name]: e.target.value,
+  }));
+};
+
+const opendepart=(e)=>{
+    var id=parseInt(e.target.id)
+    setselected_department((prev)=>({...prev,depname:department_list[id]['name']}))
+    document.getElementsByClassName('deletealertgray')[0].style.display='flex';
+}
+
+const Login=()=>{
+
+    try{
+        var data_to_delete={org_name:sessionStorage.getItem('org_name'),org_address:sessionStorage.getItem('org_address'),name:selected_department.depname,password:selected_department.password}
+        
+        fetch('http://localhost:5000/api/hospital/logindep/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data_to_delete)
+        }).then(res=>{
+
+            
+            
+            setselected_department({depname:'',password:''})
+            
+            if (res.status === 200) {
+            res.json()
+                .then(data => {
+                console.log(data);
+                console.log(data.user);
+                const userData = data.user; // Store the user data in a variable
+                setloggedindep(userData);
+                alert('Department logged in successfully');
+                fetchdepartments();
+                document.getElementsByClassName('deletealertgray')[0].style.display = 'none';
+                set_expand_view(!close_expand_view);
+                })
+                .catch(err => {
+                console.log('Error reading response:', err);
+                });
+}
+            else{
+                alert('Problem logging in to this department . Please check if you have provided the correct password for it.')
+                document.getElementsByClassName('deletealertgray')[0].style.display='none'
+            }   
+            }
+        )
+
+    }catch(err){
+        console.log(err)
+    }
+}
+useEffect(()=>{console.log(loggedindep)},[loggedindep])
 return(
 <>
+{!close_expand_view &&
+<Departmentexpand close={handle_expand} department={loggedindep}/>
+}
 <div id="deletealertgray">
 <div id="deletealert">
         <div id="alertcontainer">
@@ -120,9 +189,39 @@ return(
         </div>
 
         <div id="contentareaalert">
-            <h2>Do you want to delete {selected_department[0]} department?<br/>Enter its password to confirm </h2>
-            <input type="password" id="departmentalpwdel" ></input>
+            <h2>Do you want to delete {selected_department.depname} department?<br/>Enter its password to confirm </h2>
+           <input
+                type="password"
+                name='password'
+                id="password"
+                onChange={handleChange}
+                value={selected_department.password}
+                />
             <button onClick={delete_selected}>Delete</button>
+        </div>
+    </div>
+</div>
+</div>
+<div className="deletealertgray">
+<div id="loginalert">
+        <div id="alertcontainer">
+        <div id="topalertbar">
+            <h1>Alert</h1>
+            <div id="closealert" onClick={closedeletediv} >
+                <h2>+</h2>
+            </div>
+        </div>
+
+        <div id="contentareaalert">
+            <h2>Logging in to  {selected_department.depname} department?<br/>Enter its password to confirm </h2>
+           <input
+                type="password"
+                name='password'
+                id="password"
+                onChange={handleChange}
+                value={selected_department.password}
+                />
+            <button onClick={Login}>Login</button>
         </div>
     </div>
 </div>
@@ -138,14 +237,14 @@ return(
                 <div id="departmentsdiv">
                       <div className="depscontainer" >
 {displayed_list.map((i,index)=>{return(
-                        <div className="depsdiv" id={'depsdiv'+index}>
-                            <div className="deptitle" id={'deptitle'+index}>
+                        <div className="depsdiv" id={index+'depsdiv'} onClick={opendepart}>
+                            <div className="deptitle" id={index+'deptitle'}>
                                 <h3 id={index}>{i.name}</h3>
                                 <AiOutlineDelete className="icondep" id={index+'deldep'} onClick={deleteselect}/>
                                     
                                 
                             </div>
-                            <div className="depinfo" id={'depinfo'+index}>
+                            <div className="depinfo" id={index +'depinfo'}>
                                 <h4 id={index}>Admin Name : {i.admin_name}</h4>
                                 <h4 id={index}>Phone : {(i.phone==='')?'-':i.phone}</h4>
                                 <h4 id={index}>Doctors on Duty :</h4>

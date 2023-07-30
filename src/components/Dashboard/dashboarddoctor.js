@@ -63,10 +63,16 @@ useEffect(()=>{
 })
 
 useEffect(()=>{
+const myArray = [
+  { fees: 250, name: "Aga Khan",address:"National Stadium Rd, Aga Khan University Hospital, Karachi, Karachi City, Sindh" },
+  { fees: 150, name: "Mehmooda Clinic" ,address:'R 56 sector 11 north nazimabad karachi , Karachi' },
+
+];
+const jsonString = JSON.stringify(myArray);
 sessionStorage.setItem('org_name', 'Alishba Arshad'); 
 sessionStorage.setItem('email', 'alishba@gmail.com'); 
 sessionStorage.setItem('phone', '03313423501');  
-sessionStorage.setItem('hospital','alishb , sk')
+sessionStorage.setItem('hospital',jsonString)
 sessionStorage.setItem('password','********')
 // Get the day information for each date
 const options = { weekday: 'long' };

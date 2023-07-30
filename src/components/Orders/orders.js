@@ -7,6 +7,9 @@ import {GrTransaction} from "react-icons/gr";
 import {BsCalendar2Date} from "react-icons/bs";
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import OrdersI from '../../images/order (1).png'
+import OrdersP from '../../images/box.png'
+import MedP from '../../images/medicine.png';
 
 function Orders(){
     var currentDate = new Date()
@@ -44,6 +47,9 @@ function fetchorders(){
     }
 }
 
+useEffect(()=>{
+    fetchorders()
+})
 useEffect(()=>{
     fetchorders()
 },[])
@@ -114,6 +120,31 @@ return(
             <div className="contentarea" >
                     <h3 className="contentareatitle">Our Orders</h3>
                     <hr/>
+                            <div id="statisticsdiv">
+                                <div className="summarytilesbloodbank">
+                                    <img src={OrdersI}></img>
+                                    <div>
+                                        <h3 className="tilename">Total <br/>Orders</h3>
+                                        <h2 className="tilevalue">3</h2>
+                                    </div>
+                                </div>
+                                <div className="summarytilesbloodbank">
+                                    <img src={OrdersP}></img>
+                                    <div>
+                                        <h3 className="tilename">Orders <br/>Pending </h3>
+                                        <h2 className="tilevalue">1</h2>
+                                    </div>
+                                </div> 
+                                <div className="summarytilesbloodbank">
+                                    <img src={MedP}></img>
+                                    <div>
+                                        <h3 className="tilename">Popular<br/> Medicine</h3>
+                                        <h2 className="tilevalue">Panadol</h2>
+                                    </div>
+                                </div>
+                                      
+                                
+                            </div>
                 <div id="mainorderdiv">
                     <div id="ordersdiv">
     {
