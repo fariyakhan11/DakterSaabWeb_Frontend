@@ -89,7 +89,7 @@ const filterbydate=(e)=>{
     if (e.target.value === '') {
         setCNRlist(fetched_list)
       } else {
-        var filteredForms = fetched_list.filter((o) => o.form_date === e.target.value);
+        var filteredForms = fetched_list.filter((o) => o.form_date.split('/')[0] === e.target.value);
         setCNRlist(filteredForms);
       } 
 }
@@ -108,7 +108,7 @@ const filterbymonth =(e)=>{
     if (e.target.value === '') {
         setCNRlist(fetched_list)
       } else {
-        var filteredForms = fetched_list.filter((o) => o.form_date === e.target.value);
+        var filteredForms = fetched_list.filter((o) => o.form_date.split('/')[1] === e.target.value);
         setCNRlist(filteredForms);
       } 
 }
@@ -117,7 +117,7 @@ const filterbyyear =(e)=>{
     if (e.target.value === '') {
         setCNRlist(fetched_list)
       } else {
-        var filteredForms = fetched_list.filter((o) => o.form_date === e.target.value);
+        var filteredForms = fetched_list.filter((o) => o.form_date.split('/')[2] === e.target.value);
         setCNRlist(filteredForms);
       } 
 }
@@ -263,7 +263,7 @@ return(
                                         <option>All</option>
 {[...Array(31).keys()].map((num) => num + 1).map((i,index)=>{
                                         return(
-                                            <option id={index} value={index}>{i}</option>
+                                            <option id={index} value={i}>{i}</option>
                                         )
 })}
 
@@ -275,7 +275,7 @@ return(
                                         <option>All</option>
 {['January','February','March','April','May','June','July','August','September','October','November','December'].map((i,index)=>{
                                         return(
-                                            <option id={index} value={index}>{i}</option>
+                                            <option id={index} value={index+1}>{i}</option>
                                         )
 
 
@@ -289,7 +289,7 @@ return(
                                         <option>All</option>
 {[...Array(2034-1990+1).keys()].map((num) => num + 1990).map((i,index)=>{
                                         return(
-                                            <option id={index} value={index}>{i}</option>
+                                            <option id={index} value={i}>{i}</option>
                                         )
 
 
