@@ -64,9 +64,9 @@ border-bottom: 4px solid  #c29de0 !important;
 flex-direction: row;
 align-items: center;
 display: flex;
-height:61%;
+height:37%;
 width:100%;
-margin: 0.7em 0em;
+margin: 0.7em 0em 0.2em 0em;
 justify-content: space-between;
 }
 .performancegraphsubdoctor{
@@ -90,29 +90,31 @@ padding: 0 0;
 margin: 0 0.3em 0 0.9em;
 box-shadow: 2px 2px 7px rgba(53, 52, 52, 0.247);
 font-family: Raleway;
-height: 45%;
+height: 49%;
 overflow-y: scroll;
 overflow-x: hidden;
 }
 .section1doctor{
 width: 100%;
-height: 58%;
+height: 100%;
 display: flex;
 flex-direction: row;
 margin-bottom:1em;
 
 }
-.section2{
+
+.section2doctor{
 display: flex;
 flex-direction: row;
 width: 100%;
-height: 40%;
-margin: 1em 0 0 0;
+height: 37%;
+
 justify-content: space-between;
+
 }
 .section2subdoctor{
-height: 98%;
-width:24%;
+height: 100%;
+width:49%;
 margin: 1em 0;
 }
 .section2subdoctor>h2{
@@ -123,8 +125,17 @@ box-shadow: 0 2px 30px rgba(53, 52, 52, 0.247);
 height: 82%;
 width: 100%;
 }
+.subsec1doctor{
+width: 70%;
 
+}
+.subsec2pharmacy{
+width: 45%;
+padding: 0 0;
+height: 100%;
+border-top-right-radius: 2em;
 
+}
 .patientcominghead{
 display: flex;
 flex-direction: row;

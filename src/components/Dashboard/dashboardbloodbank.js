@@ -34,7 +34,7 @@ function Dashboardbloodbank(){
 
     const [statistics,setstatistics]=useState({todayblood:'',weeksale:'',todaysale:'',popblood:''})
     const [donors,setdonors]=useState([{donorname:'',contact:'',group:'',lastdate:''}])
-    const [stock,setstock]=useState({})
+    const [bloodgroup_list,setbloodgroup_list]=useState([])
     const [events,setevents]=useState([{name:'',address:'',date:''}])
 
 //navigate between tabs from the sidenav clicks and transitions
@@ -73,7 +73,7 @@ sessionStorage.setItem('phone', '03330249895');
 sessionStorage.setItem('password','********')
 
 if(tab==='Home'){
-
+    fetchblood()
     fetchstats()
 
 }
@@ -111,12 +111,37 @@ try{
         }).then((response) => response.json()) // get response, convert to json
         .then((json) => {
 
-            setstatistics({todayblood:json.item_sold_today,weeksale:json.transac_amount_week,todaysale:json.transac_amount_today,popblood:json.popular_blood})
+            setstatistics({todayblood:json.item_sold_today,weeksale:json.transac_amount_week,todaysale:json.transac_amount_today,popblood:(json.popular_blood!=''||json.popular_blood!=null)?json.popular_blood:'-'})
+        
       });
     }catch(err){
       console.log(err)
     }
 }
+
+//fetch blood groups from the database
+function fetchblood(){
+    try{
+        const params=sessionStorage.getItem('org_name')+'/'+sessionStorage.getItem('org_address')
+        const api='http://localhost:5000/api/bloodbank/getblood/'+params;
+        fetch(api, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        }).then((response) => response.json()) // get response, convert to json
+        .then((json) => {
+        if(json.bloodgroups){
+          
+          setbloodgroup_list(json.bloodgroups);
+        }else{setbloodgroup_list([])}
+        if(json.error){console.log(json.error)}
+      });
+    }catch(err){
+      console.log(err)
+    }
+}
+
 return(
 
 <>
@@ -233,60 +258,32 @@ return(
                         <div className="section2subbloodbank">
                             <h2 className="booktitledivbloodbank">Stock</h2>
                             <div id="stockdiv">
+
                                 <div id="stockhead">
                                     <h3>Blood Group</h3>
                                     <h3>Quantity</h3>
                                 </div>
+{bloodgroup_list.map((i,ind)=>{return(<>
                                 <div id="stockcontent">
-                                    <h3>A+</h3>
-                                    <h3></h3>
+                                    <h3>{i.AvailableBloodGroup}</h3>
+                                    <h3>{i.quantity}</h3>
                                 </div>
-                                <div id="stockcontent">
-                                    <h3>B+</h3>
-                                    <h3></h3>
-                                </div>
-                                <div id="stockcontent">
-                                    <h3>O+</h3>
-                                    <h3></h3>
-                                </div>
-                                <div id="stockcontent">
-                                    <h3>AB+</h3>
-                                    <h3></h3>
-                                </div>
-                                <div id="stockcontent">
-                                    <h3>A-</h3>
-                                    <h3></h3>
-                                </div>
-                                <div id="stockcontent">
-                                    <h3>A-</h3>
-                                    <h3></h3>
-                                </div>
-                                <div id="stockcontent">
-                                    <h3>A-</h3>
-                                    <h3></h3>
-                                </div>
-                                <div id="stockcontent">
-                                    <h3>A-</h3>
-                                    <h3></h3>
-                                </div>
+
+</>)})}
                             </div>
                         </div>
                         <div className="section2subbloodbank">
                             <h2 className="booktitledivbloodbank">Last Transaction</h2>
                             <div id="eventsdiv">
-                                <ul>
-                                    <li>
-                                        <div className="eventinfo">
-                                            <h5>14/05/2020</h5>
-                                            <h3>Asghari Medical Camp</h3>
-                                            <h4>Sector 8 ground North Karachi ,Karachi</h4>
-                                            
-                                        </div>
-
-                                    </li>
-                                    
-                                </ul>
-
+                                <h5>29/4/2023</h5>
+                                <h3>Alishba Arshad</h3>
+                                
+                                <h4>Rs 490</h4>
+                                <div id="itemblooddiv">
+                                    <div><h5>Item</h5><h5>Quantity</h5></div>
+                                    <div><h5>A+</h5><h5>2</h5></div>
+                                    <div><h5>AB-</h5><h5>1</h5></div>            
+                                </div>
                             </div>
                         </div>
                         </div>

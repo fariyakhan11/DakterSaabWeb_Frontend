@@ -46,7 +46,7 @@ function fetchmeds(){
     }
 }
 
-//fetch medicines from the database
+//fetch blood groups from the database
 function fetchblood(){
     try{
         const params=sessionStorage.getItem('org_name')+'/'+sessionStorage.getItem('org_address')
@@ -68,6 +68,7 @@ function fetchblood(){
       console.log(err)
     }
 }
+
 const handleinput=(e)=>{
     e.preventDefault()
     if(e.target.name==='buyer_name'){

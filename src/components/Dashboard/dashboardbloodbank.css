@@ -81,23 +81,49 @@ justify-content: center;
 box-shadow: 2px 2px 7px rgba(105, 105, 105, 0.623);
 height: 86%;
 border-bottom-right-radius:1.5em ;
-padding: 1em 2em;
+padding: 1em 1em;
 font-family: Raleway;
+}
+#itemblooddiv{
+
+width: 100%;
 overflow-y: scroll;
+overflow-x: hidden;
 }
-.eventinfo{
-border-bottom: 3px solid rgba(190, 174, 174, 0.37);
-margin: 0 0 0.5em 0 ;
+#itemblooddiv>div{
+display: flex;
+border-bottom: 2px solid rgba(131, 128, 128, 0.5);
+flex-direction: row;
+justify-content: space-between;
+font-size: 1.5em;
+padding: 2% 5%;
+width: 90%;
 }
-.eventinfo>h3{
+#itemblooddiv>div:nth-child(1){
+background-color: #f5b3b37a;
+}
+#itemblooddiv>div>h5:nth-child(1){
+width: 70%;
+}
+#itemblooddiv>div>h5:nth-child(2){
+width: 30%;
+text-align: center;
+}
+#eventsdiv>h3{
 font-weight: bolder;
-font-size: 1.3em;
+font-size: 1.6em;
 color:#e06464;
 text-shadow: 2px 2px 5px rgba(110, 107, 107, 0.342);
 }
-.eventinfo>h5{
+#eventsdiv>h4{
+font-weight: bolder;
+font-size: 1.4em;
+margin-bottom: 1em;
+text-shadow: 2px 2px 5px rgba(110, 107, 107, 0.342);
+}
+#eventsdiv>h5{
 font-family: Ysabeau;
-font-size: 1em;
+font-size: 1.2em;
 width:100%;
 display: flex;
 justify-content: flex-end;

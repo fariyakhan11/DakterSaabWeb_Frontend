@@ -157,7 +157,7 @@ return(
 {(tab==='Home') && 
       <>
         <div className="section1doctor">
-            <div className="subsec1">
+            <div className="subsec1doctor">
                 <div className="Summarybar">
                     <h4>Statistics</h4>
                     <div id="statisticsdiv">
@@ -199,6 +199,41 @@ return(
                         <h3>Confirmed Diagnosis</h3>
                     </div>
                 </div>
+        <div className="section2doctor">
+            <div className="section2subdoctor" >
+                <h2 className="booktitledivpharmacy">Upcoming Patient</h2>
+                <div id="upcomingpatient">
+                    <div className="patientcominghead">
+                        <img src={PatientU}></img>
+                        <div>
+                        <h4>Aliza Arshad</h4>
+                        <h5>alizaarshad@gmail.com</h5>                            
+                        </div>
+                    </div>
+                    <h4><span>Venue: </span>ABC Clinic</h4>
+                    <h4><span>Time Slot: </span>9:00 AM</h4>
+                </div>
+            </div>
+            <div className="section2subdoctor" >
+                <h2 className="booktitledivpharmacy">Previous Patient</h2>
+                <div id="prevpatient">
+                    <div className="patientcominghead">
+                        <img src={PatientsPrev}></img>
+                        <div>
+                        <h4>Aliza Arshad</h4>
+                        <h5>alizaarshad@gmail.com</h5>                            
+                        </div>
+                    </div>
+                    <h4><span>Venue: </span>ABC Clinic</h4>
+                    <h4><span>Time Slot: </span>9:00 AM</h4>
+                    <h4><span>Illness: </span>Fever , Runny Nose</h4>
+                    <h4><span>Diagnosis: </span>Viral Flu</h4>
+                </div>
+            </div>
+
+
+
+        </div>
             </div>
             <div className="subsec2pharmacy">
 
@@ -258,69 +293,7 @@ return(
                 </div>
             </div>
         </div>
-        <div className="section2">
-            <div className="section2subdoctor" >
-                <h2 className="booktitledivpharmacy">Upcoming Patient</h2>
-                <div id="upcomingpatient">
-                    <div className="patientcominghead">
-                        <img src={PatientU}></img>
-                        <div>
-                        <h4>Aliza Arshad</h4>
-                        <h5>alizaarshad@gmail.com</h5>                            
-                        </div>
-                    </div>
-                    <h4><span>Venue: </span>ABC Clinic</h4>
-                    <h4><span>Time Slot: </span>9:00 AM</h4>
-                </div>
-            </div>
-            <div className="section2subdoctor" >
-                <h2 className="booktitledivpharmacy">Previous Patient</h2>
-                <div id="prevpatient">
-                    <div className="patientcominghead">
-                        <img src={PatientsPrev}></img>
-                        <div>
-                        <h4>Aliza Arshad</h4>
-                        <h5>alizaarshad@gmail.com</h5>                            
-                        </div>
-                    </div>
-                    <h4><span>Venue: </span>ABC Clinic</h4>
-                    <h4><span>Time Slot: </span>9:00 AM</h4>
-                    <h4><span>Illness: </span>Fever , Runny Nose</h4>
-                    <h4><span>Diagnosis: </span>Viral Flu</h4>
-                </div>
-            </div>
-            <div className="section2subdoctor" >
-                <h2 className="booktitledivpharmacy">Upcoming Events</h2>
-                <div id="prevpatient">
-                    <div className="patientcominghead">
-                        <img src={EventU}></img>
-                        <div>
-                        <h4>The Doctors Meetup</h4>
-                        <h5>Chugtai Medical College</h5>                            
-                        </div>
-                    </div>
-                    <h4><span>Date: </span>5 /07/2023</h4>
-                    <h4><span>Time: </span>9:00 AM</h4>
 
-                </div>
-            </div>
-            <div className="section2subdoctor" >
-                <h2 className="booktitledivpharmacy">Patients for Today</h2>
-                <div id="prevpatient">
-                    <div className="patientcominghead">
-                        <img src={EventU}></img>
-                        <div>
-                        <h4>The Doctors Meetup</h4>
-                        <h5>Chugtai Medical College</h5>                            
-                        </div>
-                    </div>
-                    <h4><span>Date: </span>5 /07/2023</h4>
-                    <h4><span>Time: </span>9:00 AM</h4>
-
-                </div>
-            </div>
-
-        </div>
       </>
 }
 {(tab==='Appointments')&&

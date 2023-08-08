@@ -10,6 +10,8 @@ import BloodGroup from '../../images/bloodgroup.png'
 
 function Transactionhistory({close,message}){
     const [transactionhistory,settransactionhistory]=useState([])
+    const [statisticsblood,setstatisticsblood]=useState({todayblood:'',weeksale:'',todaysale:'',popblood:''})
+    const [statisticspharmacy,setstatisticspharmacy]=useState({todaymed:'',weeksale:'',todaysale:'',totalorder:'',orderpend:'',popmed:''})
 
 function fetchtransactioninfo(){
     try{
@@ -33,7 +35,13 @@ function fetchtransactioninfo(){
     }
 }
 useEffect(()=>{
-fetchtransactioninfo()
+    fetchtransactioninfo()
+    if(message==='blood'){
+        fetchstatsblood()
+    }
+    else{
+        fetchstatspharmacy()
+    }
 },[])
 
 const opendetailtransact=(e)=>{
@@ -51,6 +59,44 @@ const opendetailtransact=(e)=>{
 
 }
 
+function fetchstatsblood(){
+try{
+        const params=sessionStorage.getItem('org_name')+'/'+sessionStorage.getItem('org_address')
+        const api='http://localhost:5000/api/bloodbank/stats/'+params;
+        fetch(api, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        }).then((response) => response.json()) // get response, convert to json
+        .then((json) => {
+
+            setstatisticsblood({todayblood:json.item_sold_today,weeksale:json.transac_amount_week,todaysale:json.transac_amount_today,popblood:(json.popular_blood!=''||json.popular_blood!=null)?json.popular_blood:'-'})
+        
+      });
+    }catch(err){
+      console.log(err)
+    }
+}
+
+function fetchstatspharmacy(){
+try{
+        const params=sessionStorage.getItem('org_name')+'/'+sessionStorage.getItem('org_address')
+        const api='http://localhost:5000/api/pharmacy/stats/'+params;
+        fetch(api, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        }).then((response) => response.json()) // get response, convert to json
+        .then((json) => {
+
+            setstatisticspharmacy({todaymed:json.item_sold_today,weeksale:json.transac_amount_week,todaysale:json.transac_amount_today,totalorder:json.total_orders_today,orderpend:json.pending_orders_today,popmed:json.popular_med})
+      });
+    }catch(err){
+      console.log(err)
+    }
+}
 
 return(
 <>
@@ -69,7 +115,7 @@ return(
                                     <img src={Bloodimg}></img>
                                     <div>
                                         <h3 className="tilename">Today <br/> Blood units sold</h3>
-                                        <h2 className="tilevalue">292</h2>
+                                        <h2 className="tilevalue">{statisticsblood.todayblood}</h2>
                                     </div>
                                 </div>
 }
@@ -79,7 +125,7 @@ return(
 
                                     <div>
                                         <h3 className="tilename">Today <br/> Medicines sold</h3>
-                                        <h2 className="tilevalue">292</h2>
+                                        <h2 className="tilevalue">{statisticspharmacy.todaymed}</h2>
                                     </div>
                                 </div>
 }
@@ -87,14 +133,14 @@ return(
                                     <img src={Week}></img>
                                     <div>
                                         <h3 className="tilename">This Week<br/> Sales(Rupees)</h3>
-                                        <h2 className="tilevalue">8330</h2>
+                                        <h2 className="tilevalue">{(message==='pharmacy')?statisticspharmacy.weeksale:statisticsblood.weeksale}</h2>
                                     </div>
                                 </div> 
                                 <div className="summarytilesbloodbank">
                                     <img src={Profit}></img>
                                     <div>
                                         <h3 className="tilename">Today <br/> Sales(Rupees)</h3>
-                                        <h2 className="tilevalue">1092</h2>
+                                        <h2 className="tilevalue">{(message==='pharmacy')?statisticspharmacy.todaysale:statisticsblood.todaysale}</h2>
                                     </div>
                                 </div>
 {(message==='blood')&&
@@ -102,7 +148,7 @@ return(
                                     <img src={BloodGroup}></img>
                                     <div>
                                         <h3 className="tilename">Popular<br/> Blood group</h3>
-                                        <h2 className="tilevalue">O+</h2>
+                                        <h2 className="tilevalue">{statisticsblood.popblood}</h2>
                                     </div>
                                 </div>      
 }                                
