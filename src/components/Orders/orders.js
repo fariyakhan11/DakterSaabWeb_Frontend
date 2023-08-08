@@ -97,12 +97,13 @@ const orderdetailhandler=(e)=>{
 const filterorders = (e) => {
 
   if (e.target.id === 'all') {
-    
+    setdisplayed_list(order_list);
     document.getElementsByClassName('selectedstatus')[0].classList.remove('selectedstatus');
     e.target.classList.add('selectedstatus');
     setselectedstatus('')
   } else {
-
+    var filteredOrders = order_list.filter((o) => o.status === e.target.id);
+    setdisplayed_list(filteredOrders);
     document.getElementsByClassName('selectedstatus')[0].classList.remove('selectedstatus');
     e.target.classList.add('selectedstatus');
     setselectedstatus(e.target.id)
@@ -145,19 +146,16 @@ const handleSearchCustomer=(e)=>{
 }
 
 function filteringorders(){
-    if(searchcustomer===''&&selectedstatus===''){
+        if(searchcustomer===''){
         setdisplayed_list(order_list);
     }
-    if(searchcustomer!=''){
+    else{
         const filteredorders = order_list.filter((o) =>
         o.buyer_name.toLowerCase().includes(searchcustomer.toLowerCase())
         );
         setdisplayed_list(filteredorders);
     }
-    if(selectedstatus!=''){
-        var filteredOrders = order_list.filter((o) => o.status === e.target.id);
-        setdisplayed_list(filteredOrders);
-    }
+
 }
 return(
 <>

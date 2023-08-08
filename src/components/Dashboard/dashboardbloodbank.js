@@ -32,7 +32,7 @@ function Dashboardbloodbank(){
 
 //dashboard content
 
-    const [statistics,setstatistics]=useState({TodayBloodUnit:0,PopularBloodGroup:'',TodaySales:''})
+    const [statistics,setstatistics]=useState({todayblood:'',weeksale:'',todaysale:'',popblood:''})
     const [donors,setdonors]=useState([{donorname:'',contact:'',group:'',lastdate:''}])
     const [stock,setstock]=useState({})
     const [events,setevents]=useState([{name:'',address:'',date:''}])
@@ -71,6 +71,12 @@ sessionStorage.setItem('org_address', 'R 595 sector 8 North Karachi, Karachi');
 sessionStorage.setItem('email', 'abcbank@gmail.com'); 
 sessionStorage.setItem('phone', '03330249895');  
 sessionStorage.setItem('password','********')
+
+if(tab==='Home'){
+
+    fetchstats()
+
+}
 },[])
 
 function openoverlaytab(e){
@@ -90,6 +96,25 @@ function openoverlaytab(e){
         document.getElementById(tab).classList.remove('active-overlaypharmacy')
         settab(e.target.id)
         e.target.classList.add('active-overlaypharmacy')
+    }
+}
+
+function fetchstats(){
+try{
+        const params=sessionStorage.getItem('org_name')+'/'+sessionStorage.getItem('org_address')
+        const api='http://localhost:5000/api/bloodbank/stats/'+params;
+        fetch(api, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        }).then((response) => response.json()) // get response, convert to json
+        .then((json) => {
+
+            setstatistics({todayblood:json.item_sold_today,weeksale:json.transac_amount_week,todaysale:json.transac_amount_today,popblood:json.popular_blood})
+      });
+    }catch(err){
+      console.log(err)
     }
 }
 return(
@@ -147,28 +172,28 @@ return(
                                     <img src={Blood}></img>
                                     <div>
                                         <h3 className="tilename">Today <br/> Blood units sold</h3>
-                                        <h2 className="tilevalue">292</h2>
+                                        <h2 className="tilevalue">{statistics.todayblood}</h2>
                                     </div>
                                 </div>
                                 <div className="summarytilesbloodbank">
                                     <img src={Profit}></img>
                                     <div>
                                         <h3 className="tilename">Today <br/> Sales(Rupees)</h3>
-                                        <h2 className="tilevalue">20092</h2>
+                                        <h2 className="tilevalue">{statistics.todaysale}</h2>
                                     </div>
                                 </div>
                                 <div className="summarytilesbloodbank">
                                     <img src={Week}></img>
                                     <div>
                                         <h3 className="tilename">This Week<br/> Sales(Rupees)</h3>
-                                        <h2 className="tilevalue">8392030</h2>
+                                        <h2 className="tilevalue">{statistics.weeksale}</h2>
                                     </div>
                                 </div> 
                                 <div className="summarytilesbloodbank">
                                     <img src={BloodGroup}></img>
                                     <div>
                                         <h3 className="tilename">Popular<br/> Blood group</h3>
-                                        <h2 className="tilevalue">O+</h2>
+                                        <h2 className="tilevalue">{statistics.popblood}</h2>
                                     </div>
                                 </div>                                    
                                 
@@ -247,7 +272,7 @@ return(
                             </div>
                         </div>
                         <div className="section2subbloodbank">
-                            <h2 className="booktitledivbloodbank">Upcoming Events</h2>
+                            <h2 className="booktitledivbloodbank">Last Transaction</h2>
                             <div id="eventsdiv">
                                 <ul>
                                     <li>
@@ -259,15 +284,7 @@ return(
                                         </div>
 
                                     </li>
-                                    <li>
-                                        <div className="eventinfo">
-                                            <h5>14/05/2020</h5>
-                                            <h3>Asghari Medical Camp</h3>
-                                            <h4>Sector 8 ground North Karachi ,Karachi</h4>
-                                            
-                                        </div>
-
-                                    </li>
+                                    
                                 </ul>
 
                             </div>

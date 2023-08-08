@@ -150,7 +150,7 @@ function fetchforms(){
 
           const formNumbers = fetched_list.map(item => item.form_no); // Extract form_no values
         
-          setentryform((prevform) => ({ ...prevform, [form_no]: Math.max(...formNumbers) }));
+          setentryform((prevform) => ({ ...prevform, ['form_no']: Math.max(...formNumbers) }));
 
         }else{setCNRlist([]);setfetched_list([])}
         if(json.error){console.log(json.error)}
