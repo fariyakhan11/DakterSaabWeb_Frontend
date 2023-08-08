@@ -11,7 +11,7 @@ function Departmentexpand({close,department}){
 
     const [doctor_list,setdoctor_list]=useState([]);
     const [displayed_listdoctor,setdisplayed_listdoctor]=useState([])
-    const [nav,setnav]=useState('Prof')
+    const [nav,setnav]=useState('App')
     const[editview,set_edit_view]=useState(false)
 //initial tasks on page load
 useEffect(()=>{
@@ -323,6 +323,7 @@ return(<>
                 <h1>Increase Token Number</h1>
                 <h2>7</h2>
                 <h3>+</h3>
+                <h4>Skip</h4>
             </div>
         </div>
         <div className="docopddiv" >
@@ -364,6 +365,7 @@ return(<>
                 <h1>Increase Token Number</h1>
                 <h2>7</h2>
                 <h3>+</h3>
+                <h4>Skip</h4>
             </div>
         </div>
 </div>

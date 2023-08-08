@@ -5,52 +5,11 @@ import { useState,useEffect } from "react";
 
 
 function Appointments(){
-    const [timeSlot,settimeSlot]=useState([])
-
-
-    const generateTimeSlots = () => {
-    const slots = [];
-    const startTime = new Date().setHours(0, 0, 0, 0); // Set start time to 12AM
-    const endTime = new Date().setHours(23, 59, 59, 999); // Set end time to 11:59PM
-
-    let currentTime = startTime;
-    while (currentTime <= endTime) {
-        const timeSlot = new Date(currentTime).toLocaleTimeString([], {
-        hour: '2-digit',
-        minute: '2-digit',
-        });
-        slots.push(timeSlot);
-        currentTime += 10 * 60 * 1000; // Add 10 minutes to the current time
-    }
-
-    return slots;
-    };
-
-    useEffect(()=>{
-        var timeSlots = generateTimeSlots();
-        settimeSlot(timeSlots)
-        
-       
-    },[])
-function scrollToCenter(){
-
-  const container = document.getElementById('timer'); // Replace 'myDiv' with the actual ID of your <div>
-if (container) {
-  const scrollWidth = container.scrollWidth;
-  const clientWidth = container.clientWidth;
-  const scrollLeft = (scrollWidth - clientWidth) / 2;
-  container.scrollLeft = scrollLeft;}
-};
-
-
-
-
     const workplaceplaceno=['first','second','third','fourth','fifth']
+    const workplaceplacenum=['firstdiv','seconddiv','thirddiv','fourthdiv','fifthdiv']
     const [currentdates,setcurrentdates]=useState([])
-    const [displayeddates,setdisplayeddates]=useState([])
     const [selected,setselected]=useState({date:'',month:'',year:''})
-
-      const months = [
+const months = [
         { name: "January", days: 31 },
         { name: "February", days: 28 },
         { name: "March", days: 31 },
@@ -64,47 +23,6 @@ if (container) {
         { name: "November", days: 30 },
         { name: "December", days: 31 }
       ];
-
-function setdatesvalue(){
-    // Get today's date
-    const today = new Date();
-    const threeDaysAfter =new Date(today);
-    const twoDaysAfter=new Date(today);
-    const oneDayAfter=new Date(today);
-    const threeDaysBefore=new Date(today);
-    const twoDaysBefore=new Date(today);
-    const oneDayBefore = new Date(today);
-
-    threeDaysAfter.setDate(today.getDate() + 3);
-    twoDaysAfter.setDate(today.getDate() + 2);
-    oneDayAfter.setDate(today.getDate() + 1);
-    threeDaysBefore.setDate(today.getDate() - 3);
-    twoDaysBefore.setDate(today.getDate() - 2);
-    oneDayBefore.setDate(today.getDate() - 1);
-
-    // Get the day information for each date
-    const options = { weekday: 'long' };
-
-    setcurrentdates([
-        {date:threeDaysBefore.getDate()+' '+months[threeDaysAfter.getMonth()].name   ,day:threeDaysBefore.toLocaleDateString('en-US', options)},
-        {date:twoDaysBefore.getDate()+' '+months[twoDaysBefore.getMonth()].name     ,day:twoDaysBefore.toLocaleDateString('en-US', options)},
-        {date:oneDayBefore.getDate()+' '+months[oneDayBefore.getMonth()].name        ,day:oneDayBefore.toLocaleDateString('en-US', options)},
-        {date:today.getDate()+' '+ months[today.getMonth()].name                     ,day:today.toLocaleDateString('en-US', options)},
-        {date:oneDayAfter.getDate()+' '+months[oneDayAfter.getMonth()].name         ,day:oneDayAfter.toLocaleDateString('en-US', options)},
-        {date:twoDaysAfter.getDate()+' '+months[twoDaysAfter.getMonth()].name       ,day:twoDaysAfter.toLocaleDateString('en-US', options)},
-        {date:threeDaysAfter.getDate()+' '+months[threeDaysAfter.getMonth()].name    ,day:threeDaysAfter.toLocaleDateString('en-US', options)}]
-    )
-
-}
-
-useEffect(()=>{console.log('The array',currentdates);setdisplayeddates(currentdates)},[currentdates])
-
-useEffect(()=>{
-    setdatesvalue();
-    var today=new Date();
-    generateyears();
-    setselected({date:today.getDate(),month:months[today.getMonth()].name ,year:today.getFullYear()})
-},[])
 
 useEffect(()=>{
 
@@ -122,6 +40,38 @@ dateDropdown.value=selected.date;
 
 },[selected])
 
+useEffect(()=>{
+    setdatesvalue();
+    var today=new Date();
+    generateyears();
+    setselected({date:today.getDate(),month:months[today.getMonth()].name ,year:today.getFullYear()})
+},[])
+
+function setdatesvalue(){
+    // Get today's date
+    const today = new Date();
+
+    const oneDayAfter=new Date(today);
+
+    const oneDayBefore = new Date(today);
+
+
+    oneDayAfter.setDate(today.getDate() + 1);
+  
+
+
+    // Get the day information for each date
+    const options = { weekday: 'long' };
+
+    setcurrentdates([
+
+        {date:oneDayBefore.getDate()+' '+months[oneDayBefore.getMonth()].name        ,day:oneDayBefore.toLocaleDateString('en-US', options)},
+        {date:today.getDate()+' '+ months[today.getMonth()].name                     ,day:today.toLocaleDateString('en-US', options)},
+        {date:oneDayAfter.getDate()+' '+months[oneDayAfter.getMonth()].name         ,day:oneDayAfter.toLocaleDateString('en-US', options)},
+        ]
+    )
+
+}
 function generatedays(){
 
     const dateDropdown = document.getElementById("dateDropdown");
@@ -159,7 +109,6 @@ function generateyears(){
         yearDropdown.appendChild(option);
       }
 }
-
 const changehandler=(e)=>{
     if(e.target.id==="dateDropdown"){
        setselected((prev) => {
@@ -186,7 +135,43 @@ return(
             <div className="contentarea" >
                     <h3 className="contentareatitle">My Appointments</h3>
                     <hr/>
-                <div id="colorcode">
+                <div id="colorcodeapp">
+                    <div id="filterbarappointment">
+                            <div id="datechoose">
+                                <h5>Select Date</h5>
+                                <div id="selecteddatefilterapp">
+
+                                    <select id="dateDropdown" onChange={changehandler}>
+
+                                    </select>
+                                    <select id="monthDropdown" onChange={changehandler}>
+    {months.map((i,index)=>{return(
+                                        <option value={i.name}>{i.name}</option>
+    )})}
+
+                                    </select>
+                                    <select id="yearDropdown" onChange={changehandler}>
+
+                                    </select>
+                                </div>
+
+                            </div>
+                            <div id="datechoose">
+                            <h5>Select Workplace</h5>
+                                <div id="selectedworkfilterapp">
+
+                                    
+                                        <select id="monthDropdown" onChange={changehandler}>
+                                        <option value='All'>All</option>
+        {months.map((i,index)=>{return(
+                                            <option value={i.name}>{i.name}</option>
+        )})}
+
+                                        </select>
+
+                                </div>
+                            </div>
+                    </div>
                     <div id="colourcode1" className="colorcodediv">
 { JSON.parse(sessionStorage.getItem('hospital')).map((i,index)=>{
                         return(<>
@@ -197,61 +182,177 @@ return(
 </>)})
 }               
                     </div>
+
                 </div>
                 <div id="appointmentsdiv">
-                    <div id="appointmentcontentarea">
-                        <div id="timer" onLoad={scrollToCenter()}>
-{timeSlot.map((i,index)=>{return(<>
-                            <div id="timediv">{(index+2)%3===2?<h6>{i}</h6>:<h6>.</h6>}</div>
-
-</>)})}
-                        </div>
-                        <div id='dateandhospital' >
-                            <div id="daydiv" >
-{displayeddates.map((i,index)=>{return(
-                            <div id={index}><h4>{i.date}</h4><h3>{i.day}</h3></div>
-)})}
+                    <div id="appointmentsdivcontent">
+                        <div className="appointmentsdivcontentcontainer">
+                            <div className="contentapphead">
+                                <h1>Date: 30/07/2023</h1>
                             </div>
-                            <div id="dayandtimeappdiv" >
-
+                            <div className="contentappbody">
+                                <div className="workplaceapp firstdiv">
+                                    <div>   
+                                        <h1>Patient Name: </h1>
+                                        <h2>Alishba</h2>
+                                    </div>
+                                    <div>   
+                                        <h1>Time: </h1>
+                                        <h2>10:00AM</h2>
+                                    </div>
+                                    <div>   
+                                        <h1>Clinic: </h1>
+                                        <h2>Agha Khan</h2>
+                                    </div>
+                                </div>
+                                <div className="workplaceapp firstdiv">
+                                    <div>   
+                                        <h1>Patient Name: </h1>
+                                        <h2>Hania</h2>
+                                    </div>
+                                    <div>   
+                                        <h1>Time: </h1>
+                                        <h2>10:30AM</h2>
+                                    </div>
+                                    <div>   
+                                        <h1>Clinic: </h1>
+                                        <h2>Agha Khan</h2>
+                                    </div>
+                                </div>
+                                <div className="workplaceapp firstdiv">
+                                    <div>   
+                                        <h1>Patient Name: </h1>
+                                        <h2>Daniyal</h2>
+                                    </div>
+                                    <div>   
+                                        <h1>Time: </h1>
+                                        <h2>10:15AM</h2>
+                                    </div>
+                                    <div>   
+                                        <h1>Clinic: </h1>
+                                        <h2>Agha Khan</h2>
+                                    </div>
+                                </div>
+                                <div className="workplaceapp seconddiv">
+                                    <div>   
+                                        <h1>Patient Name: </h1>
+                                        <h2>Rohail</h2>
+                                    </div>
+                                    <div>   
+                                        <h1>Time: </h1>
+                                        <h2>12:00PM</h2>
+                                    </div>
+                                    <div>   
+                                        <h1>Clinic: </h1>
+                                        <h2>Mehmooda Clinic</h2>
+                                    </div>
+                                </div>
+                                <div className="workplaceapp seconddiv">
+                                    <div>   
+                                        <h1>Patient Name: </h1>
+                                        <h2>Dania</h2>
+                                    </div>
+                                    <div>   
+                                        <h1>Time: </h1>
+                                        <h2>12:30</h2>
+                                    </div>
+                                    <div>   
+                                        <h1>Clinic: </h1>
+                                        <h2>Mehmooda Clinic</h2>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-
-
-                    </div>
-                    <div id="appointmentsidearea">
-                        <div id="datechooser">
-                            <h5>Selected Date</h5>
-                            <div id="selecteddatefilter">
-
-                                <select id="dateDropdown" onChange={changehandler}>
-
-                                </select>
-                                <select id="monthDropdown" onChange={changehandler}>
-{months.map((i,index)=>{return(
-                                    <option value={i.name}>{i.name}</option>
-)})}
-
-                                </select>
-                                <select id="yearDropdown" onChange={changehandler}>
-
-                                </select>
+                        <div className="appointmentsdivcontentcontainer">
+                            <div className="contentapphead">
+                                <h1>Date: 30/07/2023</h1>
                             </div>
-                        </div>
-                        <div id="workingplaces">
-                            <div id="workplacehead" className="divhead"><h3>Places I work</h3><BiEditAlt className="scheduleediticon"/></div>
-                            <div id="workplacecontent" className="divcontentarea">
-                                <h4 className="selectedworkplace">All</h4>
-{ JSON.parse(sessionStorage.getItem('hospital')).map((i,index)=>{
-                        return(<>
-                                <h4 className={workplaceplaceno[index]} id={index}>{i.name}</h4>
+                            <div className="contentappbody">
                                 
-                            </>)
-
-})}
+                                <div className="workplaceapp seconddiv">
+                                    <div>   
+                                        <h1>Patient Name: </h1>
+                                        <h2>Hammad</h2>
+                                    </div>
+                                    <div>   
+                                        <h1>Time: </h1>
+                                        <h2>2:15PM</h2>
+                                    </div>
+                                    <div>   
+                                        <h1>Clinic: </h1>
+                                        <h2>Mehmooda Clinic</h2>
+                                    </div>
+                                </div>
+                                <div className="workplaceapp seconddiv">
+                                    <div>   
+                                        <h1>Patient Name: </h1>
+                                        <h2>Zohaib</h2>
+                                    </div>
+                                    <div>   
+                                        <h1>Time: </h1>
+                                        <h2>3:00PM</h2>
+                                    </div>
+                                    <div>   
+                                        <h1>Clinic: </h1>
+                                        <h2>Mehmooda Clinic</h2>
+                                    </div>
+                                </div>
+                                <div className="workplaceapp firstdiv">
+                                    <div>   
+                                        <h1>Patient Name: </h1>
+                                        <h2>Sohaib</h2>
+                                    </div>
+                                    <div>   
+                                        <h1>Time: </h1>
+                                        <h2>5:00PM</h2>
+                                    </div>
+                                    <div>   
+                                        <h1>Clinic: </h1>
+                                        <h2>Agha Khan</h2>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <div className="appointmentsdivcontentcontainer">
+                            <div className="contentapphead">
+                                <h1>Date: 30/07/2023</h1>
+                            </div>
+                            <div className="contentappbody">
+                                
+                                <div className="workplaceapp firstdiv">
+                                    <div>   
+                                        <h1>Patient Name: </h1>
+                                        <h2>Alina</h2>
+                                    </div>
+                                    <div>   
+                                        <h1>Time: </h1>
+                                        <h2>7:00PM</h2>
+                                    </div>
+                                    <div>   
+                                        <h1>Clinic: </h1>
+                                        <h2>Agha Khan</h2>
+                                    </div>
+                                </div>
+                                <div className="workplaceapp seconddiv">
+                                    <div>   
+                                        <h1>Patient Name: </h1>
+                                        <h2>Rohail</h2>
+                                    </div>
+                                    <div>   
+                                        <h1>Time: </h1>
+                                        <h2>12:00PM</h2>
+                                    </div>
+                                    <div>   
+                                        <h1>Clinic: </h1>
+                                        <h2>Mehmooda Clinic</h2>
+                                    </div>
+                                </div>
+                                
                             </div>
                         </div>
                     </div>
+                    
                 </div>
             </div>
         </div>

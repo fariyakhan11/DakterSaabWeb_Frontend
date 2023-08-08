@@ -606,3 +606,26 @@ background-color: #8db2f8;
 transform: scale(1.1);
 color: white;
 }
+#tokencounter>h4{
+cursor: pointer;
+border-radius: 1em;
+border: 3px solid #2755aa;
+font-size: 1.9em !important;
+box-shadow: 5px 5px 14px rgba(121, 121, 121, 0.397);
+transition: all 0.5s ease-in-out;
+color: #2050a8;
+font-weight: bolder;
+font-family: Fraunces;
+padding: 0.1em 1em;
+height: 1.5em;
+text-align: center;
+display: flex;
+align-items: center;
+font-size: 1.7em;
+justify-content: center;
+}
+#tokencounter>h4:hover{
+background-color: #8db2f8;
+transform: scale(1.1);
+color: white;
+}

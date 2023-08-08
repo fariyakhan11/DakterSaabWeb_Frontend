@@ -17,6 +17,7 @@ useEffect(()=>{
     if(props.class==='blood'){ fetchblood()}
     else if(props.class==='pharmacy'){
         fetchmeds()
+        
 }
 
 },[])
@@ -34,8 +35,9 @@ function fetchmeds(){
         }).then((response) => response.json()) // get response, convert to json
         .then((json) => {
         if(json.medicines){
-          var meds=json.medicines.filter(medicine => medicine.quantity <0)
+          var meds=json.medicines.filter(medicine => medicine.quantity >0)
           setdisplayed_list(meds);
+            
         }else{setdisplayed_list([])}
         if(json.error){console.log(json.error)}
       });

@@ -170,7 +170,7 @@ padding-left: 1em;
 
 }
 .bookdiv3>div>div:nth-child(2)>div>h5{
-font-size: 1.2em;
+font-size: 1em;
 font-weight: bolder;
 }
 .bookdiv3>div>div>img{
@@ -191,7 +191,7 @@ font-size: 1.2em;
 font-family: Fraunces;
 }
 .tilevalue{
-font-size: 1.9em;
+font-size: 1.4em;
 width: 100%;
 height:50%;
 }

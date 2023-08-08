@@ -25,6 +25,7 @@ import Profilepharmacy from "../Profile/profilepharmacy";
 function Dashboardpharmacy(){
     const currentDate = new Date()
     const [expandedstate,setexpandedstate]=useState(false)
+    const [statistics,setstatistics]=useState({todaymed:'',weeksale:'',todaysale:'',totalorder:'',orderpend:'',popmed:''})
     const [selectedDate, setSelectedDate] = useState(currentDate);
     const [showMenu, setShowMenu] = useState(false);
     const [tab, settab]=useState('Home');
@@ -44,15 +45,15 @@ function Dashboardpharmacy(){
     }
 
 //handle dashboards display from the overlay tab nav clicks and transitions
-    const handletopstates=(overtab)=>{
+const handletopstates=(overtab)=>{
 
-        if(!overtab){
-        document.getElementById(tab).classList.remove('active-overlaypharmacy')
-        settab(oldtab);
-        setoldtab('');
-        setoverlay(!overlay)
-        }
+    if(!overtab){
+    document.getElementById(tab).classList.remove('active-overlaypharmacy')
+    settab(oldtab);
+    setoldtab('');
+    setoverlay(!overlay)
     }
+}
 
 useEffect(()=>{
 
@@ -72,9 +73,22 @@ sessionStorage.setItem('org_address', 'R 143 sector 9 North Karachi, Karachi');
 sessionStorage.setItem('email', 'abcpharmacy@gmail.com'); 
 sessionStorage.setItem('phone', '03232626789');  
 sessionStorage.setItem('password','********')
-    fetchorders()
+
+if(tab==='Home'){
     fetchlasttransact()
-fetchlowmeds()
+    fetchlowmeds()
+    fetchstats()
+    fetchorders()
+
+    // Set the interval to fetch/update the data every 5 minutes
+    const interval = setInterval(fetchorders, 5 * 60 * 1000);
+
+    // Clean up the interval when the component unmounts
+    return () => {
+      clearInterval(interval);
+    };
+}
+
 },[])
 
 
@@ -165,6 +179,26 @@ try{
     }
 }
 
+function fetchstats(){
+try{
+        const params=sessionStorage.getItem('org_name')+'/'+sessionStorage.getItem('org_address')
+        const api='http://localhost:5000/api/pharmacy/stats/'+params;
+        fetch(api, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        }).then((response) => response.json()) // get response, convert to json
+        .then((json) => {
+
+            setstatistics({todaymed:json.item_sold_today,weeksale:json.transac_amount_week,todaysale:json.transac_amount_today,totalorder:json.total_orders_today,orderpend:json.pending_orders_today,popmed:json.popular_med})
+      });
+    }catch(err){
+      console.log(err)
+    }
+}
+
+
 return(
 <>
 {logoutalert&&
@@ -223,21 +257,21 @@ return(
                                     <img src={Med}></img>
                                     <div>
                                         <h3 className="tilename">Today <br/> Medicines sold</h3>
-                                        <h2 className="tilevalue">292</h2>
+                                        <h2 className="tilevalue">{statistics.todaymed}</h2>
                                     </div>
                                 </div>
                                 <div className="summarytilesbloodbank">
                                     <img src={Week}></img>
                                     <div>
                                         <h3 className="tilename">This Week<br/> Sales(Rupees)</h3>
-                                        <h2 className="tilevalue">8392030</h2>
+                                        <h2 className="tilevalue">{statistics.weeksale}</h2>
                                     </div>
                                 </div> 
                                 <div className="summarytilesbloodbank">
                                     <img src={Profit}></img>
                                     <div>
                                         <h3 className="tilename">Today <br/> Sales(Rupees)</h3>
-                                        <h2 className="tilevalue">20092</h2>
+                                        <h2 className="tilevalue">{statistics.todaysale}</h2>
                                     </div>
                                 </div>
                                       
@@ -248,21 +282,21 @@ return(
                                     <img src={OrdersI}></img>
                                     <div>
                                         <h3 className="tilename">Total <br/>Orders</h3>
-                                        <h2 className="tilevalue">292</h2>
+                                        <h2 className="tilevalue">{statistics.totalorder}</h2>
                                     </div>
                                 </div>
                                 <div className="summarytilesbloodbank">
                                     <img src={OrdersP}></img>
                                     <div>
                                         <h3 className="tilename">Orders <br/>Pending </h3>
-                                        <h2 className="tilevalue">8392030</h2>
+                                        <h2 className="tilevalue">{statistics.orderpend}</h2>
                                     </div>
                                 </div> 
                                 <div className="summarytilesbloodbank">
                                     <img src={MedP}></img>
                                     <div>
                                         <h3 className="tilename">Popular<br/> Medicine</h3>
-                                        <h2 className="tilevalue">O+</h2>
+                                        <h2 className="tilevalue">{statistics.popmed}</h2>
                                     </div>
                                 </div>
                                       

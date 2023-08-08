@@ -12,14 +12,14 @@ import OrdersP from '../../images/box.png'
 import MedP from '../../images/medicine.png';
 
 function Orders(){
-    var currentDate = new Date()
+    const [searchcustomer,setsearchcustomer]=useState('')
     const [searchTerm, setSearchTerm] = useState("");
-    const [selectedCategory, setSelectedCategory] = useState("");
+    const [selectedstatus,setselectedstatus]=useState('')
     const [selectedDate, setSelectedDate] = useState('');
     const [filters,setfilters]=useState({time:''});
     const [order_list,setorder_list]=useState([]);
     const [displayed_list,setdisplayed_list]=useState([])
-
+    const [statistics,setstatistics]=useState({todaymed:'',weeksale:'',todaysale:'',totalorder:'',orderpend:'',popmed:''})
     const handleSearchTermChange = (event) => {
     setSearchTerm(event.target.value);
   };
@@ -38,7 +38,8 @@ function fetchorders(){
         .then((json) => {
         if(json.order){
           setorder_list(json.order);
-          setdisplayed_list(json.order);
+          if(selectedstatus===''){setdisplayed_list(json.order);}
+          else{setdisplayed_list(json.order.filter(o=>o.status===selectedstatus))}
         }else{setorder_list([]);setdisplayed_list([])}
         if(json.error){console.log(json.error)}
       });
@@ -50,18 +51,13 @@ function fetchorders(){
 useEffect(()=>{
     fetchorders()
 })
+
 useEffect(()=>{
     fetchorders()
+    fetchstats()
 },[])
 
-  const handleCategoryChange = (event) => {
-    setSelectedCategory(event.target.value);
-  };
 
-function formatdate(date){
-var months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
-
-}
 //data filter toggle on/off
 const handledatefilter = (e) => {
   var currentDate = new Date(); // Get the current date
@@ -99,20 +95,69 @@ const orderdetailhandler=(e)=>{
 }
 
 const filterorders = (e) => {
+
   if (e.target.id === 'all') {
-    setdisplayed_list(order_list);
+    
     document.getElementsByClassName('selectedstatus')[0].classList.remove('selectedstatus');
     e.target.classList.add('selectedstatus');
+    setselectedstatus('')
   } else {
-    var filteredOrders = order_list.filter((o) => o.status === e.target.id);
-    setdisplayed_list(filteredOrders);
+
     document.getElementsByClassName('selectedstatus')[0].classList.remove('selectedstatus');
     e.target.classList.add('selectedstatus');
+    setselectedstatus(e.target.id)
   }
 };
 
 const movetotransact=(e)=>{
 
+}
+
+function fetchstats(){
+try{
+        const params=sessionStorage.getItem('org_name')+'/'+sessionStorage.getItem('org_address')
+        const api='http://localhost:5000/api/pharmacy/stats/'+params;
+        fetch(api, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        }).then((response) => response.json()) // get response, convert to json
+        .then((json) => {
+
+            setstatistics({todaymed:json.item_sold_today,weeksale:json.transac_amount_week,todaysale:json.transac_amount_today,totalorder:json.total_orders_today,orderpend:json.pending_orders_today,popmed:json.popular_med})
+      });
+    }catch(err){
+      console.log(err)
+    }
+}
+
+function format_date(d){
+    d=parseInt(d.split('-')[2])+'/'+parseInt(d.split('-')[1])+'/'+d.split('-')[0]
+    d=d.toString();
+    return d;
+}
+
+const handleSearchCustomer=(e)=>{
+
+    setsearchcustomer(e.target.value)
+
+}
+
+function filteringorders(){
+    if(searchcustomer===''&&selectedstatus===''){
+        setdisplayed_list(order_list);
+    }
+    if(searchcustomer!=''){
+        const filteredorders = order_list.filter((o) =>
+        o.buyer_name.toLowerCase().includes(searchcustomer.toLowerCase())
+        );
+        setdisplayed_list(filteredorders);
+    }
+    if(selectedstatus!=''){
+        var filteredOrders = order_list.filter((o) => o.status === e.target.id);
+        setdisplayed_list(filteredOrders);
+    }
 }
 return(
 <>
@@ -125,21 +170,21 @@ return(
                                     <img src={OrdersI}></img>
                                     <div>
                                         <h3 className="tilename">Total <br/>Orders</h3>
-                                        <h2 className="tilevalue">3</h2>
+                                        <h2 className="tilevalue">{statistics.totalorder}</h2>
                                     </div>
                                 </div>
                                 <div className="summarytilesbloodbank">
                                     <img src={OrdersP}></img>
                                     <div>
                                         <h3 className="tilename">Orders <br/>Pending </h3>
-                                        <h2 className="tilevalue">1</h2>
+                                        <h2 className="tilevalue">{statistics.orderpend}</h2>
                                     </div>
                                 </div> 
                                 <div className="summarytilesbloodbank">
                                     <img src={MedP}></img>
                                     <div>
                                         <h3 className="tilename">Popular<br/> Medicine</h3>
-                                        <h2 className="tilevalue">Panadol</h2>
+                                        <h2 className="tilevalue">{statistics.popmed}</h2>
                                     </div>
                                 </div>
                                       
@@ -161,7 +206,7 @@ return(
                                 <FiPackage className="tabsicon Order_symbol" id={index}/>
                                 <h2 className="order_title" id={index}>{i.buyer_name}</h2>
 
-                                <h2 className="order_date" id={index}>{i.date}</h2>
+                                <h2 className="order_date" id={index}>{format_date(i.date)}</h2>
                                 <h2 className="status" id={index}>{i.status}</h2>
                                 <GrTransaction  className="tabsicon transact_icon" id={index} onClick={movetotransact}/>
                                 <div className="expand_icon" onClick={orderdetailhandler} id={index}>
@@ -208,8 +253,8 @@ return(
                                 <input
                                 type="text"
                                 placeholder="Search orders by name"
-                                value={searchTerm}
-                                onChange={handleSearchTermChange}
+                                value={searchcustomer}
+                                onChange={handleSearchCustomer}
                                 className='searchorder'
                                 />
                             <div id="datesearch">
