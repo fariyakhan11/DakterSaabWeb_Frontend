@@ -1,4 +1,4 @@
-import React from "react";
+import React, { cloneElement } from "react";
 import './newsandreports.css';
 import Complaints from '../../images/chat.png'
 import News from '../../images/newspaper.png'
@@ -12,10 +12,8 @@ function Newsandreports(){
     const [entryform ,setentryform]=useState({form_no:'',form_date:'',form_type:'',name:'',form_title:'',form_description:'',form_department:'',resolution_description:'',resolution_date:'',resolver_name:''})
     const [department_list,setdepartment_list]=useState([]);
     const [CNRlist ,setCNRlist ]=useState([
-        {form_no:'9092',form_date:'16/6/2023',form_type:'Complaint',name:'Alishba',form_title:'Broken Toilet',form_description:'The bathrooms in the first floor are broken',form_department:'Cardiology',resolution_description:'',resolution_date:'',resolver_name:''},
-
-        {form_no:'23',form_date:'12/4/2023',form_type:'Request',name:'Alishba',form_title:'Shortage of Beds',form_description:'',form_department:'Gynecology',resolution_description:'',resolution_date:'',resolver_name:''}
-    ])
+    //    {form_no:'',form_date:'',form_type:'',name:'',form_title:'',form_description:'',form_department:'',resolution_description:'',resolution_date:'',resolver_name:''},
+   ])
     const [resolution_window,set_resolution_window]=useState(false)
     const [fetched_list,setfetched_list]=useState([])
 
@@ -87,6 +85,52 @@ const filterNCR = (e) => {
   }
 };
 
+const filterbydate=(e)=>{
+    if (e.target.value === '') {
+        setCNRlist(fetched_list)
+      } else {
+        var filteredForms = fetched_list.filter((o) => o.form_date.split('/')[0] === e.target.value);
+        setCNRlist(filteredForms);
+      } 
+}
+
+const filterbydep=(e)=>{
+    if (e.target.value === '') {
+        setCNRlist(fetched_list)
+      } else {
+        var filteredForms = fetched_list.filter((o) => o.form_department === e.target.value);
+        setCNRlist(filteredForms);
+      } 
+
+}
+
+const filterbymonth =(e)=>{
+    if (e.target.value === '') {
+        setCNRlist(fetched_list)
+      } else {
+        var filteredForms = fetched_list.filter((o) => o.form_date.split('/')[1] === e.target.value);
+        setCNRlist(filteredForms);
+      } 
+}
+
+const filterbyyear =(e)=>{
+    if (e.target.value === '') {
+        setCNRlist(fetched_list)
+      } else {
+        var filteredForms = fetched_list.filter((o) => o.form_date.split('/')[2] === e.target.value);
+        setCNRlist(filteredForms);
+      } 
+}
+
+const filterbyname =(e)=>{
+    if (e.target.value === '') {
+        setCNRlist(fetched_list)
+      } else {
+        var filteredForms = fetched_list.filter((o) => o.entree_name === e.target.value);
+        setCNRlist(filteredForms);
+      } 
+}
+
 //fetch orders from the database
 function fetchforms(){
     try{
@@ -99,9 +143,15 @@ function fetchforms(){
             },
         }).then((response) => response.json()) // get response, convert to json
         .then((json) => {
-        if(json.order){
-          setCNRlist(json.order);
-          setfetched_list(json.order);
+        if(json.forms){
+            console.log(json.forms)
+          setCNRlist(json.forms);
+          setfetched_list(json.forms);
+
+          const formNumbers = fetched_list.map(item => item.form_no); // Extract form_no values
+        
+          setentryform((prevform) => ({ ...prevform, [form_no]: Math.max(...formNumbers) }));
+
         }else{setCNRlist([]);setfetched_list([])}
         if(json.error){console.log(json.error)}
       });
@@ -186,7 +236,7 @@ return(
                         <div>
                             <div id="searchoptions">
                                 <div id="name-options" className="options_cont">
-                                    <select >
+                                    <select onChange={filterbyname}>
                                         <option value='' >Name</option>
                                         <option>All</option>
                                         <option>Sara</option>
@@ -196,7 +246,7 @@ return(
                                 <div id="dep-options" className="options_cont">
                                     
 
-                                    <select  name="department" id="depinputdiv">
+                                    <select  name="department" id="depinputdiv" onChange={filterbydep}>
                                         <option key='' value='' >
                                             Department
                                         </option>
@@ -208,24 +258,24 @@ return(
                                     </select>
                                 </div>
                                 <div id="date-options" className="options_cont">
-                                    <select >
+                                    <select onChange={filterbydate} >
                                         <option value='' >Date</option>
                                         <option>All</option>
 {[...Array(31).keys()].map((num) => num + 1).map((i,index)=>{
                                         return(
-                                            <option id={index} value={index}>{i}</option>
+                                            <option id={index} value={i}>{i}</option>
                                         )
 })}
 
                                     </select>
                                 </div>
                                 <div id="date-options" className="options_cont">
-                                    <select >
+                                    <select onChange={filterbymonth}>
                                         <option value='' > Month</option>
                                         <option>All</option>
 {['January','February','March','April','May','June','July','August','September','October','November','December'].map((i,index)=>{
                                         return(
-                                            <option id={index} value={index}>{i}</option>
+                                            <option id={index} value={index+1}>{i}</option>
                                         )
 
 
@@ -234,12 +284,12 @@ return(
                                     </select>
                                 </div>
                                 <div id="date-options" className="options_cont">
-                                    <select >
+                                    <select onChange={filterbyyear}>
                                         <option value='' >Year</option>
                                         <option>All</option>
 {[...Array(2034-1990+1).keys()].map((num) => num + 1990).map((i,index)=>{
                                         return(
-                                            <option id={index} value={index}>{i}</option>
+                                            <option id={index} value={i}>{i}</option>
                                         )
 
 
@@ -287,7 +337,7 @@ return(
                                     <div id="form_identification">
                                         <div>
                                         <label>Form Number</label>
-                                        <h2>#290</h2>
+                                        <h2>{'#'+entryform.form_no}</h2>
                                         </div>
                                         <div>
                                         <label>Date</label>
@@ -300,7 +350,7 @@ return(
                                     <div>
                                         <label>Form Type </label>
                                         <select value={entryform.form_type} onChange={handleentryformvalue} id="form_type">
-                                            <option value='Complaint'></option>
+                                            <option value='' disabled>Select form type</option>
                                             <option value='Complaint'>Complaint</option>
                                             <option value='Request'>Request</option>
 

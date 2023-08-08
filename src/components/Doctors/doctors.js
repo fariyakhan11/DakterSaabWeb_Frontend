@@ -7,8 +7,8 @@ import FrontP from '../../images/front.png'
 import BackP from '../../images/back.png'
 
 function Doctors(){
-    const [searchTerm, setSearchTerm] = useState("");
-    const [selectedCategory, setSelectedCategory] = useState("");
+    const [searchdoctor,setsearchdoctor]= useState('')
+    const [searchdep,setsearchdep]= useState('')
     const [close_add_view, set_add_view] = useState(true);
     const [viewmode,setviewmode]=useState(true)
     const [doctor_list,setdoctor_list]=useState([]);
@@ -21,7 +21,7 @@ function Doctors(){
 //set whether an element is expanded or not
   const [expanded,setexpanded]=useState(false)
 //values to update medicine details
-    const [viewdoc,setviewdoc]=useState({name:'',email:'',education:'',speciality:'',department:'',experience:'',availability:[{day:"",time:''}]})
+    const [viewdoc,setviewdoc]=useState({oldname:'',olddep:'',name:'',email:'',education:'',speciality:'',department:'',experience:'',availability:[{day:"",time:''}]})
 
 //initial tasks on page load
 useEffect(()=>{
@@ -29,21 +29,11 @@ useEffect(()=>{
   fetchdepartments()
   },[])
 
-  const handleSearchTermChange = (event) => {
-    setSearchTerm(event.target.value);
-  };
-
-  const handleCategoryChange = (event) => {
-    setSelectedCategory(event.target.value);
-  };
-
-
 //close the add view tab
 const handle_add=(close)=>{
   set_add_view(close)
   fetchdoctors()
 }
-
 
 //set up the update view
 const detail_view=(e)=>{
@@ -53,6 +43,8 @@ const detail_view=(e)=>{
       document.getElementsByClassName('docsdivspecial')[0].classList.remove('medsdiv');
       console.log('the jdk',displayed_list[id].availability)
       setviewdoc({
+        oldname:displayed_list[id].Name,
+        olddep:displayed_list[id].Department,
         name:displayed_list[id].Name,
         email:displayed_list[id].email,
         education:displayed_list[id].Education,
@@ -66,7 +58,9 @@ const detail_view=(e)=>{
       
     }
 }
+
 useEffect(()=>{console.log(viewdoc)},[viewdoc])
+
 //close the update view
 const close_detail_view=(e)=>{
     if(expanded){
@@ -80,6 +74,8 @@ const close_detail_view=(e)=>{
         experience:'',
         availability:'',
         department:'',
+        olddep:'',
+        oldname:'',
       })
       setexpanded(false); 
     }     
@@ -197,10 +193,10 @@ useEffect(() => {
   console.log(selected_doctor);
 }, [selected_doctor]);
 
-
 const openupdate=(e)=>{
 set_info_view(false)
 }
+
 //fetch departments from the database
 function fetchdepartments(){
     try{
@@ -225,16 +221,13 @@ function fetchdepartments(){
 }
 
 const handleinputupdate=(e)=>{
-const { name, value } = e.target;
-    
-      
-      setviewdoc((prevViewdoc) => ({
-        ...prevViewdoc,
-        [name]: value,
-      }));
-    
-
+  const { name, value } = e.target;
+        setviewdoc((prevViewdoc) => ({
+          ...prevViewdoc,
+          [name]: value,
+        }));
 }
+
 const handleInputUpdate = (event) => {
   const { id, value } = event.target;
   const day = id; // Since the id attribute is set to the day name
@@ -269,6 +262,64 @@ const handleInputUpdate = (event) => {
     }
   }
 };
+
+const handleSearchdoctor = (e)=>{
+  setsearchdoctor(e.target.value.toLowerCase())
+  
+
+  if (searchdoctor === '') {
+    setdisplayed_list(doctor_list); // Show all doctors if search is empty
+  } else {
+    const filteredDoctors = doctor_list.filter((doctor) =>
+      doctor.Name.toLowerCase().includes(searchdoctor)
+    );
+    setdisplayed_list(filteredDoctors);
+  }
+}
+
+const handleSearchdep=(e)=>{
+  setsearchdep(e.target.value.toLowerCase())
+  if (searchdep === '') {
+      setdisplayed_list(doctor_list)
+    } else {
+      var filteredDoctors = doctor_list.filter((o) => o.Department.toLowerCase() === searchdep);
+      setdisplayed_list(filteredDoctors);
+    } 
+
+}
+
+const updatedoctor=(e)=>{
+    e.preventDefault()
+    try{
+      
+      const api='http://localhost:5000/api/hospital/updatedoc';
+      let data={org_name:sessionStorage.getItem('org_name'),org_address:sessionStorage.getItem('org_address'),doc_list:viewdoc}
+      fetch(api, {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+      }).then(res => {
+              if (res.status === 200) {
+                  alert('Doctors updated successfully')
+                  setviewdoc({olddep:'',oldname:'',name:'',email:'',education:'',speciality:'',department:'',experience:'',availability:[{day:"",time:''}]})
+                  fetchdoctors()
+                  document.getElementsByClassName('docsdivspecial')[0].classList.add('medsdiv');      
+                  document.getElementsByClassName('docsdivspecial')[0].classList.remove('docsdivspecial'); 
+                  setexpanded(false)
+                  var btn = document.getElementById('closebtndonor');
+                  btn.click();
+              }
+              
+
+              else {  alert('Problem updating doctors') }
+          });
+  }catch(err){
+      console.log(err);
+  }
+
+}
 
 return(
 <>
@@ -343,7 +394,7 @@ return(
                 <img src={FrontP} onClick={()=>{setupdatedpage('2')}}></img>
 }
               </div>
-              <button>Submit</button>
+              <button onClick={updatedoctor}>Submit</button>
             </div>
         </div>
     </div>
@@ -356,16 +407,18 @@ return(
 
                           <input
                             type="text"
-                            placeholder="Search Doctors.."
-                            value={searchTerm}
-                            onChange={handleSearchTermChange}
+                            placeholder="Search Doctors by name.."
+                            value={searchdoctor}
+                            onChange={handleSearchdoctor}
                             className='searchhospital'
                           />
-                          <select value={selectedCategory} onChange={handleCategoryChange} className='optionscategory'>
-                            <option value="">All categories</option>
-                            <option value="books">Books</option>
-                            <option value="electronics">Electronics</option>
-                            <option value="clothing">Clothing</option>
+                          <select value={searchdep} onChange={handleSearchdep} className='optionscategory'>
+                            <option value="">Select Department</option>
+                            {department_list.map((department) => (
+                                        <option key={department.name} value={department.name}>
+                                            {department.name}
+                                        </option>
+                                        ))}
                           </select>
                           
                         
