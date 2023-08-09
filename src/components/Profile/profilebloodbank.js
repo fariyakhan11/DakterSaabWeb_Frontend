@@ -125,10 +125,11 @@ const editformsubmit=()=>{
                         sessionStorage.setItem('phone',data.bloodbank.phone)
                         sessionStorage.setItem('email',data.bloodbank.email)
                         sessionStorage.setItem('time',data.bloodbank.time)
-                    })
                     alert('Blood Bank updated successfully')
                     enterdetails()
-                    document.getElementById('profcancel').click()
+                    document.getElementById('profcancel').click()                        
+                    })
+
                 }
                 else if (res.status === 430) { alert(res.error) }
 
@@ -163,7 +164,7 @@ return(
                                 <div id="Addressdiv">
                                     <div>
                                         <h6 id="addresserr">Address cannot be empty</h6>
-                                        <input type='text' placeholder="Enter Address" value={bloodbankinfo.address} onChange={handleinput} name="adddress"/>
+                                        <input type='text' placeholder="Enter Address" value={bloodbankinfo.address} onChange={handleinput} name="address"/>
                                     </div>
                                 </div>
                                 <div id="Phonediv">

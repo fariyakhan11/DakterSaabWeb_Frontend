@@ -133,7 +133,9 @@ text-align: center;
 
 #dayschedulediv{
 height: 100%;
-width: 80%;
+width: 90%;
+overflow-x: scroll;
+overflow-y: scroll;
 }
 
 #dayschedulediv>div{
@@ -153,7 +155,7 @@ margin: 0.3em;
 background-color: pink;
 border-radius: 1em;
 padding: 0.7em 1em;
-width: fit-content;
+width: fit-content!important;
 justify-content: flex-start;
 display: flex;
 }
@@ -204,6 +206,7 @@ justify-content: space-between;
 font-size: 1.15em;
 align-items: center;
 border-bottom: 2px solid rgba(136, 134, 134, 0.692);
+margin-top: 1.5em;
 }
 .divcontentarea{
 padding: 0.7em;

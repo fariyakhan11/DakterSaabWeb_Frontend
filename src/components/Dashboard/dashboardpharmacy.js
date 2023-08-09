@@ -33,7 +33,7 @@ function Dashboardpharmacy(){
     const [overlay,setoverlay]=useState(false);
     const [logoutalert,setlogoutalert]=useState(false)
     const [order_list,setorder_list]=useState([]);
-    const [last_transact,setlast_transact]=useState();
+    const [last_transact,setlast_transact]=useState({date:'',buyer_name:'',amount:'',items:[{name:'',quantity:''}]});
     const [medicine_list,setmedicine_list]=useState([]);
 
 //navigate between tabs from the sidenav clicks and transitions

@@ -11,7 +11,10 @@ function Schedule(){
     const [displayeddates,setdisplayeddates]=useState([])
     const [selected,setselected]=useState({date:'',month:'',year:''})
     const [close_add_view, set_add_view] = useState(true);
+    const [schedule,setschedule]=useState([])
     const workplaceplaceno=['first','second','third','fourth','fifth']
+    const [hospitals,sethospitals]=useState([])
+    const [selectedworkplace,setselectedworkplace]=useState('')
       const months = [
         { name: "January", days: 31 },
         { name: "February", days: 28 },
@@ -26,23 +29,22 @@ function Schedule(){
         { name: "November", days: 30 },
         { name: "December", days: 31 }
       ];
-
-function setdatesvalue(){
+function setdatesvalue(d){
     // Get today's date
-const today = new Date();
-const threeDaysAfter =new Date(today);
-const twoDaysAfter=new Date(today);
-const oneDayAfter=new Date(today);
-const threeDaysBefore=new Date(today);
-const twoDaysBefore=new Date(today);
-const oneDayBefore = new Date(today);
+const todaydate =d;
+const threeDaysAfter =new Date(todaydate);
+const twoDaysAfter=new Date(todaydate);
+const oneDayAfter=new Date(todaydate);
+const threeDaysBefore=new Date(todaydate);
+const twoDaysBefore=new Date(todaydate);
+const oneDayBefore = new Date(todaydate);
 
-threeDaysAfter.setDate(today.getDate() + 3);
-twoDaysAfter.setDate(today.getDate() + 2);
-oneDayAfter.setDate(today.getDate() + 1);
-threeDaysBefore.setDate(today.getDate() - 3);
-twoDaysBefore.setDate(today.getDate() - 2);
-oneDayBefore.setDate(today.getDate() - 1);
+threeDaysAfter.setDate(todaydate.getDate() + 3);
+twoDaysAfter.setDate(todaydate.getDate() + 2);
+oneDayAfter.setDate(todaydate.getDate() + 1);
+threeDaysBefore.setDate(todaydate.getDate() - 3);
+twoDaysBefore.setDate(todaydate.getDate() - 2);
+oneDayBefore.setDate(todaydate.getDate() - 1);
 
 // Get the day information for each date
 const options = { weekday: 'long' };
@@ -51,21 +53,23 @@ setcurrentdates([
     {date:threeDaysBefore.getDate()+' '+months[threeDaysAfter.getMonth()].name   ,day:threeDaysBefore.toLocaleDateString('en-US', options)},
     {date:twoDaysBefore.getDate()+' '+months[twoDaysBefore.getMonth()].name     ,day:twoDaysBefore.toLocaleDateString('en-US', options)},
     {date:oneDayBefore.getDate()+' '+months[oneDayBefore.getMonth()].name        ,day:oneDayBefore.toLocaleDateString('en-US', options)},
-    {date:today.getDate()+' '+ months[today.getMonth()].name                     ,day:today.toLocaleDateString('en-US', options)},
+    {date:todaydate.getDate()+' '+ months[todaydate.getMonth()].name                     ,day:todaydate.toLocaleDateString('en-US', options)},
     {date:oneDayAfter.getDate()+' '+months[oneDayAfter.getMonth()].name         ,day:oneDayAfter.toLocaleDateString('en-US', options)},
     {date:twoDaysAfter.getDate()+' '+months[twoDaysAfter.getMonth()].name       ,day:twoDaysAfter.toLocaleDateString('en-US', options)},
     {date:threeDaysAfter.getDate()+' '+months[threeDaysAfter.getMonth()].name    ,day:threeDaysAfter.toLocaleDateString('en-US', options)}]
 )
-
 }
 
-useEffect(()=>{console.log('The array',currentdates);setdisplayeddates(currentdates)},[currentdates])
+useEffect(()=>{setdisplayeddates(currentdates)},[currentdates])
 
 useEffect(()=>{
-    setdatesvalue();
+    
+
     var today=new Date();
+    
     generateyears();
     setselected({date:today.getDate(),month:months[today.getMonth()].name ,year:today.getFullYear()})
+    getschedule()
 },[])
 
 useEffect(()=>{
@@ -79,9 +83,10 @@ useEffect(()=>{
     monthDropdown.value=selected.month;
 
     yearDropdown.value=selected.year;
-generatedays()
-dateDropdown.value=selected.date;
-
+    generatedays()
+    dateDropdown.value=selected.date;
+    const today = new Date(selected.year, months.findIndex(m => m.name === selected.month), selected.date);
+    setdatesvalue(today);
 },[selected])
 
 function generatedays(){
@@ -139,14 +144,78 @@ const changehandler=(e)=>{
             
         });
     }
+    
 }
 
 //close the add view tab
 const handle_add=(close)=>{
   set_add_view(close)
-
+    getschedule()
 }
 
+useEffect(()=>{
+    const distinctHospitalNames = [...new Set(schedule.flatMap(entry =>
+        entry.availability.map(availabilityEntry => availabilityEntry.name)
+    ))];
+    sethospitals(distinctHospitalNames)
+},[schedule])
+
+function getschedule(){
+
+    try{
+        const params=sessionStorage.getItem('org_name')+'/'+sessionStorage.getItem('email')
+        const api='http://localhost:5000/api/doctor/getschedule/'+params;
+        fetch(api, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        }).then((response) => response.json()) // get response, convert to json
+        .then((json) => {
+        if(json.schedule){
+          setschedule(json.schedule)
+
+        }else{setschedule([]);}
+        if(json.error){console.log(json.error)}
+      });
+    }catch(err){
+      console.log(err)
+    }
+}
+
+const filterworkplace=(e)=>{
+    setselectedworkplace(e.target.id)
+    document.getElementsByClassName('selectedworkplace')[0].classList.remove('selectedworkplace')
+    e.target.classList.add('selectedworkplace')
+}
+useEffect(()=>{
+
+    if(selectedworkplace!=''){
+        const d=document.getElementsByClassName('daytimediv')
+        
+        const dArray = Array.from(d);
+
+        dArray.map((i) => {
+            i.style.display = 'none';
+            return null; // map function should return a value
+        });
+        const w=document.getElementsByClassName(workplaceplaceno[hospitals.indexOf(selectedworkplace)])
+        const wArray = Array.from(w);
+
+        wArray.map((i) => {
+            i.style.display = 'block';
+            return null; // map function should return a value
+        });
+    }
+    else{
+        const d=document.getElementsByClassName('daytimediv')
+        const dArray = Array.from(d);
+        dArray.map((i) => {
+            i.style.display = 'flex';
+            return null; // map function should return a value
+        });
+    }
+},[selectedworkplace])
 return(
 <>
 {!close_add_view &&
@@ -157,11 +226,11 @@ return(
                     <h3 className="contentareatitle">My Schedule</h3>
                     <hr/>
                     <div id="colorcode">
-{ JSON.parse(sessionStorage.getItem('hospital')).map((i,index)=>{
+{ hospitals.map((i,index)=>{
                         return(<>
                         <div id={index} className="colorcodediv ">
                             <div id="colordiv" className={workplaceplaceno[index]}></div>
-                            <h4 className="colorhead">{i.name}</h4>
+                            <h4 className="colorhead">{i}</h4>
                         </div>
 </>)})
 }
@@ -173,34 +242,39 @@ return(
                             <div id={index}><h4>{i.date}</h4><h3>{i.day}</h3></div>
 )})}
                         </div>
+
                         <div id="dayschedulediv">
-                            <div className="schedule">
-                                <h4 className="first">8:00 AM to 5:30 PM </h4>
-                                <h4 className="second">8:00 AM to 10:30 PM </h4>
-                            </div>
-                            <div className="schedule">
-                                <h4 className="first">10:00 AM to 7:30 PM </h4>
-                                <h4 className="second">8:00 PM to 11:30 PM </h4>
-                            </div>
-                            <div className="schedule">
-                                <h4 className="first">10:00 AM to 5:30 PM</h4>
-                                <h4 className="second">6:00 PM to 10:30 PM </h4>
-                            </div>
-                            <div className="schedule">
-                                <h4 className="second">6:00 PM to 10:30 PM </h4>
+                            {displayeddates.map((i,index)=>{
+                                
+                                const dayschedule = schedule.find(s => s.day === i.day);
 
-                            </div>
-                            <div className="schedule">
-                                <h4 className="first">10:00 AM to 4:30 PM </h4>
-                                <h4 className="second">6:00 PM to 10:30 PM  </h4>
-                            </div>
-                            <div className="schedule">
-                                <h4 className="first">8:00 AM to 5:30 PM </h4>
-                            </div>
-                            <div className="schedule">
-                                <h4 className="second">10:00 AM to 4:30 PM </h4>
+                                
+                                if(dayschedule){
+                                    return (
+                                        <div className="schedule" id={index}>
+                                            {dayschedule.availability.map((item, ind) => (
+                                                <>
+                                                    {item.time.map((element, d) => (
+                                                        <h4 key={d} className={workplaceplaceno[hospitals.indexOf(item.name)]+ ' daytimediv'}>
+                                                            {element}
+                                                        </h4>
+                                                    ))}
+                                                </>
+                                            ))}
+                                        </div>
+                                    );
+                                }
+                                else{
+                                    return(<>
 
-                            </div>
+                                        <div className="schedule">
+
+                                        </div>
+                                    </>)
+                                }
+
+                            })}
+
                         </div>
                     </div>
                     <div id="subschedulediv2">
@@ -213,7 +287,7 @@ return(
                                 </select>
                                 <select id="monthDropdown" onChange={changehandler}>
 {months.map((i,index)=>{return(
-                                    <option value={i.name}>{i.name}</option>
+                                    <option value={i.name} id={index}>{i.name}</option>
 )})}
 
                                 </select>
@@ -223,12 +297,12 @@ return(
                             </div>
                         </div>
                         <div id="workingplaces">
-                            <div id="workplacehead" className="divhead"><h3>Places I work</h3><BiEditAlt className="scheduleediticon"/></div>
+                            <div id="workplacehead" className="divhead"><h3>Places I work</h3></div>
                             <div id="workplacecontent" className="divcontentarea">
-                                <h4 className="selectedworkplace">All</h4>
-{ JSON.parse(sessionStorage.getItem('hospital')).map((i,index)=>{
+                                <h4 className="selectedworkplace" id='' onClick={filterworkplace}>All</h4>
+{ hospitals.map((i,index)=>{
                         return(<>
-                                <h4 className={workplaceplaceno[index]} id={index}>{i.name}</h4>
+                                <h4 className={workplaceplaceno[index]} id={i} onClick={filterworkplace}>{i}</h4>
                                 
                             </>)
 
@@ -237,14 +311,7 @@ return(
 
                             </div>
                         </div>
-{/* 
-                        <div id="workshopsAndEvents">
-                            <div id="workshophead" className="divhead"><h3>Workshops and events</h3><BiEditAlt className="scheduleediticon"/></div>
-                            <div id="workshopandeventscontent" className="divcontentarea">
 
-                            </div>
-                        </div>
-*/}
                         <div id="holidays">
                             <div id="holidayhead" className="divhead"></div>
                             <div id="holidaycontent" className="divcontentarea">

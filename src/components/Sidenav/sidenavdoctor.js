@@ -63,10 +63,9 @@ return(
 <div id="sidenavcontainerdoctor">
     <div className="organizationLogo">
         <img className="orglogo" src={DocP}></img>
-        <h3 className="orgname">ABC Doctor</h3>
-        <p>03302777040</p>
-        <p>R145 sector 7 North Karachi , Karachi</p>
-        <p>abcpharma@gmail.com</p>
+        <h3 className="orgname">{sessionStorage.getItem('org_name')}</h3>
+        <p>{sessionStorage.getItem('phone')}</p>
+        <p>{sessionStorage.getItem('email')}</p>
     </div>
     
     <div className="tabscontainer">
