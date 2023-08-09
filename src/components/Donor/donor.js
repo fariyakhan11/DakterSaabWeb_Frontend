@@ -10,13 +10,27 @@ function Donor(){
     const [close_add_view, set_add_view] = useState(true);
     const [close_info_view, set_info_view] = useState(true);
     const [displayed_list,setdisplayed_list]=useState([])
+    const [searchdonor,setsearchdonor]=('')
+
 //close the add view tab
 const handle_add=(close)=>{
   set_add_view(close)
   //fetchdonors()
 }
 
+const handleSearchdonor=(e)=>{
+  setsearchdonor(e.target.value.toLowerCase())
+  
 
+  if (searchdonor === '') {
+    setdisplayed_list([]); // Show all doctors if search is empty
+  } else {
+    const filteredDonors = [].filter((donor) =>
+      donor.Name.toLowerCase().includes(searchdonor)
+    );
+    setdisplayed_list(filteredDonors);
+  }
+}
 return(
 <>
 {!close_add_view &&
@@ -80,10 +94,21 @@ return(
     </div>
 }
         <div id="Doctorsdashboard">
-            <div className="contentarea" >
+            <div className="contentarea"  >
                     <h3 className="contentareatitle">Donors</h3>
                     <hr/>
-            <div className="donorarea">
+                    <div className="searchbar">
+
+                          <input
+                            type="text"
+                            placeholder="Search Donors by name.."
+                            value={searchdonor}
+                            onChange={handleSearchdonor}
+                            className='searchdonor'
+                          />
+                    </div>
+
+            <div className="donorarea" >
                 <div className="donordiv" onClick={()=>{set_info_view(false)}}>
                     <div>
                         <img src={Donorperson}></img>
@@ -167,7 +192,7 @@ return(
                     </div>
                 </div>
             </div>
-              
+        
           </div>
         </div>
 </>

@@ -74,24 +74,27 @@ sessionStorage.setItem('email', 'abcpharmacy@gmail.com');
 sessionStorage.setItem('phone', '03232626789');  
 sessionStorage.setItem('password','********')
 
-if(tab==='Home'){
-    fetchlasttransact()
-    fetchlowmeds()
-    fetchstats()
-    fetchorders()
 
-    // Set the interval to fetch/update the data every 5 minutes
-    const interval = setInterval(fetchorders, 5 * 60 * 1000);
-
-    // Clean up the interval when the component unmounts
-    return () => {
-      clearInterval(interval);
-    };
-}
 
 },[])
 
+useEffect(()=>{
+    if(tab==='Home'){
+        fetchlasttransact()
+        fetchlowmeds()
+        fetchstats()
+        fetchorders()
 
+        // Set the interval to fetch/update the data every 5 minutes
+        const interval = setInterval(fetchorders, 5 * 60 * 1000);
+
+        // Clean up the interval when the component unmounts
+        return () => {
+        clearInterval(interval);
+        };
+    }
+
+},[tab])
 
 //fetch last stored transaction
 function fetchlasttransact(){
@@ -169,7 +172,7 @@ try{
         }).then((response) => response.json()) // get response, convert to json
         .then((json) => {
         if(json.medicines){
-          setmedicine_list(json.medicines);
+          setmedicine_list(json.medicines.filter(o=>o.quantity>=0));
           
         }else{setmedicine_list([]);}
         if(json.error){console.log(json.error)}

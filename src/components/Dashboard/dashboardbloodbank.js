@@ -29,13 +29,13 @@ function Dashboardbloodbank(){
     const [oldtab,setoldtab]=useState('');
     const [overlay,setoverlay]=useState(false)
     const [logoutalert,setlogoutalert]=useState(false)
+    const [last_transact,setlast_transact]=useState();
 
 //dashboard content
 
     const [statistics,setstatistics]=useState({todayblood:'',weeksale:'',todaysale:'',popblood:''})
     const [donors,setdonors]=useState([{donorname:'',contact:'',group:'',lastdate:''}])
     const [bloodgroup_list,setbloodgroup_list]=useState([])
-    const [events,setevents]=useState([{name:'',address:'',date:''}])
 
 //navigate between tabs from the sidenav clicks and transitions
     const handlestate=(msg)=>{
@@ -72,12 +72,40 @@ sessionStorage.setItem('email', 'abcbank@gmail.com');
 sessionStorage.setItem('phone', '03330249895');  
 sessionStorage.setItem('password','********')
 
-if(tab==='Home'){
-    fetchblood()
-    fetchstats()
 
-}
+
 },[])
+
+useEffect(()=>{
+    if(tab==='Home'){
+        fetchblood()
+        fetchstats()
+        fetchlasttransact()
+    }
+
+},[tab])
+
+//fetch last stored transaction
+function fetchlasttransact(){
+    try{
+        const params=sessionStorage.getItem('org_name')+'/'+sessionStorage.getItem('org_address')
+        const api='http://localhost:5000/api/transactionandorder/getlasttransact/'+params;
+        fetch(api, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        }).then((response) => response.json()) // get response, convert to json
+        .then((json) => {
+        if(json.transaction){
+          setlast_transact(json.transaction);
+        }else{setlast_transact();}
+        if(json.error){console.log(json.error)}
+      });
+    }catch(err){
+      console.log(err)
+    }
+}
 
 function openoverlaytab(e){
     
@@ -275,14 +303,18 @@ return(
                         <div className="section2subbloodbank">
                             <h2 className="booktitledivbloodbank">Last Transaction</h2>
                             <div id="eventsdiv">
-                                <h5>29/4/2023</h5>
-                                <h3>Alishba Arshad</h3>
+
+                                <h5>{last_transact.date}</h5>
+                                <h3>{last_transact.buyer_name}</h3>
                                 
-                                <h4>Rs 490</h4>
+                                <h4>Rs {last_transact.amount}</h4>
                                 <div id="itemblooddiv">
+
                                     <div><h5>Item</h5><h5>Quantity</h5></div>
-                                    <div><h5>A+</h5><h5>2</h5></div>
-                                    <div><h5>AB-</h5><h5>1</h5></div>            
+{last_transact.items.map((i,index)=>{return(<>
+                                    <div><h5>{i.name}</h5><h5>{i.quantity}</h5></div>
+</>)})}
+           
                                 </div>
                             </div>
                         </div>

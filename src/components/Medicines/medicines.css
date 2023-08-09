@@ -490,9 +490,10 @@ font-size: 1.2em;
 display: flex;
 flex-direction: column;
 justify-content: space-between;
-height:50%;
+
 align-items: center;
 
+width: 70%;
 }
 .add_med_btns>span{
 display: flex;

@@ -287,9 +287,6 @@ const handle_csv=()=>{
 });
 }
 
-//function to handle json sheets
-const handle_json=()=>{}
-
 
 return(
 <>
@@ -378,11 +375,9 @@ return(
                         <h5>Choose how you want to upload your data through just one click!</h5>
                         <h5>Uploaded file : {auto_file} </h5>
                         <div className="add_med_btns">
-                            <button id="csv" className="upload_btnmedicine" onClick={handle_csv}  >Upload CSV /Excel</button>
+                            <button id="csv" className="upload_btnmedicine" onClick={handle_csv}  >Upload CSV</button>
                             <input type="file" id="fileInputcsv"  name="file"></input>
-                            <span>--------------------------------------or----------------------------------------</span>
-                            <button id="json" className="upload_btnmedicine" onClick={handle_json}>Upload JSON</button>
-                            <input type="file" id="fileInputjson" accept=".json" name="file"></input>
+
                         </div>
                         <h5>Having a hard time uploading data ? <a className="fplink">Click here for help</a></h5>
                     </div>

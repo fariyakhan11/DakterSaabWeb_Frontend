@@ -174,14 +174,7 @@ return(
                                 <h3 className="tilename">Patients<br/>  in Waiting</h3>
                                 <h2 className="tilevalue">92</h2>
                             </div>
-                        </div>
-                        <div className="summarytilesbloodbank">
-                            <img src={PatientsN}></img>
-                            <div>
-                                <h3 className="tilename">New Patients<br/>for today</h3>
-                                <h2 className="tilevalue">92</h2>
-                            </div>
-                        </div>                                 
+                        </div>                                
                         <div className="summarytilesbloodbank">
                             <img src={WorkHours}></img>
                             <div>

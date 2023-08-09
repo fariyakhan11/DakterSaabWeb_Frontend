@@ -13,16 +13,13 @@ import MedP from '../../images/medicine.png';
 
 function Orders(){
     const [searchcustomer,setsearchcustomer]=useState('')
-    const [searchTerm, setSearchTerm] = useState("");
     const [selectedstatus,setselectedstatus]=useState('')
     const [selectedDate, setSelectedDate] = useState('');
     const [filters,setfilters]=useState({time:''});
     const [order_list,setorder_list]=useState([]);
     const [displayed_list,setdisplayed_list]=useState([])
     const [statistics,setstatistics]=useState({todaymed:'',weeksale:'',todaysale:'',totalorder:'',orderpend:'',popmed:''})
-    const handleSearchTermChange = (event) => {
-    setSearchTerm(event.target.value);
-  };
+
 
 //fetch orders from the database
 function fetchorders(){
@@ -38,8 +35,8 @@ function fetchorders(){
         .then((json) => {
         if(json.order){
           setorder_list(json.order);
-          if(selectedstatus===''){setdisplayed_list(json.order);}
-          else{setdisplayed_list(json.order.filter(o=>o.status===selectedstatus))}
+          
+          
         }else{setorder_list([]);setdisplayed_list([])}
         if(json.error){console.log(json.error)}
       });
@@ -55,28 +52,29 @@ useEffect(()=>{
 useEffect(()=>{
     fetchorders()
     fetchstats()
+
+    setdisplayed_list(order_list)
 },[])
 
 
 //data filter toggle on/off
 const handledatefilter = (e) => {
   var currentDate = new Date(); // Get the current date
-
-  if (!filters.time) {
+alert('djn')
+  if (selectedDate==='') {
     e.target.classList.add('activetogglebtn');
     e.target.classList.remove('idletogglebtn');
     document.getElementById('togglebtndiv').style.justifyContent = 'flex-end';
     setSelectedDate(currentDate.toISOString().split('T')[0]); // Set selectedDate to current date
-    setfilters((prevdata) => ({ ...prevdata, time: currentDate }));
-    var filteredOrders=order_list.filter(o=>o.date===selectedDate)
-    setdisplayed_list(filteredOrders)
+    
+
   } else {
     e.target.classList.add('idletogglebtn');
     e.target.classList.remove('activetogglebtn');
     document.getElementById('togglebtndiv').style.justifyContent = 'flex-start';
     setSelectedDate('');
-    setfilters((prevdata) => ({ ...prevdata, time: '' }));
-    setdisplayed_list(order_list)
+    
+    
   }
 };
 //show or hide the order detail
@@ -97,13 +95,12 @@ const orderdetailhandler=(e)=>{
 const filterorders = (e) => {
 
   if (e.target.id === 'all') {
-    setdisplayed_list(order_list);
+    
     document.getElementsByClassName('selectedstatus')[0].classList.remove('selectedstatus');
     e.target.classList.add('selectedstatus');
     setselectedstatus('')
   } else {
-    var filteredOrders = order_list.filter((o) => o.status === e.target.id);
-    setdisplayed_list(filteredOrders);
+
     document.getElementsByClassName('selectedstatus')[0].classList.remove('selectedstatus');
     e.target.classList.add('selectedstatus');
     setselectedstatus(e.target.id)
@@ -142,21 +139,28 @@ function format_date(d){
 const handleSearchCustomer=(e)=>{
 
     setsearchcustomer(e.target.value)
-
 }
 
-function filteringorders(){
-        if(searchcustomer===''){
-        setdisplayed_list(order_list);
-    }
-    else{
-        const filteredorders = order_list.filter((o) =>
-        o.buyer_name.toLowerCase().includes(searchcustomer.toLowerCase())
-        );
-        setdisplayed_list(filteredorders);
-    }
+function filteringorders() {
 
+    
+    var filteredOrders = order_list.filter((o) => o.status === selectedstatus && o.buyer_name.toLowerCase().includes(searchcustomer.toLowerCase()));
+    setdisplayed_list(filteredOrders);
 }
+
+
+useEffect(()=>{
+    filteringorders()
+
+},[displayed_list])
+
+useEffect(()=>{
+    filteringorders()
+},[selectedstatus])
+
+useEffect(()=>{
+    filteringorders()
+},[searchcustomer])
 return(
 <>
         <div id="Ordersdashboard">

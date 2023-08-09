@@ -1,11 +1,24 @@
+
+
 .donorarea{
 
-height: 95%;
-width: 100%;
+height: 40em;
+width: 98%;
 padding: 1em;
  display: flex;
   flex-wrap: wrap;
  overflow-y: scroll;
+overflow-x: hidden;
+}
+.searchdonor {
+  border: none;
+  background-color: transparent;
+  font-size: 1.2em;
+font-family: Raleway;
+  margin-right: 0.5em;
+border: 3px solid #e06464da;
+padding: 0.5em 3.8em 0.5em 0.5em;
+border-radius:2em ;
 }
 .donordiv{
   border:3px solid #f2f2f2;

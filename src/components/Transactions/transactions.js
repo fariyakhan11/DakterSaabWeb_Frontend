@@ -230,7 +230,20 @@ return(
                                 </tr>
 {transactioninfo.items.map((i,index)=>{return(
                                 <tr >
-                                    <td className="quantity"><input type="number" id={index+'quantity'} className="quantityinput" min={1} value={i.quantity} onChange={handleinput}/></td>
+{props.class==='blood'&&
+                                    <td className="quantity">
+                                        <input type="number" id={index+'quantity'} className="quantityinput" min={1} value={i.quantity} onChange={handleinput} 
+
+                                        max={displayed_list.find(d => d.AvailableBloodGroup === i.name)?.quantity}/>
+                                    </td>
+}
+{props.class==='pharmacy'&&
+                                    <td className="quantity">
+                                        <input type="number" id={index+'quantity'} className="quantityinput" min={1} value={i.quantity} onChange={handleinput} 
+
+                                        max={displayed_list.find(d => d.name === i.name)?.quantity}/>
+                                    </td>
+}
                                     <td className="itemname">{i.name}</td>
                                     <td>{parseInt(i.quantity)*parseInt(i.price)}</td>
                                 </tr>

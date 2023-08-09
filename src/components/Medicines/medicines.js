@@ -5,12 +5,13 @@ import MedImg from '../../images/medicine.png'
 import Addmedicines from "./addmedicines";
 
 function Medicines(){
-    const [searchTerm, setSearchTerm] = useState("");
+    const [searchmed, setSearchmed] = useState("");
     const [selectedCategory, setSelectedCategory] = useState("");
     const [close_add_view, set_add_view] = useState(true);
     const [medicine_list,setmedicine_list]=useState([]);
     const [displayed_list,setdisplayed_list]=useState([])
     const [viewmode,setviewmode]=useState(true)
+    const [allcategories,setallcategories]=useState([])
 //set whether an element is expanded or not
   const [expanded,setexpanded]=useState(false)
 //selected medicines to delete
@@ -50,7 +51,8 @@ const updatemedicine=()=>{
                       price:'',
                       category:''
                     })
-                    fetchmeds()              
+                    fetchmeds()
+                                 
                 }
                 else if (res.status === 430) { alert(res.error) }
 
@@ -128,8 +130,11 @@ function fetchmeds(){
         }).then((response) => response.json()) // get response, convert to json
         .then((json) => {
         if(json.medicines){
-          setmedicine_list(json.medicines);
-          setdisplayed_list(json.medicines);
+          const m=json.medicines.filter(o=>o.quantity>0)
+          setmedicine_list(m);
+          setallcategories(Array.from(new Set(m.map(item => item.category)))) 
+          setSelectedCategory('')
+          setSearchmed('')
         }else{setmedicine_list([]);setdisplayed_list([])}
         if(json.error){console.log(json.error)}
       });
@@ -139,45 +144,26 @@ function fetchmeds(){
 }
 
 //initial tasks on page load
-  useEffect(()=>{
-fetchmeds()
-  },[])
+useEffect(()=>{
+  fetchmeds()  
+},[])
 
-  const handleSearchTermChange = (event) => {
-    setSearchTerm(event.target.value);
-  };
+useEffect(()=>{
+console.log(medicine_list)
+setdisplayed_list(medicine_list)
 
-  const handleCategoryChange = (event) => {
-    setSelectedCategory(event.target.value);
-  };
+},[medicine_list])
 
-  useEffect(()=>{
-    filter(searchTerm,selectedCategory)},
-  [searchTerm,selectedCategory])
+useEffect(()=>{
+console.log(displayed_list)
+},[displayed_list])
 
-  function filter(name,category){
-      
-      var fml=[];
-      if(name===''&&category===''){
-        setdisplayed_list(medicine_list);
-      }
-      else if(name===''&&category!=''){
-        medicine_list.forEach(element => {
-            if(element.category.toLowerCase()===category.toLowerCase()){fml.push(element)}
-        });setdisplayed_list(fml)
-      }
-      else if(name!=''&&category===''){
-        medicine_list.forEach(element => {
-          if(element.name.toLowerCase()===name.toLowerCase()){fml.push(element)}
-        });setdisplayed_list(fml);
-      }
-        
-  }
 
 //close the add view tab
 const handle_add=(close)=>{
   set_add_view(close)
   fetchmeds()
+  
 }
 
 //open the add view tab
@@ -270,7 +256,8 @@ const delete_selected=(e)=>{
                 cb[c].style.display='none';
             }
             if(res.status===200){
-                fetchmeds()    
+                fetchmeds()
+                document.getElementById('delstock').click()   
                 alert('Medicines deleted successfully')
             }
                 
@@ -281,6 +268,28 @@ const delete_selected=(e)=>{
         console.log(err)
     }
 }
+
+const handleSearchMed=(e)=>{
+
+  setSearchmed(e.target.value)
+}
+
+const handleCategoryChange=(e)=>{
+  setSelectedCategory(e.target.value)
+
+}
+
+useEffect(() => {
+    var filteredMeds = medicine_list;
+    if (searchmed !== '') {
+        filteredMeds = filteredMeds.filter((o) => o.name.toLowerCase().includes(searchmed.toLowerCase()));
+    }
+    if (selectedCategory !== '') {
+        filteredMeds = filteredMeds.filter((o) => o.category.toLowerCase().includes(selectedCategory.toLowerCase()));
+    }
+    setdisplayed_list(filteredMeds);
+}, [selectedCategory,searchmed]);
+
 return(
 <>
 {!close_add_view &&
@@ -299,15 +308,17 @@ return(
                           <input
                             type="text"
                             placeholder="Search medicines.."
-                            value={searchTerm}
-                            onChange={handleSearchTermChange}
+                            value={searchmed}
+                            onChange={handleSearchMed}
                             className='searchmedicine'
                           />
-                          <select value={selectedCategory} onChange={handleCategoryChange} className='optionscategory'>
+                          <select value={selectedCategory} onChange={handleCategoryChange} className='optionscategory' placeholder="Filter by Category">
                             <option value="">All categories</option>
-                            <option value="books">Books</option>
-                            <option value="electronics">Electronics</option>
-                            <option value="clothing">Clothing</option>
+{allcategories.map((i,ind)=>{return(<>
+                            <option value={i} id={ind}>{i}</option>
+</>)})}
+
+
                           </select>
                           
                         

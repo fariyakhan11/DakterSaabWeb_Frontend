@@ -28,7 +28,8 @@
     "recharts": "^2.7.2",
     "validator": "^13.9.0",
     "vanilla-cookieconsent": "^2.8.9",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "xlsx": "^0.18.5"
   },
   "scripts": {
     "start": "react-scripts start",

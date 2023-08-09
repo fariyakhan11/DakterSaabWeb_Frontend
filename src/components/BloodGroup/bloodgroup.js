@@ -101,7 +101,7 @@ const updateblood=()=>{
             body: JSON.stringify(data)
         }).then(res => {
                 if (res.status === 200) {
-                    alert('medicine updated successfully')
+                    alert('Blood Group updated successfully')
                     setexpanded(false);
                     document.getElementsByClassName('medsdivspecial')[0].classList.add('medsdiv');      
                     document.getElementsByClassName('medsdivspecial')[0].classList.remove('medsdivspecial'); 
@@ -142,9 +142,10 @@ const close_update_view=(e)=>{
 const select_delete = (event) => {
   event.preventDefault();
   let id = parseInt(event.target.id);
+  
   let check = document.getElementById('cbd' + id);
   check.checked = !check.checked;
-
+  
   if (check.checked) {
     document.getElementById('cb' + id).style.display = 'block';
     setselected_blood((prevState) => [...prevState, check.value]);
@@ -211,6 +212,8 @@ const delete_selected=(e)=>{
             if(res.status===200){
                 fetchblood()    
                 alert('Blood Type deleted successfully')
+                const btn =document.getElementById('delstock')
+                btn.click()
             }
                 
             }
@@ -284,7 +287,7 @@ return(
                                     <div className="checkbox-outline" id={'co'+index}>
                                         <div className="checkbox-selected" id={'cb'+index}></div>
                                     </div>
-                                    <input type="checkbox" value={i.name} name="selected-delete" id={'cbd'+index} className="selectedcbd"/>
+                                    <input type="checkbox" value={i.AvailableBloodGroup} name="selected-delete" id={'cbd'+index} className="selectedcbd"/>
                                     
                                 </div>
                                 <div className="expandable-div">
