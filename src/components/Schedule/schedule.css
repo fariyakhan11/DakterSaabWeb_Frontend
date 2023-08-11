@@ -270,7 +270,13 @@ background-color: rgb(255, 255, 255);
 box-shadow: 5px 5px 14px rgba(126, 125, 125, 0.397);
 width: 50%;
 height: 85%;
+
 border-radius: 2em;
+
+}
+.scheduleinfoenterdiv{
+    overflow: scroll;
+
 }
 .grayareaschedule{
 position: absolute;
@@ -437,9 +443,24 @@ transform: scale(1.2) !important;
 }
 #hospitalschedulearea{
 background: linear-gradient(white,#c29de01a,white);
-height: 100%;
-}
+height: 100% ;
 
+}
+.hospitalenterinfo{
+width: 80%;
+
+}
+.hospitalenterinfo>div{
+display:flex;
+font-family:Fraunces;
+margin: 0.5em 1em;
+width :100%;
+
+}
+.hospitalenterinfo>div>h3{
+width:30%;
+font-size: 1.1em;
+}
 #hospitalschedulearea>div{
 display: flex;
 flex-direction: row;
@@ -449,12 +470,7 @@ padding: 0.5em 1em;
 border-bottom: 2px solid rgba(121, 120, 120, 0.562);
 margin: 0.5em 0;
 }
-#hospitalschedulearea>div>input{
-outline: none;
-border: 2px solid #693396;
-padding: 0.5em ;
-font-size: 1em;
-}
+
 #hospitalschedulearea>div>h3{
 font-size: 1.3em;
 

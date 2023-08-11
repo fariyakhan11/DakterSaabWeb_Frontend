@@ -13,7 +13,7 @@ function Adddepartment({close}){
 
 //to handle the input values
 const inputhandler=(e)=>{
-
+    
     const name_expression =/^[A-Za-z]+$/;
     if(e.target.name==='name'){
         if(name_expression.test(e.target.value[0])){
@@ -56,15 +56,7 @@ const inputhandler=(e)=>{
             document.getElementById('phoneerr').style.display="none";
         }
     }
-    else if (e.target.name==='repw'){
-        if(!(document.getElementById('password').value===e.target.value)){
-            document.getElementById('pwerr').textContent="Passwords dont match";
-            document.getElementById('pwerr').style.display="block";
-        }
-        else{
-            document.getElementById('pwerr').style.display="none";
-        }
-    }
+
     setdata((prevState) => ({
     ...prevState,
     [e.target.name]: e.target.value
@@ -74,10 +66,10 @@ const inputhandler=(e)=>{
 }
 
 //to show the value of the password input
-    const togglePasswordVisibility = (e) => {
-    e.preventDefault()
-    setShowPassword(!showPassword);
-    };
+const togglePasswordVisibility = (e) => {
+e.preventDefault()
+setShowPassword(!showPassword);
+};
 
 function checkerror(){
     let e=document.getElementsByClassName('inputerror');
@@ -105,6 +97,7 @@ function disablebtn(){
 useEffect(()=>{
 disablebtn()
 })
+
 //to submit add department values
 const submitadddep=(e)=>{
     e.preventDefault();
@@ -133,6 +126,18 @@ const submitadddep=(e)=>{
         console.log(err);
     }
 }
+
+useEffect(()=>{
+    console.log(data)
+    if(data.password!=data.repw){
+        document.getElementById('pwerr').textContent="Passwords dont match";
+        document.getElementById('pwerr').style.display="block";
+    }
+    else{
+        document.getElementById('pwerr').style.display="none";
+    }
+
+},[data])
 return(
 <>
 <div className="grayarea">

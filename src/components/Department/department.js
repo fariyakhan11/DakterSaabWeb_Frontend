@@ -110,10 +110,6 @@ const deleteselect=(e)=>{
     document.getElementById('deletealertgray').style.display='flex';
 }
 
-useEffect(()=>{
-console.log(selected_department)
-},[selected_department])
-
 const handleChange = (e) => {
  
   setselected_department((prev) => ({

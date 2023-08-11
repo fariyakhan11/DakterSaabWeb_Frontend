@@ -264,28 +264,27 @@ const handleInputUpdate = (event) => {
 };
 
 const handleSearchdoctor = (e)=>{
-  setsearchdoctor(e.target.value.toLowerCase())
-  
-
-  if (searchdoctor === '') {
-    setdisplayed_list(doctor_list); // Show all doctors if search is empty
-  } else {
-    const filteredDoctors = doctor_list.filter((doctor) =>
-      doctor.Name.toLowerCase().includes(searchdoctor)
-    );
-    setdisplayed_list(filteredDoctors);
-  }
+  setsearchdoctor(e.target.value)
 }
 
-const handleSearchdep=(e)=>{
-  setsearchdep(e.target.value.toLowerCase())
-  if (searchdep === '') {
-      setdisplayed_list(doctor_list)
-    } else {
-      var filteredDoctors = doctor_list.filter((o) => o.Department.toLowerCase() === searchdep);
-      setdisplayed_list(filteredDoctors);
-    } 
+useEffect(()=>{
+  setdisplayed_list(doctor_list)
+  var d=doctor_list
+  if(searchdoctor!=''){
+    const filteredDoctors = d.filter((doctor) =>
+      doctor.Name.toLowerCase().includes(searchdoctor.toLowerCase())
+    );
+    d=filteredDoctors;
+  }
+  if(searchdep!=''){
+    var filteredDoctors = d.filter((o) => o.Department.toLowerCase() === searchdep.toLowerCase());
+    d=filteredDoctors;
+  }
+  setdisplayed_list(d)
+},[searchdoctor,searchdep])
 
+const handleSearchdep=(e)=>{
+  setsearchdep(e.target.value)
 }
 
 const updatedoctor=(e)=>{

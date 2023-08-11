@@ -7,7 +7,7 @@ import { useState,useEffect } from "react";
 function Appointments(){
     const workplaceplaceno=['first','second','third','fourth','fifth']
     const workplaceplacenum=['firstdiv','seconddiv','thirddiv','fourthdiv','fifthdiv']
-    const [currentdates,setcurrentdates]=useState([])
+    
     const [selectedworkplace,setselectedworkplace]=useState('')
     const [hospitals,sethospitals]=useState([])
     const [schedule,setschedule]=useState([])
@@ -73,7 +73,7 @@ useEffect(()=>{
 },[selected])
 
 useEffect(()=>{
-    setdatesvalue();
+    
     var today=new Date();
     generateyears();
     setselected({date:today.getDate(),month:months[today.getMonth()].name ,year:today.getFullYear()})
@@ -111,31 +111,7 @@ function getschedule(){
     }
 }
 
-function setdatesvalue(){
-    // Get today's date
-    const today = new Date();
 
-    const oneDayAfter=new Date(today);
-
-    const oneDayBefore = new Date(today);
-
-
-    oneDayAfter.setDate(today.getDate() + 1);
-  
-
-
-    // Get the day information for each date
-    const options = { weekday: 'long' };
-
-    setcurrentdates([
-
-        {date:oneDayBefore.getDate()+' '+months[oneDayBefore.getMonth()].name        ,day:oneDayBefore.toLocaleDateString('en-US', options)},
-        {date:today.getDate()+' '+ months[today.getMonth()].name                     ,day:today.toLocaleDateString('en-US', options)},
-        {date:oneDayAfter.getDate()+' '+months[oneDayAfter.getMonth()].name         ,day:oneDayAfter.toLocaleDateString('en-US', options)},
-        ]
-    )
-
-}
 function generatedays(){
 
     const dateDropdown = document.getElementById("dateDropdown");

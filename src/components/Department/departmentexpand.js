@@ -9,7 +9,7 @@ import PatientI from '../../images/patient1.png'
 
 function Departmentexpand({close,department}){
     const [Department,setDepartment]=useState(department)
-    const [dep,setdep]=useState({name:Department.name,admin_name:Department.admin_name,password:'',phone:Department.phone})
+    const [dep,setdep]=useState({name:Department.name,admin_name:Department.admin_name,password:'........',phone:Department.phone,changepw:0})
     const [searchdoctor,setsearchdoctor]= useState('')
     const [doctor_list,setdoctor_list]=useState([]);
     const [displayed_listdoctor,setdisplayed_listdoctor]=useState([])
@@ -34,8 +34,9 @@ function fetchdoctors(){
         }).then((response) => response.json()) // get response, convert to json
         .then((json) => {
         if(json.doctors){
-          setdoctor_list(json.doctors);
-          setdisplayed_listdoctor(json.doctors);
+            var doc=json.doctors.filter(h=>h.Department===dep.name)
+          setdoctor_list(doc);
+          setdisplayed_listdoctor(doc);
         }else{setdoctor_list([]);setdisplayed_listdoctor([])}
         if(json.error){console.log(json.error)}
       });
@@ -82,6 +83,12 @@ const { name, value } = e.target;
         ...prevViewdoc,
         [name]: value,
       }));
+      if(name==='password'){
+        setdep((prevViewdoc) => ({
+            ...prevViewdoc,
+            ['changepw']: 1,
+          }));        
+      }
 }
 
 useEffect(()=>{
@@ -99,18 +106,21 @@ useEffect(()=>{
 },[nav])
 
 const handleSearchdoctor = (e)=>{
-    setsearchdoctor(e.target.value.toLowerCase())
+    setsearchdoctor(e.target.value)
     
-  
-    if (searchdoctor === '') {
-      setdisplayed_listdoctor(doctor_list); // Show all doctors if search is empty
-    } else {
-      const filteredDoctors = doctor_list.filter((doctor) =>
-        doctor.Name.toLowerCase().includes(searchdoctor)
-      );
-      setdisplayed_listdoctor(filteredDoctors);
-    }
 }
+  
+useEffect(()=>{
+setdisplayed_listdoctor(doctor_list)
+var d=doctor_list
+if(searchdoctor!=''){
+    const filteredDoctors = d.filter((doctor) =>
+    doctor.Name.toLowerCase().includes(searchdoctor.toLowerCase())
+    );
+    d=filteredDoctors;
+}
+setdisplayed_listdoctor(d)
+},[searchdoctor])
 
 function getpatients(){
     try{
@@ -151,19 +161,20 @@ return(<>
     </div>
 {nav==='Doc'&&
     <div id="depexpcontent">
- <h3>Doctors on Duty</h3>
-        <div id="depdoctorsdiv">
-                <div className="searchbar">
+        <div className="searchbar">
 
-                    <input
-                    type="text"
-                    placeholder="Search Doctors by name.."
-                    value={searchdoctor}
-                    onChange={handleSearchdoctor}
-                    className='searchhospital'
-                    />
-            
-                </div>
+        <input
+        type="text"
+        placeholder="Search Doctors by name.."
+        value={searchdoctor}
+        onChange={handleSearchdoctor}
+        className='searchhospital'
+        />
+
+        </div>
+        <h3>Doctors on Duty</h3>
+        <div id="depdoctorsdiv">
+
         {
 
                         displayed_listdoctor.map((i,index)=>{
@@ -214,71 +225,7 @@ return(<>
                           </div>
 
 )})}
-                          <div className="medsdivdep"  >
-                            <div className="topareamed">
-                                <div className="medimg" >
-                                  <img  src={DocP}></img>
-                                </div>
 
-
-
-                            </div>
-                            <div className="bottomareamed" >
-                                <h4 >Surgery</h4>
-                                <h3 >Fareha</h3>
-                                <h4 >fareha123@gmail.com</h4>
-                                <h4 >{'Experience: '+5+' yrs'}</h4>
-                            </div>
-                          </div>
-
-                          <div className="medsdivdep"  >
-                            <div className="topareamed" >
-                                <div className="medimg">
-                                  <img  src={DocP}></img>
-                                </div>
-
-
-
-                            </div>
-                            <div className="bottomareamed">
-                                <h4 >Surgery</h4>
-                                <h3 >Mohiduddin</h3>
-                                <h4 >moh_uddin34@gmail.com</h4>
-                                <h4 >{'Experience: '+8+' yrs'}</h4>
-                            </div>
-                          </div>
-                          <div className="medsdivdep"  >
-                            <div className="topareamed" >
-                                <div className="medimg">
-                                  <img  src={DocP}></img>
-                                </div>
-
-
-
-                            </div>
-                            <div className="bottomareamed">
-                                <h4 >General Medicine</h4>
-                                <h3 >Sohaib</h3>
-                                <h4 >sohaib34@gmail.com</h4>
-                                <h4 >{'Experience: '+1+' yrs'}</h4>
-                            </div>
-                          </div>
-                          <div className="medsdivdep"  >
-                            <div className="topareamed" >
-                                <div className="medimg">
-                                  <img  src={DocP}></img>
-                                </div>
-
-
-
-                            </div>
-                            <div className="bottomareamed">
-                                <h4 >Surgery</h4>
-                                <h3 >Mohiduddin</h3>
-                                <h4 >moh_uddin34@gmail.com</h4>
-                                <h4 >{'Experience: '+8+' yrs'}</h4>
-                            </div>
-                          </div>
         </div>
     </div>
 }

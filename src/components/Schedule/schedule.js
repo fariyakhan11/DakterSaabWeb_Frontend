@@ -12,6 +12,7 @@ function Schedule(){
     const [selected,setselected]=useState({date:'',month:'',year:''})
     const [close_add_view, set_add_view] = useState(true);
     const [schedule,setschedule]=useState([])
+    const [unformattedschedule,setunformattedschedule]=useState([])
     const workplaceplaceno=['first','second','third','fourth','fifth']
     const [hospitals,sethospitals]=useState([])
     const [selectedworkplace,setselectedworkplace]=useState('')
@@ -173,8 +174,41 @@ function getschedule(){
         }).then((response) => response.json()) // get response, convert to json
         .then((json) => {
         if(json.schedule){
-          setschedule(json.schedule)
+            var sch=json.schedule
+            setunformattedschedule(json.schedule)
+            if(sch.length){
 
+                // Initialize an empty array to store the new formatted data
+                var formattedSchedule = [];
+                const findDay = (day) => {
+                    return formattedSchedule.find(entry => entry.day === day);
+                };
+
+                // Iterate through each entry in the 'availability' array
+                sch.forEach(entry => {
+                    entry.availability.forEach(availabilityEntry => {
+                        // Find or create a day entry in the formattedSchedule array
+                        let dayEntry = findDay(availabilityEntry.day);
+                        if (!dayEntry) {
+                            dayEntry = { day: availabilityEntry.day, availability: [] };
+                            formattedSchedule.push(dayEntry);
+                        }
+
+
+                        // Push the availability information into the day entry
+                        dayEntry.availability.push({
+                            name: entry.name,
+                            time: availabilityEntry.time
+                        });
+                    });
+                });
+
+            }
+            else{
+                var formattedSchedule = [{day:'',availability:[{name:'',time:[]}]}];
+            }
+          setschedule(formattedSchedule)
+            console.log(formattedSchedule)
         }else{setschedule([]);}
         if(json.error){console.log(json.error)}
       });
@@ -182,6 +216,11 @@ function getschedule(){
       console.log(err)
     }
 }
+
+const openEdit=()=>{
+    set_add_view(!close_add_view)
+}
+
 
 const filterworkplace=(e)=>{
     setselectedworkplace(e.target.id)
@@ -219,7 +258,7 @@ useEffect(()=>{
 return(
 <>
 {!close_add_view &&
-<Scheduleenter close={handle_add}/>
+<Scheduleenter close={handle_add} unformattedschedule={unformattedschedule}/>
 }
         <div id="Scheduledashboard">
             <div className="contentarea" >
@@ -315,7 +354,7 @@ return(
                         <div id="holidays">
                             <div id="holidayhead" className="divhead"></div>
                             <div id="holidaycontent" className="divcontentarea">
-                                <button onClick={()=>{set_add_view(!close_add_view)}}>Import Schedule</button>
+                                <button onClick={openEdit}>Import Schedule</button>
                             </div>
                         </div>
 

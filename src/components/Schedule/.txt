@@ -1,0 +1,157 @@
+import React from "react";
+import './schedule.css';
+import {BiEditAlt } from "react-icons/bi";
+import { useState,useEffect } from "react";
+
+
+function Scheduleenter({close}){
+    const [selectedschedule,setselectedschedule]=useState('')
+    const [schedule,setschedule]=useState([])
+const handleinput=(e)=>{}
+
+useEffect(()=>{
+    getscheduleedit()
+
+},[])
+
+function getscheduleedit(){
+
+    try{
+        const params=sessionStorage.getItem('org_name')+'/'+sessionStorage.getItem('email')
+        const api='http://localhost:5000/api/doctor/getscheduleedit/'+params;
+        fetch(api, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        }).then((response) => response.json()) // get response, convert to json
+        .then((json) => {
+        if(json.schedule){
+          var s=json.schedule.map((i,index)=>{
+            i.availability=[
+                {day:"Monday",time:(i.availability.filter(a=>a.day==='Monday')?i.availability.filter(a=>a.day==="Monday").time:[''])},
+                {day:"Tuesday",time:(i.availability.filter(a=>a.day==='Tuesday')?i.availability.filter(a=>a.day==="Tuesday").time:[''])},
+                {day:"Wednesday",time:(i.availability.filter(a=>a.day==='Wednesday')?i.availability.filter(a=>a.day==="Wednesday").time:[''])},
+                {day:"Thursday",time:(i.availability.filter(a=>a.day==='Thursday')?i.availability.filter(a=>a.day==="Thursday").time:[''])},
+                {day:"Friday",time:(i.availability.filter(a=>a.day==='Friday')?i.availability.filter(a=>a.day==="Friday").time:[''])},
+                {day:"Saturday",time:(i.availability.filter(a=>a.day==='Saturday')?i.availability.filter(a=>a.day==="Saturday").time:[''])},
+                {day:"Sunday",time:(i.availability.filter(a=>a.day==='Sunday')?i.availability.filter(a=>a.day==="Sunday").time:[''])},
+            ]
+    
+        })  
+          setschedule(s)
+          setselectedschedule(s[0].name)  
+        }else{setschedule([]);setselectedschedule('')}
+        if(json.error){console.log(json.error)}
+      });
+    }catch(err){
+      console.log(err)
+    }
+}
+const addhospital=()=>{
+    
+    setschedule([...schedule,{name:"Unnamed",email:'',fee:'',availability:[]} ]);
+
+}
+
+
+
+const viewhospitaldetail=(e)=>{
+    const id=e.target.id
+    setselectedschedule(schedule[id])
+    document.getElementsByClassName('actiivehospitaltab')[0].classList.remove('actiivehospitaltab')
+    e.target.classList.add('actiivehospitaltab')
+}
+
+const addtimevalue=(e)=>{}
+return(<>
+<div className="grayareaschedule">
+    <div id="scheduleenterdiv">
+        <div><h1>Upload Schedule</h1><div id="closebtnschedule" onClick={()=>{close(true)}}><h1>+</h1></div></div>
+        <div className="scheduleinfoenterdiv">
+            <div id="sheetschedule">
+                <h2>Add Data through sheet</h2>
+                <button>Upload</button>
+            </div>
+            <div>
+                <div id="hospitalbar">
+                    <div id="hospitalbardiv1">
+{schedule.map((i,index)=>{
+    
+        return(<>
+                        <div className={index===0?"actiivehospitaltab":''} onClick={viewhospitaldetail} id={index}><h2>{i.name}</h2></div>
+
+        </>)
+})}
+
+                    </div>
+                    <div id="morehosbtn" onClick={addhospital}><h2>+</h2></div>
+                </div>
+                <button id="removehospital">Remove Hospital</button>
+                <div className="hospitalenterinfo">
+                    <div>
+                    <h3>Name:</h3>
+                    <input type="text" placeholder="Enter hospital name" name="hosnewname" value=""/>
+                    </div>
+                    <div>
+                    <h3>Address:</h3>
+                    <input type="text" placeholder="Enter hospital address" name="hosnewname" value=""/>
+                    </div>
+                    <div>
+                    <h3>Fees:</h3>
+                    <input type="number" placeholder="Enter fees" name="hosnewname" value=""/>
+                    </div>
+                    <div>
+                    <h3>Timings</h3>
+                    </div>
+                </div>
+                <div id="hospitalschedulearea">
+{schedule.filter(s=>s.name===selectedschedule).availability.map((i,index)=>{return(<>
+                    <div>
+                        <h3>{i.day}</h3>
+                        {i.time.map((t,ind)=>{return(<>
+                            <input value={t} type="text" onChange={handleinput} name={i} id={ind} className="time"/>
+                        </>)})}
+                        
+                        <button onClick={addtimevalue}>+</button>
+                    </div>
+
+
+</>)})}                  
+
+
+                    <div>
+                        <h3>Wednesday</h3>
+                        <input value='' type="text" onChange={handleinput} name='monday' className="time"/>
+                        <button onClick={addtimevalue}>+</button>
+                    </div>
+                    <div>
+                        <h3>Thursday</h3>
+                        <input value='10:00 AM to 6:30 PM ' type="text" onChange={handleinput} name='monday' className="time"/>
+                        <button onClick={addtimevalue}>+</button>
+                    </div>
+                    <div>
+                        <h3>Friday</h3>
+                        <input value=' ' type="text" onChange={handleinput} name='monday' className="time"/>
+                        <button onClick={addtimevalue}>+</button>
+                    </div>
+                    <div>
+                        <h3>Saturday</h3>
+                        <input value='8:00 AM to 5:30 PM ' type="text" onChange={handleinput} name='monday' className="time"/>
+                        <button onClick={addtimevalue}>+</button>
+                    </div>
+                    <div>
+                        <h3>Sunday</h3>
+                        <input value='8:00 AM to 5:30 PM ' type="text" onChange={handleinput} name='sunday' className="time"/>
+                        <button onClick={addtimevalue}>+</button>
+                    </div>
+                </div>
+                <button id="schedulemanual">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+</>)
+}
+export default Scheduleenter;
