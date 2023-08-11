@@ -12,7 +12,7 @@ const handleinput=(e)=>{}
 useEffect(() => {geteditschedule()
 }, []);
 
-useEffect(() => {console.log(editschedule.find(s=>s.name===selectedschedule).availability)
+useEffect(() => {console.log(editschedule)
 }, [editschedule]);
 function convertschedule(){}
 function geteditschedule() {
@@ -78,25 +78,14 @@ return(<>
                     <div id="morehosbtn" onClick={addhospital}><h2>+</h2></div>
                 </div>
                 <button id="removehospital">Remove Hospital</button>
+{editschedule&&selectedschedule&&
                 <div id="hospitalschedulearea">
                     
-{
-['Monday','Tuesday','Wednesday','Thursday',"Friday","Saturday","Sunday"].map((j,index)=>{
-const sch=editschedule.find(s=>s.name===selectedschedule)
-if(sch){
-    sch.availability.map((i,ind)=>{return(<>
-
                     <div>
-                        <h3>{i.day}</h3>
-                        {i.time.map((t,ind)=>{return(<>
-                            <input value={t} type="text" onChange={handleinput} name={i} id={ind} className="time"/>
-                        </>)})}
-                        
+                        <h3>Monday</h3>
+                        <input value={()=>{return editschedule[0].name}} type="text" onChange={handleinput} name='monday' className="time"/>
                         <button onClick={addtimevalue}>+</button>
                     </div>
-
-
-</>)})}})}    
                     <div>
                         <h3>Tuesday</h3>
                         <input value='10:00 AM to 6:30 PM  ' type="text" onChange={handleinput} name='monday' className="time"/>
@@ -128,6 +117,7 @@ if(sch){
                         <button onClick={addtimevalue}>+</button>
                     </div>
                 </div>
+}
                 <button id="schedulemanual">Submit</button>
             </div>
         </div>

@@ -5,30 +5,21 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { useState } from "react";
 import Blood from '../../images/blood.png'
 import Profit from '../../images/profits.png'
-import { FaBars  } from "react-icons/fa";
-import { FiLogOut} from "react-icons/fi";
-import { BiUser } from "react-icons/bi";
-import {MdSettings } from "react-icons/md";
 import {GrHelp,GrNote} from "react-icons/gr";
 import BloodGroup from '../../images/bloodgroup.png'
-import Notes from "../Notes/notes";
 import { useEffect } from "react";
 import Transactions from "../Transactions/transactions";
 import Bloodgroup from "../BloodGroup/bloodgroup";
-import  Alert from '../Alert/alert';
 import Week from '../../images/week.png';
 import Profilebloodbank from '../Profile/profilebloodbank'
-import Donor from "../Donor/donor";
+
 
 function Dashboardbloodbank(){
     const currentDate = new Date()
     const [expandedstate,setexpandedstate]=useState(false);
     const [selectedDate, setSelectedDate] = useState(currentDate);
-    const [showMenu, setShowMenu] = useState(false);
     const [tab, settab]=useState('Home');
-    const [oldtab,setoldtab]=useState('');
-    const [overlay,setoverlay]=useState(false)
-    const [logoutalert,setlogoutalert]=useState(false)
+    
     const [last_transact,setlast_transact]=useState({date:'',buyer_name:'',amount:'',items:[{name:'',quantity:''}]});
 
 //dashboard content
@@ -39,22 +30,13 @@ function Dashboardbloodbank(){
 
 //navigate between tabs from the sidenav clicks and transitions
     const handlestate=(msg)=>{
-        if(!overlay){
-        settab(msg.tab)}
+    
+        settab(msg.tab)
         
         setexpandedstate(msg.expanded)
     }
 
-//handle dashboards display from the overlay tab nav clicks and transitions
-    const handletopstates=(overtab)=>{
 
-        if(!overtab){
-        document.getElementById(tab).classList.remove('active-overlaypharmacy')
-        settab(oldtab);
-        setoldtab('');
-        setoverlay(!overlay)
-        }
-    }
 useEffect(()=>{
 
     if(!expandedstate){
@@ -107,26 +89,6 @@ function fetchlasttransact(){
     }
 }
 
-function openoverlaytab(e){
-    
-    if(e.target.id===tab||oldtab===''){
-       setoverlay(!overlay)     
-        if(!overlay){
-            e.target.classList.add('active-overlaypharmacy')
-            setoldtab(tab);
-            settab(e.target.id);
-        }else{
-            e.target.classList.remove('active-overlaypharmacy')
-            settab(oldtab);    
-            setoldtab('');
-        }
-    }else{
-        document.getElementById(tab).classList.remove('active-overlaypharmacy')
-        settab(e.target.id)
-        e.target.classList.add('active-overlaypharmacy')
-    }
-}
-
 function fetchstats(){
 try{
         const params=sessionStorage.getItem('org_name')+'/'+sessionStorage.getItem('org_address')
@@ -173,46 +135,12 @@ function fetchblood(){
 return(
 
 <>
-{logoutalert&&
-<Alert alert="Are you sure you want to logout?" />
-}
+
 <div id="dashboardcontainer">
 
 <Sidenavbloodbank msg={handlestate} />
     <div id="dashboardarea">
-        <div className="secondnavbloodbank">
-            <div className="admindiv">
-            <BiUser  className="icon" onClick={openoverlaytab} id="Profile"/>   
-    
-            <h2  className='adminname' onClick={openoverlaytab} id="Profile">Hi Alishba !</h2>
-            </div>
-            <div className="links">
-            <button
-            className="navbar-toggler"
-            onClick={() => setShowMenu(!showMenu)}
-            >
-            <FaBars />
-            </button>
-            <ul className={showMenu ? "nav-menu active" : "nav-menu"}>
-            <li className="nav-item ">
-                
-                <GrNote className="icon " id="Notes" onClick={openoverlaytab}/>
-                
-            </li>
-            <li className="nav-item">
-            
-                <GrHelp className="icon" id='Help' onClick={openoverlaytab}/>
-                
-            </li>
 
-            <li className="nav-item">
-                
-                <FiLogOut className="icon" id='Logout' onClick={()=>{setlogoutalert(true)}}/>
-                
-            </li>
-            </ul>
-            </div>
-        </div>
             <div className="infoareadashboard">
 {(tab==='Home') && 
             <>
@@ -330,18 +258,13 @@ return(
 {(tab==='Blood')&&
 <Bloodgroup/>
 }
-{(tab==='Donor')&&
-<Donor/>
-}
+
 {(tab==='Profile')&&
 <Profilebloodbank/>
 }
 
 
-{(tab==='Notes') && 
-<Notes overtab={handletopstates}/>
 
-}
         </div>
     </div>
 </div>

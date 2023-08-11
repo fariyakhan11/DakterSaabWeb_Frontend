@@ -51,17 +51,7 @@ justify-items: center;
 align-items: center;
 cursor: pointer;
 }
-.infoareadashboard{
-display: flex;
-flex-direction: column;
-margin: 1em 0.6em 0em 1.2em;
 
-height: 83vh;
-border-radius: 2em;
-box-shadow: 0 2px 30px rgba(53, 52, 52, 0.247);
-padding: 0.7em;
-
-}
 .Summarybar{
 font-family: Fraunces;
 display: flex;

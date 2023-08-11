@@ -4,13 +4,16 @@ import PharmP from '../../images/drugs1.png'
 import {AiOutlineHome} from "react-icons/ai";
 import {GiMedicines} from "react-icons/gi";
 import {FiPackage} from "react-icons/fi";
+import { FiLogOut} from "react-icons/fi";
 import {BiPurchaseTag,BiExpand,BiCollapse} from "react-icons/bi";
+import  Alert from '../Alert/alert';
+import { BiUser } from "react-icons/bi";
 import { useState ,useEffect} from "react";
 import {GrTransaction} from "react-icons/gr";
 
 function Sidenavpharmacy({msg }){
-    const [expanded,setexpanded]=useState(true);
-    
+    const [expanded,setexpanded]=useState(false);
+    const [logoutalert,setlogoutalert]=useState(false)
     useEffect(() => {
         sessionStorage.setItem('current_tab', 'Home');
         let elements=document.querySelectorAll('.Home');
@@ -60,6 +63,9 @@ function Sidenavpharmacy({msg }){
    
 return(
 <>
+{logoutalert&&
+<Alert alert="Are you sure you want to logout?" />
+}
 {expanded &&
 <div id="sidenavcontainerpharmacy">
     <div className="organizationLogo">
@@ -67,7 +73,7 @@ return(
         <h3 className="orgname">{sessionStorage.getItem('org_name')}</h3>
         <p>{sessionStorage.getItem('phone')}</p>
         <p>{sessionStorage.getItem('org_address')}</p>
-        <p>{sessionStorage.getItem('email')}</p>
+       
     </div>
     
     <div className="tabscontainer">
@@ -89,9 +95,20 @@ return(
             <GiMedicines className="tabsicon" id="Medicines"/>
             <h4 className="tabsnamepharmacy" id="Medicines">Medicines</h4>
         </div>
+        <div className="tabsdiv Profile" id="Profile" onClick={selectedtab}>
+            <BiUser className="tabsicon" id="Profile"/>
+            <h4 className="tabsnamepharmacy" id="Profile">Profile</h4>
+        </div>
+        <div className="tabsdiv Logout" id="Logout" onClick={()=>{setlogoutalert(true)}}>
+            <FiLogOut className="tabsicon" id="Logout"/>
+            <h4 className="tabsnamepharmacy" id="Logout">Logout</h4>
+        </div>
+        <div>
+        <BiCollapse className="collapsebtn" onClick={expandhandler}/>
+        </div>
     </div>
 
-<BiCollapse id="collapsebtn" onClick={expandhandler}/>
+
 </div>
  }
 
@@ -112,6 +129,12 @@ return(
 </div>
 <div className="tabscollapsed Medicines" onClick={selectedtab} id="Medicines">
 <GiMedicines className="tabsicon" id="Medicines"/>
+</div>
+<div className="tabscollapsed Profile" onClick={selectedtab} id="Profile">
+<BiUser className="tabsicon" id="Profile"/>
+</div>
+<div className="tabscollapsed Logout" onClick={()=>{setlogoutalert(true)}} id="Logout">
+<FiLogOut className="tabsicon" id="Logout"/>
 </div>
 </div>
 

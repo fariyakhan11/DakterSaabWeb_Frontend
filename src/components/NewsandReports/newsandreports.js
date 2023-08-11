@@ -270,14 +270,7 @@ return(
                     <div>
                         <div>
                             <div id="searchoptions">
-                                <div id="name-options" className="options_cont">
-                                    <select onChange={filterbyname}>
-                                        <option value='' >Name</option>
-                                        <option>All</option>
-                                        <option>Sara</option>
-                                        <option>Farooq</option>
-                                    </select>
-                                </div>
+
                                 <div id="dep-options" className="options_cont">
                                     
 

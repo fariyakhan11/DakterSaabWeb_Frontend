@@ -107,34 +107,34 @@ function fetchdoctors(){
 useEffect(()=>{console.log(displayed_list)},[displayed_list])
 
 //activate the delete view
-const deletemodeon=(e)=>{
-    var cb_o=document.getElementsByClassName('checkbox-outline');
-    var deletebtn=document.getElementById('delMedicines');
-    if(viewmode){
+const deletemodeon=()=>{
+  var cb_o=document.getElementsByClassName('checkbox-outline');
+  var deletebtn=document.getElementById('delMedicines');
+  if(viewmode){
 
-        document.getElementById('deletetitle').style.display='none';
-        document.getElementsByClassName('stockoptitle1')[0].style.display='block';
-        deletebtn.style.transform='rotate(5deg)';
-        deletebtn.classList.add('delMedicinesactive');
-        for(var c=0;c<cb_o.length;c++){
-            cb_o[c].style.display='flex';
-        }
-    }
-    else{
-        document.getElementById('deletetitle').style.display='flex';
-        document.getElementsByClassName('stockoptitle1')[0].style.display='none';
-        deletebtn.style.transform='rotate(-45deg)';
-        deletebtn.classList.remove('delMedicinesactive');
-        for(var c=0;c<cb_o.length;c++){
-            cb_o[c].style.display='none';
-        }
-        setselected_doctor([])
-        var cb=document.getElementsByClassName('checkbox-selected')
-        for(var c=0;c<cb.length;c++){
-            cb[c].style.display='none';
-        }
-    }
-    setviewmode(!viewmode)
+      document.getElementById('deletetitle').style.display='none';
+     document.getElementById('hiddendiv').style.display='flex';
+      deletebtn.style.transform='rotate(5deg)';
+      deletebtn.classList.add('delMedicinesactive');
+      for(var c=0;c<cb_o.length;c++){
+          cb_o[c].style.display='flex';
+      }
+  }
+  else{
+      document.getElementById('deletetitle').style.display='flex';
+      document.getElementById('hiddendiv').style.display='none';
+      deletebtn.style.transform='rotate(-45deg)';
+      deletebtn.classList.remove('delMedicinesactive');
+      for(var c=0;c<cb_o.length;c++){
+          cb_o[c].style.display='none';
+      }
+      setselected_doctor([])
+      var cb=document.getElementsByClassName('checkbox-selected')
+      for(var c=0;c<cb.length;c++){
+          cb[c].style.display='none';
+      }
+  }
+  setviewmode(!viewmode)
 }
 
 //delete the selected medicines
@@ -402,6 +402,10 @@ return(
             <div className="contentarea" >
                     <h3 className="contentareatitle">Doctors</h3>
                     <hr/>
+                    <div id="hiddendiv">
+                      <h2  onClick={delete_selected}>Delete</h2>
+                      <h2 onClick={deletemodeon}>Cancel</h2>
+                    </div>
                     <div className="searchbar">
 
                           <input
@@ -533,10 +537,7 @@ return(
                   <div className="stockoptitle" id="deletetitle"> 
                   <h4 >Delete Doctor</h4>
                   </div>
-                  <div className="stockoptitle1" id='delbtns'>
-                  <h3 id='delete-confirm' onClick={delete_selected}>Delete</h3>
-                  <h3 id='cancel'  onClick={deletemodeon}>Cancel</h3>
-                  </div>
+
               </div>
           </div>
         </div>

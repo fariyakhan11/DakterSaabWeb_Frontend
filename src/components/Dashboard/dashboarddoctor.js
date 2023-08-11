@@ -5,52 +5,37 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useState } from "react";
 import { FaBars  } from "react-icons/fa";
-import { FiLogOut} from "react-icons/fi";
 import { BiUser } from "react-icons/bi";
 import {MdSettings } from "react-icons/md";
 import {GrHelp,GrNote} from "react-icons/gr";
 import Profiledoctor from "../Profile/profiledoctor";
 import Appointments from "../Appointments/appointments";
 import Schedule from "../Schedule/schedule";
-import Notes from "../Notes/notes";
+
 import { useEffect } from "react";
-import Alert from "../Alert/alert";
+
 import PatientsP from '../../images/waiting-room.png'
-import PatientsPrev from '../../images/patient.png'
+
 import PatientsT from '../../images/user.png'
-import PatientsN from '../../images/doctor-visit.png'
+
 import WorkHours from '../../images/working-time.png'
-import PatientU from '../../images/examination.png'
-import EventU from '../../images/calendar.png'
+
 
 function Dashboarddoctor(){
     const currentDate = new Date()
     const [expandedstate,setexpandedstate]=useState(false);
-    const [selectedDate, setSelectedDate] = useState(currentDate);
-    const [showMenu, setShowMenu] = useState(false);
     const [tab, settab]=useState('Home');
-    const [oldtab,setoldtab]=useState('');
-    const [overlay,setoverlay]=useState(false)
-    const [logoutalert,setlogoutalert]=useState(false)
+    
     const [Datenow,setDatenow]=useState()
 //navigate between tabs from the sidenav clicks and transitions
     const handlestate=(msg)=>{
-        if(!overlay){
-        settab(msg.tab)}
+    
+        settab(msg.tab)
         
         setexpandedstate(msg.expanded)
     }
 
-//handle dashboards display from the overlay tab nav clicks and transitions
-    const handletopstates=(overtab)=>{
 
-        if(!overtab){
-        document.getElementById(tab).classList.remove('active-overlaypharmacy')
-        settab(oldtab);
-        setoldtab('');
-        setoverlay(!overlay)
-        }
-    }
 
 useEffect(()=>{
 
@@ -82,25 +67,7 @@ DN=DN.getDate()+'/'+DN.getMonth()+'/'+DN.getFullYear()+" "+DN.toLocaleDateString
 setDatenow(DN) 
 },[])
 
-function openoverlaytab(e){
-    
-    if(e.target.id===tab||oldtab===''){
-       setoverlay(!overlay)     
-        if(!overlay){
-            e.target.classList.add('active-overlaypharmacy')
-            setoldtab(tab);
-            settab(e.target.id);
-        }else{
-            e.target.classList.remove('active-overlaypharmacy')
-            settab(oldtab);    
-            setoldtab('');
-        }
-    }else{
-        document.getElementById(tab).classList.remove('active-overlaypharmacy')
-        settab(e.target.id)
-        e.target.classList.add('active-overlaypharmacy')
-    }
-}
+
 
 useEffect(()=>{
 // Get the day information for each date
@@ -113,46 +80,11 @@ setDatenow(DN)
 return(
 
 <>
-{logoutalert&&
-<Alert alert="Are you sure you want to logout?" />
-}
 <div id="dashboardcontainer">
 
 <Sidenavdoctor msg={handlestate} />
 <div id="dashboardarea">
-    <div className="secondnavdoctor">
-        <div className="admindiv">
-        <BiUser  className="icon"  onClick={openoverlaytab} id="Profile"/>   
-   
-        <h2  className='adminname' onClick={openoverlaytab} id="Profile">Hi Alishba !</h2>
-        </div>
-        <div className="links">
-        <button
-          className="navbar-toggler"
-          onClick={() => setShowMenu(!showMenu)}
-        >
-          <FaBars />
-        </button>
-        <ul className={showMenu ? "nav-menu active" : "nav-menu"}>
-          <li className="nav-item ">
-            
-              <GrNote className="icon " id="Notes" onClick={openoverlaytab}/>
-            
-          </li>
-          <li className="nav-item">
-           
-              <GrHelp className="icon" id='Help' onClick={openoverlaytab}/>
-            
-          </li>
 
-          <li className="nav-item">
-            
-              <FiLogOut className="icon" id='Logout' onClick={()=>{setlogoutalert(true)}}/>
-            
-          </li>
-        </ul>
-        </div>
-    </div>
         <div className="infoareadashboard">
 {(tab==='Home') && 
       <>
@@ -188,9 +120,7 @@ return(
                 </div>
                 <div className="performancegraphdoctor">
                     <div className="performancegraphsubdoctor" ></div>
-                    <div className="performancegraphsubdoctor">
-                        <h3>Confirmed Diagnosis</h3>
-                    </div>
+
                 </div>
 
             </div>
@@ -266,10 +196,6 @@ return(
 }
 
 
-{(tab==='Notes') && 
-<Notes overtab={handletopstates}/>
-
-}
 </div>
 </div>
 </div>
