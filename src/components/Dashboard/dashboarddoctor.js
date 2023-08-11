@@ -192,41 +192,7 @@ return(
                         <h3>Confirmed Diagnosis</h3>
                     </div>
                 </div>
-        <div className="section2doctor">
-            <div className="section2subdoctor" >
-                <h2 className="booktitledivpharmacy">Upcoming Patient</h2>
-                <div id="upcomingpatient">
-                    <div className="patientcominghead">
-                        <img src={PatientU}></img>
-                        <div>
-                        <h4>Aliza Arshad</h4>
-                        <h5>alizaarshad@gmail.com</h5>                            
-                        </div>
-                    </div>
-                    <h4><span>Venue: </span>ABC Clinic</h4>
-                    <h4><span>Time Slot: </span>9:00 AM</h4>
-                </div>
-            </div>
-            <div className="section2subdoctor" >
-                <h2 className="booktitledivpharmacy">Previous Patient</h2>
-                <div id="prevpatient">
-                    <div className="patientcominghead">
-                        <img src={PatientsPrev}></img>
-                        <div>
-                        <h4>Aliza Arshad</h4>
-                        <h5>alizaarshad@gmail.com</h5>                            
-                        </div>
-                    </div>
-                    <h4><span>Venue: </span>ABC Clinic</h4>
-                    <h4><span>Time Slot: </span>9:00 AM</h4>
-                    <h4><span>Illness: </span>Fever , Runny Nose</h4>
-                    <h4><span>Diagnosis: </span>Viral Flu</h4>
-                </div>
-            </div>
 
-
-
-        </div>
             </div>
             <div className="subsec2pharmacy">
 

@@ -9,42 +9,41 @@ function Scheduleenter({close,unformatted}){
     const [editschedule,seteditschedule]=useState([])
 const handleinput=(e)=>{}
 
-useEffect(async() => {
-    await seteditschedule(unformatted)
+useEffect(() => {geteditschedule()
 }, []);
 
-
+useEffect(() => {console.log(editschedule.find(s=>s.name===selectedschedule).availability)
+}, [editschedule]);
 function convertschedule(){}
-async function geteditschedule() {
+function geteditschedule() {
     try {
         const params = sessionStorage.getItem('org_name') + '/' + sessionStorage.getItem('email');
         const api = 'http://localhost:5000/api/doctor/getscheduleedit/' + params;
-        const response = await fetch(api, {
+        fetch(api, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
             },
-        });
-        const json = await response.json();
+        }).then(res=>res.json())
+        .then(json=>{
 
-        if (json.schedule) {
-            seteditschedule(json.schedule);
-            setselectedschedule(json.schedule[0].name);
-            console.log(json.schedule);
-        } else {
-            seteditschedule([]);
-        }
-        if (json.error) {
-            console.log(json.error);
-        }
+            if (json.schedule) {
+                seteditschedule(json.schedule);
+                setselectedschedule(json.schedule[0].name);
+                console.log(json.schedule);
+            } else {
+                seteditschedule([]);
+            }
+            if (json.error) {
+                console.log(json.error);
+            }
+
+        })
+
     } catch (err) {
         console.log(err);
     }
 }
-
-useEffect(()=>{
-    console.log(editschedule[0])
-},[editschedule])
 
 const addhospital=()=>{
     
@@ -81,11 +80,23 @@ return(<>
                 <button id="removehospital">Remove Hospital</button>
                 <div id="hospitalschedulearea">
                     
+{
+['Monday','Tuesday','Wednesday','Thursday',"Friday","Saturday","Sunday"].map((j,index)=>{
+const sch=editschedule.find(s=>s.name===selectedschedule)
+if(sch){
+    sch.availability.map((i,ind)=>{return(<>
+
                     <div>
-                        <h3>Monday</h3>
-                        <input value='8:00 AM to 5:30 PM ' type="text" onChange={handleinput} name='monday' className="time"/>
+                        <h3>{i.day}</h3>
+                        {i.time.map((t,ind)=>{return(<>
+                            <input value={t} type="text" onChange={handleinput} name={i} id={ind} className="time"/>
+                        </>)})}
+                        
                         <button onClick={addtimevalue}>+</button>
                     </div>
+
+
+</>)})}})}    
                     <div>
                         <h3>Tuesday</h3>
                         <input value='10:00 AM to 6:30 PM  ' type="text" onChange={handleinput} name='monday' className="time"/>
