@@ -1,4 +1,4 @@
-import React, { cloneElement } from "react";
+import React from "react";
 import './newsandreports.css';
 import Complaints from '../../images/chat.png'
 import News from '../../images/newspaper.png'
@@ -8,8 +8,8 @@ import { Label } from "reactstrap";
 import All from '../../images/all.png'
 
 function Newsandreports(){
-
-    const [entryform ,setentryform]=useState({form_no:'',form_date:'',form_type:'',entree_name:'',form_title:'',form_description:'',form_department:'',resolution_description:'',resolution_date:'',resolver_name:''})
+    const [entryform,setentryform]=useState()
+    //const [entryform ,setentryform]=useState({form_no:'',form_date:'',form_type:'',entree_name:'',form_title:'',form_description:'',form_department:'',resolution_description:'',resolution_date:'',resolver_name:''})
     const [department_list,setdepartment_list]=useState([]);
     const [CNRlist ,setCNRlist ]=useState([
     //    {form_no:'',form_date:'',form_type:'',name:'',form_title:'',form_description:'',form_department:'',resolution_description:'',resolution_date:'',resolver_name:''},

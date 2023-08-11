@@ -6,7 +6,7 @@ import PharmP from '../../images/drugs1.png'
 import './signup.css';
 import { useState , useEffect } from "react";
 import validator from "validator";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate} from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import LogoP from '../../images/logo.png'
 
@@ -68,6 +68,8 @@ function Signup(){
         education:'',
         experience:'',
         speciality:'',
+        longitude:'',
+        latitude:'',
         name: '',
         phone: '',
         city: '',
@@ -77,7 +79,7 @@ function Signup(){
 
 // to validate the form values while entering
     function handleUserInput(e) {
-        
+        console.log(formValue)
         document.getElementsByClassName('errordescription')[0].style.display="none";
 
         if (!(e.target.name === 'time')) {
@@ -166,9 +168,27 @@ function Signup(){
                     if (res.status === 200) {
                         document.getElementsByClassName('errordescription')[0].textContent="";
                         document.getElementsByClassName('errordescription')[0].style.display='none';
-                        emptyfields();
-                        alert("you master key has been sent to you by email");
+                        
+                        alert("Sign up Success");
+                        //to empty the input values after the successful submission of signup form
+    
+                        setformValue(
+                        {   email: '',
+                            password: '',
+                            address: '',
+                            education:'',
+                            experience:'',
+                            speciality:'',
+                            name: '',
+                            phone: '',
+                            longitude:'',
+                            latitude:'',
+                            city: '',
+                            time: { open: '', close: '' },
+                            org:identitytitle
+                        }
 
+                    )
                     }
                     else if (res.status === 430) { 
                         document.getElementsByClassName('errordescription')[0].textContent="This "+ identitytitle+" already exist."; 
@@ -202,25 +222,7 @@ function Signup(){
         setidentitypic(options[divId].opt_imgs);
     }
 
-//to empty the input values after the successful submission of signup form
-    function emptyfields(){
-        setformValue(
-        {   email: '',
-            password: '',
-            address: '',
-            education:'',
-            experience:'',
-            speciality:'',
-            name: '',
-            phone: '',
-            city: '',
-            time: { open: '', close: '' },
-            org:identitytitle
-        }
 
-    )
-
-}
 return(
 <>
 <div className="registercontainer">
@@ -311,6 +313,12 @@ return(
                                         <label>Timings: </label>
                                         <input className="inputf time" type="time" name="time" id="open" onChange={handleUserInput}/><h5>to</h5>
                                         <input className="inputf time" type="time" name="time" id="close" onChange={handleUserInput}/>
+                                    </div>
+                                    <div className="form-fields" id="time-div">
+                                        <label>Longitude: </label>
+                                        <input className="inputf time" type="text" name="longitude"  onChange={handleUserInput}/>
+                                        <label>Latitude: </label>
+                                        <input className="inputf time" type="text" name="latitude"  onChange={handleUserInput}/>
                                     </div>
                                     <div className="form-fields">
                                         <label>Password: </label>

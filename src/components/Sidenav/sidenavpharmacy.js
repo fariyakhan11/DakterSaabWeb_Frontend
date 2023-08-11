@@ -22,7 +22,7 @@ function Sidenavpharmacy({msg }){
         });
         msg({expanded:expanded,tab:sessionStorage.getItem('current_tab')})
     },[])
-
+    
     useEffect(()=>{
         let select_tab="."+sessionStorage.getItem('current_tab')
         let sel=document.querySelectorAll(select_tab);
