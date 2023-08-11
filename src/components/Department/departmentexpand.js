@@ -5,17 +5,19 @@ import { useState,useEffect } from "react";
 import EditP from '../../images/edit1.png'
 import DocP from '../../images/doctor1.png'
 import PatientI from '../../images/patient1.png'
+
+
 function Departmentexpand({close,department}){
     const [Department,setDepartment]=useState(department)
     const [dep,setdep]=useState({name:Department.name,admin_name:Department.admin_name,password:'',phone:Department.phone})
-
+    const [searchdoctor,setsearchdoctor]= useState('')
     const [doctor_list,setdoctor_list]=useState([]);
     const [displayed_listdoctor,setdisplayed_listdoctor]=useState([])
     const [nav,setnav]=useState('App')
     const[editview,set_edit_view]=useState(false)
 //initial tasks on page load
 useEffect(()=>{
-  fetchdoctors()
+  
   
   },[])
 
@@ -81,6 +83,56 @@ const { name, value } = e.target;
         [name]: value,
       }));
 }
+
+useEffect(()=>{
+
+    if(nav==='App'){
+
+    }
+    else if(nav==='Prof'){
+
+    }
+    else if(nav==='Doc'){
+        fetchdoctors()
+    }
+
+},[nav])
+
+const handleSearchdoctor = (e)=>{
+    setsearchdoctor(e.target.value.toLowerCase())
+    
+  
+    if (searchdoctor === '') {
+      setdisplayed_listdoctor(doctor_list); // Show all doctors if search is empty
+    } else {
+      const filteredDoctors = doctor_list.filter((doctor) =>
+        doctor.Name.toLowerCase().includes(searchdoctor)
+      );
+      setdisplayed_listdoctor(filteredDoctors);
+    }
+}
+
+function getpatients(){
+    try{
+        const params=sessionStorage.getItem('org_name')+'/'+sessionStorage.getItem('org_address')
+        const api='http://localhost:5000/api/hospital/getpatients/'+params;
+        fetch(api, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        }).then((response) => response.json()) // get response, convert to json
+        .then((json) => {
+        if(json.doctors){
+          setdoctor_list(json.doctors);
+          setdisplayed_listdoctor(json.doctors);
+        }else{setdoctor_list([]);setdisplayed_listdoctor([])}
+        if(json.error){console.log(json.error)}
+      });
+    }catch(err){
+      console.log(err)
+    }
+}
 return(<>
 <div className="depgray">
 <div id="depexpdiv">
@@ -101,7 +153,17 @@ return(<>
     <div id="depexpcontent">
  <h3>Doctors on Duty</h3>
         <div id="depdoctorsdiv">
-       
+                <div className="searchbar">
+
+                    <input
+                    type="text"
+                    placeholder="Search Doctors by name.."
+                    value={searchdoctor}
+                    onChange={handleSearchdoctor}
+                    className='searchhospital'
+                    />
+            
+                </div>
         {
 
                         displayed_listdoctor.map((i,index)=>{

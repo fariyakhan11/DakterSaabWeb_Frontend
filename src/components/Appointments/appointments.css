@@ -95,16 +95,16 @@ border: 4px solid  rgb(144, 224, 144) !important;
 border: 4px solid  rgb(238, 236, 113) !important;
 }
 
-.workplaceapp{
+#workplaceapp{
 border: 3px solid rgba(155, 152, 152, 0.37);
 padding: 1.3em;
 margin: 1em 0;
 }
-.workplaceapp>div{
+#workplaceapp>div{
 display: flex;
 align-items: center;
 }
-.workplaceapp>div>h1{
+#workplaceapp>div>h1{
 width: 40%;
 }
 #appointmentsidearea{
@@ -163,9 +163,9 @@ width: fit-content;
 
 #datechoose>h5{
 font-family: Fraunces;
-font-size: 1.2em;
+font-size: 1em;
 
-margin-right: 2em;
+margin-right: 1em;
 }
 #selecteddatefilterapp{
 display: flex;
@@ -177,7 +177,7 @@ margin-top: 0.5em;
 }
 #selecteddatefilterapp>select{
 cursor: pointer;
-margin-left: 1em;
+margin-left: 0.5em;
 font-size: 1.05em;
 padding: 0.6em 0.6em;
 font-family: Fraunces;

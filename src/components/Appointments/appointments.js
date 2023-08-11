@@ -8,7 +8,15 @@ function Appointments(){
     const workplaceplaceno=['first','second','third','fourth','fifth']
     const workplaceplacenum=['firstdiv','seconddiv','thirddiv','fourthdiv','fifthdiv']
     const [currentdates,setcurrentdates]=useState([])
+    const [selectedworkplace,setselectedworkplace]=useState('')
+    const [hospitals,sethospitals]=useState([])
+    const [schedule,setschedule]=useState([])
+    const [before,setbefore]=useState('')
+    const [after,setafter]=useState('')
     const [selected,setselected]=useState({date:'',month:'',year:''})
+    const [appointmentlist,setappointmentlist]=useState([])
+    const [displayed_appointmentlist,setdisplayed_appointmentlist]=useState([])
+    
 const months = [
         { name: "January", days: 31 },
         { name: "February", days: 28 },
@@ -35,8 +43,32 @@ useEffect(()=>{
     monthDropdown.value=selected.month;
 
     yearDropdown.value=selected.year;
-generatedays()
-dateDropdown.value=selected.date;
+    generatedays()
+    dateDropdown.value=selected.date;
+    const today = new Date(
+        selected.year,
+        months.findIndex((m) => m.name === selected.month),
+        selected.date
+    );
+    const oneDayBefore = new Date(today);
+    oneDayBefore.setDate(today.getDate() - 1);
+    setbefore(
+        oneDayBefore.getDate() +
+        ' ' +
+        months[oneDayBefore.getMonth()].name +
+        ' ' +
+        oneDayBefore.getFullYear()
+    );
+    const oneDayAfter = new Date(today);
+
+    oneDayAfter.setDate(today.getDate() + 1);
+    setafter(
+        oneDayAfter.getDate() +
+        ' ' +
+        months[oneDayAfter.getMonth()].name +
+        ' ' +
+        oneDayAfter.getFullYear()
+    );
 
 },[selected])
 
@@ -45,7 +77,39 @@ useEffect(()=>{
     var today=new Date();
     generateyears();
     setselected({date:today.getDate(),month:months[today.getMonth()].name ,year:today.getFullYear()})
+    getschedule()
+    getappointments()
 },[])
+
+useEffect(()=>{
+    const distinctHospitalNames = [...new Set(schedule.flatMap(entry =>
+        entry.availability.map(availabilityEntry => availabilityEntry.name)
+    ))];
+    sethospitals(distinctHospitalNames)
+},[schedule])
+
+function getschedule(){
+
+    try{
+        const params=sessionStorage.getItem('org_name')+'/'+sessionStorage.getItem('email')
+        const api='http://localhost:5000/api/doctor/getschedule/'+params;
+        fetch(api, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        }).then((response) => response.json()) // get response, convert to json
+        .then((json) => {
+        if(json.schedule){
+          setschedule(json.schedule)
+
+        }else{setschedule([]);}
+        if(json.error){console.log(json.error)}
+      });
+    }catch(err){
+      console.log(err)
+    }
+}
 
 function setdatesvalue(){
     // Get today's date
@@ -128,7 +192,64 @@ const changehandler=(e)=>{
     }
 }
 
+useEffect(()=>{
+    setdisplayed_appointmentlist(appointmentlist)
+},[appointmentlist])
 
+function getappointments(){
+    try{
+        const params=sessionStorage.getItem('org_name')+'/'+sessionStorage.getItem('email')
+        const api='http://localhost:5000/api/doctor/getappointments/'+params;
+        fetch(api, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        }).then((response) => response.json()) // get response, convert to json
+        .then((json) => {
+        if(json.appointment){
+            setappointmentlist(json.appointment)
+        }else{setappointmentlist([])}
+        if(json.error){console.log(json.error)}
+      });
+    }catch(err){
+      console.log(err)
+    }
+}
+
+const filterworkplace=(e)=>{
+    setselectedworkplace(e.target.value)
+    
+}
+
+useEffect(()=>{
+    
+    if(selectedworkplace!=''){
+        const d=document.getElementsByClassName('clinicapp')
+        
+        const dArray = Array.from(d);
+
+        dArray.map((i) => {
+            i.style.display = 'none';
+            return null; // map function should return a value
+        });
+        const w=document.getElementsByClassName(workplaceplacenum[hospitals.indexOf(selectedworkplace)])
+        const wArray = Array.from(w);
+
+        wArray.map((i) => {
+            i.style.display = 'block';
+            return null; // map function should return a value
+        });
+    }
+    else{
+        const d=document.getElementsByClassName('clinicapp')
+        const dArray = Array.from(d);
+        dArray.map((i) => {
+            i.style.display = 'block';
+            return null; // map function should return a value
+        });
+    }
+},[selectedworkplace])
 return(
 <>
         <div id="Appointmentsdashboard">
@@ -161,10 +282,11 @@ return(
                                 <div id="selectedworkfilterapp">
 
                                     
-                                        <select id="monthDropdown" onChange={changehandler}>
-                                        <option value='All'>All</option>
-        {months.map((i,index)=>{return(
-                                            <option value={i.name}>{i.name}</option>
+                                        <select id="monthDropdown" onClick={filterworkplace}>
+                                        <option value=''>All</option>
+
+        {hospitals.map((i,index)=>{return(
+                                            <option id={i} value={i}>{i}</option>
         )})}
 
                                         </select>
@@ -173,14 +295,14 @@ return(
                             </div>
                     </div>
                     <div id="colourcode1" className="colorcodediv">
-{ JSON.parse(sessionStorage.getItem('hospital')).map((i,index)=>{
+                    { hospitals.map((i,index)=>{
                         return(<>
                         <div id={index} className="colorcodediv ">
                             <div id="colordiv" className={workplaceplaceno[index]}></div>
-                            <h4 className="colorhead">{i.name}</h4>
+                            <h4 className="colorhead">{i}</h4>
                         </div>
 </>)})
-}               
+}              
                     </div>
 
                 </div>
@@ -188,167 +310,111 @@ return(
                     <div id="appointmentsdivcontent">
                         <div className="appointmentsdivcontentcontainer">
                             <div className="contentapphead">
-                                <h1>Date: 30/07/2023</h1>
+                                <h1>Date: {before}
+                                    </h1>
                             </div>
                             <div className="contentappbody">
-                                <div className="workplaceapp firstdiv">
-                                    <div>   
-                                        <h1>Patient Name: </h1>
-                                        <h2>Alishba</h2>
-                                    </div>
-                                    <div>   
-                                        <h1>Time: </h1>
-                                        <h2>10:00AM</h2>
-                                    </div>
-                                    <div>   
-                                        <h1>Clinic: </h1>
-                                        <h2>Agha Khan</h2>
-                                    </div>
-                                </div>
-                                <div className="workplaceapp firstdiv">
-                                    <div>   
-                                        <h1>Patient Name: </h1>
-                                        <h2>Hania</h2>
-                                    </div>
-                                    <div>   
-                                        <h1>Time: </h1>
-                                        <h2>10:30AM</h2>
-                                    </div>
-                                    <div>   
-                                        <h1>Clinic: </h1>
-                                        <h2>Agha Khan</h2>
-                                    </div>
-                                </div>
-                                <div className="workplaceapp firstdiv">
-                                    <div>   
-                                        <h1>Patient Name: </h1>
-                                        <h2>Daniyal</h2>
-                                    </div>
-                                    <div>   
-                                        <h1>Time: </h1>
-                                        <h2>10:15AM</h2>
-                                    </div>
-                                    <div>   
-                                        <h1>Clinic: </h1>
-                                        <h2>Agha Khan</h2>
-                                    </div>
-                                </div>
-                                <div className="workplaceapp seconddiv">
-                                    <div>   
-                                        <h1>Patient Name: </h1>
-                                        <h2>Rohail</h2>
-                                    </div>
-                                    <div>   
-                                        <h1>Time: </h1>
-                                        <h2>12:00PM</h2>
-                                    </div>
-                                    <div>   
-                                        <h1>Clinic: </h1>
-                                        <h2>Mehmooda Clinic</h2>
-                                    </div>
-                                </div>
-                                <div className="workplaceapp seconddiv">
-                                    <div>   
-                                        <h1>Patient Name: </h1>
-                                        <h2>Dania</h2>
-                                    </div>
-                                    <div>   
-                                        <h1>Time: </h1>
-                                        <h2>12:30</h2>
-                                    </div>
-                                    <div>   
-                                        <h1>Clinic: </h1>
-                                        <h2>Mehmooda Clinic</h2>
-                                    </div>
-                                </div>
+                                {displayed_appointmentlist
+                                    .filter(a => {
+                                        const dateParts = a.date.split('T')[0].split('-');
+                                        const day = dateParts[2];
+                                        const month = months[parseInt(dateParts[1]) - 1].name;
+                                        const year = dateParts[0];
+                                        return day + ' ' + month + ' ' + year === before;
+                                    })
+                                    .map((i, index) => {
+                                        return (
+                                        
+                                                <div id="workplaceapp" className={workplaceplacenum[hospitals.indexOf(i.clinicName)]+' clinicapp'}>
+                                                    <div>
+                                                        <h1>Patient Name: </h1>
+                                                        <h2>{i.patientName}</h2>
+                                                    </div>
+                                                    <div>
+                                                        <h1>Time: </h1>
+                                                        <h2>{i.time}</h2>
+                                                    </div>
+                                                    <div>
+                                                        <h1>Clinic: </h1>
+                                                        <h2>{i.clinicName}</h2>
+                                                    </div>
+                                                </div>
+                                            
+                                        );
+                                    })}
+                            </div>
+
+
+                    
+                        </div>
+                        <div className="appointmentsdivcontentcontainer">
+                            <div className="contentapphead">
+                                <h1>Date: {"  "+selected.date+' '+selected.month+' '+selected.year}</h1>
+                            </div>
+                            <div className="contentappbody">
+                                {displayed_appointmentlist
+                                    .filter(a => {
+                                        const dateParts = a.date.split('T')[0].split('-');
+                                        const day = dateParts[2];
+                                        const month = months[parseInt(dateParts[1]) - 1].name;
+                                        const year = dateParts[0];
+                                        return day + ' ' + month + ' ' + year === selected.date+' '+selected.month+" "+selected.year;
+                                    })
+                                    .map((i, index) => {
+                                        return (
+                                            
+                                                <div id="workplaceapp" className={workplaceplacenum[hospitals.indexOf(i.clinicName)] +' clinicapp'}>
+                                                    <div>
+                                                        <h1>Patient Name: </h1>
+                                                        <h2>{i.patientName}</h2>
+                                                    </div>
+                                                    <div>
+                                                        <h1>Time: </h1>
+                                                        <h2>{i.time}</h2>
+                                                    </div>
+                                                    <div>
+                                                        <h1>Clinic: </h1>
+                                                        <h2>{i.clinicName}</h2>
+                                                    </div>
+                                                </div>
+                                            
+                                        );
+                                    })}
                             </div>
                         </div>
                         <div className="appointmentsdivcontentcontainer">
                             <div className="contentapphead">
-                                <h1>Date: 30/07/2023</h1>
+                                <h1>Date: {after}</h1>
                             </div>
                             <div className="contentappbody">
-                                
-                                <div className="workplaceapp seconddiv">
-                                    <div>   
-                                        <h1>Patient Name: </h1>
-                                        <h2>Hammad</h2>
-                                    </div>
-                                    <div>   
-                                        <h1>Time: </h1>
-                                        <h2>2:15PM</h2>
-                                    </div>
-                                    <div>   
-                                        <h1>Clinic: </h1>
-                                        <h2>Mehmooda Clinic</h2>
-                                    </div>
-                                </div>
-                                <div className="workplaceapp seconddiv">
-                                    <div>   
-                                        <h1>Patient Name: </h1>
-                                        <h2>Zohaib</h2>
-                                    </div>
-                                    <div>   
-                                        <h1>Time: </h1>
-                                        <h2>3:00PM</h2>
-                                    </div>
-                                    <div>   
-                                        <h1>Clinic: </h1>
-                                        <h2>Mehmooda Clinic</h2>
-                                    </div>
-                                </div>
-                                <div className="workplaceapp firstdiv">
-                                    <div>   
-                                        <h1>Patient Name: </h1>
-                                        <h2>Sohaib</h2>
-                                    </div>
-                                    <div>   
-                                        <h1>Time: </h1>
-                                        <h2>5:00PM</h2>
-                                    </div>
-                                    <div>   
-                                        <h1>Clinic: </h1>
-                                        <h2>Agha Khan</h2>
-                                    </div>
-                                </div>
-                                
-                            </div>
-                        </div>
-                        <div className="appointmentsdivcontentcontainer">
-                            <div className="contentapphead">
-                                <h1>Date: 30/07/2023</h1>
-                            </div>
-                            <div className="contentappbody">
-                                
-                                <div className="workplaceapp firstdiv">
-                                    <div>   
-                                        <h1>Patient Name: </h1>
-                                        <h2>Alina</h2>
-                                    </div>
-                                    <div>   
-                                        <h1>Time: </h1>
-                                        <h2>7:00PM</h2>
-                                    </div>
-                                    <div>   
-                                        <h1>Clinic: </h1>
-                                        <h2>Agha Khan</h2>
-                                    </div>
-                                </div>
-                                <div className="workplaceapp seconddiv">
-                                    <div>   
-                                        <h1>Patient Name: </h1>
-                                        <h2>Rohail</h2>
-                                    </div>
-                                    <div>   
-                                        <h1>Time: </h1>
-                                        <h2>12:00PM</h2>
-                                    </div>
-                                    <div>   
-                                        <h1>Clinic: </h1>
-                                        <h2>Mehmooda Clinic</h2>
-                                    </div>
-                                </div>
-                                
+                                {displayed_appointmentlist
+                                    .filter(a => {
+                                        const dateParts = a.date.split('T')[0].split('-');
+                                        const day = dateParts[2];
+                                        const month = months[parseInt(dateParts[1]) - 1].name;
+                                        const year = dateParts[0];
+                                        return day + ' ' + month + ' ' + year === after;
+                                    })
+                                    .map((i, index) => {
+                                        return (
+                                            
+                                                <div id="workplaceapp" className={workplaceplacenum[hospitals.indexOf(i.clinicName)]+' clinicapp'}>
+                                                    <div>
+                                                        <h1>Patient Name: </h1>
+                                                        <h2>{i.patientName}</h2>
+                                                    </div>
+                                                    <div>
+                                                        <h1>Time: </h1>
+                                                        <h2>{i.time}</h2>
+                                                    </div>
+                                                    <div>
+                                                        <h1>Clinic: </h1>
+                                                        <h2>{i.clinicName}</h2>
+                                                    </div>
+                                                </div>
+                                            
+                                        );
+                                    })}
                             </div>
                         </div>
                     </div>

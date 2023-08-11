@@ -211,7 +211,7 @@ useEffect(()=>{
         const d=document.getElementsByClassName('daytimediv')
         const dArray = Array.from(d);
         dArray.map((i) => {
-            i.style.display = 'flex';
+            i.style.display = 'block';
             return null; // map function should return a value
         });
     }
