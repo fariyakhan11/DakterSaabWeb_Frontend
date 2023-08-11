@@ -3,7 +3,7 @@ import './dashboardhospital.css'
 import Sidenavhospital from "../Sidenav/sidenavhospital"
 import { useState } from "react";
 
-import {GrHelp,GrNote} from "react-icons/gr";
+import {GrHelp} from "react-icons/gr";
 import Newsandreports from '../NewsandReports/newsandreports';
 import Department from '../Department/department';
 import Doctors from '../Doctors/doctors';

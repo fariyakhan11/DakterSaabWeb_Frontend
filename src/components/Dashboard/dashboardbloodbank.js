@@ -5,7 +5,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { useState } from "react";
 import Blood from '../../images/blood.png'
 import Profit from '../../images/profits.png'
-import {GrHelp,GrNote} from "react-icons/gr";
+import {GrHelp} from "react-icons/gr";
 import BloodGroup from '../../images/bloodgroup.png'
 import { useEffect } from "react";
 import Transactions from "../Transactions/transactions";

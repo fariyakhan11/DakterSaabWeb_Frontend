@@ -7,7 +7,7 @@ import { useState } from "react";
 import { FaBars  } from "react-icons/fa";
 import { BiUser } from "react-icons/bi";
 import {MdSettings } from "react-icons/md";
-import {GrHelp,GrNote} from "react-icons/gr";
+import {GrHelp} from "react-icons/gr";
 import Profiledoctor from "../Profile/profiledoctor";
 import Appointments from "../Appointments/appointments";
 import Schedule from "../Schedule/schedule";
