@@ -218,6 +218,7 @@ function getschedule(){
 }
 
 const openEdit=()=>{
+
     set_add_view(!close_add_view)
 }
 
@@ -255,10 +256,15 @@ useEffect(()=>{
         });
     }
 },[selectedworkplace])
+
+useEffect(()=>{
+
+console.log(unformattedschedule)
+},[unformattedschedule])
 return(
 <>
 {!close_add_view &&
-<Scheduleenter close={handle_add} unformattedschedule={unformattedschedule}/>
+<Scheduleenter close={handle_add} unformatted={unformattedschedule}/>
 }
         <div id="Scheduledashboard">
             <div className="contentarea" >

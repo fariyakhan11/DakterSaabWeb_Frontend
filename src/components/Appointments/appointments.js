@@ -82,9 +82,11 @@ useEffect(()=>{
 },[])
 
 useEffect(()=>{
-    const distinctHospitalNames = [...new Set(schedule.flatMap(entry =>
-        entry.availability.map(availabilityEntry => availabilityEntry.name)
-    ))];
+    var distinctHospitalNames=[]
+    for(var i=0;i<schedule.length;i++){
+        distinctHospitalNames.push(schedule[i].name)
+
+    }
     sethospitals(distinctHospitalNames)
 },[schedule])
 
