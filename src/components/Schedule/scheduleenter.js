@@ -1,6 +1,6 @@
 import React from "react";
 import './schedule.css';
-import {BiEditAlt } from "react-icons/bi";
+
 import { useState,useEffect } from "react";
 
 
@@ -16,7 +16,7 @@ function Scheduleenter({close,unformatted}){
     ]})
     const [editschedule,seteditschedule]=useState([])
     const [selectedindex,setselectedindex]=useState(0)
-const handleinput=(e)=>{}
+
 
 useEffect(() => {geteditschedule()
 }, []);
@@ -61,29 +61,9 @@ function geteditschedule() {
                     {day:"Sunday",time:['']}
                 ] });
                 setselectedindex(0)
-                setselectedschedule({name:json.schedule[0].name,address:json.schedule[0].address,fee:json.schedule[0].fee,availability:[
-                    {day:'Monday',time:(json.schedule[0].availability.filter(a=>{a.day.toLowerCase()==='monday'}))?(json.schedule[0].availability.filter(a=>{a.day.toLowerCase()==='monday'})).time:['']},
-                    {day:'Tuesday',time:(json.schedule[0].availability.filter(a=>{a.day.toLowerCase()==='tuesday'}))?(json.schedule[0].availability.filter(a=>{a.day.toLowerCase()==='tuesday'})).time:['']},
-                    {day:'Wednesday',time:(json.schedule[0].availability.filter(a=>{a.day.toLowerCase()==='wednesday'}))?(json.schedule[0].availability.filter(a=>{a.day.toLowerCase()==='wednesday'})).time:['']},
-                    {day:'Thursday',time:(json.schedule[0].availability.filter(a=>{a.day.toLowerCase()==='thursday'}))?(json.schedule[0].availability.filter(a=>{a.day.toLowerCase()==='thursday'})).time:['']},
-                    {day:'Friday',time:(json.schedule[0].availability.filter(a=>{a.day.toLowerCase()==='friday'}))?(json.schedule[0].availability.filter(a=>{a.day.toLowerCase()==='friday'})).time:['']},
-                    {day:'Saturday',time:(json.schedule[0].availability.filter(a=>{a.day.toLowerCase()==='saturday'}))?(json.schedule[0].availability.filter(a=>{a.day.toLowerCase()==='saturday'})).time:['']},
-                    {day:'Sunday',time:(json.schedule[0].availability.filter(a=>{a.day.toLowerCase()==='sunday'}))?(json.schedule[0].availability.filter(a=>{a.day.toLowerCase()==='sunday'})).time:['']}
                 
-                ]});
-                console.log(json.schedule);
-            } else {
-                seteditschedule([{name:'Unnamed',address:'',fee:'',availability:[]}]);
-                setselectedschedule({name:'Unnamed',address:'',fee:'',availability:[
-                    {day:'Monday',time:['']},
-                    {day:'Tuesday',time:['']},
-                    {day:'Wednesday',time:['']},
-                    {day:'Thursday',time:['']},
-                    {day:'Friday',time:['']},
-                    {day:'Saturday',time:['']},
-                    {day:'Sunday',time:['']},
-                ]})
-            }
+                
+            } 
             if (json.error) {
                 console.log(json.error);
             }
@@ -101,18 +81,51 @@ const addhospital=()=>{
 
 }
 
-
+const hospitalinfochange = (e) => {
+    setselectedschedule(prevSelectedSchedule => {
+        const updatedSchedule = { ...prevSelectedSchedule }; // Make a shallow copy of the existing state
+        if (e.target.name === 'hosnewname') {
+            updatedSchedule.name = e.target.value;
+        } else if (e.target.name === 'hosnewaddress') {
+            updatedSchedule.address = e.target.value;
+        } else if (e.target.name === 'hosnewfee') {
+            updatedSchedule.fee = e.target.value;
+        }
+        return updatedSchedule; // Return the updated state
+    });
+}
 
 const addtimevalue=(e)=>{}
 
 const changehospital=(e)=>{
     const element=editschedule[e.target.id]
+    setselectedschedule({
+        name:element.name,address:element.address,fee:element.fee,availability:[
+            {day:'Monday',time:(element.availability.filter(a=>{a.day.toLowerCase()==='monday'}))?(element.availability.filter(a=>{a.day.toLowerCase()==='monday'})).time:['']},
+            {day:'Tuesday',time:(element.availability.filter(a=>{a.day.toLowerCase()==='tuesday'}))?(element.availability.filter(a=>{a.day.toLowerCase()==='tuesday'})).time:['']},
+            {day:'Wednesday',time:(element.availability.filter(a=>{a.day.toLowerCase()==='wednesday'}))?(element.availability.filter(a=>{a.day.toLowerCase()==='wednesday'})).time:['']},
+            {day:'Thursday',time:(element.availability.filter(a=>{a.day.toLowerCase()==='thursday'}))?(element.availability.filter(a=>{a.day.toLowerCase()==='thursday'})).time:['']},
+            {day:'Friday',time:(element.availability.filter(a=>{a.day.toLowerCase()==='friday'}))?(element.availability.filter(a=>{a.day.toLowerCase()==='friday'})).time:['']},
+            {day:'Saturday',time:(element.availability.filter(a=>{a.day.toLowerCase()==='saturday'}))?(element.availability.filter(a=>{a.day.toLowerCase()==='saturday'})).time:['']},
+            {day:'Sunday',time:(element.availability.filter(a=>{a.day.toLowerCase()==='sunday'}))?(element.availability.filter(a=>{a.day.toLowerCase()==='sunday'})).time:['']}
+                
+        ]
+    })
     
-    setselectedschedule()
     setselectedindex(e.target.id)
     alert(e.target)
     document.getElementsByClassName('actiivehospitaltab')[0].classList.remove('actiivehospitaltab')
     e.target.classList.add('actiivehospitaltab')
+}
+
+const handleinput=(e)=>{
+    var element=selectedschedule
+    element.availability[element.availability.indexOf(element.availability.filter(a=>{a.day===e.target.name}))].time[e.target.id]=e.target.value
+    setselectedschedule(element)
+    var s=[...editschedule]
+    s[selectedindex]=element
+    seteditschedule(s)
+
 }
 return(<>
 <div className="grayareaschedule">
@@ -129,7 +142,7 @@ return(<>
 {editschedule.map((i,index)=>{
     
         return(<>
-                        <div className={index===0?"actiivehospitaltab":''}><h2>{i.name}</h2></div>
+                        <div className={index===0?"actiivehospitaltab":''} onClick={changehospital} id={index}><h2 id={index}>{i.name}</h2></div>
 
         </>)
 })}
