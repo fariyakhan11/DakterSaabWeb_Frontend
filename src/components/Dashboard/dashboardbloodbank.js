@@ -48,7 +48,7 @@ useEffect(()=>{
 })
 
 useEffect(()=>{
-sessionStorage.setItem('org_name', 'ABC BloodBank'); 
+sessionStorage.setItem('org_name', 'Blood Bank LNH Karachi'); 
 sessionStorage.setItem('org_address', 'R 595 sector 8 North Karachi, Karachi');
 sessionStorage.setItem('email', 'abcbank@gmail.com'); 
 sessionStorage.setItem('phone', '03330249895');  
