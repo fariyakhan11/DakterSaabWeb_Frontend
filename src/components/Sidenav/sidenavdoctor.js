@@ -3,13 +3,15 @@ import './sidenavdoctor.css'
 import DocP from '../../images/doctor1.png'
 import {AiOutlineHome,AiOutlineBook} from "react-icons/ai";
 import {BiExpand,BiCollapse} from "react-icons/bi";
+import { FiLogOut} from "react-icons/fi";
+import { BiUser } from "react-icons/bi";
 import { useState ,useEffect} from "react";
 import {BsPerson} from "react-icons/bs";
 import {MdSchedule} from "react-icons/md";
-
+import  Alert from '../Alert/alert';
 function Sidenavdoctor({msg }){
     const [expanded,setexpanded]=useState(true);
-    
+    const [logoutalert,setlogoutalert]=useState(false)
     useEffect(() => {
         sessionStorage.setItem('current_tab', 'Home');
         let elements=document.querySelectorAll('.Home');
@@ -59,6 +61,9 @@ function Sidenavdoctor({msg }){
    
 return(
 <>
+{logoutalert&&
+<Alert alert="Are you sure you want to logout?" />
+}
 {expanded &&
 <div id="sidenavcontainerdoctor">
     <div className="organizationLogo">
@@ -86,11 +91,16 @@ return(
             <BsPerson className="tabsicon" id="Profile"/>
             <h4 className="tabsnamedoctor" id="Profile">Profile</h4>
         </div>
- 
-
+        <div className="tabsdiv Logout" id="Logout" onClick={()=>{setlogoutalert(true)}}>
+            <FiLogOut className="tabsicon" id="Logout"/>
+            <h4 className="tabsnamedoctor" id="Logout">Logout</h4>
+        </div>
+        <div>
+        <BiCollapse className="collapsebtn" onClick={expandhandler}/>
+        </div>
     </div>
 
-<BiCollapse id="collapsebtn" onClick={expandhandler}/>
+
 </div>
  }
 
@@ -111,6 +121,12 @@ return(
 </div>
 <div className="tabscollapsed Profile" onClick={selectedtab} id="Profile">
 <BsPerson className="tabsicon" id="Profile"/>
+</div>
+<div className="tabscollapsed Profile" onClick={selectedtab} id="Profile">
+<BiUser className="tabsicon" id="Profile"/>
+</div>
+<div className="tabscollapsed Logout" onClick={()=>{setlogoutalert(true)}} id="Logout">
+<FiLogOut className="tabsicon" id="Logout"/>
 </div>
 </div>
 

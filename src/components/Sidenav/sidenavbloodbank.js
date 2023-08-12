@@ -5,12 +5,14 @@ import {AiOutlineHome} from "react-icons/ai";
 import {BiPurchaseTag,BiExpand,BiCollapse} from "react-icons/bi";
 import { useState ,useEffect} from "react";
 import {GrTransaction} from "react-icons/gr";
-import {BsPeople} from "react-icons/bs";
+import { FiLogOut} from "react-icons/fi";
+import { BiUser } from "react-icons/bi";
+import  Alert from '../Alert/alert';
 import {MdOutlineBloodtype} from "react-icons/md";
 
 function Sidenavbloodbank({msg }){
     const [expanded,setexpanded]=useState(true);
-    
+    const [logoutalert,setlogoutalert]=useState(false)
     useEffect(() => {
         sessionStorage.setItem('current_tab', 'Home');
         let elements=document.querySelectorAll('Home');
@@ -60,6 +62,9 @@ function Sidenavbloodbank({msg }){
    
 return(
 <>
+{logoutalert&&
+<Alert alert="Are you sure you want to logout?" />
+}
 {expanded &&
 <div id="sidenavcontainerbloodbank">
     <div className="organizationLogo">
@@ -67,7 +72,7 @@ return(
         <h3 className="orgname">{sessionStorage.getItem('org_name')}</h3>
         <p>{sessionStorage.getItem('phone')}</p>
         <p>{sessionStorage.getItem('org_address')}</p>
-        <p>{sessionStorage.getItem('email')}</p>
+      
     </div>
     
     <div className="tabscontainer">
@@ -84,14 +89,20 @@ return(
             <MdOutlineBloodtype className="tabsicon" id="Blood"/>
             <h4 className="tabsnamebloodbank" id="Blood">Blood Groups</h4>
         </div>
-        <div className="tabsdiv Donor" id="Donor" onClick={selectedtab}>
-            <BsPeople className="tabsicon" id="Donor"/>
-            <h4 className="tabsnamebloodbank" id="Donor">Donors</h4>
+        <div className="tabsdiv Profile" id="Profile" onClick={selectedtab}>
+            <BiUser className="tabsicon" id="Profile"/>
+            <h4 className="tabsnamebloodbank" id="Profile">Profile</h4>
         </div>
-
+        <div className="tabsdiv Logout" id="Logout" onClick={()=>{setlogoutalert(true)}}>
+            <FiLogOut className="tabsicon" id="Logout"/>
+            <h4 className="tabsnamebloodbank" id="Logout">Logout</h4>
+        </div>
+        <div>
+        <BiCollapse className="collapsebtn" onClick={expandhandler}/>
+        </div>
     </div>
 
-<BiCollapse id="collapsebtn" onClick={expandhandler}/>
+
 </div>
  }
 
@@ -110,8 +121,11 @@ return(
 <div className="tabscollapsed Blood" onClick={selectedtab} id="Blood">
  <MdOutlineBloodtype className="tabsicon" id="Blood"/>
 </div>
-<div className="tabscollapsed Donor" onClick={selectedtab} id="Donor">
- <BsPeople className="tabsicon" id="Donor"/>
+<div className="tabscollapsed Profile" onClick={selectedtab} id="Profile">
+<BiUser className="tabsicon" id="Profile"/>
+</div>
+<div className="tabscollapsed Logout" onClick={()=>{setlogoutalert(true)}} id="Logout">
+<FiLogOut className="tabsicon" id="Logout"/>
 </div>
 </div>
 

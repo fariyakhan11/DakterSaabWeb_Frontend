@@ -2,17 +2,10 @@ import React from "react";
 import './dashboardpharmacy.css'
 import Sidenavpharmacy from "../Sidenav/sidenavpharmacy"
 import { useState } from "react";
-import { FaBars  } from "react-icons/fa";
-import { FiLogOut} from "react-icons/fi";
-import { BiUser } from "react-icons/bi";
-import {MdSettings } from "react-icons/md";
-import {GrHelp,GrNote} from "react-icons/gr";
 import Medicines from "../Medicines/medicines";
-import Notes from "../Notes/notes";
 import { useEffect } from "react";
 import Orders from "../Orders/orders";
 import Transactions from "../Transactions/transactions";
-import  Alert from '../Alert/alert';
 import Profit from '../../images/profits.png'
 import Med from '../../images/drugs1.png';
 import MedP from '../../images/medicine.png';
@@ -24,36 +17,21 @@ import Profilepharmacy from "../Profile/profilepharmacy";
 
 function Dashboardpharmacy(){
     const currentDate = new Date()
-    const [expandedstate,setexpandedstate]=useState(false)
+    const [expandedstate,setexpandedstate]=useState(true)
     const [statistics,setstatistics]=useState({todaymed:'',weeksale:'',todaysale:'',totalorder:'',orderpend:'',popmed:''})
-    const [selectedDate, setSelectedDate] = useState(currentDate);
-    const [showMenu, setShowMenu] = useState(false);
     const [tab, settab]=useState('Home');
-    const [oldtab,setoldtab]=useState('');
-    const [overlay,setoverlay]=useState(false);
-    const [logoutalert,setlogoutalert]=useState(false)
     const [order_list,setorder_list]=useState([]);
     const [last_transact,setlast_transact]=useState({date:'',buyer_name:'',amount:'',items:[{name:'',quantity:''}]});
     const [medicine_list,setmedicine_list]=useState([]);
 
 //navigate between tabs from the sidenav clicks and transitions
     const handlestate=(msg)=>{
-        if(!overlay){
-        settab(msg.tab)}
+        settab(msg.tab)
         
         setexpandedstate(msg.expanded)
     }
 
-//handle dashboards display from the overlay tab nav clicks and transitions
-const handletopstates=(overtab)=>{
 
-    if(!overtab){
-    document.getElementById(tab).classList.remove('active-overlaypharmacy')
-    settab(oldtab);
-    setoldtab('');
-    setoverlay(!overlay)
-    }
-}
 
 useEffect(()=>{
 
@@ -140,26 +118,6 @@ function fetchorders(){
     }
 }
 
-function openoverlaytab(e){
-    
-    if(e.target.id===tab||oldtab===''){
-       setoverlay(!overlay)     
-        if(!overlay){
-            e.target.classList.add('active-overlaypharmacy')
-            setoldtab(tab);
-            settab(e.target.id);
-        }else{
-            e.target.classList.remove('active-overlaypharmacy')
-            settab(oldtab);    
-            setoldtab('');
-        }
-    }else{
-        document.getElementById(tab).classList.remove('active-overlaypharmacy')
-        settab(e.target.id)
-        e.target.classList.add('active-overlaypharmacy')
-    }
-}
-
 function fetchlowmeds(){
 try{
         const params=sessionStorage.getItem('org_name')+'/'+sessionStorage.getItem('org_address')
@@ -204,48 +162,14 @@ try{
 
 return(
 <>
-{logoutalert&&
-<Alert alert="Are you sure you want to logout?" />
-}
+
 
 <div id="dashboardcontainer">
 
 <Sidenavpharmacy msg={handlestate} />
 
 <div id="dashboardarea">
-    <div className="secondnavpharmacy">
-        <div className="admindiv">
-        <BiUser  className="icon" onClick={openoverlaytab} id="Profile" />   
-   
-        <h2  className='adminname' onClick={openoverlaytab} id="Profile">Hi Alishba !</h2>
-        </div>
-        <div className="links">
-        <button
-          className="navbar-toggler"
-          onClick={() => setShowMenu(!showMenu)}
-        >
-          <FaBars />
-        </button>
-        <ul className={showMenu ? "nav-menu active" : "nav-menu"}>
-          <li className="nav-item ">
-            
-              <GrNote className="icon " id="Notes" onClick={openoverlaytab}/>
-            
-          </li>
-          <li className="nav-item">
-           
-              <GrHelp className="icon" id='Help' onClick={openoverlaytab}/>
-            
-          </li>
 
-          <li className="nav-item">
-            
-              <FiLogOut className="icon" id='Logout' onClick={()=>{setlogoutalert(true)}}/>
-            
-          </li>
-        </ul>
-        </div>
-    </div>
 
     <div className="infoareadashboard">
 
@@ -416,10 +340,7 @@ return(
 <Profilepharmacy/>
 }
 
-{(tab==='Notes') && 
-<Notes overtab={handletopstates}/>
 
-}
 
 
 

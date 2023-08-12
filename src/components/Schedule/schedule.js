@@ -12,7 +12,7 @@ function Schedule(){
     const [selected,setselected]=useState({date:'',month:'',year:''})
     const [close_add_view, set_add_view] = useState(true);
     const [schedule,setschedule]=useState([])
-    const [unformattedschedule,setunformattedschedule]=useState([])
+    
     const workplaceplaceno=['first','second','third','fourth','fifth']
     const [hospitals,sethospitals]=useState([])
     const [selectedworkplace,setselectedworkplace]=useState('')
@@ -175,7 +175,7 @@ function getschedule(){
         .then((json) => {
         if(json.schedule){
             var sch=json.schedule
-            setunformattedschedule(json.schedule)
+            
             if(sch.length){
 
                 // Initialize an empty array to store the new formatted data
@@ -256,15 +256,10 @@ useEffect(()=>{
         });
     }
 },[selectedworkplace])
-
-useEffect(()=>{
-
-console.log(unformattedschedule)
-},[unformattedschedule])
 return(
 <>
 {!close_add_view &&
-<Scheduleenter close={handle_add} unformatted={unformattedschedule}/>
+<Scheduleenter close={handle_add} />
 }
         <div id="Scheduledashboard">
             <div className="contentarea" >

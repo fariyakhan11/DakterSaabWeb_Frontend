@@ -30,17 +30,7 @@ justify-items: center;
 align-items: center;
 cursor: pointer;
 }
-.infoareadashboard{
-display: flex;
-flex-direction: column;
-margin: 1em 0.6em 0em 1.2em;
 
-height: 83vh;
-border-radius: 2em;
-box-shadow: 0 2px 30px rgba(53, 52, 52, 0.247);
-padding: 0.7em;
-
-}
 /**/
 .secondnavhospital{
     width: 99%;
@@ -79,7 +69,7 @@ margin: 0 0.3%;
 border: 3px solid #adc7f7d2;
 align-items: center;
 box-shadow: 0 2px 30px rgba(53, 52, 52, 0.089);
-height:36%;
+height:40%;
 width:99.4%;
 margin: 0.2em 0.1em;
 }
@@ -218,13 +208,13 @@ text-align: end;
 #doctorsonduty{
 display: flex;
 flex-direction: row;
-height: 25%;
+height: 27.5%;
 box-shadow: 2px 2px 7px rgba(66, 65, 65, 0.541);
 width: 96%;
 margin: 2em 1em 1em 1em;
 }
 .bookdiv7{
-height: 27%;
+height: 47%;
 box-shadow: 2px 2px 7px rgba(66, 65, 65, 0.541);
 width:97%;
 margin: 0.5em 0.2em;

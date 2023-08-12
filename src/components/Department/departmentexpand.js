@@ -8,13 +8,20 @@ import PatientI from '../../images/patient1.png'
 
 
 function Departmentexpand({close,department}){
+    const [today,setToday]=useState(new Date())
     const [Department,setDepartment]=useState(department)
     const [dep,setdep]=useState({name:Department.name,admin_name:Department.admin_name,password:'........',phone:Department.phone,changepw:0})
     const [searchdoctor,setsearchdoctor]= useState('')
     const [doctor_list,setdoctor_list]=useState([]);
+    const [appointment_list,setappointment_list]=useState([]);
+    const [currentToken,setcurrentToken]=useState(0);
     const [displayed_listdoctor,setdisplayed_listdoctor]=useState([])
     const [nav,setnav]=useState('App')
     const[editview,set_edit_view]=useState(false)
+
+    // Get the day information for each date
+const options = { weekday: 'long' };
+
 //initial tasks on page load
 useEffect(()=>{
   
@@ -34,9 +41,10 @@ function fetchdoctors(){
         }).then((response) => response.json()) // get response, convert to json
         .then((json) => {
         if(json.doctors){
-            var doc=json.doctors.filter(h=>h.Department===dep.name)
+            var doc=json.doctors.filter(h=>h.Department===Department.name)
+            var docduty=json.doctors.filter(h=>h.availability.day===today.toLocaleDateString('en-US', options))
           setdoctor_list(doc);
-          setdisplayed_listdoctor(doc);
+          setdisplayed_listdoctor(docduty);
         }else{setdoctor_list([]);setdisplayed_listdoctor([])}
         if(json.error){console.log(json.error)}
       });
@@ -46,7 +54,7 @@ function fetchdoctors(){
 }
 const editformsubmit=()=>{
         try{
-        
+        console.log('here')
         const api='http://localhost:5000/api/hospital/updatedep';
         let data={old_name:Department.name,org_name:sessionStorage.getItem('org_name'),org_address:sessionStorage.getItem('org_address'),depinfo:dep}
         fetch(api, {
@@ -60,7 +68,7 @@ const editformsubmit=()=>{
                     alert('Department updated successfully')
                     res.json().then(data => {
                         setDepartment(data.department)
-                        setdep({name:data.name,admin_name:data.admin_name,password:'',phone:data.phone})
+                        setdep(data.department)
                     })
 
                     
@@ -124,7 +132,7 @@ setdisplayed_listdoctor(d)
 
 function getpatients(){
     try{
-        const params=sessionStorage.getItem('org_name')+'/'+sessionStorage.getItem('org_address')
+        const params=sessionStorage.getItem('org_name')+'/'+sessionStorage.getItem('org_address')+'/'+Department.name;
         const api='http://localhost:5000/api/hospital/getpatients/'+params;
         fetch(api, {
             method: 'GET',
@@ -133,7 +141,7 @@ function getpatients(){
             },
         }).then((response) => response.json()) // get response, convert to json
         .then((json) => {
-        if(json.doctors){
+        if(json.appointments){
           setdoctor_list(json.doctors);
           setdisplayed_listdoctor(json.doctors);
         }else{setdoctor_list([]);setdisplayed_listdoctor([])}
@@ -172,7 +180,7 @@ return(<>
         />
 
         </div>
-        <h3>Doctors on Duty</h3>
+        <h3 className="docdeptitle">Doctors on Duty</h3>
         <div id="depdoctorsdiv">
 
         {
@@ -198,13 +206,16 @@ return(<>
                           </div>
 
 )})}
+{!displayed_listdoctor.length&&
+<h1 className="errordepexpand">No doctors on duty</h1>
+}
         </div>
- <h3>Department Doctors</h3>
+ <h3 className="docdeptitle">Department Doctors</h3>
         <div id="depdoctorsdiv">
        
         {
 
-                        displayed_listdoctor.map((i,index)=>{
+                        doctor_list.map((i,index)=>{
                           return(
 
                           <div className="medsdivdep" id={index} >
@@ -225,7 +236,9 @@ return(<>
                           </div>
 
 )})}
-
+{!doctor_list.length&&
+<h1 className="errordepexpand">No doctors added in this department</h1>
+}
         </div>
     </div>
 }

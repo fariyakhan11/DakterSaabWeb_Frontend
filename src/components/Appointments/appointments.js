@@ -90,6 +90,11 @@ useEffect(()=>{
     sethospitals(distinctHospitalNames)
 },[schedule])
 
+const intervalInMilliseconds = 2 * 60 * 1000; // 30 minutes
+setInterval(() => {
+  getappointments();// Call the function that fetches data
+}, intervalInMilliseconds);
+
 function getschedule(){
 
     try{

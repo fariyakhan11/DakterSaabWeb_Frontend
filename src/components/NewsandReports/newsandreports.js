@@ -1,4 +1,4 @@
-import React, { cloneElement } from "react";
+import React from "react";
 import './newsandreports.css';
 import Complaints from '../../images/chat.png'
 import News from '../../images/newspaper.png'
@@ -8,8 +8,8 @@ import { Label } from "reactstrap";
 import All from '../../images/all.png'
 
 function Newsandreports(){
-
-    const [entryform ,setentryform]=useState({form_no:'',form_date:'',form_type:'',name:'',form_title:'',form_description:'',form_department:'',resolution_description:'',resolution_date:'',resolver_name:''})
+    const [entryform,setentryform]=useState()
+    //const [entryform ,setentryform]=useState({form_no:'',form_date:'',form_type:'',entree_name:'',form_title:'',form_description:'',form_department:'',resolution_description:'',resolution_date:'',resolver_name:''})
     const [department_list,setdepartment_list]=useState([]);
     const [CNRlist ,setCNRlist ]=useState([
     //    {form_no:'',form_date:'',form_type:'',name:'',form_title:'',form_description:'',form_department:'',resolution_description:'',resolution_date:'',resolver_name:''},
@@ -18,9 +18,10 @@ function Newsandreports(){
     const [fetched_list,setfetched_list]=useState([])
 
 useEffect(()=>{
-    setentryform({form_no:'',form_date:generatenowdate(),form_type:'',name:'',form_title:'',form_description:'',form_department:'',resolution_description:'',resolution_date:generatenowdate(),resolver_name:''})
+    setentryform({form_no:'',form_date:generatenowdate(),form_type:'',entree_name:'',form_title:'',form_description:'',form_department:'',resolution_description:'',resolution_date:generatenowdate(),resolver_name:''})
     fetchforms()
     fetchdepartments()
+    
 },[])
 
 function generatenowdate(){
@@ -152,12 +153,46 @@ function fetchforms(){
         
           setentryform((prevform) => ({ ...prevform, ['form_no']: Math.max(...formNumbers) }));
 
-        }else{setCNRlist([]);setfetched_list([])}
+        }else{
+            setentryform((prevform) => ({ ...prevform, ['form_no']: 1 }));
+            setCNRlist([]);setfetched_list([])}
         if(json.error){console.log(json.error)}
       });
     }catch(err){
       console.log(err)
     }
+}
+
+const submitNCRform=(e)=>{
+    
+    
+    alert(entryform.form_date,entryform.form_department,entryform.form_no,entryform.form_type,entryform.form_title)
+    
+        try{
+            alert('ok')    
+            const api='http://localhost:5000/api/hospital/storeforms';
+            let data={org_name:sessionStorage.getItem('org_name'),org_address:sessionStorage.getItem('org_address'),depinfo:entryform}
+            fetch(api, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            }).then(res => {
+                    if (res.status === 200) {
+                        alert('Form added successfully')
+                        setentryform({form_no:'',form_date:generatenowdate(),form_type:'',entree_name:'',form_title:'',form_description:'',form_department:'',resolution_description:'',resolution_date:'',resolver_name:''})
+                        fetchforms()
+                    }
+                    
+    
+                    else {  alert('Problem adding forms') }
+                });
+        }catch(err){
+            console.log(err);
+        }      
+    
+
 }
 return(
 <>
@@ -235,14 +270,7 @@ return(
                     <div>
                         <div>
                             <div id="searchoptions">
-                                <div id="name-options" className="options_cont">
-                                    <select onChange={filterbyname}>
-                                        <option value='' >Name</option>
-                                        <option>All</option>
-                                        <option>Sara</option>
-                                        <option>Farooq</option>
-                                    </select>
-                                </div>
+
                                 <div id="dep-options" className="options_cont">
                                     
 
@@ -382,7 +410,7 @@ return(
                                         <input type="textarea" value={entryform.form_description} onChange={handleentryformvalue} id="form_description"></input>
                                     </div>
                                     <div>
-                                        <button>Submit</button>
+                                        <button onClick={submitNCRform}>Submit</button>
                                     </div>
                                 </div>
                             </div>
