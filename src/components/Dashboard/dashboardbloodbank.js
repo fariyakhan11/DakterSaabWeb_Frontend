@@ -25,7 +25,7 @@ function Dashboardbloodbank(){
 //dashboard content
 
     const [statistics,setstatistics]=useState({todayblood:'',weeksale:'',todaysale:'',popblood:''})
-    const [donors,setdonors]=useState([{donorname:'',contact:'',group:'',lastdate:''}])
+    
     const [bloodgroup_list,setbloodgroup_list]=useState([])
 
 //navigate between tabs from the sidenav clicks and transitions
@@ -49,7 +49,7 @@ useEffect(()=>{
 
 useEffect(()=>{
 sessionStorage.setItem('org_name', 'Blood Bank LNH Karachi'); 
-sessionStorage.setItem('org_address', 'R 595 sector 8 North Karachi, Karachi');
+sessionStorage.setItem('org_address', '  KDA Scheme, 24, Block 5 Gulshan-e-Iqbal, Khi');
 sessionStorage.setItem('email', 'abcbank@gmail.com'); 
 sessionStorage.setItem('phone', '03330249895');  
 sessionStorage.setItem('password','********')
@@ -81,7 +81,7 @@ function fetchlasttransact(){
         .then((json) => {
         if(json.transaction){
           setlast_transact(json.transaction);
-        }else{setlast_transact();}
+        }else{setlast_transact({date:'',buyer_name:'',amount:'',items:[{quantity:'',name:''}]});}
         if(json.error){console.log(json.error)}
       });
     }catch(err){
@@ -186,29 +186,10 @@ return(
                         </div>
                     </div>
                     <div className="subsec2bloodbank">
-                        <h2 className="booktitledivbloodbank">Blood Donors</h2>
+                        
 
                         <div className="bookdiv">
-                            <div id='headdonor' className="donorinfo">
-                                <h3>Donor Name</h3>
-                                <h3>Blood Group</h3>
-                                <h3>Last Donated</h3>
-                                <h3>Contact</h3>
-                            </div>
-                            <div id="contentinfodonor">
-                                <div className="donorinfo donorcontent">
-                                    <h3>Alishba Arshad</h3>
-                                    <h3>O+</h3>
-                                    <h3>14/09/2023</h3>
-                                    <h3>03330249895</h3>
-                                </div>
-                                <div className="donorinfo donorcontent">
-                                    <h3>Alishba Arshad</h3>
-                                    <h3>O+</h3>
-                                    <h3>14/09/2023</h3>
-                                    <h3>03330249895</h3>
-                                </div>
-                            </div>
+                       
                         </div>
                         <div id='bottomcontentbloodbank'>
                         <div className="section2subbloodbank">
