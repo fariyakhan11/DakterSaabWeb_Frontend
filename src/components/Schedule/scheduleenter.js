@@ -61,6 +61,28 @@ function geteditschedule() {
                     {day:"Sunday",time:['']}
                 ] });
                 setselectedindex(0)
+                setselectedschedule({name:json.schedule[0].name,address:json.schedule[0].address,fee:json.schedule[0].fee,availability:[
+                    {day:'Monday',time:(json.schedule[0].availability.filter(a=>{a.day.toLowerCase()==='monday'}))?(json.schedule[0].availability.filter(a=>{a.day.toLowerCase()==='monday'})).time:['']},
+                    {day:'Tuesday',time:(json.schedule[0].availability.filter(a=>{a.day.toLowerCase()==='tuesday'}))?(json.schedule[0].availability.filter(a=>{a.day.toLowerCase()==='tuesday'})).time:['']},
+                    {day:'Wednesday',time:(json.schedule[0].availability.filter(a=>{a.day.toLowerCase()==='wednesday'}))?(json.schedule[0].availability.filter(a=>{a.day.toLowerCase()==='wednesday'})).time:['']},
+                    {day:'Thursday',time:(json.schedule[0].availability.filter(a=>{a.day.toLowerCase()==='thursday'}))?(json.schedule[0].availability.filter(a=>{a.day.toLowerCase()==='thursday'})).time:['']},
+                    {day:'Friday',time:(json.schedule[0].availability.filter(a=>{a.day.toLowerCase()==='friday'}))?(json.schedule[0].availability.filter(a=>{a.day.toLowerCase()==='friday'})).time:['']},
+                    {day:'Saturday',time:(json.schedule[0].availability.filter(a=>{a.day.toLowerCase()==='saturday'}))?(json.schedule[0].availability.filter(a=>{a.day.toLowerCase()==='saturday'})).time:['']},
+                    {day:'Sunday',time:(json.schedule[0].availability.filter(a=>{a.day.toLowerCase()==='sunday'}))?(json.schedule[0].availability.filter(a=>{a.day.toLowerCase()==='sunday'})).time:['']}
+                
+                ]});
+                console.log(json.schedule);
+            } else {
+                seteditschedule([{name:'Unnamed',address:'',fee:'',availability:[]}]);
+                setselectedschedule({name:'Unnamed',address:'',fee:'',availability:[
+                    {day:'Monday',time:['']},
+                    {day:'Tuesday',time:['']},
+                    {day:'Wednesday',time:['']},
+                    {day:'Thursday',time:['']},
+                    {day:'Friday',time:['']},
+                    {day:'Saturday',time:['']},
+                    {day:'Sunday',time:['']},
+                ]})
             }
             if (json.error) {
                 console.log(json.error);
@@ -79,29 +101,7 @@ const addhospital=()=>{
 
 }
 
-const hospitalinfochange = (e) => {
-    setselectedschedule(prevSelectedSchedule => {
-        const updatedSchedule = { ...prevSelectedSchedule }; // Make a shallow copy of the existing state
-        if (e.target.name === 'hosnewname') {
-            updatedSchedule.name = e.target.value;
-        } else if (e.target.name === 'hosnewaddress') {
-            updatedSchedule.address = e.target.value;
-        } else if (e.target.name === 'hosnewfee') {
-            updatedSchedule.fee = e.target.value;
-        }
-        return updatedSchedule; // Return the updated state
-    });
-    
-    
-    console.log(selectedschedule)
-}
 
-useEffect(()=>{
-    console.log(selectedschedule)
-    const s=[...editschedule]
-    s[selectedindex]=selectedschedule
-    seteditschedule(s)
-},[selectedschedule])
 
 const addtimevalue=(e)=>{}
 
@@ -129,7 +129,7 @@ return(<>
 {editschedule.map((i,index)=>{
     
         return(<>
-                        <div className={index===selectedindex?"actiivehospitaltab":''} onClick={changehospital} id={index}><h2 id={index}>{i.name}</h2></div>
+                        <div className={index===0?"actiivehospitaltab":''}><h2>{i.name}</h2></div>
 
         </>)
 })}
