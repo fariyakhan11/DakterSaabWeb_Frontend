@@ -59,8 +59,8 @@ function fetchblood(){
         }).then((response) => response.json()) // get response, convert to json
         .then((json) => {
         if(json.bloodgroups){
-          var blood =json.bloodgroups.filter(b => b.quantity < 0)
-          setdisplayed_list(json.bloodgroups);
+          var blood =json.bloodgroups.filter(b => b.quantity > 0)
+          setdisplayed_list(blood);
         }else{setdisplayed_list([])}
         if(json.error){console.log(json.error)}
       });

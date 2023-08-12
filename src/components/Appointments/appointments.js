@@ -1,13 +1,13 @@
 import React from "react";
 import './appointments.css';
-import {BiEditAlt } from "react-icons/bi";
-import { useState,useEffect } from "react";
 
+import { useState,useEffect } from "react";
+import socketIOClient from 'socket.io-client';
 
 function Appointments(){
     const workplaceplaceno=['first','second','third','fourth','fifth']
     const workplaceplacenum=['firstdiv','seconddiv','thirddiv','fourthdiv','fifthdiv']
-    
+    const serverUrl = 'http://localhost:5000'; // Your server URL
     const [selectedworkplace,setselectedworkplace]=useState('')
     const [hospitals,sethospitals]=useState([])
     const [schedule,setschedule]=useState([])
@@ -73,6 +73,8 @@ useEffect(()=>{
 },[selected])
 
 useEffect(()=>{
+    // Connect to the server's socket.io
+    const socket = socketIOClient(serverUrl);
     
     var today=new Date();
     generateyears();
@@ -118,7 +120,6 @@ function getschedule(){
     }
 }
 
-
 function generatedays(){
 
     const dateDropdown = document.getElementById("dateDropdown");
@@ -156,6 +157,7 @@ function generateyears(){
         yearDropdown.appendChild(option);
       }
 }
+
 const changehandler=(e)=>{
     if(e.target.id==="dateDropdown"){
        setselected((prev) => {
@@ -201,8 +203,7 @@ function getappointments(){
 }
 
 const filterworkplace=(e)=>{
-    setselectedworkplace(e.target.value)
-    
+    setselectedworkplace(e.target.value)   
 }
 
 useEffect(()=>{
@@ -233,6 +234,7 @@ useEffect(()=>{
         });
     }
 },[selectedworkplace])
+
 return(
 <>
         <div id="Appointmentsdashboard">

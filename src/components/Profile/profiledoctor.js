@@ -151,7 +151,7 @@ const handleinput=(e)=>{
         }
         else if (e.target.name ==='hospital'){
             var id=parseInt(e.target.id)
-            const name_expression =/^[A-Za-z]+$/;
+            
             
                 document.getElementById('hoserr').style.display="none";
                     var h=doctorinfo.Hospitals

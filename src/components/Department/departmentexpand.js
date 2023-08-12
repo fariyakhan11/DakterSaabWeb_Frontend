@@ -1,11 +1,10 @@
 import React from "react";
 import './department.css';
-import {AiOutlineDelete} from "react-icons/ai";
 import { useState,useEffect } from "react";
 import EditP from '../../images/edit1.png'
 import DocP from '../../images/doctor1.png'
 import PatientI from '../../images/patient1.png'
-
+import socketIOClient from 'socket.io-client';
 
 function Departmentexpand({close,department}){
     const [today,setToday]=useState(new Date())
@@ -19,12 +18,14 @@ function Departmentexpand({close,department}){
     const [nav,setnav]=useState('App')
     const[editview,set_edit_view]=useState(false)
 
+    const serverUrl = 'http://localhost:5000'; // Your server URL
     // Get the day information for each date
 const options = { weekday: 'long' };
 
 //initial tasks on page load
 useEffect(()=>{
-  
+  // Connect to the server's socket.io
+  const socket = socketIOClient(serverUrl);
   
   },[])
 

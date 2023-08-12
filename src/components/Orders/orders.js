@@ -10,6 +10,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import OrdersI from '../../images/order (1).png'
 import OrdersP from '../../images/box.png'
 import MedP from '../../images/medicine.png';
+import socketIOClient from 'socket.io-client';
 
 function Orders(){
     const [searchcustomer,setsearchcustomer]=useState('')
@@ -19,7 +20,7 @@ function Orders(){
     const [order_list,setorder_list]=useState([]);
     const [displayed_list,setdisplayed_list]=useState([])
     const [statistics,setstatistics]=useState({todaymed:'',weeksale:'',todaysale:'',totalorder:'',orderpend:'',popmed:''})
-
+    const serverUrl = 'http://localhost:5000'; // Your server URL
 
 //fetch orders from the database
 function fetchorders(){
@@ -46,14 +47,27 @@ function fetchorders(){
 }
 
 useEffect(()=>{
-    fetchorders()
+    
 })
 
 useEffect(()=>{
+    // Connect to the server's socket.io
+    const socket = socketIOClient(serverUrl)
+    // Listen for order updates
+    socket.on('orderUpdate', data => {
+        // Handle the updated order data received from the server
+        console.log('Received updated order data:', data.order);
+        // Update the order list with the new data
+        setorder_list(data.order);
+        setdisplayed_list(order_list)
+        });
     fetchorders()
     fetchstats()
-
+    fetchorders()
     setdisplayed_list(order_list)
+
+    // Cleanup: Disconnect the socket when the component unmounts
+    return () => socket.disconnect();
 },[])
 
 

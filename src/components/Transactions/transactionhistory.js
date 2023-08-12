@@ -71,7 +71,7 @@ try{
         }).then((response) => response.json()) // get response, convert to json
         .then((json) => {
 
-            setstatisticsblood({todayblood:json.item_sold_today,weeksale:json.transac_amount_week,todaysale:json.transac_amount_today,popblood:(json.popular_blood!=''||json.popular_blood!=null)?json.popular_blood:'-'})
+            setstatisticsblood({todayblood:json.item_sold_today,weeksale:json.transac_amount_week,todaysale:json.transac_amount_today,popblood:(json.popular_blood!==''||json.popular_blood!==null)?json.popular_blood:'-'})
         
       });
     }catch(err){

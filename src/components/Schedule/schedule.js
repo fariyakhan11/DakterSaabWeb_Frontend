@@ -1,6 +1,5 @@
 import React from "react";
 import './schedule.css';
-import {BiEditAlt } from "react-icons/bi";
 import { useState,useEffect } from "react";
 import Scheduleenter from "./scheduleenter";
 
