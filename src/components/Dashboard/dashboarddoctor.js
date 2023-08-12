@@ -54,9 +54,9 @@ const myArray = [
 
 ];
 const jsonString = JSON.stringify(myArray);
-sessionStorage.setItem('org_name', 'Dr Muhammad Arsalan'); 
-sessionStorage.setItem('email', 'iwritewhatsright712@gmail.com'); 
-sessionStorage.setItem('phone', '03313423501');  
+sessionStorage.setItem('org_name', 'Dr Ayesha Khan'); 
+sessionStorage.setItem('email', 'ayeshakhan@gmail.com'); 
+sessionStorage.setItem('phone', '0301-1234567');  
 sessionStorage.setItem('hospital',jsonString)
 sessionStorage.setItem('password','********')
 // Get the day information for each date
