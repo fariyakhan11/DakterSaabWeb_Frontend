@@ -4,7 +4,7 @@ import './schedule.css';
 import { useState,useEffect } from "react";
 
 
-function Scheduleenter({close,unformatted}){
+function Scheduleenter({close}){
     const [selectedschedule,setselectedschedule]=useState({name:'',address:'',fee:'',availability: [
         {day:"Monday",time:['']},
         {day:"Tuesday",time:['']},
@@ -111,19 +111,38 @@ useEffect(()=>{
     s[selectedindex]=selectedschedule
     seteditschedule(s)
 },[selectedschedule])
-
-const addtimevalue=(e)=>{
-    const days=['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']
-    var element=selectedschedule
-    element.availability[days.indexOf(e.target.id)]=
-}
-
+//add more time divs for a day
+const addtimevalue = (e) => {
+    const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+    const dayIndex = days.indexOf(e.target.id);
+  
+    // Create a new array of the current availability
+    const newAvailability = selectedschedule.availability.map((slot, index) => {
+      if (index === dayIndex) {
+        // Create a new object for the selected day with an additional empty time slot
+        return {
+          ...slot,
+          time: [...slot.time, '']
+        };
+      } else {
+        return slot;
+      }
+    });
+  
+    // Update the selectedschedule with the new availability
+    const updatedSchedule = { ...selectedschedule, availability: newAvailability };
+  
+    // Update the state
+    setselectedschedule(updatedSchedule);
+};
+  
 // Helper function to get availability for a specific day
 function getElementAvailability(element, day) {
     const filteredAvailability = element.availability.filter(a => a.day.toLowerCase() === day);
     return filteredAvailability.length ? filteredAvailability[0].time : [''];
-  }
+}
 
+//change the selected hospital
 const changehospital=(e)=>{
  const element = editschedule[e.target.id];
 
@@ -142,11 +161,10 @@ setselectedschedule({
   ],
 });
     
-    setselectedindex(e.target.id)
-
-    
+    setselectedindex(e.target.id)   
 }
 
+//handle inputs for time
 const handleinput = (e) => {
     const day = e.target.name;
     const index = selectedschedule.availability.findIndex(a => a.day === day);
@@ -156,8 +174,39 @@ const handleinput = (e) => {
       element.availability[index].time[e.target.id] = e.target.value;
       setselectedschedule(element);
     }
-  }
-  
+}
+
+
+// Define a function to refine the editschedule array
+const refineSchedule = () => {
+  const refinedSchedule = editschedule.map((item) => {
+    const refinedAvailability = item.availability
+      .filter((slot) => slot.time.length > 0) // Remove slots with empty time
+      .reduce((acc, slot) => {
+        // Merge adjacent slots with a non-empty slot
+        if (acc.length > 0 && slot.time.length > 0) {
+          const prevSlot = acc[acc.length - 1];
+          if (prevSlot.time.length === 1 && prevSlot.time[0] === '' && slot.time[0] !== '') {
+            prevSlot.time[0] = slot.time[0];
+          } else {
+            acc.push(slot);
+          }
+        } else {
+          acc.push(slot);
+        }
+        return acc;
+      }, []);
+
+    return { ...item, availability: refinedAvailability };
+  });
+
+  seteditschedule(refinedSchedule);
+};
+
+//function to submit the entered data
+function submitscheduledata(){
+    
+}
 return(<>
 <div className="grayareaschedule">
     <div id="scheduleenterdiv">
