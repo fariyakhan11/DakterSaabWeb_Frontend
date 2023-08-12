@@ -105,41 +105,50 @@ const handleinput=(e)=>{
         }
 }
 
-const editformsubmit=()=>{
-        try{
+const editformsubmit = async () => {
+    try {
+        const api = 'http://localhost:5000/api/pharmacy/update';
+        const data = {
+            old_name: sessionStorage.getItem('org_name'),
+            old_address: sessionStorage.getItem('org_address'),
+            pharmacyinfo: pharmacyinfo
+        };
 
-        const api='http://localhost:5000/api/pharmacy/update';
-        let data={old_name:sessionStorage.getItem('org_name'),old_address:sessionStorage.getItem('org_address'),pharmacyinfo:pharmacyinfo}
-        fetch(api, {
+        const response = await fetch(api, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(data)
-        }).then(res => {
-                if (res.status === 200) {
-                    alert('Pharmacy updated successfully')
-                    res.json().then(data => {
-                        console.log('doc is ',data.pharmacy)
-                        sessionStorage.setItem('org_name',data.pharmacy.pharmacyname)
-                        sessionStorage.setItem('org_address',data.pharmacy.address)
-                        sessionStorage.setItem('phone',data.pharmacy.phone)
-                        sessionStorage.setItem('email',data.pharmacy.email)
-                        sessionStorage.setItem('time',data.pharmacy.time)
-                    })
+        });
 
+        if (response.status === 200) {
+            const jsonData = await response.json();
+            console.log('Response data:', jsonData);
 
-                    enterdetails()
-                    document.getElementById('profcancel').click()
-                }
-                else if (res.status === 430) { alert(res.error) }
+            // Update session storage with the updated data
+            sessionStorage.setItem('org_name', jsonData.pharmacy.pharmacyname);
+            sessionStorage.setItem('org_address', jsonData.pharmacy.address);
+            sessionStorage.setItem('phone', jsonData.pharmacy.phone);
+            sessionStorage.setItem('email', jsonData.pharmacy.email);
+            sessionStorage.setItem('time', jsonData.pharmacy.time);
 
-                else {  alert('Problem updating Pharmacy', res.error) }
-            });
-    }catch(err){
-        console.log(err);
+            // Close the edit form after successful update
+            set_edit_view(false);
+
+            alert('Pharmacy updated successfully');
+        } else if (response.status === 430) {
+            const errorData = await response.json();
+            console.log('Error response:', errorData);
+            alert(errorData.error);
+        } else {
+            console.log('Problem updating Pharmacy');
+            alert('Problem updating Pharmacy');
+        }
+    } catch (err) {
+        console.error(err);
     }
-}
+};
 return(
 <>
         <div id="Profilepharmacydashboard">
@@ -163,11 +172,18 @@ return(
                                     </div>
                                 </div>
                                 <div id="Addressdiv">
-                                    <div>
-                                        <h6 id="addresserr">Address cannot be empty</h6>
-                                        <input type='text' placeholder="Enter Address" value={pharmacyinfo.address} onChange={handleinput} name="adddress"/>
-                                    </div>
-                                </div>
+    <div>
+        <h6 id="addresserr">Address cannot be empty</h6>
+        <input
+            type='text'
+            placeholder="Enter Address"
+            value={pharmacyinfo.address}
+            onChange={handleinput}
+            name="address" // Fix the typo here
+        />
+    </div>
+</div>
+
                                 <div id="Phonediv">
                                     <div>
                                     <   input  value={pharmacyinfo.phone} onChange={handleinput} name="phone" type="number" minLength={10} placeholder="3** *******" />

@@ -298,3 +298,39 @@ font-weight: 800;
 
 font-family: Georgia, 'Times New Roman', Times, serif;
 }
+
+.hospital-list {
+    display: flex;
+  margin-left: 2rem;
+  flex-direction: row;
+ 
+  align-items: center;
+  }
+  
+  .hospital-card {
+    background-color:#ddd5e2;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 2px 4px rgba(160, 50, 50, 0.1);
+    width: 20rem;
+    margin: 2rem;
+  }
+  .Description{
+    margin-left: 65px
+  }
+  .hospital-details {
+    margin: 15px 0;
+  }
+  
+  .availability-title {
+    margin-top: 10px;
+  }
+  
+  .availability-item {
+    margin-top: 5px;
+  }
+  
+  .time-list {
+    margin-left: 20px;
+  }
+  

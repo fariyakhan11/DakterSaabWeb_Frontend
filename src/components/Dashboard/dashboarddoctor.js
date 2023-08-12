@@ -54,8 +54,8 @@ const myArray = [
 
 ];
 const jsonString = JSON.stringify(myArray);
-sessionStorage.setItem('org_name', 'Alishba Arshad'); 
-sessionStorage.setItem('email', 'alishba@gmail.com'); 
+sessionStorage.setItem('org_name', 'Dr Muhammad Arsalan'); 
+sessionStorage.setItem('email', 'iwritewhatsright712@gmail.com'); 
 sessionStorage.setItem('phone', '03313423501');  
 sessionStorage.setItem('hospital',jsonString)
 sessionStorage.setItem('password','********')

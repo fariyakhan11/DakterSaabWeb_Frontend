@@ -162,11 +162,21 @@ return(
                                     </div>
                                 </div>
                                 <div id="Addressdiv">
-                                    <div>
-                                        <h6 id="addresserr">Address cannot be empty</h6>
-                                        <input type='text' placeholder="Enter Address" value={bloodbankinfo.address} onChange={handleinput} name="address"/>
-                                    </div>
-                                </div>
+    <div>
+        <h6 id="addresserr">Address cannot be empty</h6>
+        <input
+            type='text'
+            placeholder="Enter Address"
+            value={bloodbankinfo.address}
+            onChange={handleinput}
+            name="address" // Fix the typo here
+        />
+    </div>
+</div>
+
+
+                                
+
                                 <div id="Phonediv">
                                     <div>
                                     <   input  value={bloodbankinfo.phone} onChange={handleinput} name="phone" type="number" minLength={10} placeholder="3** *******" />
