@@ -83,11 +83,11 @@ const handleinput=(e)=>{
             let itemlist=transactioninfo.items;
             
             itemlist[index].quantity=e.target.value;
-            var amount=0
+            var amounts=0
             for(var i=0;i<itemlist.length;i++){
-                amount+=parseInt(itemlist[i].quantity)*parseInt(itemlist[i].price);
+                amounts+=parseInt(itemlist[i].quantity)*parseInt(itemlist[i].price);
             }
-            settransactioninfo((previnfo)=>{return({...previnfo,['items']:itemlist,['amount']:amount})})
+            settransactioninfo((previnfo)=>{return({...previnfo,items:itemlist,amount:amounts})})
 
             
 
@@ -118,18 +118,18 @@ const handlechecks=(e)=>{
 
     }
     else{
-        var itemlist=[];
-        for (var i=0;i<transactioninfo.items.length;i++){
-            if(transactioninfo.items[i].name!=e.target.name){
-                itemlist.push(transactioninfo.items[i])
+        var itemlists=[];
+        for (var j=0;j<transactioninfo.items.length;j++){
+            if(transactioninfo.items[j].name!==e.target.name){
+                itemlists.push(transactioninfo.items[j])
             }
         } 
-        var amount = 0;
-        for (var i = 0; i < itemlist.length; i++) {
-        amount = amount + parseInt(itemlist[i].quantity) * parseInt(itemlist[i].price);
+        var amounts = 0;
+        for (var y = 0; y < itemlists.length; y++) {
+        amounts = amounts + parseInt(itemlists[y].quantity) * parseInt(itemlists[y].price);
         }
         settransactioninfo((previnfo) => {
-        return { ...previnfo, items: itemlist, amount: amount };
+        return { ...previnfo, items: itemlists, amount: amounts };
         });
         
     }
