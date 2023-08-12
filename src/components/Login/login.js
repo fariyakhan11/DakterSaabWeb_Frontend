@@ -130,6 +130,7 @@ function Login() {
                 if(response.status===200){alert('Login success')}
                 response.json()})
           .then((json) => {
+            console.log(json.user)
             document.getElementById("nameerr").innerHTML = json.error;
             document.getElementById("nameerr").style.display = 'flex';
             if (!json.error) {

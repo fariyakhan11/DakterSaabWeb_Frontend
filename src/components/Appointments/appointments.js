@@ -75,12 +75,23 @@ useEffect(()=>{
 useEffect(()=>{
     // Connect to the server's socket.io
     const socket = socketIOClient(serverUrl);
-    
+    // Listen for order updates
+    socket.on('appointmentUpdate', data => {
+        // Handle the updated order data received from the server
+        console.log('Received updated order data:', data.appointment);
+        // Update the order list with the new data
+        setappointmentlist(data.appointment);
+        setdisplayed_appointmentlist(data.appointment);
+      });
     var today=new Date();
     generateyears();
     setselected({date:today.getDate(),month:months[today.getMonth()].name ,year:today.getFullYear()})
     getschedule()
     getappointments()
+
+    // Cleanup: Disconnect the socket when the component unmounts
+    return () => socket.disconnect();
+  
 },[])
 
 useEffect(()=>{

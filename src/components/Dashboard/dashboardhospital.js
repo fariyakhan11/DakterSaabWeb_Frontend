@@ -41,8 +41,8 @@ useEffect(()=>{
 })
 
 useEffect(()=>{
-sessionStorage.setItem('org_name', 'Patel Hospital'); 
-sessionStorage.setItem('org_address', 'Gulshan-e-Iqbal');
+sessionStorage.setItem('org_name', 'Jinnah Postgraduate Medical Center(JPMC)'); 
+sessionStorage.setItem('org_address', 'Rafiqui, Sarwar Shaheed Rd');
 sessionStorage.setItem('email', 'abchospital@gmail.com'); 
 sessionStorage.setItem('password','********')
 sessionStorage.setItem('phone', '+92 21 35112710');  
