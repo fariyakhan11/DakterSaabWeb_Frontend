@@ -95,6 +95,12 @@ const hospitalinfochange = (e) => {
     });
 }
 
+useEffect(()=>{
+    var s=[...editschedule]
+    s[selectedindex]=selectedschedule
+    seteditschedule(s)
+},[selectedschedule])
+
 const addtimevalue=(e)=>{}
 
 const changehospital=(e)=>{
@@ -122,9 +128,7 @@ const handleinput=(e)=>{
     var element=selectedschedule
     element.availability[element.availability.indexOf(element.availability.filter(a=>{a.day===e.target.name}))].time[e.target.id]=e.target.value
     setselectedschedule(element)
-    var s=[...editschedule]
-    s[selectedindex]=element
-    seteditschedule(s)
+
 
 }
 return(<>
