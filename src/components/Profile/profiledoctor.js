@@ -7,8 +7,44 @@ import validator from "validator";
 
 function Profiledoctor(){
     const [edit_view, set_edit_view] = useState(false);
-    const [doctorinfo,setdoctorinfo]=useState({name:'',email:'',phone:'',education:'',speciality:'',password:'',experience:'',description:'',hospital:[{name:'',address:'',fees:""}],ratings:''})
+    const [doctorinfo, setdoctorinfo] = useState({
+        Name: '',
+        Email: '',
+        Phone: '',
+        Education: '',
+        Speciality: '',
+        Password: '',
+        Experience: '',
+        Description: '',
+        Hospitals: [],
+        Ratings: ''
+    });
 
+    const fetchDoctorDetails = async () => {
+        const orgName = sessionStorage.getItem('org_name');
+        const email = sessionStorage.getItem('email');
+        const api = `http://localhost:5000/api/doctor/detail/${orgName}/${email}`;
+    
+        try {
+          const response = await fetch(api);
+          if (response.status === 200) {
+            const data = await response.json();
+            console.log('Fetched doctor data:', data);
+            const doctorData = data.doctor;
+            setdoctorinfo(doctorData);
+          } else {
+            console.log('Error fetching doctor details');
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      };
+    
+      useEffect(() => {
+        // Fetch initial data
+        fetchDoctorDetails();
+      }, []);
+    
 useEffect(()=>{
     enterdetails()
 
@@ -16,32 +52,33 @@ useEffect(()=>{
 
 function enterdetails(){
     
-    var myArray = JSON.parse(sessionStorage.getItem('hospital'));
+    // var myArray = JSON.parse(sessionStorage.getItem('hospital'));
     
-    setdoctorinfo({name:sessionStorage.getItem('org_name'),email:sessionStorage.getItem('email'),phone:sessionStorage.getItem('phone'),education:sessionStorage.getItem('education'),password:sessionStorage.getItem('password'),speciality:sessionStorage.getItem('speciality'),experience:sessionStorage.getItem('experience'),description:sessionStorage.getItem('description'),hospital:myArray,ratings:sessionStorage.getItem('ratings')})
+    setdoctorinfo({name:sessionStorage.getItem('org_name'),email:sessionStorage.getItem('email'),phone:sessionStorage.getItem('phone'),education:sessionStorage.getItem('education'),password:sessionStorage.getItem('password'),speciality:sessionStorage.getItem('speciality'),experience:sessionStorage.getItem('experience'),description:sessionStorage.getItem('description'),ratings:sessionStorage.getItem('ratings')})
+
 
 }
 
-const addhosdiv=()=>{
-    var h=doctorinfo.hospital
-    h.push('')
+const addhosdiv = () => {
     setdoctorinfo((prev) => ({
-          ...prev,
-          hospital:h
-    }))
-}
-
-const removehosdiv=(e)=>{
-
-    var h=doctorinfo.hospital
-    if(h.length>1)
-    
-    h.splice(parseInt(e.target.id), 1);
-    setdoctorinfo((prev) => ({
-          ...prev,
-          hospital:h
-    }))
-}
+      ...prev,
+      hospitals: [...prev.Hospitals, { name: "", address: "", fee: "" }],
+    }));
+  };
+  
+  const removehosdiv = (index) => {
+    if (doctorinfo.Hospitals.length > 1) {
+      const updatedHospitals = [...doctorinfo.Hospitals];
+      updatedHospitals.splice(index, 1);
+  
+      setdoctorinfo((prev) => ({
+        ...prev,
+        hospitals: updatedHospitals,
+      }));
+    }
+  };
+  
+  
 
 useEffect(()=>{console.log(doctorinfo)},[doctorinfo])
 
@@ -117,7 +154,7 @@ const handleinput=(e)=>{
             const name_expression =/^[A-Za-z]+$/;
             
                 document.getElementById('hoserr').style.display="none";
-                    var h=doctorinfo.hospital
+                    var h=doctorinfo.Hospitals
                     h[id]=e.target.value
                     setdoctorinfo((prev) => ({
                     ...prev,
@@ -133,6 +170,17 @@ const handleinput=(e)=>{
 
         }
 }
+
+const handleHospitalInput = (e, index, field) => {
+    const updatedHospitals = [...doctorinfo.Hospitals];
+    updatedHospitals[index][field] = e.target.value;
+  
+    setdoctorinfo((prev) => ({
+      ...prev,
+      hospital: updatedHospitals,
+    }));
+  };
+  
 
 const editformsubmit=()=>{
         try{
@@ -150,10 +198,11 @@ const editformsubmit=()=>{
                     alert('Doctor updated successfully')
                     res.json().then(data => {
                         console.log('doc is ',data.doctor)
+                        setdoctorinfo(data.doctor);
                         sessionStorage.setItem('org_name',data.doctor.Name)
                         sessionStorage.setItem('education',data.doctor.Education)
                         sessionStorage.setItem('phone',data.doctor.Phone)
-                        sessionStorage.setItem('email',data.doctor.email)
+                        sessionStorage.setItem('email',data.doctor.Email)
                         sessionStorage.setItem('speciality',data.doctor.Speciality)
                         sessionStorage.setItem('ratings',data.doctor.Ratings)
                         sessionStorage.setItem('experience',data.doctor.Experience)
@@ -175,6 +224,7 @@ const editformsubmit=()=>{
 return(
 <>
         <div id="Profiledoctordashboard">
+        
             <div className="contentarea" >
                     <h3 className="contentareatitle">My Profile</h3>
                     <hr/>
@@ -191,24 +241,24 @@ return(
                                 <div id="Namediv">
                                     <div>
                                         <h6 id="nameerr">Name cannot contain special characters or numbers</h6>
-                                        <input type='text' placeholder="Enter Name" value={doctorinfo.name} onChange={handleinput} name="name"/>
+                                        <input type='text' placeholder="Enter Name" value={doctorinfo.Name} onChange={handleinput} name="Name"/>
                                     </div>
                                 </div>
                                 <div id="Phonediv">
                                     <div>
-                                    <   input  value={doctorinfo.phone} onChange={handleinput} name="phone" type="number" minLength={10} placeholder="3** *******" />
+                                    <   input  value={doctorinfo.Phone} onChange={handleinput} name="Phone" minLength={10} placeholder="3** *******" />
                                     </div>
                                 </div>
                                 <div id="Emaildiv">
                                     <div>
                                         <h6 id="emailerr">Email is not valid</h6>
-                                        <input type="email" placeholder="Enter Email" value={doctorinfo.email} onChange={handleinput} name="email"/>
+                                        <input type="email" placeholder="Enter Email" value={doctorinfo.Email} onChange={handleinput} name="Email"/>
                                     </div>
                                 </div>
                                 <div id="Educationdiv">
                                     <div>
                                         <h6 id="eduerr">Education cannot contain special characters or numbers</h6>
-                                        <input type='text' placeholder="Enter Education" value={doctorinfo.education} onChange={handleinput} name="education"/>
+                                        <input type='text' placeholder="Enter Education" value={doctorinfo.Education} onChange={handleinput} name="Education"/>
                                     </div>
                                 </div>
                             </div>
@@ -219,13 +269,13 @@ return(
                                 <h2>{sessionStorage.getItem('org_name')}</h2>
                                 </div>
                                 <div id="Phonediv">
-                                <h2>{sessionStorage.getItem('phone')}</h2>
+                                <h2>{doctorinfo.Phone}</h2>
                                 </div>
                                 <div id="Emaildiv">
                                 <h2>{sessionStorage.getItem('email')}</h2>
                                 </div>
                                 <div id="Educationdiv">
-                                <h2>{sessionStorage.getItem('Education')}</h2>
+                                <h2>{doctorinfo.Education}</h2>
                                 </div>
                             </div>
 }
@@ -243,48 +293,74 @@ return(
                             <h6 id='pwerr'>Password is too short</h6>
                             <div id="Passworddiv">
                                 <h1>Password:</h1>
-                                <input value={doctorinfo.password} onChange={handleinput} name="password" minLength={8} type="password" placeholder="Enter password"/>
+                                <input value={doctorinfo.Password} onChange={handleinput} name="Password" minLength={8} type="password" placeholder="Enter password"/>
                             </div>
                             <h6 id="speerr">Speciality cannot contain special characters or numbers</h6>
                             <div id="Specialitydiv">
                                 <h1>Speciality:</h1>
-                                <input value={doctorinfo.speciality} onChange={handleinput} name="speciality" placeholder="Enter speciality" type="text"/>
+                                <input value={doctorinfo.Speciality} onChange={handleinput} name="Speciality" placeholder="Enter speciality" type="text"/>
                             </div>
                             <h6 id="experr">Experience cannot be empty and only contain numbers</h6>
                             <div id="Experiencediv">
                                 <h1>Experience (in years):</h1>
-                                <input value={doctorinfo.experience} onChange={handleinput} name="experience" placeholder="Enter experience" type="text"/>
+                                <input value={doctorinfo.Experience} onChange={handleinput} name="Experience" placeholder="Enter experience" type="text"/>
                             </div>
                             <div id="Descriptiondiv">
                                 <h1>Description:</h1>
-                                <textarea value={doctorinfo.description} onChange={handleinput} name="description" placeholder="Enter description" type="text"/>
+                                <textarea value={doctorinfo.Description} onChange={handleinput} name="Description" placeholder="Enter description" type="text"/>
                                 </div>
                             <h6 id="hoserr">Hospital Name cannot contain special characters or numbers</h6>
                             <div id="Hospitaldiv">
-                                <div>
-                                    <h1 style={{color:"#8746bd"}}>Hospitals:</h1>
-                                </div>
-                                <div>
-                                    <div id="addhosbtn" onClick={addhosdiv}><div><h5>+</h5></div><h4>Add Hospitals</h4></div>
-                                </div>
-                            </div>
-{doctorinfo.hospital.map((i,index)=>{return(<>
-                            <div id="Hospitaldiv">
+  <div>
+    <h1 style={{ color: "#8746bd" }}>Hospitals:</h1>
+  </div>
+  <div>
+    <div id="addhosbtn" onClick={addhosdiv}>
+     
+      <h4>Add Hospitals</h4>
+    </div>
+  </div>
+</div>
+{doctorinfo.Hospitals.map((hospital, index) => {
+  return (
+    <div key={index} id="Hospitaldiv">
+      <div>
+        {doctorinfo.Hospitals.length > 1 && (
+          <div className="removehosbtn" onClick={() => removehosdiv(index)}>
+            <div>
+              <h5>+</h5>
+            </div>
+          </div>
+        )}
+      </div>
+      <div className="hospitalinputdiv">
+        <input
+          value={hospital.name}
+          onChange={(e) => handleHospitalInput(e, index, "name")}
+          className="name"
+          type="text"
+          placeholder="Enter hospital name"
+        />
+        <input
+          value={hospital.address}
+          onChange={(e) => handleHospitalInput(e, index, "address")}
+          className="address"
+          type="text"
+          placeholder="Enter hospital address"
+        />
+        <input
+          value={hospital.fee}
+          onChange={(e) => handleHospitalInput(e, index, "fee")}
+          className="fee"
+          type="text"
+          placeholder="Fees"
+        />
+      </div>
+    </div>
+  );
+})}
 
-                                <div>
-{doctorinfo.hospital.length>1&&
-                                    <div className="removehosbtn" id={index} onClick={removehosdiv}><div id={index} ><h5 id={index} >+</h5></div></div>     
-}                               
-                                </div>
-
-                                <div className="hospitalinputdiv">
-                                    <input value={i.name} onChange={handleinput} name="hospital" className="name" type="text" id={index} placeholder="Enter hospital name"/>
-                                    <input value={i.address} onChange={handleinput} className="address" name="hospital" type="text" id={index} placeholder="Enter hospital address"/>
-                                    <input value={i.fees} onChange={handleinput} className="fees" name="hospital" type="text" id={index} placeholder="fees"/>
-                                </div>
-                            </div>  
-</>)})}
- 
+                          
          
                         </div>
 }
@@ -296,24 +372,56 @@ return(
                             </div>
                             <div id="Specialitydiv">
                             <h1>Speciality:</h1>
-                            <h2>{sessionStorage.getItem('speciality')}</h2>
+                            <h2>{doctorinfo.Speciality}</h2>
                             </div>
                             <div id="Experiencediv">
-                            <h1>Experience (in years):</h1>
-                            <h2>{sessionStorage.getItem('experience')}</h2>
+                            <h1>Experience:</h1>
+                            <h2>{doctorinfo.Experience} Years</h2>
                             </div>
                             <div id="Descriptiondiv">
                             <h1>Description:</h1>
-                            <h2>{sessionStorage.getItem('description')}</h2>
+                            <h2 className="Description">{doctorinfo.Description}</h2>
                             </div>
                             <div id="Ratingsdiv">
                             <h1>Ratings:</h1>
-                            <h2>{sessionStorage.getItem('ratings')}</h2>
+                            <h2>{doctorinfo.Ratings} Stars</h2>
                             </div>
                             <div id="Hospitaldiv">
-                            <h1>Hospitals:</h1>
-                            <h2>{sessionStorage.getItem('hospital')}</h2>
-                            </div>
+                           
+  <h1 style={{ color: "#8746bd" }}>Hospitals:</h1>
+  <div className="hospital-list">
+    {doctorinfo.Hospitals ? (
+      doctorinfo.Hospitals.map((hospital, index) => (
+        <div className="hospital-card" key={index}>
+          <h2>{hospital.name}</h2>
+          <p className="hospital-details">Address: {hospital.address}</p>
+          <p className="hospital-details">Fee: {hospital.fee}</p>
+          {/* <h3 className="availability-title">Availability:</h3>
+          <ul className="availability-list">
+            {hospital.avaliblity.map((availability, availIndex) => (
+              <li className="availability-item" key={availIndex}>
+                <p>{availability.day}</p>
+                <ul className="time-list">
+                  {availability.time.map((time, timeIndex) => (
+                    <li key={timeIndex}>{time}</li>
+                  ))}
+                </ul>
+              </li>
+            ))}
+          </ul> */}
+        </div>
+      ))
+    ) : (
+      <p>Loading hospitals...</p>
+    )}
+  </div>
+
+
+  
+
+</div>
+
+
           
                         </div>
 }

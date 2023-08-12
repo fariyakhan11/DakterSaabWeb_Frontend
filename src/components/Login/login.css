@@ -1,292 +1,283 @@
-.LoginContainer{
-font-size: 0.6em;
-text-align: center;
-font-family: Fraunces;
-padding: 1em;
-}
-.LoginContainer h1{
-color: rgb(25, 25, 26);
-font-weight: 400;
-text-shadow: 2px 2px 4px rgb(172, 169, 169);
-}
-.LoginContainer h4{
-color: rgb(97, 61, 133);
-text-shadow: 2px 3px 4px rgb(129, 126, 126);
-padding: 0.2em;
-font-size: 1.9em;
-font-family: Preside;
-}
-.form-control{
-display: flex;
-align-items:center;
-justify-content: center;
-cursor: pointer;
-}
-.OrgDiv img{
-border-radius: 50%;
-width:1.1em;
-height: 1.1em;
-padding-right: 0.5em;
-}
-.OrgDiv label{
-font-size: 1.2em;
-color: rgb(31, 30, 30);
-transition: 2s ease-in-out 7s;
-}
-.OrgDiv:hover{
-transform: scale(1.2);
-}
-
-
-.labeldiv{
-display: flex;
-flex-direction: column;
-align-items: flex-start;
-font-size: 0.8em;
-
-}
-.labeldiv label{
-color: black;
-text-shadow: 2px 2px 4px rgb(172, 169, 169);
-}
-.faicon{
-margin-right: 0.5em;
-
-}
-
-.Fields{
-
-margin: 1em 3em;
-}
-.inputf{
-width:90%;
-font-size: 0.8em;
-padding: 0.5em;
-margin: 0.5em 0;
-border-radius: 0.2em;
-outline: none;
-}
-
-
-
 /*
-.......................................................................................................................
-*/
-#logincontainer{
-height: 100vh;
-width: 100vw;
-background-image: url('../../images/wall1.jpg');
-top:0;
-left: 0;
-margin: 0 0;
-background-repeat: no-repeat ;
-background-position: center;
-background-size:cover ;
-display: flex;
-justify-content: center;
-text-align: center;
-font-size: 2em;
-font-family: Preside;
-flex-direction: column;
-overflow: hidden;
-align-items: center;
-}
-#login_screen{
-display: flex;
-
-justify-content: center;
-text-align: center;
-align-items: center;
-height: 90%;
-}
-#logincontainer>a{
-height: 5%;
-position: absolute;
-top: 1em;
-width: 100%;
-font-size: 1em !important;
-}
-.fplink{
-color: rgb(211, 7, 7);
-text-align: end;
-width: 90%;
-font-size: 0.7em;
-font-weight: bolder;
-font-family: Raleway;
-}
-.fplink:hover{
-color: rgb(97, 61, 133);
-}
-.login_type_container{
-display:flex;
-flex-direction: row;
-width: 100%;
-align-items: center;
-justify-content: center;
-margin-bottom: 0.4em;
-}
-.login_type_container>img{
-margin-left: 0.5em;
-width:1.5em;
-height:1.5em;
-border-radius: 50%;
-}
-.login_type_container>h3{
-font-family:"Fraunces";
-font-size:1.2em ;
-margin-left:0.5em;
-color: rgb(97, 61, 133);
-}
-#login_forms{
-display: flex;
-flex-direction: column;
-justify-content: center;
-width: 100%;
-height: 100%;
-overflow: hidden;
-align-items: center;
-}
-#login_forms>h1{
-letter-spacing: 0.2em;
-color: rgb(97, 61, 133);
-text-shadow: 2px 2px 5px rgba(22, 22, 22, 0.274);
-margin-bottom: 0.5em;
-font-family: Fraunces;
-font-size: 1.4em;
-}
-#login_and_form{
-display: flex;
-flex-direction: row;
-width: 57%;
-height: 56%;
-justify-content: center;
-
-}
-.loginform{
-background-color: rgba(210, 172, 241, 0.315);
-border-radius: 1em;
-box-shadow: 4px 2px 14px rgb(75, 74, 74);
-display: flex;
-flex-direction: column;
-width: 60%;
-height: 86%;
-align-self: center;
-overflow: hidden;
-padding: 1em;
-margin-top: 1em;
+......................login........................................................*/
+#logincontainer {
+    top: 0;
+    left: 0;
+    margin: 0 0;
+    height: 100vh;
+    width: 100vw;
+    background-image: url('../../images/wall1.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;
 }
 
-#bookmarks_login{
-display: flex;
-flex-direction: column;
-justify-content: space-around;
-width: 2em;
+.llogo {
+    padding-top: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    text-decoration: none;
 }
-#bookmarks_login>div{
-display: flex;
-box-shadow: 5px 5px 14px rgba(119, 118, 118, 0.582);
-transform: rotate(-90deg);
-width: 18em;
-height: 4.5em;
-font-size: 0.6rem;
-font-family: Fraunces;
-justify-content: center;
-align-items: center;
-border-radius: 14em;
-cursor: pointer;
-transition:all 0.1s ease-in-out 0.1ms ;
-margin-left: -8em;
-border: 4px solid  rgb(97, 61, 133);
+
+.llogo>img {
+    margin-left: 15px;
+    width: 50px;
+    height: 50px;
 }
-#bookmarks_login>div>h1{
-color: black;
-transition:all 0.5s ease-in-out 0.01ms;
+
+.llogo>h1 {
+    margin-left: 5px;
+    font-size: 1.25rem;
+    color: rgb(3, 3, 3);
+    font-family: Fraunces;
 }
-#bookmarks_login>div:hover{
-width:19em ;
-height: 4.8em;
-color: rgb(97, 61, 133);
+
+#login_forms {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
-#bookmarks_login>div:hover  h1{
-color: rgb(97, 61, 133);
+
+#login_forms>h1 {
+    font-size: 2em;
+    font-family: Fraunces;
+    text-align: center;
+    text-shadow: 2px 2px 7px rgba(112, 111, 111, 0.5);
+    color: rgb(36, 42, 100);
+    letter-spacing: 0.1em;
+    margin-bottom: 1.5rem;
+}
+
+.optcont {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    /* width: 400px; */
+    cursor: pointer;
+}
+
+.optdivs {
+    /* margin-bottom: 0.5rem; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.optdivs>img {
+    width: 2rem;
+    height: 2rem;
+    box-shadow: 0 2px 24px rgba(107, 106, 106, 0.514);
+    border-radius: 50%;
+    border: 1px solid rgba(0, 0, 0, 0.315);
+    padding: 5px;
+    cursor: pointer;
+    transition: all 0.5s ease-in-out 0.01ms;
+}
+
+.optdivs>h3 {
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+    font-family: Fraunces;
+    font-size: 1em;
+    cursor: pointer;
+    margin-top: 0.5em;
+}
+
+.optdivs>img:hover+h3 {
+    opacity: 1;
+}
+
+.optdivs>img:hover {
+    border: 1px solid rgb(36, 42, 100);
+}
+
+#login_and_form {
+    display: flex;
+    flex-direction: column;
+}
+
+#bookmarks_login {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+#bookmarks_login>div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-width: 0;
+    border-radius: 10px;
+    width: 100px;
+    height: 40px;
+    font-family: Fraunces;
+    cursor: pointer;
+    background-color: rgb(36, 42, 100);
+    color: white;
+    font-size: 0.4rem;
+    transition: all 0.1s ease-in-out 0.1ms;
+    margin-right: 5px;
+}
+
+#bookmarks_login>div>h1 {
+    color: white;
+    transition: all 0.5s ease-in-out 0.01ms;
+}
+
+#bookmarks_login>div:hover {
+    background-color: rgb(205, 229, 252);
+}
+
+#bookmarks_login>div:hover h1 {
+    color: black;
+}
+.selected_bookmark {
+    background-color: rgb(205, 229, 252)!important;
+    border: 1px solid rgb(36, 42, 100) ;
+    border-width: 0.5px;
+  }
+  .selected_bookmark>h1 {
+    color: black !important;
+  }
+
+.loginform {
+    background-color: rgba(173, 209, 243, 0.4);
+    box-shadow: 4px 2px 14px rgb(174, 173, 173);
+    border-radius: 15px;
+    padding: 20px 40px 20px 40px;
+}
+
+.login_type_container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.4em;
+}
+
+.login_type_container>img {
+    /* margin-left: 0.5em; */
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+}
+
+.login_type_container>h3 {
+    font-family: "Fraunces";
+    font-size: 1.5rem;
+    margin-left: 0.5rem;
+    color: rgb(36, 42, 100);
+}
+
+#login_form {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    /* height: 100%; */
+}
+
+.inputsdiv {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.form-fields {
+    margin-top: 1.5rem;
+    display: flex;
+    flex-direction: row;
+    font-family: Raleway;
+    font-size: 1rem;
+}
+
+.form-fields>label {
+    min-width: 30%;
+    display: flex;
+    flex-wrap: wrap;
+    font-weight: bold;
+    padding: 5px;
+}
+
+.inputf {
+    padding: 5px;
+    outline: none;
+    border: none;
+    width: 70%;
+    background-color: transparent;
+    border-bottom: 2px solid black;
+    border-radius: 0;
+    font-size: 1rem;
+}
+
+.inputf:focus {
+    background-color: rgba(210, 172, 241, 0.315);
+}
+
+.btndiv {
+    margin-top: 1.5rem;
+    display: flex;
+    justify-content: center;
+}
+
+.formbtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-width: 0;
+    border-radius: 10px;
+    padding: 10px 20px;
+    font-family: Fraunces;
+    cursor: pointer;
+    background-color: rgb(36, 42, 100);
+    color: white;
+    font-size: 0.7rem;
+    transition: all 0.1s ease-in-out 0.1ms;
+}
+
+.formbtn:hover {
+    transform: scale(1.1);
+}
+
+#showpw {
+    font-size: 1em;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+#err {
+    background-color: rgb(236, 213, 213);
+    border: 3px solid red;
+    color: red;
+    /* width: 100%; */
+    padding: 10px;
+    text-align: center;
+    font-family: Fraunces;
+    display: none;
 }
 
 
+.radio-btn-label-branch {
+    font-family: Fraunces;
+    font-size: 1em;
+    text-shadow: none !important;
+    font-weight: 100;
+    cursor: pointer;
+}
 
-.inputsdiv{
-display: flex;
-flex-direction: column;
-justify-content: space-evenly;
-height: 80%;
+.fplink {
+    color: rgb(211, 7, 7);
+    text-align: end;
+    font-size: 0.75rem;
+    font-weight: bolder;
+    font-family: Raleway;
+    margin-top: 1rem;
 }
-#login_form{
-height: 100%;
-}
-.form-fields{
-display: flex;
-flex-direction: row;
-justify-content: flex-start;
-align-items: center;
-font-family: Raleway;
-font-size: 0.75em;
-}
-.form-fields>label{
-margin-right: 1em;
-}
-.inputf{
-outline: none;
-border: none;
-width: 100%;
-overflow-x: scroll;
-border-bottom: 2px solid black;
-border-radius: 0;
-background-color: rgba(210, 172, 241, 0.315);
-}
-.inputf:focus{
-background-color: rgba(210, 172, 241, 0.315);
-}
-.formbtn{
-padding: 0.7em 3.5em;
-font-size: 0.6em;
-border-radius: 2em;
-font-family: Raleway;
-border:3px solid rgb(97, 61, 133);
-transition: all 0.5s ease-in-out 0.01ms;
-background-color: transparent;
-}
-.formbtn:hover{
-transform: scale(1.2);
-border: transparent;
-background-color:  rgb(97, 61, 133);
-color: white
-}
-.btndiv{
 
-display: flex;
-justify-content: center;
-align-items: flex-end;
-}
-#showpw{
-padding: 0 0.5em;
-font-size: 1em;
-background: transparent;
-border: none;
-cursor: pointer;
-}
-#err{
-background-color: rgb(236, 213, 213);
-border: 3px solid red;
-color: red;
-width: 100%;
-padding: 0.5em 0.2em;
-text-align: center;
-font-family: Fraunces;
-display: none;
-}
-.radio-btn-label-branch{
-font-family: Fraunces;
-font-size: 1em;
-text-shadow: none !important;
-font-weight: 100;
-cursor: pointer;
+.fplink:hover {
+    color: rgb(97, 61, 133);
 }

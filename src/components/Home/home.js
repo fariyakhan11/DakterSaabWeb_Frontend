@@ -39,7 +39,7 @@ function Home() {
         <div className="main">
           <div className="headingdiv">
             <div className="heading">
-              <h3>Your Health is Our Priority</h3>
+              <h3 className="mainheading">Your Health is Our Priority</h3>
               <h4>Set up , manage and reach out your healing hands to the community </h4>
               <p>This is your content that comes after the fixed navbar.<br />
                 This is your content that comes after the fixed navbar.<br />
@@ -56,15 +56,24 @@ function Home() {
             </div>
           </div>
 
-
-
-
-
-          <div className="modulesdiv" id="bottomarealanding">
-            <div><img src={HospitalP} /><h4>Hospitals</h4><h5>Cater Appointments , Manage Departments Doctors and Services </h5></div>
-            <div><img src={BloodP} /><h4>Blood Banks</h4><h5>Help provide people with instant desired blood services</h5></div>
-            <div><img src={PharmP} /><h4>Pharmacies</h4><h5>Manage medicine inventory and help people book medicines online</h5></div>
-            <div><img src={DocP} /><h4>Doctors</h4><h5>Manage your clinic appointments and schedule over the internet</h5></div>
+          <div className="modules" id="bottomarealanding">
+            <div className="module1">
+              <img src={HospitalP} />
+              <h4>Hospitals</h4>
+              <h5>Cater Appointments , Manage Departments Doctors and Services </h5></div>
+              <div className="module1">
+              <img src={BloodP} />
+              <h4>Blood Banks</h4>
+              <h5>Help provide people with instant desired blood services</h5></div>
+            
+            <div className="module1">
+              <img src={PharmP} />
+              <h4>Pharmacies</h4>
+              <h5>Manage medicine inventory and help people book medicines online</h5></div>
+              <div className="module1">
+              <img src={DocP} />
+              <h4>Doctors</h4>
+              <h5>Manage your clinic appointments and schedule over the internet</h5></div>
           </div>
         </div>
 
@@ -72,9 +81,8 @@ function Home() {
           <About />
         </div>
 
-
         <div id="processContainer">
-          <h2>How Dakter Saab Web Works</h2>
+          <h2 className="homeheading" >How Dakter Saab Web Works</h2>
           <div id="worksdiv">
             <div id="work1">
               <h2>1</h2>
@@ -91,8 +99,8 @@ function Home() {
           </div>
 
         </div>
-        <div id="processContainer" ref={downloadSectionRef}>
-          <h2>Download App</h2>
+        <div id="downloadcontainer" ref={downloadSectionRef}>
+          <h2 className="homeheading">Download App</h2>
           <div id="appdiv">
             <div className="dbtndiv">
               <h3>Search Find & Book<br />At One Tap</h3>

@@ -7,7 +7,15 @@ import EditP from '../../images/edit1.png'
 
 function Profilehospital(){
     const [edit_view, set_edit_view] = useState(false);
-    const [hospitalinfo,sethospitalinfo]=useState({name:'',email:'',phone:'',address:'',time:{open:'',close:''},password:''})
+    const [hospitalinfo, sethospitalinfo] = useState({
+        name: '',
+        email: '',
+        phone: '',
+        address: '',
+        time: { open: '', close: '' }, // Initialize time as an object with open and close properties
+        password: ''
+    });
+    
 
 useEffect(()=>{
     enterdetails()
@@ -80,22 +88,23 @@ const handleinput=(e)=>{
         else if (e.target.name === 'time') {
             if (e.target.id === 'open') {
                 sethospitalinfo((prev) => ({
-                ...prev,
-                time: {
-                    ...prev.time,
-                    open: e.target.value
-                }
+                    ...prev,
+                    time: {
+                        ...prev.time,
+                        open: e.target.value
+                    }
                 }));
             } else if (e.target.id === 'close') {
                 sethospitalinfo((prev) => ({
-                ...prev,
-                time: {
-                    ...prev.time,
-                    close: e.target.value
-                }
+                    ...prev,
+                    time: {
+                        ...prev.time,
+                        close: e.target.value
+                    }
                 }));
             }
         }
+        
         else{
             sethospitalinfo((prev) => ({
             ...prev,
@@ -104,41 +113,52 @@ const handleinput=(e)=>{
 
         }
 }
+const editformsubmit = async () => {
+    try {
+        const api = 'http://localhost:5000/api/hospital/update';
+        const data = {
+            old_name: sessionStorage.getItem('org_name'),
+            old_address: sessionStorage.getItem('org_address'),
+            hospitalinfo:hospitalinfo
+        };
 
-const editformsubmit=()=>{
-        try{
-
-        const api='http://localhost:5000/api/hospital/update';
-        let data={old_name:sessionStorage.getItem('org_name'),old_address:sessionStorage.getItem('org_address'),hospitalinfo:hospitalinfo}
-        fetch(api, {
+        const response = await fetch(api, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(data)
-        }).then(res => {
-                if (res.status === 200) {
-                    alert('Hospital updated successfully')
-                    res.json().then(data => {
-                        console.log('doc is ',data.hospital)
-                        sessionStorage.setItem('org_name',data.hospital.name)
-                        sessionStorage.setItem('org_address',data.hospital.address)
-                        sessionStorage.setItem('phone',data.hospital.phone)
-                        sessionStorage.setItem('email',data.hospital.email)
-                        sessionStorage.setItem('time',data.hospital.time)
-                    })
+        });
 
-                    enterdetails()
-                    document.getElementById('profcancel').click()
-                }
-                else if (res.status === 430) { alert(res.error) }
+        if (response.status === 200) {
+            const jsonData = await response.json();
+            console.log('Response data:', jsonData);
 
-                else {  alert('Problem updating Hospital', res.error) }
-            });
-    }catch(err){
-        console.log(err);
+            // Update session storage with the updated data
+           
+                sessionStorage.setItem('org_name',jsonData.hospital.name)
+                sessionStorage.setItem('org_address',jsonData.hospital.address)
+                sessionStorage.setItem('phone',jsonData.hospital.phone)
+                sessionStorage.setItem('email',jsonData.hospital.email)
+                sessionStorage.setItem('time',jsonData.hospital.time)
+            
+
+            // Close the edit form after successful update
+            set_edit_view(false);
+
+            alert('Hospital updated successfully');
+        } else if (response.status === 430) {
+            const errorData = await response.json();
+            console.log('Error response:', errorData);
+            alert(errorData.error);
+        } else {
+            console.log('Problem updating Hospital');
+            alert('Problem updating Hospital');
+        }
+    } catch (err) {
+        console.error(err);
     }
-}
+};
 return(
 <>
         <div id="Profilehospitaldashboard">
@@ -162,11 +182,18 @@ return(
                                     </div>
                                 </div>
                                 <div id="Addressdiv">
-                                    <div>
-                                        <h6 id="addresserr">Address cannot be empty</h6>
-                                        <input type='text' placeholder="Enter Address" value={hospitalinfo.address} onChange={handleinput} name="adddress"/>
-                                    </div>
-                                </div>
+    <div>
+        <h6 id="addresserr">Address cannot be empty</h6>
+        <input
+            type='text'
+            placeholder="Enter Address"
+            value={hospitalinfo.address}
+            onChange={handleinput}
+            name="address" // Fix the typo here
+        />
+    </div>
+</div>
+
                                 <div id="Phonediv">
                                     <div>
                                     <   input  value={hospitalinfo.phone} onChange={handleinput} name="phone" type="number" minLength={10} placeholder="3** *******" />

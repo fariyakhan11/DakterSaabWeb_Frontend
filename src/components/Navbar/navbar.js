@@ -11,7 +11,7 @@ function Navbar({ scrollToAbout, scrollToContact, scrollToHome, scrollToDownload
     <nav>
       <div className="navbar-container">
         <a href="/" className="logo">
-          <img src={LogoP} style={{ width: '2em', height: '2em' }}></img>
+          <img src={LogoP}></img>
           <h1 style={{ fontFamily: 'Fraunces' }} className='title'> DakterSaab</h1>
         </a>
         <button
