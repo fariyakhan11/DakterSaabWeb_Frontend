@@ -46,8 +46,8 @@ useEffect(()=>{
 })
 
 useEffect(()=>{
-sessionStorage.setItem('org_name', 'ABC Pharma'); 
-sessionStorage.setItem('org_address', 'R 143 sector 9 North Karachi, Karachi');
+sessionStorage.setItem('org_name', 'Dvago'); 
+sessionStorage.setItem('org_address', '123 Main Street, Gulshan-e-Iqbal');
 sessionStorage.setItem('email', 'abcpharmacy@gmail.com'); 
 sessionStorage.setItem('phone', '03232626789');  
 sessionStorage.setItem('password','********')
@@ -58,10 +58,10 @@ sessionStorage.setItem('time','10:30 AM - 11-00 PM')
 
 useEffect(()=>{
     if(tab==='Home'){
-        fetchlasttransact()
+        //fetchlasttransact()
         fetchlowmeds()
         fetchstats()
-        fetchorders()
+        //fetchorders()
 
         // Set the interval to fetch/update the data every 5 minutes
         const interval = setInterval(fetchorders, 5 * 60 * 1000);

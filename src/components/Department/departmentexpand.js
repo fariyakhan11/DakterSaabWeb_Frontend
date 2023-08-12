@@ -142,15 +142,15 @@ function getpatients(){
         }).then((response) => response.json()) // get response, convert to json
         .then((json) => {
         if(json.appointments){
-          setdoctor_list(json.doctors);
-          setdisplayed_listdoctor(json.doctors);
-        }else{setdoctor_list([]);setdisplayed_listdoctor([])}
+          setappointment_list(json.appointments)
+        }else{setappointment_list([])}
         if(json.error){console.log(json.error)}
       });
     }catch(err){
       console.log(err)
     }
 }
+
 return(<>
 <div className="depgray">
 <div id="depexpdiv">

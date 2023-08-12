@@ -41,8 +41,8 @@ useEffect(()=>{
 })
 
 useEffect(()=>{
-sessionStorage.setItem('org_name', 'ABC Hospital'); 
-sessionStorage.setItem('org_address', 'R 143 sector 9 North Karachi, Karachi');
+sessionStorage.setItem('org_name', 'Indus Hospital'); 
+sessionStorage.setItem('org_address', 'Korangi Crossing');
 sessionStorage.setItem('email', 'abchospital@gmail.com'); 
 sessionStorage.setItem('password','********')
 sessionStorage.setItem('phone', '+92 21 35112710');  

@@ -158,7 +158,11 @@ useEffect(()=>{
     const distinctHospitalNames = [...new Set(schedule.flatMap(entry =>
         entry.availability.map(availabilityEntry => availabilityEntry.name)
     ))];
-    sethospitals(distinctHospitalNames)
+    if(distinctHospitalNames[0]){
+    sethospitals(distinctHospitalNames)}
+    else{
+        sethospitals([])
+    }
 },[schedule])
 
 function getschedule(){
@@ -256,6 +260,7 @@ useEffect(()=>{
         });
     }
 },[selectedworkplace])
+
 return(
 <>
 {!close_add_view &&
@@ -266,7 +271,7 @@ return(
                     <h3 className="contentareatitle">My Schedule</h3>
                     <hr/>
                     <div id="colorcode">
-{ hospitals.map((i,index)=>{
+{hospitals.map((i,index)=>{
                         return(<>
                         <div id={index} className="colorcodediv ">
                             <div id="colordiv" className={workplaceplaceno[index]}></div>

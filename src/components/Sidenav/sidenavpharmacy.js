@@ -12,7 +12,7 @@ import { useState ,useEffect} from "react";
 import {GrTransaction} from "react-icons/gr";
 
 function Sidenavpharmacy({msg }){
-    const [expanded,setexpanded]=useState(false);
+    const [expanded,setexpanded]=useState(true);
     const [logoutalert,setlogoutalert]=useState(false)
     useEffect(() => {
         sessionStorage.setItem('current_tab', 'Home');

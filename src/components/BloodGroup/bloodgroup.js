@@ -269,7 +269,8 @@ return(
                       <h2 onClick={deletemodeon}>Cancel</h2>
                     </div>
                 <div id="bloodgroupsdiv">
-                      <div className="medscontainer">
+                <div id="scrollablecont">
+                      <div className="medscontainerdisplay">
 
 
 {
@@ -323,6 +324,7 @@ return(
                         !bloodgroup_list.length&&
                         <h2 className="no_med">No blood units available right now</h2>
 }
+                      </div>
                       </div>
 
                 </div>

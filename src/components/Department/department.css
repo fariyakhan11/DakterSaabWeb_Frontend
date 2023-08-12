@@ -95,12 +95,13 @@ font-weight: 100;
 }
 .icondep:hover{
 background-color: white;
-border-radius: 50%;
+
 }
 .icondep{
 box-shadow: 0 2px 30px rgba(53, 52, 52, 0.247);
-width: 1.5em;
-height: 1.5em;
+width: 1.5rem;
+height: 1.5rem;
+border-radius: 50%;
 }
 .more-btnhospital{
 border-radius: 50%;

@@ -5,6 +5,7 @@ import { useState,useEffect } from "react";
 import Adddoctors from "./adddoctors";
 import FrontP from '../../images/front.png'
 import BackP from '../../images/back.png'
+import {AiOutlineDelete} from "react-icons/ai";
 
 function Doctors(){
     const [searchdoctor,setsearchdoctor]= useState('')
@@ -26,7 +27,7 @@ function Doctors(){
 //initial tasks on page load
 useEffect(()=>{
   fetchdoctors()
-  fetchdepartments()
+  
   },[])
 
 //close the add view tab
@@ -96,7 +97,8 @@ function fetchdoctors(){
         if(json.doctors){
           setdoctor_list(json.doctors);
           setdisplayed_list(json.doctors);
-        }else{setdoctor_list([]);setdisplayed_list([])}
+          fetchdepartments(json.doctors)
+        }else{setdoctor_list([]);setdisplayed_list([]);fetchdepartments([])}
         if(json.error){console.log(json.error)}
       });
     }catch(err){
@@ -157,6 +159,8 @@ const delete_selected=(e)=>{
             for(var c=0;c<cb.length;c++){
                 cb[c].style.display='none';
             }
+            var btn=document.getElementById('cancel-delete-btn')
+            btn.click()
             if(res.status===200){
                 fetchdoctors()    
                 alert('Doctors deleted successfully')
@@ -180,10 +184,10 @@ const select_delete = (event) => {
   check.checked = !check.checked;
 
   if (check.checked) {
-    document.getElementById('cb' + id).style.display = 'block';
+    document.getElementById('cb' + id).style.backgroundColor = 'red';
     setselected_doctor((prevState) => [...prevState, {name:check.value,department:check.name}]);
   } else {
-    document.getElementById('cb' + id).style.display = 'none';
+    document.getElementById('cb' + id).style.backgroundColor = 'transparent';
     setselected_doctor((prevState) => prevState.filter((item) => item.name !== check.value&&item.department!==check.name ));
   }  
 };
@@ -198,7 +202,7 @@ set_info_view(false)
 }
 
 //fetch departments from the database
-function fetchdepartments(){
+function fetchdepartments(docs){
     try{
         const params=sessionStorage.getItem('org_name')+'/'+sessionStorage.getItem('org_address')
         const api='http://localhost:5000/api/hospital/getdeptdetail/'+params;
@@ -210,8 +214,12 @@ function fetchdepartments(){
         }).then((response) => response.json()) // get response, convert to json
         .then((json) => {
         if(json.department){
-          setdepartment_list(json.department);
           
+          const distinctDepartmentNames = [...new Set(docs.map(entry => entry.Department))];
+
+        var deplist=new Set([...json.department,...distinctDepartmentNames])
+        deplist=[...deplist]
+        setdepartment_list(deplist)
         }else{setdepartment_list([]);}
         if(json.error){console.log(json.error)}
       });
@@ -404,7 +412,7 @@ return(
                     <hr/>
                     <div id="hiddendiv">
                       <h2  onClick={delete_selected}>Delete</h2>
-                      <h2 onClick={deletemodeon}>Cancel</h2>
+                      <h2 onClick={deletemodeon} id="cancel-delete-btn">Cancel</h2>
                     </div>
                     <div className="searchbar">
 
@@ -442,10 +450,11 @@ return(
                                   <img id={index} src={DocP}></img>
                                 </div>
                                 <div className="sideareamed" id={index}>
-                                    
-                                    <div className="checkbox-outline" id={'co'+index}>
-                                        <div className="checkbox-selected" id={'cb'+index}></div>
+                                <div className="checkbox-outline" id={'co'+index}>
+                                      <AiOutlineDelete className="icondep checkbox-selected" id={'cb'+index} />
+                                        
                                     </div>
+                              
                                     <input type="checkbox" value={i.Name} name={i.Department} id={'cbd'+index} className="selectedcbd"/>
                                     
                                 </div>

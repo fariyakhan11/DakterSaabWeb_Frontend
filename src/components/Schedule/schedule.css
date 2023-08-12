@@ -512,7 +512,7 @@ margin: 0 0 0 80% ;
 border: 3px solid #c29de0;
 transition: all 0.5s ease-in-out;
 cursor: pointer;
-font-size: 1rem;
+font-size: 0.8rem;
 box-shadow: 5px 5px 14px rgba(126, 125, 125, 0.479);
 font-family: Fraunces;
 width: max-content;
@@ -527,14 +527,15 @@ border-radius: 1rem;
 color:black;
 padding: 0.5rem 2rem;
 background-color: transparent;
-margin: 1rem 0 0 70% ;
+margin: 0.5rem 0 0 70% ;
 border: 3px solid red;
 transition: all 0.5s ease-in-out;
 cursor: pointer;
-font-size: 1rem;
+font-size: 0.8rem;
 box-shadow: 5px 5px 14px rgba(126, 125, 125, 0.479);
 font-family: Fraunces;
 width: max-content;
+opacity: 1;
 }
 #removehospital:hover{
 background-color:red;
@@ -558,4 +559,8 @@ padding: 0.3rem;
 border: 2px solid pink;
 border-radius: 0.5rem;
 margin: 0 0.5rem;
+}
+.onediv{
+cursor: not-allowed !important;
+opacity: 0.5 !important;
 }

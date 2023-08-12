@@ -48,8 +48,8 @@ useEffect(()=>{
 })
 
 useEffect(()=>{
-sessionStorage.setItem('org_name', 'Hussani Blood Bank'); 
-sessionStorage.setItem('org_address', '12 Rojhan Street, Block 5 Block 3 Clifton, South City Hospital');
+sessionStorage.setItem('org_name', 'Fatmid'); 
+sessionStorage.setItem('org_address', 'Britto Rd, Garden East Karachi, Sindh, Pakistan');
 sessionStorage.setItem('email', 'Hbb.south@gmail.com'); 
 sessionStorage.setItem('phone', '021-32237734');  
 sessionStorage.setItem('password','********')
