@@ -92,7 +92,7 @@ useEffect(()=>{
 
 const intervalInMilliseconds = 2 * 60 * 1000; // 30 minutes
 setInterval(() => {
-  fetchData(); // Call the function that fetches data
+  getappointments();// Call the function that fetches data
 }, intervalInMilliseconds);
 
 function getschedule(){
