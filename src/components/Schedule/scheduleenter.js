@@ -38,16 +38,27 @@ function geteditschedule() {
 
             if (json.schedule) {
                 seteditschedule(json.schedule);
+                const daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+                const selectedAvailability = {};
+
+                // Iterate over each day of the week
+                daysOfWeek.forEach(day => {
+                const lowercaseDay = day.toLowerCase();
+                const filteredAvailability = json.schedule[0].availability.filter(a => a.day.toLowerCase() === lowercaseDay);
                 
-                setselectedschedule({ name:json.schedule[0].name, address:json.schedule[0].address, fee:json.schedule[0].fee, availability: [
-                    {day:"Monday",time:(json.schedule[0].availability.filter(a=>{a.day.toLowercase()==='monday'}))?(json.schedule[0].availability.filter(a=>{a.day.toLowercase()==='monday'})).time:['']},
-                    {day:"Tuesday",time:(json.schedule[0].availability.filter(a=>{a.day.toLowercase()==='tuesday'}))?(json.schedule[0].availability.filter(a=>{a.day.toLowercase()==='tuesday'})).time:['']},
-                    {day:"Wednesday",time:(json.schedule[0].availability.filter(a=>{a.day.toLowercase()==='wednesday'}))?(json.schedule[0].availability.filter(a=>{a.day.toLowercase()==='wednesday'})).time:['']},
-                    {day:"Thursday",time:(json.schedule[0].availability.filter(a=>{a.day.toLowercase()==='thursday'}))?(json.schedule[0].availability.filter(a=>{a.day.toLowercase()==='thursday'})).time:['']},
-                    {day:"Friday",time:(json.schedule[0].availability.filter(a=>{a.day.toLowercase()==='friday'}))?(json.schedule[0].availability.filter(a=>{a.day.toLowercase()==='friday'})).time:['']},
-                    {day:"Saturday",time:(json.schedule[0].availability.filter(a=>{a.day.toLowercase()==='saturday'}))?(json.schedule[0].availability.filter(a=>{a.day.toLowercase()==='saturday'})).time:['']},
-                    {day:"Sunday",time:(json.schedule[0].availability.filter(a=>{a.day.toLowercase()==='sunday'}))?(json.schedule[0].availability.filter(a=>{a.day.toLowercase()==='sunday'})).time:['']}
-                ] });
+                // Set the availability for the current day
+                selectedAvailability[day] = filteredAvailability.length ? filteredAvailability[0].time : [''];
+                });
+                // Construct the selected schedule object with availability for each day
+                setselectedschedule({
+                    name: json.schedule[0].name,
+                    address: json.schedule[0].address,
+                    fee: json.schedule[0].fee,
+                    availability: daysOfWeek.map(day => ({
+                    day,
+                    time: selectedAvailability[day],
+                    })),
+                });
                 setselectedindex(0)
                 } else {
                 seteditschedule([{name:'Unnamed',address:'',fee:'',availability:[]}]);
@@ -101,36 +112,52 @@ useEffect(()=>{
     seteditschedule(s)
 },[selectedschedule])
 
-const addtimevalue=(e)=>{}
+const addtimevalue=(e)=>{
+    const days=['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']
+    var element=selectedschedule
+    element.availability[days.indexOf(e.target.id)]=
+}
+
+// Helper function to get availability for a specific day
+function getElementAvailability(element, day) {
+    const filteredAvailability = element.availability.filter(a => a.day.toLowerCase() === day);
+    return filteredAvailability.length ? filteredAvailability[0].time : [''];
+  }
 
 const changehospital=(e)=>{
-    const element=editschedule[e.target.id]
-    setselectedschedule({
-        name:element.name,address:element.address,fee:element.fee,availability:[
-            {day:'Monday',time:(element.availability.filter(a=>{a.day.toLowerCase()==='monday'}))?(element.availability.filter(a=>{a.day.toLowerCase()==='monday'})).time:['']},
-            {day:'Tuesday',time:(element.availability.filter(a=>{a.day.toLowerCase()==='tuesday'}))?(element.availability.filter(a=>{a.day.toLowerCase()==='tuesday'})).time:['']},
-            {day:'Wednesday',time:(element.availability.filter(a=>{a.day.toLowerCase()==='wednesday'}))?(element.availability.filter(a=>{a.day.toLowerCase()==='wednesday'})).time:['']},
-            {day:'Thursday',time:(element.availability.filter(a=>{a.day.toLowerCase()==='thursday'}))?(element.availability.filter(a=>{a.day.toLowerCase()==='thursday'})).time:['']},
-            {day:'Friday',time:(element.availability.filter(a=>{a.day.toLowerCase()==='friday'}))?(element.availability.filter(a=>{a.day.toLowerCase()==='friday'})).time:['']},
-            {day:'Saturday',time:(element.availability.filter(a=>{a.day.toLowerCase()==='saturday'}))?(element.availability.filter(a=>{a.day.toLowerCase()==='saturday'})).time:['']},
-            {day:'Sunday',time:(element.availability.filter(a=>{a.day.toLowerCase()==='sunday'}))?(element.availability.filter(a=>{a.day.toLowerCase()==='sunday'})).time:['']}
-                
-        ]
-    })
+ const element = editschedule[e.target.id];
+
+setselectedschedule({
+  name: element.name,
+  address: element.address,
+  fee: element.fee,
+  availability: [
+    { day: 'Monday', time: getElementAvailability(element, 'monday') },
+    { day: 'Tuesday', time: getElementAvailability(element, 'tuesday') },
+    { day: 'Wednesday', time: getElementAvailability(element, 'wednesday') },
+    { day: 'Thursday', time: getElementAvailability(element, 'thursday') },
+    { day: 'Friday', time: getElementAvailability(element, 'friday') },
+    { day: 'Saturday', time: getElementAvailability(element, 'saturday') },
+    { day: 'Sunday', time: getElementAvailability(element, 'sunday') },
+  ],
+});
     
     setselectedindex(e.target.id)
-    alert(e.target)
-    document.getElementsByClassName('actiivehospitaltab')[0].classList.remove('actiivehospitaltab')
-    e.target.classList.add('actiivehospitaltab')
+
+    
 }
 
-const handleinput=(e)=>{
-    var element=selectedschedule
-    element.availability[element.availability.indexOf(element.availability.filter(a=>{a.day===e.target.name}))].time[e.target.id]=e.target.value
-    setselectedschedule(element)
-
-
-}
+const handleinput = (e) => {
+    const day = e.target.name;
+    const index = selectedschedule.availability.findIndex(a => a.day === day);
+  
+    if (index !== -1) {
+      const element = { ...selectedschedule };
+      element.availability[index].time[e.target.id] = e.target.value;
+      setselectedschedule(element);
+    }
+  }
+  
 return(<>
 <div className="grayareaschedule">
     <div id="scheduleenterdiv">
@@ -146,7 +173,7 @@ return(<>
 {editschedule.map((i,index)=>{
     
         return(<>
-                        <div className={index===0?"actiivehospitaltab":''} onClick={changehospital} id={index}><h2 id={index}>{i.name}</h2></div>
+                        <div className={i.name===selectedschedule.name?"actiivehospitaltab":''} onClick={changehospital} id={index}><h2 id={index}>{i.name}</h2></div>
 
         </>)
 })}
@@ -176,87 +203,101 @@ return(<>
                 <div id="hospitalschedulearea"> 
                     <div>
                         <h3>Monday</h3>
+                        <div className="timescrolldiv">
 {selectedschedule.availability[0].time.map((i,ind)=>{
     return(
         <>
-                        <input value={i} id={ind} type="text" onChange={handleinput} name='Monday' className="time"/>
+                        <input value={i} id={ind} type="text" onChange={handleinput} name='Monday' className="timediv"/>
         </>
     )
 })
 }
-                        <button onClick={addtimevalue}>+</button>
+                        </div>
+                        <button id='Monday' onClick={addtimevalue}>+</button>
                     </div>
                     <div>
                         <h3>Tuesday</h3>
+                        <div className="timescrolldiv">
 {selectedschedule.availability[1].time.map((i,ind)=>{
     return(
         <>
-                        <input value={i} id={ind} type="text" onChange={handleinput} name='Tuesday' className="time"/>
+                        <input value={i} id={ind} type="text" onChange={handleinput} name='Tuesday' className="timediv"/>
         </>
     )
 })
 }
-                        <button onClick={addtimevalue}>+</button>
+                        </div>
+                        <button  id='Tuesday' onClick={addtimevalue}>+</button>
                     </div>
                     <div>
                         <h3>Wednesday</h3>
+                        <div className="timescrolldiv">
 {selectedschedule.availability[2].time.map((i,ind)=>{
     return(
         <>
-                        <input value={i} id={ind} type="text" onChange={handleinput} name='Wednesday' className="time"/>
+                        <input value={i} id={ind} type="text" onChange={handleinput} name='Wednesday' className="timediv"/>
         </>
     )
 })
 }
-                        <button onClick={addtimevalue}>+</button>
-                    </div>
+                        </div>
+                        <button id='Wednesday' onClick={addtimevalue}>+</button>
+                    </div>   
                     <div>
                         <h3>Thursday</h3>
+                        <div className="timescrolldiv">
 {selectedschedule.availability[3].time.map((i,ind)=>{
     return(
         <>
-                        <input value={i} id={ind} type="text" onChange={handleinput} name='Thursday' className="time"/>
+                        <input value={i} id={ind} type="text" onChange={handleinput} name='Thursday' className="timediv"/>
         </>
     )
 })
 }
-                        <button onClick={addtimevalue}>+</button>
+                        </div>
+                        <button id='Thursday' onClick={addtimevalue}>+</button>
                     </div>
                     <div>
                         <h3>Friday</h3>
+                        <div className="timescrolldiv">
 {selectedschedule.availability[4].time.map((i,ind)=>{
     return(
         <>
-                        <input value={i} id={ind} type="text" onChange={handleinput} name='Friday' className="time"/>
+                        <input value={i} id={ind} type="text" onChange={handleinput} name='Friday' className="timediv"/>
         </>
     )
 })
 }
-                        <button onClick={addtimevalue}>+</button>
+                        </div>
+                        <button id='Friday' onClick={addtimevalue}>+</button>
                     </div>
                     <div>
                         <h3>Saturday</h3>
+                        <div className="timescrolldiv">
 {selectedschedule.availability[5].time.map((i,ind)=>{
     return(
         <>
-                        <input value={i} id={ind} type="text" onChange={handleinput} name='Saturday' className="time"/>
+                        <input value={i} id={ind} type="text" onChange={handleinput} name='Saturday' className="timediv"/>
         </>
     )
 })
 }
-                        <button onClick={addtimevalue}>+</button>
+                        </div>
+                        <button id='Saturday' onClick={addtimevalue}>+</button>
                     </div>
                     <div>
                         <h3>Sunday</h3>
+                        <div className="timescrolldiv">
 {selectedschedule.availability[6].time.map((i,ind)=>{
     return(
         <>
-                        <input value={i} id={ind} type="text" onChange={handleinput} name='Sunday' className="time"/>
+                        <input value={i} id={ind} type="text" onChange={handleinput} name='Sunday' className="timediv"/>
         </>
     )
 })
 }
-                        <button onClick={addtimevalue}>+</button>
+                        </div>
+                        <button id='Sunday' onClick={addtimevalue}>+</button>
                     </div>
                 </div>
 }
