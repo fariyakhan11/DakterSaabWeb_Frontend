@@ -5,7 +5,7 @@ import { useState,useEffect } from "react";
 
 
 function Scheduleenter({close}){
-    const [selectedschedule,setselectedschedule]=useState({name:'',address:'',fee:'',availability: [
+    const [selectedschedule,setselectedschedule]=useState({name:'',address:'',fee:'',longitude:'',latitude:'',coordinates:{},availability: [
         {day:"Monday",time:['']},
         {day:"Tuesday",time:['']},
         {day:"Wednesday",time:['']},
@@ -21,7 +21,7 @@ function Scheduleenter({close}){
 useEffect(() => {geteditschedule()
 }, []);
 
-useEffect(() => {console.log(editschedule)
+useEffect(() => {
 }, [editschedule]);
 
 function geteditschedule() {
@@ -54,6 +54,7 @@ function geteditschedule() {
                     name: json.schedule[0].name,
                     address: json.schedule[0].address,
                     fee: json.schedule[0].fee,
+                    longitude:json.schedule[0].longitude,latitude:json.schedule[0].latitude,coordinates:json.schedule[0].coordinates,
                     availability: daysOfWeek.map(day => ({
                     day,
                     time: selectedAvailability[day],
@@ -61,8 +62,8 @@ function geteditschedule() {
                 });
                 setselectedindex(0)
                 } else {
-                seteditschedule([{name:'Unnamed',address:'',fee:'',availability:[]}]);
-                setselectedschedule({ name: 'Unnamed', address: '', fee: '', availability: [
+                seteditschedule([{name:'Unnamed',address:'',fee:'',longitude:'',latitude:'',coordinates:{},availability:[]}]);
+                setselectedschedule({ name: 'Unnamed', address: '', fee: '',longitude:'',latitude:'',coordinates:{}, availability: [
                     {day:"Monday",time:['']},
                     {day:"Tuesday",time:['']},
                     {day:"Wednesday",time:['']},
@@ -88,7 +89,7 @@ function geteditschedule() {
 
 const addhospital=()=>{
     
-    seteditschedule([...editschedule,{name:'Unnamed',address:'',fee:'',availability:[]} ]);
+    seteditschedule([...editschedule,{name:'Unnamed',address:'',fee:'',longitude:'',latitude:'',coordinates:{},availability:[]} ]);
 
 }
 
@@ -102,6 +103,14 @@ const hospitalinfochange = (e) => {
         } else if (e.target.name === 'hosnewfee') {
             updatedSchedule.fee = e.target.value;
         }
+        else if (e.target.name === 'hosnewlong') {
+            updatedSchedule.longitude = e.target.value;
+            updatedSchedule.coordinates={type:'Point',coordinates:[e.target.value,selectedschedule.coordinates[1]]}
+        }
+        else if (e.target.name === 'hosnewlat') {
+            updatedSchedule.latitude = e.target.value;
+            updatedSchedule.coordinates={type:'Point',coordinates:[selectedschedule.coordinates[0],e.target.value]}
+        }
         return updatedSchedule; // Return the updated state
     });
 }
@@ -111,6 +120,7 @@ useEffect(()=>{
     s[selectedindex]=selectedschedule
     seteditschedule(s)
 },[selectedschedule])
+
 //add more time divs for a day
 const addtimevalue = (e) => {
     const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
@@ -150,6 +160,7 @@ setselectedschedule({
   name: element.name,
   address: element.address,
   fee: element.fee,
+  longitude:element.longitude?element.longitude:'',latitude:element.latitude?element.latitude:'',coordinates:element.coordinates.length?element.coordinates:{},
   availability: [
     { day: 'Monday', time: getElementAvailability(element, 'monday') },
     { day: 'Tuesday', time: getElementAvailability(element, 'tuesday') },
@@ -203,19 +214,56 @@ const refineSchedule = () => {
   seteditschedule(refinedSchedule);
 };
 
-//function to submit the entered data
-function submitscheduledata(){
-    
+const submitscheduledata=()=>{
+    alert('hi')
+    refineSchedule()
+    console.log('mmmmmmmmmmmmmmmmmmmm',editschedule)
 }
+
+function sendupdatedschedule(){
+    
+    try{
+        const api='http://localhost:5000/api/doctor/updateschedule/';
+        let data={name:sessionStorage.getItem('org_name'),email:sessionStorage.getItem('email'),schedule:editschedule}
+        fetch(api, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        }).then(res => {
+                if (res.status === 200) {
+                    
+                    seteditschedule([])
+                    setselectedindex(0)
+                    setselectedschedule({name:'',address:'',fee:'',availability: [
+                        {day:"Monday",time:['']},
+                        {day:"Tuesday",time:['']},
+                        {day:"Wednesday",time:['']},
+                        {day:"Thursday",time:['']},
+                        {day:"Friday",time:['']},
+                        {day:"Saturday",time:['']},
+                        {day:"Sunday",time:['']}
+                    ]})                
+                    var btn = document.getElementById('closebtnschedule');
+                    btn.click();
+                    
+                }
+                else if (res.status === 430) { alert(res.error) }
+
+                else {  alert('Problem updating schedule', res.error) }
+            });
+    }catch(err){
+        console.log(err);
+    }
+
+}
+
 return(<>
 <div className="grayareaschedule">
     <div id="scheduleenterdiv">
         <div><h1>Upload Schedule</h1><div id="closebtnschedule" onClick={()=>{close(true)}}><h1>+</h1></div></div>
         <div>
-            <div id="sheetschedule">
-                <h2>Add Data through sheet</h2>
-                <button>Upload</button>
-            </div>
             <div>
                 <div id="hospitalbar">
                     <div id="hospitalbardiv1">
@@ -239,6 +287,14 @@ return(<>
                     <div>
                     <h3>Address:</h3>
                     <input type="text"  name="hosnewaddress" onChange={hospitalinfochange}  value={selectedschedule.address} className="inputhospitalname"/>
+                    </div>
+                    <div>
+                    <h3>Longitude:</h3>
+                    <input type="text"  name="hosnewlong" onChange={hospitalinfochange}  value={selectedschedule.longitude} className="inputhospitalname"/>
+                    </div>
+                    <div>
+                    <h3>Latitude:</h3>
+                    <input type="text"  name="hosnewlat" onChange={hospitalinfochange}  value={selectedschedule.latitude} className="inputhospitalname"/>
                     </div>
                     <div>
                     <h3>Fees:</h3>
@@ -350,7 +406,8 @@ return(<>
                     </div>
                 </div>
 }
-                <button id="schedulemanual">Submit</button>
+            <button id="schedulemanual" onClick={submitscheduledata}>Submit</button>
+
             </div>
         </div>
     </div>
