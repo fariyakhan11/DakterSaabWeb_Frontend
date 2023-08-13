@@ -160,7 +160,6 @@
 }
 
 .login_type_container>img {
-    /* margin-left: 0.5em; */
     width: 3rem;
     height: 3rem;
     border-radius: 50%;
@@ -177,13 +176,13 @@
     align-items: center;
     justify-content: center;
     display: flex;
-    /* height: 100%; */
 }
 
 .inputsdiv {
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
+    /* background-color: yellow; */
+    /* justify-content: space-evenly; */
 }
 
 .form-fields {
@@ -192,21 +191,21 @@
     flex-direction: row;
     font-family: Raleway;
     font-size: 1rem;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
 }
 
 .form-fields>label {
-    min-width: 30%;
+    min-width: 35%;
     display: flex;
     flex-wrap: wrap;
     font-weight: bold;
-    padding: 5px;
 }
-
 .inputf {
-    padding: 5px;
     outline: none;
     border: none;
-    width: 70%;
+    width: 65%;
     background-color: transparent;
     border-bottom: 2px solid black;
     border-radius: 0;
@@ -214,7 +213,7 @@
 }
 
 .inputf:focus {
-    background-color: rgba(210, 172, 241, 0.315);
+    background-color: rgba(63, 181, 245, 0.315);
 }
 
 .btndiv {

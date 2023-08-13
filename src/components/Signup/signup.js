@@ -315,7 +315,7 @@ function Signup() {
                                             <label>Email: </label>
                                             <input className="inputf" type="email" name="email" onChange={handleUserInput} />
                                         </div>
-                                        <h4 id='24open'>If your organization is open 24/7 leave this field empty</h4>
+                                        <h4 id='24open' className="opentime">If your organization is open 24/7 leave this field empty</h4>
                                         <div className="form-fields" id="time-div">
                                             <label>Timings: </label>
                                             <input className="inputf time" type="time" name="time" id="open" onChange={handleUserInput} /><h5>to</h5>
@@ -324,6 +324,8 @@ function Signup() {
                                         <div className="form-fields" id="coordinates">
                                             <label>Longitude: </label>
                                             <input className="inputf time" type="text" name="longitude" onChange={handleUserInput} />
+                                        </div>
+                                        <div className="form-fields" id="coordinates">
                                             <label>Latitude: </label>
                                             <input className="inputf time" type="text" name="latitude" onChange={handleUserInput} />
                                         </div>
