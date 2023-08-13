@@ -4,15 +4,15 @@ import { useState } from "react";
 import { FaBars } from "react-icons/fa";
 import LogoP from '../../images/logo.png'
 
-function Navbar({ scrollToAbout, scrollToContact,scrollToHome,scrollToDownload }) {
+function Navbar({ scrollToAbout, scrollToContact, scrollToHome, scrollToDownload }) {
   const [showMenu, setShowMenu] = useState(false);
 
   return (
     <nav>
       <div className="navbar-container">
         <a href="/" className="logo">
-          <img src={LogoP} style={{width:'2em',height:'2em'}}></img>
-          <h1 style={{fontFamily:'Fraunces'}} className='title'> DakterSaab</h1>
+          <img src={LogoP}></img>
+          <h1 style={{ fontFamily: 'Fraunces' }} className='title'> DakterSaab</h1>
         </a>
         <button
           className="navbar-toggler"

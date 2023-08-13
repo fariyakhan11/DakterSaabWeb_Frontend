@@ -1,86 +1,83 @@
-*{
-    margin: 0;
-    padding: 0;
+* {
+  margin: 0;
+  padding: 0;
 }
 
 .navbar-container {
+  padding: 8px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-background-color: rgba(166, 211, 253, 0.432);
-  backdrop-filter: blur(10px); /* apply a blur effect to the navbar */
-  -webkit-backdrop-filter: blur(10px); /* for Safari */
-  box-shadow: 0 0 30px rgba(0, 0, 0, 0.247); 
-  padding: 0.5em 1em;
-position: fixed;
-width: 98vw;
+  background-color: rgba(166, 211, 253, 0.432);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(80px);
+  position: fixed;
+  top: 0;
+  width: 100%;
 }
 
 .logo {
-  font-size: 1.7em;
-  font-weight: bold;
-  color: #333;
+  margin-left: 25px;
   text-decoration: none;
-display: flex;
-flex-direction: row;
-align-items: center;
-letter-spacing: 0.2em;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
-.logo >img{
-margin:0 1em;
+
+.logo>img {
+  width: 50px;
+  height: 50px;
+}
+.title {
+  margin-left: 10px;
+  font-size: 1.25rem;
+  color: rgb(3, 3, 3);
 }
 .navbar-toggler {
   display: none;
   background-color: transparent;
   border: none;
   cursor: pointer;
-margin-right: 2em;
-margin-top: 0.3em;
-font-size: 1.4em;
+  margin-right: 20px;
+  font-size: 1.5rem;
 }
 
 .nav-menu {
   display: flex;
   justify-content: center;
   align-items: center;
-  list-style: none;
-  margin: 0;
-  padding: 0;
+  list-style: none; 
+  /* background-color: pink; */
 }
 
 .nav-menu.active {
   display: flex;
   flex-direction: column;
   position: absolute;
-  top: 70px;
+  top: 50px;
   left: 0;
   width: 100%;
-  background-color: rgba(183, 153, 218, 0.205);
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-font-family: Fraunces;
+  background-color: rgb(205, 229, 252);
+  font-family: Fraunces;
 }
 
 .nav-item {
-  margin: 0 1.5em;
-font-family: Fraunces;
-transition: all 0.5s ease-in-out;
-width: 5.5em;
-padding: 0 1.2em;
-text-align: center;
+  margin-right:3rem;
+  font-family: Fraunces;
+  transition: all 0.5s ease-in-out;
+  text-align: center;
 }
 
 .nav-link {
+  padding: 5px;
   font-size: 18px;
+  margin-bottom: 10px;
   color: #333;
   text-decoration: none;
-  transition: all 0.5s ease-in-out;
-
+  transition: all 0.3s ease-in;
 }
-
 .nav-link:hover {
-  color: rgb(89, 32, 155);
-font-weight: bolder;
-font-size: 1.6em;
+  color: rgb(109, 142, 240);
 }
 
 @media (max-width: 768px) {
@@ -91,11 +88,12 @@ font-size: 1.6em;
   .nav-menu {
     display: none;
   }
+  .title {
+    font-size: 1rem;
+  }
+  .logo>img {
+    width: 40px;
+    height: 40px;
+  }
 }
 
-.title{
-font-size: 0.9em;
-color: rgb(3, 3, 3);
-text-shadow:  5px 2px 14px rgba(231, 224, 224, 0.5);
-
-}

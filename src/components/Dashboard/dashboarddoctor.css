@@ -64,7 +64,7 @@ border-bottom: 4px solid  #c29de0 !important;
 flex-direction: row;
 align-items: center;
 display: flex;
-height:57%;
+height:72%;
 width:100%;
 margin: 0.7em 0em 0.2em 0em;
 justify-content: space-between;
@@ -73,14 +73,13 @@ justify-content: space-between;
 border: 3px solid #d3b1ece0;
 box-shadow: 0 2px 30px rgba(53, 52, 52, 0.089);
 height: 100%;
+width: 100%;
+border-bottom-left-radius: 2em;
 }
 .performancegraphsubdoctor>h3{
 font-family: Fraunces;
 text-align: center;
 padding: 0.5em 0;
-}
-.performancegraphsubdoctor:nth-child(1){
-width: 95%;
 }
 
 .bookdiv4{

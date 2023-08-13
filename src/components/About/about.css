@@ -1,26 +1,58 @@
-#AboutContainer{
-text-align: center;
-padding: 4em 15em;
-padding-bottom: 2.4em;
+#AboutContainer {
+    padding-left: 5rem;
+    padding-right: 5rem;
+    margin-top: 3.5rem;
+}
+
+#AboutContainer>h2 {
+    font-size: 2.5em;
+    font-family: Fraunces;
+    text-align: center;
+    text-shadow: 2px 2px 7px rgba(112, 111, 111, 0.5);
+    color: rgb(36, 42, 100);
+    letter-spacing: 0.1em;
+    margin-bottom: 2rem;
+}
+.cardcontainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.card1 {
+    background-color: white;
+    padding: 2rem;
+    margin-bottom: 15px;
+    border-radius: 15px;
+  width: 500px;
 
 }
-#AboutContainer>h2{
-font-family: Fraunces;
-font-size: 2.5em;
-margin-bottom: 1em;
-text-shadow:  2px 2px 7px rgba(112, 111, 111, 0.5);
-color: rgb(36, 42, 100);
-letter-spacing: 0.1em;
+.card1>p {
+    text-align: left;
+    font-family: Raleway;
+    font-size: 1rem;
+  color: rgb(36, 42, 100);
+
 }
-#AboutContainer>table>tr>td>p{
-font-family: Raleway;
-font-size: 1.3rem;
-line-height: 1.8em;
-border-spacing:3em 0;
-border-radius: 2em;
-box-shadow: 2px 2px 14px rgba(70, 69, 69, 0.671);
-padding: 1.2em;
-background-color: rgba(210, 172, 241, 0.308);
-color: rgb(60, 28, 87);
-font-weight: bolder;
+
+.sidediv {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sideimg1 {
+    width: 60%;
+}
+
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .card1 {
+        padding: 1rem;
+        width: 500px;
+    }
+    .card1>p {
+        font-size: 0.65rem;
+    }
 }
