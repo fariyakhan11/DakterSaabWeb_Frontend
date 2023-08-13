@@ -46,9 +46,9 @@ useEffect(()=>{
 })
 
 useEffect(()=>{
-sessionStorage.setItem('org_name', 'Dvago Pharmacy'); 
-sessionStorage.setItem('org_address', '123 Main St.');
-sessionStorage.setItem('email', 'pharmacy@gmail.com'); 
+sessionStorage.setItem('org_name', 'ABC Pharma'); 
+sessionStorage.setItem('org_address', 'R 143 sector 9 North Karachi, Karachi');
+sessionStorage.setItem('email', 'abcpharmacy@gmail.com'); 
 sessionStorage.setItem('phone', '03232626789');  
 sessionStorage.setItem('password','********')
 sessionStorage.setItem('time','10:30 AM - 11-00 PM')

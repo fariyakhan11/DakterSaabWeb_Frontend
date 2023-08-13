@@ -45,7 +45,7 @@ sessionStorage.setItem('org_name', 'ABC Hospital');
 sessionStorage.setItem('org_address', 'R 143 sector 9 North Karachi, Karachi');
 sessionStorage.setItem('email', 'abchospital@gmail.com'); 
 sessionStorage.setItem('password','********')
-sessionStorage.setItem('phone', '03232626589');  
+sessionStorage.setItem('phone', '+92 21 35112710');  
 sessionStorage.setItem('time', '10:00 AM - 10:00 PM');  
 },[])
 
