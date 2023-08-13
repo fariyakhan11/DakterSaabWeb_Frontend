@@ -38,8 +38,8 @@ function Signup() {
             document.getElementById('exp-div').style.display = 'flex';
             document.getElementById('spe-div').style.display = 'flex';
             document.getElementById('24open').style.display = 'none';
-            document.getElementById('coordinates').style.display='none';
-            
+            document.getElementById('coordinates').style.display = 'none';
+
         }
         else {
             document.getElementById('exp-div').style.display = 'none';
@@ -49,8 +49,8 @@ function Signup() {
             document.getElementById('address-div').style.display = 'flex';
             document.getElementById('city-div').style.display = 'flex';
             document.getElementById('time-div').style.display = 'flex';
-            document.getElementById('coordinates').style.display='flex';
-            
+            document.getElementById('coordinates').style.display = 'flex';
+
         }
     }, [identitytitle])
     //
@@ -310,17 +310,18 @@ function Signup() {
                                             <label>Phone: </label>
                                             <input className="inputf" type="number" name="phone" placeholder="3** *******" onChange={handleUserInput} />
                                         </div>
-                                        <h6 id="emailerr">Email is not valid</h6>
+                                        
                                         <div className="form-fields">
                                             <label>Email: </label>
                                             <input className="inputf" type="email" name="email" onChange={handleUserInput} />
                                         </div>
-                                        <h4 id='24open' className="opentime">If your organization is open 24/7 leave this field empty</h4>
+                                        <h6 id="emailerr">Email is not valid</h6>
                                         <div className="form-fields" id="time-div">
                                             <label>Timings: </label>
                                             <input className="inputf time" type="time" name="time" id="open" onChange={handleUserInput} /><h5>to</h5>
                                             <input className="inputf time" type="time" name="time" id="close" onChange={handleUserInput} />
                                         </div>
+                                        <h4 id='24open' className="opentime">If your organization is open 24/7 leave this field empty</h4>
                                         <div className="form-fields" id="coordinates">
                                             <label>Longitude: </label>
                                             <input className="inputf time" type="text" name="longitude" onChange={handleUserInput} />

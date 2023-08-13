@@ -1,5 +1,5 @@
 .registercontainer {
-  height: 120vh;
+  height: 140vh;
   width: 100vw;
   background-image: url('../../images/wall1.jpg');
   top: 0;
@@ -166,7 +166,6 @@
 /* ---------------------side--------------------------------- */
 .sideopts {
   position: fixed;
-  /* position: absolute; */
   display: flex;
   flex-direction: column;
   top: 40%;
