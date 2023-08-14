@@ -12,7 +12,7 @@ height: 100%;
     height: 100%;
 }
 .contentareatitle{
-font-size: 2.5em;
+font-size: 2.5rem;
 font-family: Fraunces;
 text-align: center;
 margin: 0.1em 0;
@@ -38,7 +38,7 @@ align-items: center;
 
 }
 .filterbar>h6 {
-font-size: 1.4em;
+font-size: 1.1rem;
 font-family: Fraunces;
 text-align: left;
 width: 100%;
@@ -49,12 +49,12 @@ outline: none;
 border: 3px solid #56aca6;
 border-radius: 1em;
 width: 96%;
-font-size: 1.2em;
+font-size: 1rem;
 padding: 0.5em;
 margin-bottom: 1em;
 }
 .filterbar>div>h6{
-font-size: 1.4em;
+font-size: 1.1rem;
 font-family: Fraunces;
 text-align: left;
 }
@@ -101,7 +101,7 @@ border-radius: 1em;
 margin-left: 4%;
 font-family: Raleway;
 font-weight: bolder;
-font-size: 1.2em;
+font-size: 1rem;
 cursor: pointer;
 text-align: center;
 outline: none;
@@ -120,7 +120,7 @@ cursor: pointer;
 padding: 0.3em 0;
 box-shadow: 1px 2px 7px rgba(59, 59, 59, 0.507);
 transition: all 0.5s ease-in-out 0s;
-font-size: 1.2em;
+font-size: 1rem;
 text-align: center;
 opacity: 0.7;
 margin-bottom: 0.5em;
@@ -151,7 +151,7 @@ width: 100%;
 box-shadow: 1px 1px 7px rgba(59, 59, 59, 0.507);
 margin: 1em 0;
 transition: all 0.5s ease-in-out 0s;
-
+font-size: 0.8rem;
 
 }
 .order_containerdelivered{
@@ -163,10 +163,10 @@ flex-direction: row;
 align-items: center;
 padding: 0 2%;
 font-family: Fraunces;
-font-size: 1em;
+font-size: 1rem;
 justify-content: space-evenly;
 cursor: pointer;
-
+font-size: 0.8rem;
 }
 .order_containerdelivered:hover>.order_title{
 color: white;

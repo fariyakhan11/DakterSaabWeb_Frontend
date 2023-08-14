@@ -10,17 +10,16 @@ import 'react-datepicker/dist/react-datepicker.css';
 import OrdersI from '../../images/order (1).png'
 import OrdersP from '../../images/box.png'
 import MedP from '../../images/medicine.png';
-import socketIOClient from 'socket.io-client';
+import io from 'socket.io-client';
 
 function Orders(){
     const [searchcustomer,setsearchcustomer]=useState('')
     const [selectedstatus,setselectedstatus]=useState('')
     const [selectedDate, setSelectedDate] = useState('');
-    const [filters,setfilters]=useState({time:''});
     const [order_list,setorder_list]=useState([]);
     const [displayed_list,setdisplayed_list]=useState([])
     const [statistics,setstatistics]=useState({todaymed:'',weeksale:'',todaysale:'',totalorder:'',orderpend:'',popmed:''})
-    const serverUrl = 'http://localhost:5000'; // Your server URL
+    
 
 //fetch orders from the database
 function fetchorders(){
@@ -36,8 +35,6 @@ function fetchorders(){
         .then((json) => {
         if(json.order){
           setorder_list(json.order);
-          
-          
         }else{setorder_list([]);setdisplayed_list([])}
         if(json.error){console.log(json.error)}
       });
@@ -46,30 +43,30 @@ function fetchorders(){
     }
 }
 
-useEffect(()=>{
-    
-})
-
-useEffect(()=>{
-    // Connect to the server's socket.io
-    const socket = socketIOClient(serverUrl)
-    // Listen for order updates
-    socket.on('orderUpdate', data => {
-        // Handle the updated order data received from the server
-        console.log('Received updated order data:', data.order);
-        // Update the order list with the new data
-        setorder_list(data.order);
-        setdisplayed_list(order_list)
-        });
-    fetchorders()
-    fetchstats()
-    fetchorders()
-    setdisplayed_list(order_list)
+useEffect(() => {
+    const socket = io('http://localhost:4000'); // Replace with your server URL
+    fetchorders();
+    fetchstats();
+    // Listen for the 'entryAdded' event
+    socket.on('entryAdded', newEntry => {
+      console.log('Received new entrynmnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn:', newEntry);
+      if(newEntry.org_name===sessionStorage.getItem('org_name')&&newEntry.org_address===sessionStorage.getItem('org_address')){
+        setorder_list(prev=>[...prev,newEntry])
+      }
+    });
 
     // Cleanup: Disconnect the socket when the component unmounts
     return () => socket.disconnect();
-},[])
+    // Fetch orders and stats
 
+
+}, []);
+
+useEffect(()=>{
+    
+filter()
+
+},[order_list])
 
 //data filter toggle on/off
 const handledatefilter = (e) => {
@@ -122,7 +119,7 @@ const filterorders = (e) => {
 };
 
 const movetotransact=(e)=>{
-
+    const element=displayed_list[e.target.id]
 }
 
 function fetchstats(){
@@ -154,27 +151,32 @@ const handleSearchCustomer=(e)=>{
 
     setsearchcustomer(e.target.value)
 }
-
-function filteringorders() {
-
-    
-    var filteredOrders = order_list.filter((o) => o.status === selectedstatus && o.buyer_name.toLowerCase().includes(searchcustomer.toLowerCase()));
-    setdisplayed_list(filteredOrders);
+function filter(){
+    var dL=[...order_list]
+    if(searchcustomer!=''){
+        dL=dL.filter(f=>f.buyer_name.toLowerCase().includes(searchcustomer.toLowerCase()))
+    }
+    if(selectedstatus!=''){
+        dL=dL.filter(f=>f.status===selectedstatus)
+    }
+    if(selectedDate!=''){
+        var d=selectedDate('/')+'-'+selectedDate.split('/')[1]+'-'+selectedDate.split('/')[0]
+        dL=dL.filter(f=>f.date===d)
+    }
+    setdisplayed_list(dL)
 }
 
-
 useEffect(()=>{
-    filteringorders()
-
-},[displayed_list])
-
-useEffect(()=>{
-    filteringorders()
+filter()
 },[selectedstatus])
 
 useEffect(()=>{
-    filteringorders()
+    filter()
 },[searchcustomer])
+
+useEffect(()=>{
+    filter()
+},[selectedDate])
 return(
 <>
         <div id="Ordersdashboard">
@@ -279,7 +281,7 @@ return(
                             </div>
 
                             
-                            <input type="date" id="datepicker" className="calendar-containerfilter" value={selectedDate} onChange={(e) => setSelectedDate(e.target.value)}></input>                                
+                            <input type="date" id="datepicker" className="calendar-containerfilter" value={selectedDate} onChange={(e) =>{alert(e.target.value); setSelectedDate(e.target.value)}}></input>                                
 
                             <h6>Order Status:</h6>
                                 <h5 id="all" className="selectedstatus" onClick={filterorders} >All</h5>

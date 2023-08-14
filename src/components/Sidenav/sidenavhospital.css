@@ -7,6 +7,7 @@
     border-bottom-right-radius: 1em;
     border-top-right-radius: 1em;
     /* margin-top: 10px; */
+  
 }
 
 .tabsnamehospital {
@@ -29,7 +30,7 @@
 #sidecollapsedcontainerhospital {
     background-color: #8db2f8;
     display: flex;
-    justify-items: center;
+    justify-items: space-evenly;
     align-items: center;
     flex-direction: column;
     width: 50px;

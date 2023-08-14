@@ -15,7 +15,9 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    height: 30%;
     font-family: Fraunces;
+    
 }
 .orglogo {
     width: 20%;
@@ -32,9 +34,12 @@
     text-align: center;
 }
 .tabscontainer {
-    margin-top: 2rem;
+    margin-top: 0.5rem;
     display: flex;
     flex-direction: column;
+    height: 60%;
+    
+    justify-content: space-evenly;
 }
 .tabsdiv {
     display: flex;
@@ -106,6 +111,8 @@
 }
 
 .tabsrow {
+    height: 75%;
+    justify-content: space-evenly;
     margin-top: 2rem;
     display: flex;
     flex-direction: column;

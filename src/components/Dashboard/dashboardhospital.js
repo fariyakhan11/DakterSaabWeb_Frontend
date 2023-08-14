@@ -116,7 +116,10 @@ useEffect(()=>{
     }
 })
 
-
+useEffect(()=>{
+    sessionStorage.setItem('org_name', 'Dow University Hospital');
+    sessionStorage.setItem('org_address', 'Gulzar-e-Hijri Gulshan-e-Iqbal, Karachi, Sindh, Pakistan');
+},[])
 return(
 
 <>

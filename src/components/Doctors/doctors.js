@@ -97,7 +97,7 @@ function fetchdoctors(){
         if(json.doctors){
           setdoctor_list(json.doctors);
           setdisplayed_list(json.doctors);
-          fetchdepartments(json.doctors)
+          fetchdepartments()
         }else{setdoctor_list([]);setdisplayed_list([]);fetchdepartments([])}
         if(json.error){console.log(json.error)}
       });
@@ -110,7 +110,7 @@ useEffect(()=>{console.log(displayed_list)},[displayed_list])
 
 //activate the delete view
 const deletemodeon=()=>{
-  var cb_o=document.getElementsByClassName('checkbox-outline');
+  var cb_o=document.getElementsByClassName('checkbox-selected');
   var deletebtn=document.getElementById('delMedicines');
   if(viewmode){
 
@@ -142,6 +142,7 @@ const deletemodeon=()=>{
 //delete the selected medicines
 const delete_selected=(e)=>{
     e.preventDefault();
+    console.log(sessionStorage.getItem('org_name'),sessionStorage.getItem('org_address'),selected_doctor)
     try{
       let data={name:sessionStorage.getItem('org_name'),address:sessionStorage.getItem('org_address'),doc_list:selected_doctor}
         
@@ -202,7 +203,7 @@ set_info_view(false)
 }
 
 //fetch departments from the database
-function fetchdepartments(docs){
+function fetchdepartments(){
     try{
         const params=sessionStorage.getItem('org_name')+'/'+sessionStorage.getItem('org_address')
         const api='http://localhost:5000/api/hospital/getdeptdetail/'+params;
@@ -215,11 +216,8 @@ function fetchdepartments(docs){
         .then((json) => {
         if(json.department){
           
-          const distinctDepartmentNames = [...new Set(docs.map(entry => entry.Department))];
-
-        var deplist=new Set([...json.department,...distinctDepartmentNames])
-        deplist=[...deplist]
-        setdepartment_list(deplist)
+          
+        setdepartment_list(json.department)
         }else{setdepartment_list([]);}
         if(json.error){console.log(json.error)}
       });

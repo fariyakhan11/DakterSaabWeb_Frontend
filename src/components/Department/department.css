@@ -46,15 +46,19 @@ font-family: Fraunces;
 .stockopiconhospital:hover> h4{
 transform: rotate(180deg);
 }
-
+#departmentsdiv{
+  height: 90%;
+ 
+  
+}
 .depscontainer{
  display: flex;
   flex-wrap: wrap;
 margin-left: 3em;
 align-items: center;
- overflow-y: scroll;
+ overflow-y: scroll !important;
 padding: 0 1em;
-
+height: 100%;
 }
 .errordepexpand{
   width: 100%;

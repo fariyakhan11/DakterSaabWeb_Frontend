@@ -99,10 +99,7 @@ useEffect(()=>{
 
 })
 
-useEffect(()=>{
-    sessionStorage.setItem('org_name', 'Tabiyat pk');
-    sessionStorage.setItem('org_address', '456 Park Avenue PECHS');
-},[])
+
 
 useEffect(()=>{
     if(tab==='Home'){
@@ -177,6 +174,10 @@ try{
     }
 }
 
+useEffect(()=>{
+    sessionStorage.setItem('org_name', 'Dvago');
+    sessionStorage.setItem('org_address', '123 Main Street, Gulshan-e-Iqbal');
+},[])
 
 return(
 <>
@@ -267,7 +268,7 @@ return(
                     <div id="contentinfopharmacy">
                     {!order_list.length>0&&
     <div className="inventorycontent">
-                    <h6 classname="nolowmed">No medicines sold today</h6>
+                    <h6 className="nolowmed">No medicines sold today</h6>
                     </div>
 }
 {order_list.map((i,index)=>{return(<>
@@ -337,7 +338,7 @@ return(
 </>)})}
 {!medicine_list.length>0&&
     <div className="inventorycontent">
-                    <h6 classname="nolowmed">No medicines below 5 units</h6>
+                    <h6 className="nolowmed">No medicines below 5 units</h6>
                     </div>
 }
 
