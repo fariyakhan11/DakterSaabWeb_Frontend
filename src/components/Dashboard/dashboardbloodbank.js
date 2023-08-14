@@ -12,7 +12,7 @@ import Transactions from "../Transactions/transactions";
 import Bloodgroup from "../BloodGroup/bloodgroup";
 import Week from '../../images/week.png';
 import Profilebloodbank from '../Profile/profilebloodbank'
-
+import { Bar } from 'react-chartjs-2';
 
 function Dashboardbloodbank(){
     const currentDate = new Date()
@@ -21,6 +21,42 @@ function Dashboardbloodbank(){
     const [tab, settab]=useState('Home');
     
     const [last_transact,setlast_transact]=useState({date:'',buyer_name:'',amount:'',items:[{name:'',quantity:''}]});
+
+    const [dataweek, setweekdata] = useState({
+        labels: ['January', 'February', 'March', 'April', 'May', 'June'],
+        datasets: [
+          {
+            label: 'Component A',
+            data: [15000, 20000, 22000, 18000, 25000, 28000],
+            backgroundColor: 'rgba(75, 192, 192, 0.6)',
+          },
+          {
+            label: 'Component B',
+            data: [18000, 23000, 21000, 19000, 24000, 27000],
+            backgroundColor: 'rgba(255, 99, 132, 0.6)',
+          },
+          {
+            label: 'Component C',
+            data: [16000, 19000, 24000, 20000, 23000, 26000],
+            backgroundColor: 'rgba(255, 205, 86, 0.6)',
+          },
+        ],
+      });
+      
+      const [optionsweek, setoptionsweek] = useState({
+        scales: {
+          x: {
+            beginAtZero: true,
+            stacked: true,
+          },
+          y: {
+            type: 'category', // Use 'category' scale for the y axis
+            beginAtZero: true,
+            stacked: true,
+          },
+        },
+      }); 
+
 
 //dashboard content
 
@@ -178,6 +214,10 @@ return(
                         </div>
                         <h2 className="performacetitle">Performance and Operations</h2>
                         <div className="performancegraphbloodbank">
+                        <Bar
+                            data={dataweek}
+                            options={optionsweek}
+                        />
                         </div>
                     </div>
                     <div className="subsec2bloodbank">

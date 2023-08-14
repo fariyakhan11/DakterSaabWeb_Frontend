@@ -266,14 +266,16 @@ return(
                         <div id={"header-side-transact-div"+props.class}>
                             <h1>{props.stock} in stock</h1>
                         </div>
+                        <div id="slec">
+                                    <h6></h6>                        
+                                    <h6>Name</h6>
+                                    <h6>Price (Rs)</h6>
+                                    <h6>Quantity</h6>
+                                </div>
                         <div id="container-side-transact-div">
+                        
                             <table>
-                                <tr className={"entryhead"+props.class}>
-                                    <th></th>                        
-                                    <th>Name</th>
-                                    <th>Price (Rs)</th>
-                                    <th>Quantity</th>
-                                </tr>
+                                
 {displayed_list.map((i,index)=>{return(
                                 <tr className={"entrydetail"+props.class}>
                                     <td><input type="checkbox" id={index+"-cb"} onChange={handlechecks} name={props.class==='blood'?i.AvailableBloodGroup:i.name} className="checkboxtransact"></input></td>                        

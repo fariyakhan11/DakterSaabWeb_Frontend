@@ -45,7 +45,10 @@ useEffect(()=>{
 
 })
 
-
+useEffect(()=>{
+    sessionStorage.setItem('org_name', 'Tabiyat pk');
+    sessionStorage.setItem('org_address', '456 Park Avenue PECHS');
+},[])
 
 useEffect(()=>{
     if(tab==='Home'){
@@ -229,7 +232,7 @@ return(
                 
                 <h2 className="booktitledivpharmacy">Medicines booking</h2>
                 <div id="colorcodeboxes"><div id="pendingbox"></div><h2>Pending</h2><div id="filledbox"></div><h2>Fulfilled</h2></div>                
-                <div className="bookdiv2">
+                <div className="bookdiv10">
 
                     <div id='headpharmacy' className="pharmacyinfo">
                         <h3>Customer Name</h3>
@@ -274,7 +277,7 @@ return(
                             <div>
                                 <h2>{last_transact.buyer_name}</h2>
                                 <h3>{last_transact.date}</h3>
-                                <h4>Rs {last_transact.amount}</h4>
+                                <h4>Rs {last_transact.amount?last_transact.amount:0}</h4>
                             </div>
                         </div>
                         <div>
