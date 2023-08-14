@@ -123,6 +123,10 @@ function fetchblood(){
     }
 }
 
+useEffect(()=>{
+    sessionStorage.setItem('org_name', 'Hussani Blood Bank');
+    sessionStorage.setItem('org_address', 'Soldier Bazaar Parsi Colony Saddar, Karachi, Sindh, Pakistan');
+},[])
 return(
 
 <>

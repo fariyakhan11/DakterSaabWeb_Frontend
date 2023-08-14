@@ -87,7 +87,7 @@ function Signup() {
 
     // to validate the form values while entering
     function handleUserInput(e) {
-        console.log(formValue)
+        
         document.getElementsByClassName('errordescription')[0].style.display = "none";
 
         if (!(e.target.name === 'time')) {

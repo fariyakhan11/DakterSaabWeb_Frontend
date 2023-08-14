@@ -23,6 +23,7 @@ function Login() {
   const [identitypic, setidentitypic] = useState('');
   //locations for the organizations
   const [hospitalbranches, setbranches] = useState('');
+
   //to set the initial identity title and empty the input fields
   useEffect(() => {
     setidentitypic(DocP)
@@ -40,6 +41,7 @@ function Login() {
     emptyfields()
     sessionStorage.clear()
   }, [])
+
   //for constant dynamic changes 
   useEffect(() => {
     document.getElementById('signin_mark').classList.add('selected_bookmark');
@@ -97,6 +99,7 @@ function Login() {
 
 
   }
+
   //signin form submission
   const SignIn = (e) => {
     e.preventDefault();
@@ -153,14 +156,14 @@ function Login() {
               sessionStorage.setItem('phone', json.user.phone); 
             }
             sessionStorage.setItem('password','********')
-            console.log(sessionStorage.getItem('org_name'))
+        
             const rout='/'+identitytitle.toLowerCase()
             navigate(rout)
             }if (!json.error) {
               emptyfields();
               document.getElementById("nameerr").innerHTML = "";
               document.getElementById("nameerr").style.display = 'none';
-              console.log(json.user)
+      
 
             }
             else{

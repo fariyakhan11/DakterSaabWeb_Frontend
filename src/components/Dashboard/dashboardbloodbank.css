@@ -64,6 +64,7 @@ border-bottom: 4px solid  #e06464da !important;
 .summarytilesbloodbank{
 font-family: Fraunces;
 display: flex;
+flex-basis: 10rem;
 flex-direction: row;
 align-items: center;
 justify-content: center;
@@ -122,29 +123,33 @@ justify-content: flex-end;
 #stockdiv{
 box-shadow: 2px 2px 7px rgba(105, 105, 105, 0.623);
 height: 96%;
+overflow: scroll;
 }
 #stockdiv>#stockhead{
 display: flex;
 flex-direction: row;
 font-family: Raleway;
 padding: 0.9em 2em;
-font-size: 0.9em;
+font-size: 0.9rem;
 border-bottom: 3px solid rgba(190, 174, 174, 0.37);
 justify-content: space-between;
 }
 #stockhead>h3{
 font-weight: lighter;
+margin:0.3rem
 }
 #stockcontent{
 display: flex;
 font-family: Ysabeau;
 flex-direction: row;
-padding: 0.1em 2em;
+margin:0.3rem;
+padding: 0.1em 0.3rem;
 justify-content: space-between;
 }
 #stockcontent>h3{
-width: 46%;
+width: 49%;
 text-align: center;
+font-size: 1rem;
 }
 #stockcontent:nth-child(2n){
 background-color: rgba(247, 123, 123, 0.315);

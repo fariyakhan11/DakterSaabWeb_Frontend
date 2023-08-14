@@ -3,6 +3,7 @@ import './bloodgroup.css';
 import BloodP from '../../images/blood1.png';
 import Addbloodgroup from './addbloodgroup';
 import { useState,useEffect } from "react";
+import {AiOutlineDelete} from "react-icons/ai";
 
 
 
@@ -285,8 +286,9 @@ return(
                                 </div>
                                 <div className="sideareamed" id={index}>
                                     
-                                    <div className="checkbox-outline" id={'co'+index}>
-                                        <div className="checkbox-selected" id={'cb'+index}></div>
+                                <div className="checkbox-outline" id={'co'+index}>
+                                      <AiOutlineDelete className="icondep checkbox-selected" id={'cb'+index} />
+                                        
                                     </div>
                                     <input type="checkbox" value={i.AvailableBloodGroup} name="selected-delete" id={'cbd'+index} className="selectedcbd"/>
                                     
