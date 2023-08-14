@@ -149,10 +149,10 @@ const select_delete = (event) => {
   
   if (check.checked) {
     document.getElementById('cb' + id).style.backgroundColor = 'red';
-    setselected_medicine((prevState) => [...prevState, check.value]);
+    setselected_blood((prevState) => [...prevState, check.value]);
   } else {
     document.getElementById('cb' + id).style.backgroundColor = 'transparent';
-    setselected_medicine((prevState) => prevState.filter((item) => item !== check.value));
+    setselected_blood((prevState) => prevState.filter((item) => item !== check.value));
   }  
 };
 
