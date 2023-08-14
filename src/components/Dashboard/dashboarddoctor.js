@@ -4,9 +4,6 @@ import Sidenavdoctor from "../Sidenav/sidenavdoctor"
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useState } from "react";
-import { FaBars  } from "react-icons/fa";
-import { BiUser } from "react-icons/bi";
-import {MdSettings } from "react-icons/md";
 import {GrHelp} from "react-icons/gr";
 import Profiledoctor from "../Profile/profiledoctor";
 import Appointments from "../Appointments/appointments";
@@ -48,17 +45,10 @@ useEffect(()=>{
 })
 
 useEffect(()=>{
-const myArray = [
-  { fees: 250, name: "Aga Khan",address:"National Stadium Rd, Aga Khan University Hospital, Karachi, Karachi City, Sindh" },
-  { fees: 150, name: "Mehmooda Clinic" ,address:'R 56 sector 11 north nazimabad karachi , Karachi' },
 
-];
-const jsonString = JSON.stringify(myArray);
-sessionStorage.setItem('org_name', 'Dr Waqar Akram'); 
-sessionStorage.setItem('email', 'waqarakram@gmail.com'); 
-sessionStorage.setItem('phone', '0301-1234567');  
-sessionStorage.setItem('hospital',jsonString)
-sessionStorage.setItem('password','********')
+
+
+
 // Get the day information for each date
 const options = { weekday: 'long' };
 

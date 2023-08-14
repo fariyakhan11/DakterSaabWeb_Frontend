@@ -47,16 +47,7 @@ useEffect(()=>{
     }
 })
 
-useEffect(()=>{
-sessionStorage.setItem('org_name', 'Fatmid'); 
-sessionStorage.setItem('org_address', 'Britto Rd, Garden East Karachi, Sindh, Pakistan');
-sessionStorage.setItem('email', 'Hbb.south@gmail.com'); 
-sessionStorage.setItem('phone', '021-32237734');  
-sessionStorage.setItem('password','********')
 
-
-
-},[])
 
 useEffect(()=>{
     if(tab==='Home'){

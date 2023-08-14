@@ -40,15 +40,6 @@ useEffect(()=>{
     }
 })
 
-useEffect(()=>{
-sessionStorage.setItem('org_name', 'Jinnah Postgraduate Medical Center(JPMC)'); 
-sessionStorage.setItem('org_address', 'Rafiqui, Sarwar Shaheed Rd');
-sessionStorage.setItem('email', 'abchospital@gmail.com'); 
-sessionStorage.setItem('password','********')
-sessionStorage.setItem('phone', '+92 21 35112710');  
-sessionStorage.setItem('time', '10:00 AM - 10:00 PM');  
-},[])
-
 
 return(
 
