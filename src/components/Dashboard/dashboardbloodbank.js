@@ -12,7 +12,27 @@ import Transactions from "../Transactions/transactions";
 import Bloodgroup from "../BloodGroup/bloodgroup";
 import Week from '../../images/week.png';
 import Profilebloodbank from '../Profile/profilebloodbank'
-import { Bar } from 'react-chartjs-2';
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import { Pie } from 'react-chartjs-2';
+
+import {  
+    CategoryScale,
+    LinearScale,
+    BarElement,
+    Title,
+  } from 'chart.js';
+
+  import { Bar } from 'react-chartjs-2';
+  ChartJS.register(
+    CategoryScale,
+    LinearScale,
+    BarElement,
+    Title,
+    Tooltip,
+    Legend,
+    ArcElement
+  );
+
 
 function Dashboardbloodbank(){
     const currentDate = new Date()
@@ -21,41 +41,70 @@ function Dashboardbloodbank(){
     const [tab, settab]=useState('Home');
     
     const [last_transact,setlast_transact]=useState({date:'',buyer_name:'',amount:'',items:[{name:'',quantity:''}]});
-
-    const [dataweek, setweekdata] = useState({
-        labels: ['January', 'February', 'March', 'April', 'May', 'June'],
-        datasets: [
-          {
-            label: 'Component A',
-            data: [15000, 20000, 22000, 18000, 25000, 28000],
-            backgroundColor: 'rgba(75, 192, 192, 0.6)',
+    const options = {
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'top'
           },
-          {
-            label: 'Component B',
-            data: [18000, 23000, 21000, 19000, 24000, 27000],
-            backgroundColor: 'rgba(255, 99, 132, 0.6)',
-          },
-          {
-            label: 'Component C',
-            data: [16000, 19000, 24000, 20000, 23000, 26000],
-            backgroundColor: 'rgba(255, 205, 86, 0.6)',
-          },
-        ],
-      });
-      
-      const [optionsweek, setoptionsweek] = useState({
-        scales: {
-          x: {
-            beginAtZero: true,
-            stacked: true,
-          },
-          y: {
-            type: 'category', // Use 'category' scale for the y axis
-            beginAtZero: true,
-            stacked: true,
+          title: {
+            display: true,
+            text: 'Sales This Week',
           },
         },
-      }); 
+      };
+      const optionsweek = {
+        // The `legend` configuration to position the labels on the side
+        labels: {
+          position: 'right',
+          labels: {
+            boxWidth: 6, // Adjust the box width for the colored squares next to the labels
+          },
+        },
+      };
+  
+      const labels = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+
+      const [dataweek,setdataweek]=useState({
+        labels,
+        datasets: [
+            {
+              label: 'Component A',
+              data: [15000, 20000, 22000, 18000, 25000, 28000],
+              backgroundColor: 'rgba(75, 192, 192, 0.6)',
+            },
+            
+          ],
+      })
+     
+    const  data = {
+        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        datasets: [
+          {
+            label: '# of Votes',
+            data: [12, 19, 3, 5, 2, 3],
+            backgroundColor: [
+              'rgba(255, 99, 132, 0.2)',
+              'rgba(54, 162, 235, 0.2)',
+              'rgba(255, 206, 86, 0.2)',
+              'rgba(75, 192, 192, 0.2)',
+              'rgba(153, 102, 255, 0.2)',
+              'rgba(255, 159, 64, 0.2)',
+            ],
+            borderColor: [
+              'rgba(255, 99, 132, 1)',
+              'rgba(54, 162, 235, 1)',
+              'rgba(255, 206, 86, 1)',
+              'rgba(75, 192, 192, 1)',
+              'rgba(153, 102, 255, 1)',
+              'rgba(255, 159, 64, 1)',
+            ],
+            borderWidth: 1,
+          },
+        ],
+      }; 
+      
+      
 
 
 //dashboard content
@@ -72,7 +121,6 @@ function Dashboardbloodbank(){
         setexpandedstate(msg.expanded)
     }
 
-
 useEffect(()=>{
 
     if(!expandedstate){
@@ -82,8 +130,6 @@ useEffect(()=>{
         document.getElementById('dashboardarea').style.width='85%'
     }
 })
-
-
 
 useEffect(()=>{
     if(tab==='Home'){
@@ -176,7 +222,7 @@ return(
 {(tab==='Home') && 
             <>
                 <div className="section1">
-                    <div className="subsec1">
+                    <div className="subsec1blood">
                         <div className="Summarybar">
                             <h4>Statistics</h4>
                             <div id="statisticsdiv">
@@ -212,11 +258,11 @@ return(
                             </div>
                             
                         </div>
-                        <h2 className="performacetitle">Performance and Operations</h2>
+                        
                         <div className="performancegraphbloodbank">
                         <Bar
                             data={dataweek}
-                            options={optionsweek}
+                            options={options}
                         />
                         </div>
                     </div>
@@ -224,7 +270,8 @@ return(
                         
 
                         <div className="bookdiv">
-                       
+                        <h2 className="booktitledivbloodbank">Sales Today</h2>
+                            <Pie data={data} options={optionsweek}/>;
                         </div>
                         <div id='bottomcontentbloodbank'>
                         <div className="section2subbloodbank">
@@ -251,7 +298,7 @@ return(
                                 <h5>{last_transact.date}</h5>
                                 <h3>{last_transact.buyer_name}</h3>
                                 
-                                <h4>Rs {last_transact.amount}</h4>
+                                <h4>Rs {last_transact.amount?last_transact.amount:0}</h4>
                                 <div id="itemblooddiv">
 
                                     <div><h5>Item</h5><h5>Quantity</h5></div>

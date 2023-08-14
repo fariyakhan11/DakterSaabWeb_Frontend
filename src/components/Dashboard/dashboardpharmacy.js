@@ -14,6 +14,28 @@ import OrdersI from '../../images/order (1).png'
 import OrdersP from '../../images/box.png'
 import Trans from '../../images/card-payment.png'
 import Profilepharmacy from "../Profile/profilepharmacy";
+import {
+    Chart as ChartJS,
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Title,
+    Tooltip,
+    Legend,
+  } from 'chart.js';
+import { Line } from 'react-chartjs-2';
+
+ChartJS.register(
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Title,
+    Tooltip,
+    Legend
+);
+
 
 function Dashboardpharmacy(){
     const currentDate = new Date()
@@ -31,6 +53,38 @@ function Dashboardpharmacy(){
         setexpandedstate(msg.expanded)
     }
 
+    const options = {
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'top' ,
+          },
+          title: {
+            display: true,
+            text: 'Medicines sold in Week',
+          },
+        },
+      };
+      
+      const labels = ['zylex','augmentin','cafka','ponstan','panadol','flagel','gponstan','honad','isbhcbshj','jbcjhc','ksbjcvnvx','lxsbcj','mxscb','motilium','csbhnc','ansaid','honad','isbhcbshj','jbcjhc','ksbjcvnvx','lxsbcj','mxscb','motilium','csbhnc','ansaid'];
+      
+      const data = {
+        labels,
+        datasets: [
+          {
+            label: 'Week 1',
+            data: [10,79,25,25,32,1,45,23,56,34,4,20,19,50,27,7,34,4,20,19,50,27,7],
+            borderColor: 'rgb(255, 99, 132)',
+            backgroundColor: 'rgba(255, 99, 132, 0.5)',
+          },
+          {
+            label: 'Week 2',
+            data: [4,47,23,56,5,61,15,8,3,67,34,9,0,3,0,10,34,4,20,19,50,27,7],
+            borderColor: 'rgb(53, 162, 235)',
+            backgroundColor: 'rgba(53, 162, 235, 0.5)',
+          },
+        ],
+      };
 
 
 useEffect(()=>{
@@ -52,18 +106,10 @@ useEffect(()=>{
 
 useEffect(()=>{
     if(tab==='Home'){
-        //fetchlasttransact()
+        fetchlasttransact()
         fetchlowmeds()
         fetchstats()
-        //fetchorders()
-
-        // Set the interval to fetch/update the data every 5 minutes
-        const interval = setInterval(fetchorders, 5 * 60 * 1000);
-
-        // Clean up the interval when the component unmounts
-        return () => {
-        clearInterval(interval);
-        };
+        
     }
 
 },[tab])
@@ -83,28 +129,6 @@ function fetchlasttransact(){
         if(json.transaction){
           setlast_transact(json.transaction);
         }else{setlast_transact();}
-        if(json.error){console.log(json.error)}
-      });
-    }catch(err){
-      console.log(err)
-    }
-}
-
-//fetch orders from the database
-function fetchorders(){
-    try{
-        const params=sessionStorage.getItem('org_name')+'/'+sessionStorage.getItem('org_address')
-        const api='http://localhost:5000/api/transactionandorder/getorders/'+params;
-        fetch(api, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-        }).then((response) => response.json()) // get response, convert to json
-        .then((json) => {
-        if(json.order){
-          setorder_list(json.order);
-        }else{setorder_list([]);}
         if(json.error){console.log(json.error)}
       });
     }catch(err){
@@ -226,21 +250,26 @@ return(
                             
                         </div>
                 <div className="performancegraphpharmacy">
+                    <Line options={options} data={data} className="linechart"/>;
+
                 </div>
             </div>
             <div className="subsec2pharmacy">
                 
-                <h2 className="booktitledivpharmacy">Medicines booking</h2>
-                <div id="colorcodeboxes"><div id="pendingbox"></div><h2>Pending</h2><div id="filledbox"></div><h2>Fulfilled</h2></div>                
+                <h2 className="booktitledivpharmacy">Medicines Sold Today</h2>
                 <div className="bookdiv10">
 
                     <div id='headpharmacy' className="pharmacyinfo">
-                        <h3>Customer Name</h3>
-                        <h3>Amount</h3>
-                        <h3>Item</h3>
+                        <h3>Medicine Name</h3>
                         <h3>Quantity</h3>
+                        <h3>Price</h3>
                     </div>
                     <div id="contentinfopharmacy">
+                    {!order_list.length>0&&
+    <div className="inventorycontent">
+                    <h6 classname="nolowmed">No medicines sold today</h6>
+                    </div>
+}
 {order_list.map((i,index)=>{return(<>
                         <div className="pharmacyinfo pharmacycontent">
                             <h3>{i.buyer_name}</h3>
@@ -306,6 +335,11 @@ return(
 
 
 </>)})}
+{!medicine_list.length>0&&
+    <div className="inventorycontent">
+                    <h6 classname="nolowmed">No medicines below 5 units</h6>
+                    </div>
+}
 
                     </div>
                 </div>

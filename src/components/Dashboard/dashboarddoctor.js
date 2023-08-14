@@ -17,6 +17,25 @@ import PatientsT from '../../images/user.png'
 
 import WorkHours from '../../images/working-time.png'
 
+import { Chart as ChartJS, ArcElement,Title, Tooltip,    CategoryScale,
+    LinearScale,
+    BarElement, Legend } from 'chart.js';
+import { Doughnut } from 'react-chartjs-2';
+
+import { Bar } from 'react-chartjs-2';
+
+  
+  ChartJS.register(
+    CategoryScale,
+    LinearScale,
+    BarElement,
+    Title,
+    ArcElement,
+    Tooltip,
+    Legend
+  );
+
+
 
 function Dashboarddoctor(){
     const currentDate = new Date()
@@ -32,7 +51,63 @@ function Dashboarddoctor(){
         setexpandedstate(msg.expanded)
     }
 
+      const labels = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+      const options = {
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'top' ,
+          },
 
+      }}
+      const [workinghours,setworkinghours]=useState({
+        labels,
+        datasets: [
+            {
+              
+              data: [15, 12, 7, 8, 10, 8,6],
+              backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)',
+              ],
+              borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)',
+              ],
+              borderWidth: 1,
+            },
+            
+          ],
+      })
+
+      const[appointmentweek,setappointmentweek]=useState({
+        labels,
+        datasets: [
+            {
+              label: 'Component A',
+              data: [15, 2, 11, 7, 0, 3,2],
+              backgroundColor: 'rgba(75, 192, 192, 0.6)',
+            },
+            {
+                label: 'Component B',
+                data: [9, 18, 0, 0, 5, 10,4],
+                backgroundColor: 'rgba(53, 162, 235, 0.5)',
+              },
+              {
+                label: 'Component C',
+                data: [15, 17, 9, 11, 0, 5,6],
+                backgroundColor: 'rgba(75, 192, 192, 0.6)',
+              },
+          ],}
+      )
 
 useEffect(()=>{
 
@@ -53,7 +128,7 @@ useEffect(()=>{
 const options = { weekday: 'long' };
 
 var DN=new Date();
-DN=DN.getDate()+'/'+DN.getMonth()+'/'+DN.getFullYear()+" "+DN.toLocaleDateString('en-US', options)
+DN=DN.getDate()+'/'+DN.getMonth()+1+'/'+DN.getFullYear()+" "+DN.toLocaleDateString('en-US', options)
 setDatenow(DN) 
 },[])
 
@@ -64,7 +139,7 @@ useEffect(()=>{
 const options = { weekday: 'long' };
 
 var DN=new Date();
-DN=DN.getDate()+'/'+DN.getMonth()+'/'+DN.getFullYear()+" "+DN.toLocaleDateString('en-US', options)
+DN=DN.getDate()+'/'+DN.getMonth()+1+'/'+DN.getFullYear()+" "+DN.toLocaleDateString('en-US', options)
 setDatenow(DN) 
 },[Date()])
 return(
@@ -108,15 +183,29 @@ return(
                     </div>
                     
                 </div>
-                <div className="performancegraphdoctor">
-                    <div className="performancegraphsubdoctor" ></div>
-
-                </div>
-
-            </div>
-            <div className="subsec2pharmacy">
-
+                <h2 className="booktitledivpharmacy">Schedule for today</h2>
                 
+                <div className="bookdiv11">
+                    <div id="datedisplay"><h2>{Datenow}</h2></div>
+                    <div id="scheduledashboard">
+                        <div>
+                            <h1>10:00 AM - 3:00 AM</h1>
+                            <h3> ABC Hospital</h3>
+                        </div>
+                        <div>
+                            <h1>10:00 AM - 3:00 AM</h1>
+                            <h3> ABC Hospital</h3>
+                        </div>
+                        <div>
+                            <h1>10:00 AM - 3:00 AM</h1>
+                            <h3> ABC Hospital</h3>
+                        </div>
+                        <div>
+                            <h1>10:00 AM - 3:00 AM</h1>
+                            <h3> ABC Hospital</h3>
+                        </div>
+                    </div>
+                </div>
                 <h2 className="booktitledivpharmacy">Upcoming Appointments</h2>
                 
                 <div className="bookdiv4">
@@ -147,28 +236,23 @@ return(
 
                     </div>
                 </div>
-                <h2 className="booktitledivpharmacy">Schedule for today</h2>
-                
-                <div className="bookdiv2">
-                    <div id="datedisplay"><h2>{Datenow}</h2></div>
-                    <div id="scheduledashboard">
-                        <div>
-                            <h1>10:00 AM - 3:00 AM</h1>
-                            <h3> ABC Hospital</h3>
-                        </div>
-                        <div>
-                            <h1>10:00 AM - 3:00 AM</h1>
-                            <h3> ABC Hospital</h3>
-                        </div>
-                        <div>
-                            <h1>10:00 AM - 3:00 AM</h1>
-                            <h3> ABC Hospital</h3>
-                        </div>
-                        <div>
-                            <h1>10:00 AM - 3:00 AM</h1>
-                            <h3> ABC Hospital</h3>
-                        </div>
+
+
+            </div>
+            <div className="subsec2doctor">
+            <div className="performancegraphdoctor">
+                    <h2 className="booktitledivpharmacy">Appointments of the week</h2>
+                    <div className="performancegraphsubdoctor" style={{borderTopRightRadius:'2em'}} >
+                    <Bar options={options} data={appointmentweek} />
                     </div>
+                    
+                </div>
+                <div className="performancegraphdoctor">
+                    <h2 className="booktitledivpharmacy">Working Hours of the week</h2>
+                    <div className="performancegraphsubdoctor" style={{borderBottomRightRadius:'2em'}} >
+                            <Doughnut data={workinghours} />
+                    </div>
+                    
                 </div>
             </div>
         </div>
