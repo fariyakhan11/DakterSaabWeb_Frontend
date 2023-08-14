@@ -71,14 +71,17 @@ align-items: center;
 box-shadow: 0 2px 30px rgba(53, 52, 52, 0.089);
 height:40%;
 width:99.4%;
+display: flex;
+justify-content: center;
+align-items: center;
 margin: 0.2em 0.1em;
 }
-.bookdiv6{
+.bookdiv12{
 padding: 0 0;
 margin: 0 0.3em 0 0.9em;
 box-shadow: 2px 2px 7px rgba(53, 52, 52, 0.247);
 font-family: Raleway;
-height: 44%;
+height: 37%;
 }
 .subsec2hospital{
 height: 2em;
@@ -208,10 +211,12 @@ text-align: end;
 #doctorsonduty{
 display: flex;
 flex-direction: row;
-height: 27.5%;
+height: 34%;
 box-shadow: 2px 2px 7px rgba(66, 65, 65, 0.541);
 width: 96%;
 margin: 2em 1em 1em 1em;
+justify-content: center;
+align-items: center;
 }
 .bookdiv7{
 height: 47%;

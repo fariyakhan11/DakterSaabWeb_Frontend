@@ -13,7 +13,25 @@ import Complaints from '../../images/chat.png'
 import News from '../../images/newspaper.png'
 import Requests from '../../images/request.png'
 import Profilehospital from "../Profile/profilehospital";
+import { Chart as ChartJS, ArcElement,Title, Tooltip,    CategoryScale,
+    LinearScale,    PointElement,
+    LineElement,
+    BarElement, Legend } from 'chart.js';
+import { Bar } from 'react-chartjs-2';
 
+import { Line } from 'react-chartjs-2';
+
+ChartJS.register(
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Title,
+    Tooltip,
+    Legend,
+    ArcElement,
+    BarElement,
+  );
 
 function Dashboardhospital(){
     const currentDate = new Date()
@@ -21,6 +39,64 @@ function Dashboardhospital(){
     const [selectedDate, setSelectedDate] = useState(currentDate);
     
     const [tab, settab]=useState('Home');
+
+    const labelsweek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+  
+  const dataforweekop = {
+    labels: labelsweek, // Moved labels to the data object
+    datasets: [
+      {
+        label: 'Week 1',
+        data: [10, 79, 25, 25, 32, 1, 45],
+        borderColor: 'rgb(255, 99, 132)',
+        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+      },
+      {
+        label: 'Week 2',
+        data: [4, 47, 23, 56, 5, 61, 15],
+        borderColor: 'rgb(53, 162, 235)',
+        backgroundColor: 'rgba(53, 162, 235, 0.5)',
+      },
+    ],
+  };
+
+  const optionsforweekop = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'top',
+      },
+      title: {
+        display: true,
+        text: 'Patients over the week',
+      },
+    },
+  };
+    const labels = ['Neurology', 'Oncology', 'Gynecology', 'ENT', 'Cardiology', 'Pulmonology'];
+    const options = {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: 'top' ,
+        },
+
+    }}
+    const[departmentop,setdepartmentop]=useState({
+        labels,
+        datasets: [
+            {
+              label: 'Doctors',
+              data: [15, 2, 11, 7, 0, 3,2],
+              backgroundColor: 'rgba(75, 192, 192, 0.6)',
+            },
+            {
+                label: 'Patients',
+                data: [9, 18, 0, 0, 5, 10,4],
+                backgroundColor: 'rgba(53, 162, 235, 0.5)',
+              },
+              
+          ],}
+      )
 
 //navigate between tabs from the sidenav clicks and transitions
     const handlestate=(msg)=>{
@@ -57,7 +133,7 @@ return(
 
                 <h2 className="booktitledivpharmacy">Departmental Overview</h2>
                 <div className="performancegraphhospital">
-
+                    <Bar options={options} data={departmentop} />
                 </div>
                 
                 <div className="bookdiv7">
@@ -120,14 +196,14 @@ return(
                         </div>
                     </div>
                     <div id="doctorsonduty">
-                        <div className="dod">
-                            
-                        </div>
+                        
+                         <Line options={optionsforweekop} data={dataforweekop} className="linechart"/>;
+                        
                     </div>
                 
                 <h2 className="booktitledivhospital"> Complaints News and Requests</h2>
                 
-                <div className="bookdiv6">
+                <div className="bookdiv12">
                     <div id="CNRstats">
                         <div className="complaintstats">
                             <img src={Complaints}></img>
