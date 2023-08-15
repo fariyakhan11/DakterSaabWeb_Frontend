@@ -168,7 +168,7 @@ const Login=()=>{
         console.log(err)
     }
 }
-useEffect(()=>{console.log(loggedindep)},[loggedindep])
+
 return(
 <>
 {!close_expand_view &&
@@ -233,14 +233,14 @@ return(
                 <div id="departmentsdiv">
                       <div className="depscontainer" >
 {displayed_list.map((i,index)=>{return(
-                        <div className="depsdiv" id={index+'depsdiv'} onClick={opendepart}>
+                        <div className="depsdiv" id={index+'depsdiv'} >
                             <div className="deptitle" id={index+'deptitle'}>
                                 <h3 id={index}>{i.name}</h3>
                                 <AiOutlineDelete className="icondep" id={index+'deldep'} onClick={deleteselect}/>
                                     
                                 
                             </div>
-                            <div className="depinfo" id={index +'depinfo'}>
+                            <div className="depinfo" id={index +'depinfo'} onClick={opendepart}>
                                 <h4 id={index}>Admin Name : {i.admin_name}</h4>
                                 <h4 id={index}>Phone : {(i.phone==='')?'-':i.phone}</h4>
                             </div>

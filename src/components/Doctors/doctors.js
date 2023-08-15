@@ -181,6 +181,7 @@ const delete_selected=(e)=>{
 const select_delete = (event) => {
   event.preventDefault();
   let id = parseInt(event.target.id);
+  if(id!=null){
   let check = document.getElementById('cbd' + id);
   check.checked = !check.checked;
 
@@ -190,7 +191,7 @@ const select_delete = (event) => {
   } else {
     document.getElementById('cb' + id).style.backgroundColor = 'transparent';
     setselected_doctor((prevState) => prevState.filter((item) => item.name !== check.value&&item.department!==check.name ));
-  }  
+  } } 
 };
 
 //which medicines are selected for deletion

@@ -44,7 +44,7 @@ function Signup() {
             document.getElementById('spe-div').style.display = 'flex';
             document.getElementById('24open').style.display = 'none';
             document.getElementById('coordinates').style.display = 'none';
-
+            document.getElementById('coordinates1').style.display = 'none';
         }
         else {
             document.getElementById('exp-div').style.display = 'none';
@@ -55,7 +55,7 @@ function Signup() {
             document.getElementById('city-div').style.display = 'flex';
             document.getElementById('time-div').style.display = 'flex';
             document.getElementById('coordinates').style.display = 'flex';
-
+            document.getElementById('coordinates1').style.display = 'flex';
         }
     }, [identitytitle])
     //
@@ -356,7 +356,7 @@ function Signup() {
                                             <label>Longitude: </label>
                                             <input className="inputf time" type="text" name="longitude" onChange={handleUserInput} />
                                         </div>
-                                        <div className="form-fields" id="coordinates">
+                                        <div className="form-fields" id="coordinates1">
                                             <label>Latitude: </label>
                                             <input className="inputf time" type="text" name="latitude" onChange={handleUserInput} />
                                         </div>

@@ -300,9 +300,7 @@ function Login() {
                       {showPassword ? <FaEye /> : <FaEyeSlash />}
                     </button>
                   </div>
-                  <div className='fplink'>
-                    <a href="" className='fplink' onClick={forget_password}>Forgot password?</a>
-                  </div>
+
                 </div>
               </form>
               <div className="btndiv">

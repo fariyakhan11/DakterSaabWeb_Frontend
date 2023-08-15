@@ -27,7 +27,7 @@ width: 0.8em;
 height: 0.8em;
 }
 #profilediv{
-width: 100%;
+width: 95%;
 height: 90%;
 display: flex;
 flex-direction: column;
@@ -55,7 +55,7 @@ outline: none;
 border-radius: 2em;
 border: 3px solid #8746bd;
 font-family: Fraunces;
-font-size: 1.2em;
+font-size: 1.1rem;
 background-color: white;
 color: #763da5;
 transition: all 0.5s ease-in-out;
@@ -94,10 +94,10 @@ margin-right: 4%;
 width: 16%;
 }
 #maincontentdiv{
-width: 80%;
+width: 70%;
 }
 #maincontentdiv>div>div>h6{
-font-size: 1em;
+font-size: 0.7rem;
 color: red;
 font-family: Fraunces;
 text-shadow: 2px 2px 10px rgba(197, 194, 194, 0.411);
@@ -105,7 +105,7 @@ display: none;
 }
 
 #profinfodiv>h6{
-font-size: 1em;
+font-size: 0.9rem;
 color: red;
 font-family: Fraunces;
 text-shadow: 2px 2px 10px rgba(197, 194, 194, 0.411);
@@ -122,7 +122,7 @@ outline: none;
 width: 100%;
 border: none;
 border-bottom: 2px solid rgba(179, 176, 176, 0.452);
-font-size: 1.4em;
+font-size: 1.2rem;
 font-family: Fraunces;
 }
 #Hospitaldiv>div:nth-child(1){
@@ -246,7 +246,7 @@ border-radius: 50%;
 border: 2px solid #c29de0 ;
 }
 #Namediv>h2{
-font-size: 2.6em;
+font-size: 1.6rem;
 text-shadow: 2px 2px 10px rgba(197, 194, 194, 0.411);
 }
 #profinfodiv{
@@ -312,8 +312,10 @@ font-family: Georgia, 'Times New Roman', Times, serif;
     padding: 30px;
     border-radius: 20px;
     box-shadow: 0 2px 4px rgba(160, 50, 50, 0.1);
-    width: 20rem;
-    margin: 2rem;
+    width: 12rem;
+    margin: 1rem;
+    height: 10rem;
+    font-size: 0.8rem;
   }
   .Description{
     margin-left: 65px

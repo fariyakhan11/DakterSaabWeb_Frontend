@@ -91,11 +91,18 @@ border-collapse: separate;
 border-spacing: 0;
 
 }
-#slec{width: 98%;
-    border: 3px solid #56aca6;
+#slec{width: 96%;
+
 justify-content: space-evenly;
 display: flex;      
 margin-top: 0.3rem;
+padding-right: 0.5rem;
+}
+.slecphamracy{
+    border: 2px solid #56aca6;
+}
+.slecblood{
+    border: 2px solid #e06464da ;
 }
 #slec>h6{
     font-size: 0.8rem;

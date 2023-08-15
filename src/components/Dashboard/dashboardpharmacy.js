@@ -9,7 +9,7 @@ import Transactions from "../Transactions/transactions";
 import Profit from '../../images/profits.png'
 import Med from '../../images/drugs1.png';
 import MedP from '../../images/medicine.png';
-import Week from '../../images/week.png';
+
 import OrdersI from '../../images/order (1).png'
 import OrdersP from '../../images/box.png'
 import Trans from '../../images/card-payment.png'
@@ -45,6 +45,8 @@ function Dashboardpharmacy(){
     const [last_transact,setlast_transact]=useState({date:'',buyer_name:'',amount:'',items:[{name:'',quantity:''}]});
     const [medicine_list,setmedicine_list]=useState([]);
     const [medsold,settodaymedsold]=useState([]);
+    const [todaysale,settodaysale]=useState(0)
+    const [todayquantity,settodayquantity]=useState(0)
 //navigate between tabs from the sidenav clicks and transitions
     const handlestate=(msg)=>{
         settab(msg.tab)
@@ -203,8 +205,15 @@ function fetchtodaymedsold(){
             },
         }).then((response) => response.json()) // get response, convert to json
         .then((json) => {
-
+            var amount=0
+            var quantity=0
             settodaymedsold(json.medsold)
+            json.medsold.forEach(element => {
+                amount=amount+(element.totalQuantitySold*element.totalPrice)
+                quantity=quantity+element.totalQuantitySold
+            });
+            settodaysale(amount)
+            settodayquantity(quantity)
         });
     }catch(err){
       console.log(err)
@@ -234,21 +243,15 @@ return(
                                     <img src={Med}></img>
                                     <div>
                                         <h3 className="tilename">Today <br/> Medicines sold</h3>
-                                        <h2 className="tilevalue">{statistics.todaymed?statistics.todaymed:0}</h2>
+                                        <h2 className="tilevalue">{todayquantity}</h2>
                                     </div>
                                 </div>
-                                <div className="summarytilesbloodbank">
-                                    <img src={Week}></img>
-                                    <div>
-                                        <h3 className="tilename">This Week<br/> Sales(Rupees)</h3>
-                                        <h2 className="tilevalue">{statistics.weeksale?statistics.weeksale:0}</h2>
-                                    </div>
-                                </div> 
+
                                 <div className="summarytilesbloodbank">
                                     <img src={Profit}></img>
                                     <div>
                                         <h3 className="tilename">Today <br/> Sales(Rupees)</h3>
-                                        <h2 className="tilevalue">{statistics.todaysale?statistics.todaysale:0}</h2>
+                                        <h2 className="tilevalue">{todaysale}</h2>
                                     </div>
                                 </div>
                                       
@@ -302,11 +305,11 @@ return(
                     <h6 className="nolowmed">No medicines sold today</h6>
                     </div>
 }
-{medsold.map((i,index)=>{return(<>
+{medsold.filter(m=>m.totalQuantitySold>0).map((i,index)=>{return(<>
                         <div className="pharmacyinfo pharmacycontent">
                             <h3>{i.name}</h3>
-                            <h3>{i.quantity}</h3>
-                            <h3>{i.price}</h3>
+                            <h3>{i.totalQuantitySold}</h3>
+                            <h3>{i.totalPrice}</h3>
 
                         </div>
 

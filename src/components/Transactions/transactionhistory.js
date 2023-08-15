@@ -7,6 +7,7 @@ import Week from '../../images/week.png';
 import Profit from '../../images/profits.png'
 import Bloodimg from '../../images/blood.png'
 import BloodGroup from '../../images/bloodgroup.png'
+import MedP from '../../images/medicine.png';
 
 function Transactionhistory({close,message}){
     const [transactionhistory,settransactionhistory]=useState([])
@@ -119,7 +120,7 @@ return(
                                     </div>
                                 </div>
 }
-{(message==='pharmacy')&&
+{(message==='pharmacy')&&<>
                                 <div className="summarytilesbloodbank">
                                     <img src={Med}></img>
 
@@ -128,14 +129,15 @@ return(
                                         <h2 className="tilevalue">{statisticspharmacy.todaymed}</h2>
                                     </div>
                                 </div>
-}
                                 <div className="summarytilesbloodbank">
-                                    <img src={Week}></img>
+                                    <img src={MedP}></img>
                                     <div>
-                                        <h3 className="tilename">This Week<br/> Sales(Rupees)</h3>
-                                        <h2 className="tilevalue">{(message==='pharmacy')?statisticspharmacy.weeksale:statisticsblood.weeksale}</h2>
+                                        <h3 className="tilename">Popular<br/> Medicine</h3>
+                                        <h2 className="tilevalue">{statisticspharmacy.popmed?statisticspharmacy.popmed:'None'}</h2>
                                     </div>
-                                </div> 
+                                </div></>
+}
+
                                 <div className="summarytilesbloodbank">
                                     <img src={Profit}></img>
                                     <div>

@@ -294,18 +294,29 @@ return(
                     {department_list.map((d,dind)=>{
                         return(
                         <div className="depstatsdivtokens">
-                                <h1>{d+ 'Department'}</h1>
+                            
+                                <h1>{d.name+ ' Department'}</h1>
                                 <div className="depstatsdivtokensdetails">
-                        {doctor_on_duty.filter(duty=>duty.Department===d).map((i,index)=>{return(<>
+                                <div></div>
+                                <div style={{display:'flex',flexDirection:'column'}}>
+                        {doctor_on_duty.map((i,index)=>{return(<>
 
                         
-                        
+                        {i.Department===d.name&&
                         <div>
                             <h2>{i.Name}</h2>
                             
                         </div>
-                        
+                        }
+
                         </>)})}
+                        {!doctor_on_duty.filter(f=>f.Department===d.name).length>0&&
+                        <div>
+                        <h2>No doctors on duty</h2>
+                        
+                    </div>
+                        }
+                        </div>
                         </div>
                     </div>
                         )})}
@@ -355,7 +366,7 @@ return(
                                         </div>
 )})} {
     CNRlist.length<1&&<>
-    <h2 style={{textAlign:'center',width:'100%'}}>No Forms to display</h2>
+    <h2 style={{textAlign:'center',width:'100%',fontFamily:'Fraunces',fontSize:'0.8rem',marginTop:'1rem'}}>No Forms to display</h2>
     </>
 }
 

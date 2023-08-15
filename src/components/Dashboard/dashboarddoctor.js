@@ -39,13 +39,14 @@ import { appStore } from "fontawesome";
 
 
 function Dashboarddoctor(){
-    const currentDate = new Date()
+    
     const [expandedstate,setexpandedstate]=useState(false);
     const [tab, settab]=useState('Home');
     const [appointment_list,setappointment_list]=useState([])
     const [schedule,setschedule]=useState([])
     const [Datenow,setDatenow]=useState()
-
+    const[schedulehours,setschedulehours]=useState([])
+    
 //navigate between tabs from the sidenav clicks and transitions
     const handlestate=(msg)=>{
     
@@ -70,13 +71,13 @@ function Dashboarddoctor(){
         },
       };
 
-      const labels=[]
+      const labels=['Monday','Tuesday','Wednesday','Thursday',"Friday",'Saturday',"Sunday"]
       const [workinghours,setworkinghours]=useState({
         labels,
         datasets: [
             {
               
-              data: [15, 12, 7, 8, 10, 8,6],
+              data: [0,0,0,0,0,0,0],
               backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',
@@ -99,17 +100,50 @@ function Dashboarddoctor(){
           ],
       })
 
-
-
-      const[appointmentweek,setappointmentweek]=useState({
+useEffect(()=>{
+    setworkinghours({
         labels,
+        datasets: [
+            {
+              
+              data: schedulehours,
+              backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)',
+              ],
+              borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)',
+              ],
+              borderWidth: 1,
+            },
+            
+          ],
+      })
+},[schedulehours])
+    const workplaces=[]
+      const[appointmentweek,setappointmentweek]=useState({
+        labels:workplaces,
         datasets: [
             
             
           ],}
       )
-const [upcoming,setupcoming]=useState([])
 
+      
+const [upcoming,setupcoming]=useState([])
+function timeToMinutes(time) {
+    const [hours, minutes] = time.split(':').map(Number);
+    return hours * 60 + minutes;
+}
 
 function getschedule(){
 
@@ -129,37 +163,35 @@ function getschedule(){
             if(sch.length){
 
                 // Initialize an empty array to store the new formatted data
-                var formattedSchedule = [];
-                const findDay = (day) => {
-                    return formattedSchedule.find(entry => entry.day === day);
-                };
+                var formattedSchedule = [0,0,0,0,0,0,0];
+                sch.forEach(s=>{
+                    ['Monday','Tuesday','Wednesday','Thursday',"Friday",'Saturday',"Sunday"].forEach((dayt,index) =>{
+                        s.availability.map((a)=>{
+                            if(a.day===dayt){
+                                a.time.forEach(timeslot=>{
+                                    const [startTime, endTime] = timeslot.split('-')
+                                    const startMinutes = timeToMinutes(startTime);
+                                    const endMinutes = timeToMinutes(endTime);
 
-                // Iterate through each entry in the 'availability' array
-                sch.forEach(entry => {
-                    entry.availability.forEach(availabilityEntry => {
-                        // Find or create a day entry in the formattedSchedule array
-                        let dayEntry = findDay(availabilityEntry.day);
-                        if (!dayEntry) {
-                            dayEntry = { day: availabilityEntry.day, availability: [] };
-                            formattedSchedule.push(dayEntry);
-                        }
+                                    const timeDifferenceInMinutes = endMinutes - startMinutes;
+                                    formattedSchedule[index]=formattedSchedule+(timeDifferenceInMinutes/60)
+                                })
 
+                            }})
 
-                        // Push the availability information into the day entry
-                        dayEntry.availability.push(
-                            
-                            availabilityEntry.time
-                        );
-                    });
-                });
+                    })
+                })
+                
+
+                
 
             }
             else{
-                var formattedSchedule = [{day:'',availability:[[]]}];
+                var formattedSchedule = [0,0,0,0,0,0,0];
             }
           setschedulehours(formattedSchedule)
             
-        }else{setschedulehours([]);}
+        }else{setschedulehours([0,0,0,0,0,0,0]);}
         if(json.error){console.log(json.error)}
       });
     }catch(err){
@@ -216,6 +248,7 @@ useEffect(()=>{
     if(tab==='Home'){
     getappointments()
     geteditschedule()
+    getschedule()
 }
 },[tab])
 
@@ -231,7 +264,8 @@ function getappointments(){
         }).then((response) => response.json()) // get response, convert to json
         .then((json) => {
         if(json.appointment){
-            const today=new Date()
+            var today=new Date()
+            
             const app = json.appointment.filter(a => {
                 const dateParts = a.date.split('-');
                 const appointmentYear = parseInt(dateParts[0]);
@@ -241,13 +275,13 @@ function getappointments(){
                 return (
                     appointmentYear === today.getFullYear() &&
                     appointmentMonth === today.getMonth() + 1 && // Months are 0-based, so add 1
-                    appointmentDate === today.getDate()
+                    appointmentDate === today.getDate()+1
                 );
             });
             setappointment_list(app)
-
+            console.log(app)
             var clinic_and_appointment=[]
-            const distinctClinicNames = [...new Set(json.appointment.map(appointment => appointment.clinicName))];
+            const distinctClinicNames = [...new Set(app.map(appointment => appointment.clinicName))];
             distinctClinicNames.forEach((element,index)=>{
                 var apps=json.appointment.filter(appo=>appo.clinicName===element)
                 clinic_and_appointment.push(apps.length)
@@ -265,6 +299,10 @@ function getappointments(){
       console.log(err)
     }
 }
+useEffect(()=>{
+    sessionStorage.setItem('org_name', 'Dr Ayesha Khan');
+    sessionStorage.setItem('email', 'ayeshakhan@gmail.com');
+},[])
 
 //get schedule for editing
 function geteditschedule() {
@@ -278,22 +316,23 @@ function geteditschedule() {
             },
         }).then(res=>res.json())
         .then(json=>{
-
+            
             if (json.schedule.length) {
-                const dayIndex = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
-                var timework=[]
-                json.schedule.forEach(element => {
-                    dayIndex.forEach(day=>{
-                        var avail=element.availability.filter(a=>a.day===day)
-                        var time=0
-                        if(avail){
-
-                        }
-                    })
-                });
-                const currentDayIndex = new Date().getDay();
-                const sch=json.schedule.filter(s=>s.availability.day.toLowerCase()===dayIndex[currentDayIndex].toLowerCase())
-                setschedule(sch);
+                
+                
+                const currentDayIndex =new Date().toLocaleDateString('en-US', { weekday: 'long' })
+                var scharray=[]
+                json.schedule.forEach(
+                    s=>{s.availability.forEach(
+                        d=>{if(d.day.toLowerCase()===currentDayIndex.toLowerCase()){
+                            
+                            d.time.forEach(t=>{
+                                scharray.push({name:s.name,time:t})
+                            })
+                            
+                        }})})
+                
+                setschedule(scharray);
                
                 } else {
                 setschedule([])
@@ -350,28 +389,25 @@ return(
                 <div className="bookdiv11">
                     <div id="datedisplay"><h2>{Datenow}</h2></div>
                     <div id="scheduledashboard">
-                        {schedule.length&&
+                        {schedule.length>0&&
                         <>{
                         schedule.map((i,index)=>{return(<>
                         <div>
                             <h1>{i.name}</h1>
-                            {i.time.map((m,ind)=>{
-                                return(<>
-                                <h3>{m}</h3>
-                                </>)
-                                
-                            })}
+                            <h3  style={{fontFamily:'Fraunces',fontSize:'0.8rem'}}>{i.time}</h3>
+                        
                             
                         </div>
                         </>)})}
                         </>
                         }
-                        {!schedule.length&&
+                        {!schedule.length>0&&
                         <div><h1>No schedule entered for today</h1></div>
                         }
                      
                     </div>
                 </div>
+
                 <h2 className="booktitledivpharmacy">Today Appointments</h2>
                 
                 <div className="bookdiv4">
@@ -382,18 +418,19 @@ return(
                         <h3>Time</h3>
                     </div>
                     <div id="contentinfopatient">
-{appointment_list.length &&<>
+
                     {appointment_list.map((i,index)=>{
+                        return(<>
                         <div className="patientinfo patientcontent">
                         <h3>{i.patientName}</h3>
                         <h3>{i.clinicName}</h3>
                         
                         <h3>{i.time}</h3>
-                    </div>
+                    </div></>)
                     })}
-                </>}
+
                 {
-                    !appointment_list &&<div className="patientinfo patientcontent">
+                    !appointment_list.length>0 &&<div className="patientinfo patientcontent">
                     <h3>No appointments for today</h3>
                     
                 </div>

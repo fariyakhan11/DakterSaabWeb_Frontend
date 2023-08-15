@@ -39,7 +39,7 @@ function Dashboardbloodbank(){
     const [expandedstate,setexpandedstate]=useState(false);
     const [selectedDate, setSelectedDate] = useState(currentDate);
     const [tab, settab]=useState('Home');
- 
+    const [bloodlabel,setbloodlabel]=useState([]); 
     const [bloodsold,settodaybloodsold]=useState([]);
     const [last_transact,setlast_transact]=useState({date:'',buyer_name:'',amount:'',items:[{name:'',quantity:''}]});
     const options = {
@@ -64,14 +64,14 @@ function Dashboardbloodbank(){
         },
       };
   
-      const labels = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+      const labels = [];
 
       const [dataweek,setdataweek]=useState({
         labels,
         datasets: [
             {
-              label: 'Component A',
-              data: [15000, 20000, 22000, 18000, 25000, 28000],
+            
+              data: [],
               backgroundColor: 'rgba(75, 192, 192, 0.6)',
             },
             
@@ -132,11 +132,41 @@ useEffect(()=>{
     }
 })
 
+function fetchgraphs(){
+  try{
+      const params=sessionStorage.getItem('org_name')+'/'+sessionStorage.getItem('org_address')
+      const api='http://localhost:5000/api/blood/fetchgraphs/'+params;
+      fetch(api, {
+          method: 'GET',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+      }).then((response) => response.json()) // get response, convert to json
+      .then((json) => {
+
+          setbloodlabel(json.bloodarray)
+          setdataweek({
+              labels:json.bloodarray,
+              datasets: [
+                {
+                  data: json.quantityarray,
+                  borderColor: 'rgb(255, 99, 132)',
+                  backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                },
+              ],
+            })
+      });
+  }catch(err){
+    console.log(err)
+  }
+}
 useEffect(()=>{
     if(tab==='Home'){
         fetchblood()
         fetchstats()
         fetchlasttransact()
+        fetchtodaymedsold()
+        fetchgraphs()
     }
 
 },[tab])
@@ -186,7 +216,7 @@ try{
 function fetchtodaymedsold(){
   try{
       const params=sessionStorage.getItem('org_name')+'/'+sessionStorage.getItem('org_address')
-      const api='http://localhost:5000/api/pharmacy/todaymedsold/'+params;
+      const api='http://localhost:5000/api/blood/todaymedsold/'+params;
       fetch(api, {
           method: 'GET',
           headers: {
@@ -245,7 +275,7 @@ return(
                     <div className="subsec1blood">
                         <div className="Summarybar">
                             <h4>Statistics</h4>
-                            <div id="statisticsdiv">
+                            <div id="statisticsdiv" style={{height:'8rem'}}>
                                 <div className="summarytilesbloodbank">
                                     <img src={Blood}></img>
                                     <div>

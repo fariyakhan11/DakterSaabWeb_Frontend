@@ -266,7 +266,7 @@ return(
                         <div id={"header-side-transact-div"+props.class}>
                             <h1>{props.stock} in stock</h1>
                         </div>
-                        <div id="slec">
+                        <div id="slec" className={'slec'+props.class}>
                                     <h6></h6>                        
                                     <h6>Name</h6>
                                     <h6>Price (Rs)</h6>

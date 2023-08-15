@@ -48,6 +48,10 @@ height:100%;
 #NRC>div>div>.bookdiv6{
 height: 91%;
 }
+#CNRstats{
+font-family: Fraunces;
+
+}
 #NRC>div>div>.bookdiv6>#CNRstats>div{
 transition: all 0.5s ease-in-out;
 }
@@ -187,6 +191,13 @@ background-color: transparent;
 }
 #NRC_formAreaFormContainer>div:nth-last-child(2)>input{
 border: 1px solid rgb(138, 136, 136) !important;
+border-radius: 1em;
+height: 70%;
+padding-top: 5%;
+background-color: transparent;
+}
+.formkadiv{
+    border: 1px solid rgb(138, 136, 136) !important;
 border-radius: 1em;
 height: 70%;
 padding-top: 5%;

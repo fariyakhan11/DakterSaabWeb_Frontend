@@ -171,6 +171,7 @@ margin: 0em 0.1em;
 overflow: scroll;
 display: flex;
 flex-direction: column;
+border-bottom-left-radius: 2em;
 justify-content: center;
 }
 .subsec2bloodbank{

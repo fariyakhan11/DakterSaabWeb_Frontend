@@ -323,7 +323,7 @@ return(
                                 
                                 
                                 <div className="bookdiv6">
-                                    <div id="CNRstats">
+                                    <div id="CNRstats" className="formkadiv">
 {CNRlist.map((i,index)=>{return(
                                         <div className={i.form_type=='Complaint'?"complaintstats":'requeststats'} id={index} onClick={show_details_and_resolution} >
                                             <img src={i.form_type=='Complaint'?Complaints:Requests}id={index}></img>
