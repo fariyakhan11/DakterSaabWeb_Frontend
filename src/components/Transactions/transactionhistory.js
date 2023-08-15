@@ -13,7 +13,34 @@ function Transactionhistory({close,message}){
     const [transactionhistory,settransactionhistory]=useState([])
     const [statisticsblood,setstatisticsblood]=useState({todayblood:'',weeksale:'',todaysale:'',popblood:''})
     const [statisticspharmacy,setstatisticspharmacy]=useState({todaymed:'',weeksale:'',todaysale:'',totalorder:'',orderpend:'',popmed:''})
+    const [todaysale,settodaysale]=useState(0)
+    const [todayquantity,settodayquantity]=useState(0)
 
+    function fetchtodaymedsold(){
+        try{
+            const params=sessionStorage.getItem('org_name')+'/'+sessionStorage.getItem('org_address')
+            const api='http://localhost:5000/api/pharmacy/todaymedsold/'+params;
+            fetch(api, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            }).then((response) => response.json()) // get response, convert to json
+            .then((json) => {
+                var amount=0
+                var quantity=0
+              
+                json.medsold.forEach(element => {
+                    amount=amount+(element.totalQuantitySold*element.totalPrice)
+                    quantity=quantity+element.totalQuantitySold
+                });
+                settodaysale(amount)
+                settodayquantity(quantity)
+            });
+        }catch(err){
+          console.log(err)
+        }
+    }
 function fetchtransactioninfo(){
     try{
         const params=sessionStorage.getItem('org_name')+'/'+sessionStorage.getItem('org_address')
@@ -37,11 +64,13 @@ function fetchtransactioninfo(){
 }
 useEffect(()=>{
     fetchtransactioninfo()
+
     if(message==='blood'){
         fetchstatsblood()
     }
     else{
         fetchstatspharmacy()
+        fetchtodaymedsold()
     }
 },[])
 
@@ -126,7 +155,7 @@ return(
 
                                     <div>
                                         <h3 className="tilename">Today <br/> Medicines sold</h3>
-                                        <h2 className="tilevalue">{statisticspharmacy.todaymed}</h2>
+                                        <h2 className="tilevalue">{todayquantity}</h2>
                                     </div>
                                 </div>
                                 <div className="summarytilesbloodbank">
@@ -142,7 +171,7 @@ return(
                                     <img src={Profit}></img>
                                     <div>
                                         <h3 className="tilename">Today <br/> Sales(Rupees)</h3>
-                                        <h2 className="tilevalue">{(message==='pharmacy')?statisticspharmacy.todaysale:statisticsblood.todaysale}</h2>
+                                        <h2 className="tilevalue">{(message==='pharmacy')?todaysale:statisticsblood.todaysale}</h2>
                                     </div>
                                 </div>
 {(message==='blood')&&

@@ -3,7 +3,7 @@ import './dashboardhospital.css'
 import Sidenavhospital from "../Sidenav/sidenavhospital"
 import { useState } from "react";
 
-import {GrHelp} from "react-icons/gr";
+
 import Newsandreports from '../NewsandReports/newsandreports';
 import Department from '../Department/department';
 import Doctors from '../Doctors/doctors';
@@ -33,19 +33,19 @@ ChartJS.register(
   );
 
 function Dashboardhospital(){
-    const currentDate = new Date()
+
     const [expandedstate,setexpandedstate]=useState(false);
-    const [selectedDate, setSelectedDate] = useState(currentDate);
+
     const [doctor_total, setdoctor_total] = useState(0);
     const [doctor_on_duty, setdoctor_on_duty] = useState(0);
     const [doctorlist, setdoctorlist] = useState([]);
     const [tab, settab]=useState('Home');
-    const [data,setdata]=useState([]);
+
     const [department_list,setdepartment_list]=useState([]);
     
     const [CNRlist,setCNRlist]=useState([]);
     const labelsweek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-    
+  
   const dataforweekop = {
     labels: labelsweek, // Moved labels to the data object
     datasets: [
@@ -127,9 +127,9 @@ useEffect(()=>{
 
 useEffect(()=>{
     if(tab==='Home'){
-        fetchgraphs()
+        
         fetchdoctors()
-        fetchgraphsweek()
+   
         fetchdepartments()
         fetchforms()
     }
@@ -160,43 +160,7 @@ function fetchforms(){
     }
 }
 
-function fetchgraphs(){
-    try{
-        const params=sessionStorage.getItem('org_name')+'/'+sessionStorage.getItem('org_address')
-        const api='http://localhost:5000/api/hospital/fetchgraphs/'+params;
-        fetch(api, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-        }).then((response) => response.json()) // get response, convert to json
-        .then((json) => {
 
-            setdata(json)
-        });
-    }catch(err){
-      console.log(err)
-    }
-}
-
-function fetchgraphsweek(){
-    try{
-        const params=sessionStorage.getItem('org_name')+'/'+sessionStorage.getItem('org_address')
-        const api='http://localhost:5000/api/hospital/fetchgraphsforweek/'+params;
-        fetch(api, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-        }).then((response) => response.json()) // get response, convert to json
-        .then((json) => {
-
-            setdata(json)
-        });
-    }catch(err){
-      console.log(err)
-    }
-}
 
 //fetch doctors from the database
 function fetchdoctors(){

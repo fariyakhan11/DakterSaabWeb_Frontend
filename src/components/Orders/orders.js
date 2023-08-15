@@ -4,7 +4,7 @@ import {FiPackage} from "react-icons/fi";
 import { useState,useEffect } from "react";
 import {AiFillCaretDown} from "react-icons/ai";
 import {GrTransaction} from "react-icons/gr";
-import {BsCalendar2Date} from "react-icons/bs";
+import {BsSave} from "react-icons/bs";
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import OrdersI from '../../images/order (1).png'
@@ -44,12 +44,12 @@ function fetchorders(){
 }
 
 useEffect(() => {
-    const socket = io('http://localhost:4000'); // Replace with your server URL
+    const socket = io('http://localhost:5000'); // Replace with your server URL
     fetchorders();
     fetchstats();
     // Listen for the 'entryAdded' event
     socket.on('entryAdded', newEntry => {
-      console.log('Received new entrynmnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn:', newEntry);
+      
       if(newEntry.org_name===sessionStorage.getItem('org_name')&&newEntry.org_address===sessionStorage.getItem('org_address')){
         setorder_list(prev=>[...prev,newEntry])
       }
@@ -118,9 +118,6 @@ const filterorders = (e) => {
   }
 };
 
-const movetotransact=(e)=>{
-    const element=displayed_list[e.target.id]
-}
 
 function fetchstats(){
 try{
@@ -164,6 +161,61 @@ function filter(){
         dL=dL.filter(f=>f.date===d)
     }
     setdisplayed_list(dL)
+}
+
+function updateorder(id){
+    try{
+        var api='http://localhost:5000/api/transactionandorder/updateorder';
+        
+        var transactioninfo={date:displayed_list[id].date,buyer_name:displayed_list[id].buyer_name,items:displayed_list[id].items,discount:displayed_list[id].discount,amount:displayed_list[id].amount,status:'delivered'}
+        let data={org_name:sessionStorage.getItem('org_name'),address:sessionStorage.getItem('org_address'),transactioninfo:transactioninfo}
+        fetch(api, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        }).then(res => {
+                if (res.status === 200) {
+                    alert('order is updated')
+                    fetchorders()
+
+                }
+                else if (res.status === 430) { alert(res.error) }
+
+                else {  alert('Problem adding medicines', res.error) }
+            });
+    }catch(err){
+        console.log(err);
+    }
+}
+const savetrans=(e)=>{
+    const id=e.target.id;
+    console.log(order_list[id])
+    try{
+        var api='http://localhost:5000/api/transactionandorder/transactionmeds';
+        
+        var transactioninfo={date:displayed_list[id].date,buyer_name:displayed_list[id].buyer_name,items:displayed_list[id].items,discount:displayed_list[id].discount,amount:displayed_list[id].amount}
+        let data={org_name:sessionStorage.getItem('org_name'),address:sessionStorage.getItem('org_address'),transactioninfo:transactioninfo}
+        fetch(api, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        }).then(res => {
+                if (res.status === 200) {
+                    alert('transaction successful')
+                    updateorder(id)
+
+                }
+                else if (res.status === 430) { alert(res.error) }
+
+                else {  alert('Problem adding medicines', res.error) }
+            });
+    }catch(err){
+        console.log(err);
+    }
 }
 
 useEffect(()=>{
@@ -223,10 +275,12 @@ return(
                             <div className={"order_container"+i.status} id={index}>
                                 <FiPackage className="tabsicon Order_symbol" id={index}/>
                                 <h2 className="order_title" id={index}>{i.buyer_name}</h2>
-
+                                <div className="orderchangestatus" onClick={savetrans} id={index}>
+                                    <BsSave className="tabsicon " id={index} onClick={savetrans}/>
+                                </div>
                                 <h2 className="order_date" id={index}>{format_date(i.date)}</h2>
                                 <h2 className="status" id={index}>{i.status}</h2>
-                                <GrTransaction  className="tabsicon transact_icon" id={index} onClick={movetotransact}/>
+                                
                                 <div className="expand_icon" onClick={orderdetailhandler} id={index}>
                                     <AiFillCaretDown className="tabsicon " id={index}/>
                                 </div>

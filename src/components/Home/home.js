@@ -39,11 +39,12 @@ function Home() {
         <div className="main">
           <div className="headingdiv">
             <div className="heading">
-              <h3 className="mainheading">Your Health is Our Priority</h3>
-              <h4>Set up , manage and reach out your healing hands to the community </h4>
-              <p>This is your content that comes after the fixed navbar.<br />
-                This is your content that comes after the fixed navbar.<br />
-                This is your content that comes after the fixed navbar.
+            <h3 className="mainheading">Your Health <br />is Our Priority</h3>
+              <h4>Set up, manage and reach out your healing<br /> hands to the community </h4>
+              <p>Elevate your healthcare experience with our platform, providing a
+                <br /> seamless registration process for doctors, hospitals, blood banks, and pharmacies.
+                <br />Join a connected network dedicated to delivering efficient and 
+                <br />comprehensive medical services.
               </p>
               <div className="btnsdiv" ref={homeSectionRef}>
                 <button onClick={() => { navigate('/Login') }}>Login</button>

@@ -66,8 +66,26 @@ function Dashboardpharmacy(){
           },
         },
       };
-      const [medlabel,setmedlabel]=useState()
-      const [data,setdata]=useState({medlabel,datasets:[]})
+      const labels = ['zylex','augmentin','cafka','Cytopan','Bekson Forte HFA','flagel','ponstan','panadol','Covam Plus','Covam','Fexet','Daclaget','Lipanthyl','motilium','polyflex','ansaid'];
+      
+      const data = {
+        labels,
+        datasets: [
+          {
+            label: 'Week 1',
+            data: [10,79,25,25,32,1,45,23,56,34,4,20,19,50,27,7,34,4,20,19,50,27,7],
+            borderColor: 'rgb(255, 99, 132)',
+            backgroundColor: 'rgba(255, 99, 132, 0.5)',
+          },
+          {
+            label: 'Week 2',
+            data: [4,47,23,56,5,61,15,8,3,67,34,9,0,3,0,10,34,4,20,19,50,27,7],
+            borderColor: 'rgb(53, 162, 235)',
+            backgroundColor: 'rgba(53, 162, 235, 0.5)',
+          },
+        ],
+      };
+
       
       
 
@@ -91,7 +109,7 @@ useEffect(()=>{
         fetchlasttransact()
         fetchlowmeds()
         fetchstats()
-        fetchgraphs()
+    
         fetchtodaymedsold()
     }
 
@@ -165,34 +183,7 @@ useEffect(()=>{
     sessionStorage.setItem('org_address', '123 Main Street, Gulshan-e-Iqbal');
 },[])
 
-function fetchgraphs(){
-    try{
-        const params=sessionStorage.getItem('org_name')+'/'+sessionStorage.getItem('org_address')
-        const api='http://localhost:5000/api/pharmacy/fetchgraphs/'+params;
-        fetch(api, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-        }).then((response) => response.json()) // get response, convert to json
-        .then((json) => {
 
-            setmedlabel(json.medarray)
-            setdata({
-                labels:json.medarray,
-                datasets: [
-                  {
-                    data: json.quantityarray,
-                    borderColor: 'rgb(255, 99, 132)',
-                    backgroundColor: 'rgba(255, 99, 132, 0.5)',
-                  },
-                ],
-              })
-        });
-    }catch(err){
-      console.log(err)
-    }
-}
 
 function fetchtodaymedsold(){
     try{
@@ -317,7 +308,7 @@ return(
                     </div>
 
                 </div>
-                <h2 className="booktitledivpharmacy">Last Transaction</h2>
+                <h2 className="booktitledivpharmacy" style={{marginTop:'2rem'}}>Last Transaction</h2>
                 <div className="bookdiv3">
 {last_transact&&
                     <div>

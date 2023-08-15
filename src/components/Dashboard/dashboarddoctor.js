@@ -1,7 +1,7 @@
 import React from "react";
 import './dashboarddoctor.css'
 import Sidenavdoctor from "../Sidenav/sidenavdoctor"
-import DatePicker from 'react-datepicker';
+
 import 'react-datepicker/dist/react-datepicker.css';
 import { useState } from "react";
 import {GrHelp} from "react-icons/gr";
@@ -15,7 +15,7 @@ import PatientsP from '../../images/waiting-room.png'
 
 import PatientsT from '../../images/user.png'
 
-import WorkHours from '../../images/working-time.png'
+
 
 import { Chart as ChartJS, ArcElement,Title, Tooltip,    CategoryScale,
     LinearScale,
@@ -23,7 +23,7 @@ import { Chart as ChartJS, ArcElement,Title, Tooltip,    CategoryScale,
 import { Doughnut } from 'react-chartjs-2';
 
 import { Bar } from 'react-chartjs-2';
-import { appStore } from "fontawesome";
+
 
   
   ChartJS.register(
@@ -56,49 +56,63 @@ function Dashboarddoctor(){
     }
 
       
-      const options = {
-        indexAxis: 'y',
-        elements: {
-          bar: {
-            borderWidth: 2,
-          },
+    const labels = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+    const options = {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: 'top' ,
         },
-        responsive: true,
-        plugins: {
-          legend: {
-            position: 'top' ,
-          }
-        },
-      };
 
-      const labels=['Monday','Tuesday','Wednesday','Thursday',"Friday",'Saturday',"Sunday"]
-      const [workinghours,setworkinghours]=useState({
-        labels,
-        datasets: [
-            {
-              
-              data: [0,0,0,0,0,0,0],
-              backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)',
-              ],
-              borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)',
-              ],
-              borderWidth: 1,
-            },
+    }}
+    const [workinghours,setworkinghours]=useState({
+      labels,
+      datasets: [
+          {
             
-          ],
-      })
+            data: [15, 12, 7, 8, 10, 8,6],
+            backgroundColor: [
+              'rgba(255, 99, 132, 0.2)',
+              'rgba(54, 162, 235, 0.2)',
+              'rgba(255, 206, 86, 0.2)',
+              'rgba(75, 192, 192, 0.2)',
+              'rgba(153, 102, 255, 0.2)',
+              'rgba(255, 159, 64, 0.2)',
+            ],
+            borderColor: [
+              'rgba(255, 99, 132, 1)',
+              'rgba(54, 162, 235, 1)',
+              'rgba(255, 206, 86, 1)',
+              'rgba(75, 192, 192, 1)',
+              'rgba(153, 102, 255, 1)',
+              'rgba(255, 159, 64, 1)',
+            ],
+            borderWidth: 1,
+          },
+          
+        ],
+    })
+
+    const[appointmentweek,setappointmentweek]=useState({
+      labels,
+      datasets: [
+          {
+            label: 'Component A',
+            data: [15, 2, 11, 7, 0, 3,2],
+            backgroundColor: 'rgba(75, 192, 192, 0.6)',
+          },
+          {
+              label: 'Component B',
+              data: [9, 18, 0, 0, 5, 10,4],
+              backgroundColor: 'rgba(53, 162, 235, 0.5)',
+            },
+            {
+              label: 'Component C',
+              data: [15, 17, 9, 11, 0, 5,6],
+              backgroundColor: 'rgba(75, 192, 192, 0.6)',
+            },
+        ],}
+    )
 
 useEffect(()=>{
     setworkinghours({
@@ -129,14 +143,7 @@ useEffect(()=>{
           ],
       })
 },[schedulehours])
-    const workplaces=[]
-      const[appointmentweek,setappointmentweek]=useState({
-        labels:workplaces,
-        datasets: [
-            
-            
-          ],}
-      )
+
 
       
 const [upcoming,setupcoming]=useState([])
@@ -181,7 +188,33 @@ function getschedule(){
 
                     })
                 })
-                
+                setworkinghours({
+                    labels,
+                    datasets: [
+                        {
+                          
+                          data: formattedSchedule,
+                          backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(255, 206, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(153, 102, 255, 0.2)',
+                            'rgba(255, 159, 64, 0.2)',
+                          ],
+                          borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)',
+                          ],
+                          borderWidth: 1,
+                        },
+                        
+                      ],
+                  })
 
                 
 

@@ -154,6 +154,26 @@ transition: all 0.5s ease-in-out 0s;
 font-size: 0.8rem;
 
 }
+.orderchangestatus{
+    border-radius: 50%;
+    transition: all 0.5s ease-in-out;
+    display: flex;
+    width: 2rem;
+    text-align: center;
+    height: 2rem;
+    justify-content: center !important;
+    align-items: center !important;
+}
+.orderchangestatus>.tabsicon{
+  height: 7em!important;
+
+    margin-left: 35%;
+}
+.orderchangestatus:hover{
+background-color: white;
+
+transform: scale(1.1);
+}
 .order_containerdelivered{
 width: 96%;
 height: 3.5em;

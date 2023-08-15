@@ -5,12 +5,12 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { useState } from "react";
 import Blood from '../../images/blood.png'
 import Profit from '../../images/profits.png'
-import {GrHelp} from "react-icons/gr";
+
 import BloodGroup from '../../images/bloodgroup.png'
 import { useEffect } from "react";
 import Transactions from "../Transactions/transactions";
 import Bloodgroup from "../BloodGroup/bloodgroup";
-import Week from '../../images/week.png';
+
 import Profilebloodbank from '../Profile/profilebloodbank'
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Pie } from 'react-chartjs-2';
@@ -37,73 +37,74 @@ import {
 function Dashboardbloodbank(){
     const currentDate = new Date()
     const [expandedstate,setexpandedstate]=useState(false);
-    const [selectedDate, setSelectedDate] = useState(currentDate);
+ 
     const [tab, settab]=useState('Home');
-    const [bloodlabel,setbloodlabel]=useState([]); 
-    const [bloodsold,settodaybloodsold]=useState([]);
+
     const [last_transact,setlast_transact]=useState({date:'',buyer_name:'',amount:'',items:[{name:'',quantity:''}]});
     const options = {
-        responsive: true,
-        plugins: {
-          legend: {
-            position: 'top'
-          },
-          title: {
-            display: true,
-            text: 'Sales This Week',
-          },
+      responsive: true,
+      plugins: {
+        legend: {
+          position: 'top'
         },
-      };
-      const optionsweek = {
-        // The `legend` configuration to position the labels on the side
+        title: {
+          display: true,
+          text: 'Sales This Week',
+        },
+      },
+    };
+    const optionsweek = {
+      // The `legend` configuration to position the labels on the side
+      labels: {
+        position: 'right',
         labels: {
-          position: 'right',
-          labels: {
-            boxWidth: 6, // Adjust the box width for the colored squares next to the labels
-          },
+          boxWidth: 6, // Adjust the box width for the colored squares next to the labels
         },
-      };
-  
-      const labels = [];
+      },
+    };
 
-      const [dataweek,setdataweek]=useState({
-        labels,
-        datasets: [
-            {
-            
-              data: [],
-              backgroundColor: 'rgba(75, 192, 192, 0.6)',
-            },
-            
-          ],
-      })
-     
-    const  data = {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-        datasets: [
+    const labels = ['A-positive', 'B-Positive', 'O-Negative', 'AB-Positive', 'O-negative', 'A-negative','AB-negative','B-Negative','O-Positive'];
+
+    const [dataweek,setdataweek]=useState({
+      labels,
+      datasets: [
           {
-            label: '# of Votes',
-            data: [12, 19, 3, 5, 2, 3],
-            backgroundColor: [
-              'rgba(255, 99, 132, 0.2)',
-              'rgba(54, 162, 235, 0.2)',
-              'rgba(255, 206, 86, 0.2)',
-              'rgba(75, 192, 192, 0.2)',
-              'rgba(153, 102, 255, 0.2)',
-              'rgba(255, 159, 64, 0.2)',
-            ],
-            borderColor: [
-              'rgba(255, 99, 132, 1)',
-              'rgba(54, 162, 235, 1)',
-              'rgba(255, 206, 86, 1)',
-              'rgba(75, 192, 192, 1)',
-              'rgba(153, 102, 255, 1)',
-              'rgba(255, 159, 64, 1)',
-            ],
-            borderWidth: 1,
+            
+            data: [15,9,20, 4,35,17,0,9,11],
+            backgroundColor: '#f79e9e88',
+            borderColor: '#f78e8eda',
+            borderWidth: 2,
           },
+          
         ],
-      }; 
+    })
+   
+  const  data = {
+      labels: ['A-positive', 'B-Positive', 'O-Negative', 'AB-Positive', 'O-negative', 'A-negative','AB-Negative','O-Positive'],
+      datasets: [
+        {
+    
+          data: [12, 19, 3, 5, 2, 3,0,35],
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(255, 159, 64, 0.2)',
+          ],
+          borderColor: [
+            'rgba(255, 99, 132, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(153, 102, 255, 1)',
+            'rgba(255, 159, 64, 1)',
+          ],
+          borderWidth: 1,
+        },
+      ],
+    }; 
       
       
 
@@ -132,41 +133,13 @@ useEffect(()=>{
     }
 })
 
-function fetchgraphs(){
-  try{
-      const params=sessionStorage.getItem('org_name')+'/'+sessionStorage.getItem('org_address')
-      const api='http://localhost:5000/api/blood/fetchgraphs/'+params;
-      fetch(api, {
-          method: 'GET',
-          headers: {
-              'Content-Type': 'application/json'
-          },
-      }).then((response) => response.json()) // get response, convert to json
-      .then((json) => {
 
-          setbloodlabel(json.bloodarray)
-          setdataweek({
-              labels:json.bloodarray,
-              datasets: [
-                {
-                  data: json.quantityarray,
-                  borderColor: 'rgb(255, 99, 132)',
-                  backgroundColor: 'rgba(255, 99, 132, 0.5)',
-                },
-              ],
-            })
-      });
-  }catch(err){
-    console.log(err)
-  }
-}
 useEffect(()=>{
     if(tab==='Home'){
         fetchblood()
         fetchstats()
         fetchlasttransact()
-        fetchtodaymedsold()
-        fetchgraphs()
+   
     }
 
 },[tab])
@@ -213,24 +186,7 @@ try{
     }
 }
 
-function fetchtodaymedsold(){
-  try{
-      const params=sessionStorage.getItem('org_name')+'/'+sessionStorage.getItem('org_address')
-      const api='http://localhost:5000/api/blood/todaymedsold/'+params;
-      fetch(api, {
-          method: 'GET',
-          headers: {
-              'Content-Type': 'application/json'
-          },
-      }).then((response) => response.json()) // get response, convert to json
-      .then((json) => {
 
-          settodaybloodsold(json.bloodsold)
-      });
-  }catch(err){
-    console.log(err)
-  }
-}
 
 //fetch blood groups from the database
 function fetchblood(){
@@ -290,13 +246,7 @@ return(
                                         <h2 className="tilevalue">{statistics.todaysale}</h2>
                                     </div>
                                 </div>
-                                <div className="summarytilesbloodbank">
-                                    <img src={Week}></img>
-                                    <div>
-                                        <h3 className="tilename">This Week<br/> Sales(Rupees)</h3>
-                                        <h2 className="tilevalue">{statistics.weeksale}</h2>
-                                    </div>
-                                </div> 
+ 
                                 <div className="summarytilesbloodbank">
                                     <img src={BloodGroup}></img>
                                     <div>
