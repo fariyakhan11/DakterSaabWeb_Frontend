@@ -13,11 +13,11 @@ align-items: center;
 #alertcontainer{
 background-color: rgba(145, 168, 197, 0.904);
 width: 30%;
-height: 25%;
+height: 30%;
 border-radius: 1.3em;
 font-family: Fraunces;
 box-shadow: 3px 2px 9px rgba(102, 101, 101, 0.315);
-font-size: 1.1em;
+font-size: 1.1rem;
 font-weight: 100;
 }
 #closealert{
@@ -25,7 +25,7 @@ background-color: white;
 display: flex;
 justify-content: center;
 align-items: center;
-font-size: 1em;
+font-size: 1rem;
 transform: rotate(45deg);
 width: 2em;
 height: 2em;
@@ -45,7 +45,7 @@ align-items: center;
 padding: 1em;
 }
 #topalertbar>h1{
-font-size: 1.2em;
+font-size: 1.2rem;
 color: red;
 }
 #contentareaalert{
@@ -56,8 +56,9 @@ text-align: center;
 align-items: center;
 }
 #contentareaalert>button{
-margin-top: 2em;
+margin-top: 2rem;
 width: 30%;
+
 padding: 0.5em 0;
 border-radius: 1em;
 box-shadow: 3px 2px 9px rgba(59, 59, 59, 0.507);
@@ -65,7 +66,7 @@ outline: none;
 font-family: Fraunces;
 font-weight: 600;
 color: rgba(29, 54, 85, 0.973);
-font-size: 1.1em;
+font-size: 1.1rem;
 border: 2px solid  rgba(29, 54, 85, 0.973);
 transition: all 1s ease-in-out;
 cursor: pointer;

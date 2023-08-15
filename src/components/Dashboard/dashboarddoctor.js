@@ -332,10 +332,7 @@ function getappointments(){
       console.log(err)
     }
 }
-useEffect(()=>{
-    sessionStorage.setItem('org_name', 'Dr Ayesha Khan');
-    sessionStorage.setItem('email', 'ayeshakhan@gmail.com');
-},[])
+
 
 //get schedule for editing
 function geteditschedule() {

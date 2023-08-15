@@ -28,7 +28,7 @@ return(
             </div>
         </div>
 
-        <div id="contentareaalert">
+        <div id="contentareaalert" >
             <h2>{props.alert}</h2>
             <button onClick={submitok}>OK</button>
         </div>

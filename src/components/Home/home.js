@@ -49,7 +49,7 @@ function Home() {
               <div className="btnsdiv" ref={homeSectionRef}>
                 <button onClick={() => { navigate('/Login') }}>Login</button>
                 <h5>OR</h5>
-                <button onClick={() => { navigate('/Signup') }}>Signup</button>
+                <button onClick={() => { navigate('/Signup') }}>Register</button>
               </div>
             </div>
             <div>

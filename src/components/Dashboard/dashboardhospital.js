@@ -120,10 +120,7 @@ useEffect(()=>{
     }
 })
 
-useEffect(()=>{
-    sessionStorage.setItem('org_name', 'Patel Hospital');
-    sessionStorage.setItem('org_address', 'ST-18, Block 4 Gulshan-e-Iqbal, Karachi, Sindh, Pakistan');
-},[])
+
 
 useEffect(()=>{
     if(tab==='Home'){

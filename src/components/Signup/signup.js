@@ -183,6 +183,11 @@ function Signup() {
                       sessionStorage.setItem('org_name',json.user.Name); 
                       sessionStorage.setItem('email', json.user.Email); 
                       sessionStorage.setItem('phone', json.user.Phone);  
+                      sessionStorage.setItem('education', json.user.Education); 
+                      sessionStorage.setItem('speciality', json.user.
+                      Speciality); 
+                      sessionStorage.setItem('experience', json.user.Experience);
+                      sessionStorage.setItem('ratings', json.user.Ratings);  
                     }
                     else{
                       if(identitytitle.toLowerCase()==='pharmacy'){
@@ -194,6 +199,7 @@ function Signup() {
                       sessionStorage.setItem('org_address', json.user.address);
                       sessionStorage.setItem('email', json.user.email); 
                       sessionStorage.setItem('phone', json.user.phone); 
+                      sessionStorage.setItem('time', json.user.time);
                     }
                     sessionStorage.setItem('password','********')
                 

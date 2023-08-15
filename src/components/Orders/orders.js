@@ -3,9 +3,9 @@ import './orders.css';
 import {FiPackage} from "react-icons/fi";
 import { useState,useEffect } from "react";
 import {AiFillCaretDown} from "react-icons/ai";
-import {GrTransaction} from "react-icons/gr";
+
 import {BsSave} from "react-icons/bs";
-import DatePicker from 'react-datepicker';
+
 import 'react-datepicker/dist/react-datepicker.css';
 import OrdersI from '../../images/order (1).png'
 import OrdersP from '../../images/box.png'
@@ -71,7 +71,7 @@ filter()
 //data filter toggle on/off
 const handledatefilter = (e) => {
   var currentDate = new Date(); // Get the current date
-alert('djn')
+
   if (selectedDate==='') {
     e.target.classList.add('activetogglebtn');
     e.target.classList.remove('idletogglebtn');
@@ -150,13 +150,13 @@ const handleSearchCustomer=(e)=>{
 }
 function filter(){
     var dL=[...order_list]
-    if(searchcustomer!=''){
+    if(searchcustomer!==''){
         dL=dL.filter(f=>f.buyer_name.toLowerCase().includes(searchcustomer.toLowerCase()))
     }
-    if(selectedstatus!=''){
+    if(selectedstatus!==''){
         dL=dL.filter(f=>f.status===selectedstatus)
     }
-    if(selectedDate!=''){
+    if(selectedDate!==''){
         var d=selectedDate('/')+'-'+selectedDate.split('/')[1]+'-'+selectedDate.split('/')[0]
         dL=dL.filter(f=>f.date===d)
     }
@@ -205,7 +205,7 @@ const savetrans=(e)=>{
             body: JSON.stringify(data)
         }).then(res => {
                 if (res.status === 200) {
-                    alert('transaction successful')
+                    
                     updateorder(id)
 
                 }
@@ -335,7 +335,7 @@ return(
                             </div>
 
                             
-                            <input type="date" id="datepicker" className="calendar-containerfilter" value={selectedDate} onChange={(e) =>{alert(e.target.value); setSelectedDate(e.target.value)}}></input>                                
+                            <input type="date" id="datepicker" className="calendar-containerfilter" value={selectedDate} onChange={(e) =>{ setSelectedDate(e.target.value)}}></input>                                
 
                             <h6>Order Status:</h6>
                                 <h5 id="all" className="selectedstatus" onClick={filterorders} >All</h5>

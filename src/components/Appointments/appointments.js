@@ -2,12 +2,11 @@ import React from "react";
 import './appointments.css';
 
 import { useState,useEffect } from "react";
-import socketIOClient from 'socket.io-client';
-
+import io from 'socket.io-client';
 function Appointments(){
     const workplaceplaceno=['first','second','third','fourth','fifth']
     const workplaceplacenum=['firstdiv','seconddiv','thirddiv','fourthdiv','fifthdiv']
-    const serverUrl = 'http://localhost:5000'; // Your server URL
+    
     const [selectedworkplace,setselectedworkplace]=useState('')
     const [hospitals,sethospitals]=useState([])
     const [schedule,setschedule]=useState([])
@@ -74,14 +73,16 @@ useEffect(()=>{
 
 useEffect(()=>{
     // Connect to the server's socket.io
-    const socket = socketIOClient(serverUrl);
+    const socket = io('http://localhost:5000'); 
     // Listen for order updates
     socket.on('appointmentUpdate', data => {
         // Handle the updated order data received from the server
-        console.log('Received updated order data:', data.appointment);
+        console.log('Received updated appointment data:', data);
         // Update the order list with the new data
-        setappointmentlist(data.appointment);
-        setdisplayed_appointmentlist(data.appointment);
+        if(data.doctorId===sessionStorage.getItem('id')){
+            setappointmentlist(prev=>[...prev,data])
+          }
+        
       });
     var today=new Date();
     generateyears();
@@ -103,10 +104,7 @@ useEffect(()=>{
     sethospitals(distinctHospitalNames)
 },[schedule])
 
-const intervalInMilliseconds = 2 * 60 * 1000; // 30 minutes
-setInterval(() => {
-  getappointments();// Call the function that fetches data
-}, intervalInMilliseconds);
+
 
 function getschedule(){
 

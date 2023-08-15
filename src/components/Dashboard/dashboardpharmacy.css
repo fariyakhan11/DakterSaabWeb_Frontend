@@ -244,6 +244,7 @@ width: 100%;
 .linechart{
 width: 90% !important;
 height: 90% !important;
+overflow: scroll !important;
 }
 #headpharmacy{
 display: flex;
