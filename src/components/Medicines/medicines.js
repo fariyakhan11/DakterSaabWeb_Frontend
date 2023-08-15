@@ -233,7 +233,7 @@ const delete_selected=(e)=>{
             res.json();
             console.log("the response is ",res);
             setselected_medicine([])
-            var cb=document.getElementsByClassName('checkbox-selected')
+            var cb=document.getElementsByClassName('checkbox-outline')
             for(var c=0;c<cb.length;c++){
                 cb[c].style.display='none';
             }

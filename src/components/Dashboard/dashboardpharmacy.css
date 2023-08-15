@@ -70,7 +70,7 @@ margin-bottom: 1em;
 }
 
 #statisticsdiv{
-padding: 1.5rem 0;
+padding: 1.3rem 0;
 box-shadow: 2px 2px 7px rgba(66, 65, 65, 0.541);
 display: flex;
 flex-wrap: wrap;
@@ -93,7 +93,7 @@ box-shadow: 0 2px 30px rgba(53, 52, 52, 0.13);
 height:100%;
 width:18%;
 padding: 0 2em;
-font-size: 0.8em;
+font-size: 0.8rem;
 text-align: center;
 font-family: Fraunces;
 margin: 0 0.3%;
@@ -101,7 +101,7 @@ margin: 0 0.3%;
 .tilename{
 display: flex;
 letter-spacing: 0.05em;
-font-size: 1rem;
+font-size: 0.7rem;
 font-family: Raleway;
 }
 .bookdiv2{
@@ -189,7 +189,7 @@ font-size: 1.2em;
 font-family: Fraunces;
 }
 .tilevalue{
-font-size: 1.4em;
+font-size: 1.1rem;
 width: 100%;
 height:50%;
 }
@@ -208,6 +208,7 @@ width: 70%;
 .performancegraphpharmacy{
 border: 3px solid #75c5c08a;
 align-items: center;
+border-bottom-left-radius: 2em;
 box-shadow: 0 2px 30px rgba(53, 52, 52, 0.089);
 height:53%;
 display: flex;

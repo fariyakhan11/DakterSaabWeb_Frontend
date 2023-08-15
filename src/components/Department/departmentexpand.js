@@ -7,16 +7,20 @@ import PatientI from '../../images/patient1.png'
 import socketIOClient from 'socket.io-client';
 
 function Departmentexpand({close,department}){
-    const [today,setToday]=useState(new Date())
+    const [currentday,setcurrentday]=useState(new Date())
+    
     const [Department,setDepartment]=useState(department)
     const [dep,setdep]=useState({name:Department.name,admin_name:Department.admin_name,password:'........',phone:Department.phone,changepw:0})
     const [searchdoctor,setsearchdoctor]= useState('')
     const [doctor_list,setdoctor_list]=useState([]);
     const [appointment_list,setappointment_list]=useState([]);
-    const [currentToken,setcurrentToken]=useState(0);
+    const [currentToken,setcurrentToken]=useState([{name:'',appointment:{}}]);
     const [displayed_listdoctor,setdisplayed_listdoctor]=useState([])
     const [nav,setnav]=useState('App')
     const[editview,set_edit_view]=useState(false)
+    const [maxToken,setmaxToken]=useState(0)
+    
+
 
     const serverUrl = 'http://localhost:5000'; // Your server URL
     // Get the day information for each date
@@ -42,17 +46,49 @@ function fetchdoctors(){
         }).then((response) => response.json()) // get response, convert to json
         .then((json) => {
         if(json.doctors){
+            
             var doc=json.doctors.filter(h=>h.Department===Department.name)
-            var docduty=json.doctors.filter(h=>h.availability.day===today.toLocaleDateString('en-US', options))
+            console.log('all dep drs are',doc)
+
+            
           setdoctor_list(doc);
-          setdisplayed_listdoctor(docduty);
-        }else{setdoctor_list([]);setdisplayed_listdoctor([])}
+        
+        }else{setdoctor_list([]);}
         if(json.error){console.log(json.error)}
       });
     }catch(err){
       console.log(err)
     }
 }
+
+function filternowdoctor(doctorsArray){
+    const now = new Date();
+const currentDay = now.toLocaleDateString('en-US', { weekday: 'long' });
+setcurrentday(currentDay)
+const currentTime = now.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' });
+
+    const availableDoctors = doctorsArray.filter(doctor => {
+    const availability = doctor.availability.find(slot => slot.day === currentDay);
+    if (availability) {
+        const [startHour, startMinute] = availability.time[0].split(':');
+        const [currentHour, currentMinute] = currentTime.split(':');
+        const startTimestamp = parseInt(startHour) * 60 + parseInt(startMinute);
+        const currentTimestamp = parseInt(currentHour) * 60 + parseInt(currentMinute);
+
+        return currentTimestamp >= startTimestamp;
+    }
+    return false;
+});
+    return availableDoctors
+}
+
+useEffect(()=>{
+    
+const availableDoctors=filternowdoctor(doctor_list)
+console.log('Available Doctors:', availableDoctors);
+            setdisplayed_listdoctor(availableDoctors)
+},[doctor_list])
+
 const editformsubmit=()=>{
         try{
         console.log('here')
@@ -103,7 +139,8 @@ const { name, value } = e.target;
 useEffect(()=>{
 
     if(nav==='App'){
-
+        getpatients()
+        fetchdoctors()
     }
     else if(nav==='Prof'){
 
@@ -113,6 +150,23 @@ useEffect(()=>{
     }
 
 },[nav])
+
+useEffect(()=>{
+if(appointment_list.length>0&&nav==='App'){
+    var den=[]
+    displayed_listdoctor.forEach(d=>{
+        var f=appointment_list.filter(app=>app.doctorName===d.Name).sort((a,b)=>a.tokenNumber -b.tokenNumber)
+        if(f.length){
+        den.push({name:d.Name,appointment:f[0]})
+        }
+        else{
+            alert('no appointment for this doctor')
+        }
+    }
+    )
+    currentToken(den)
+}
+},[displayed_listdoctor])
 
 const handleSearchdoctor = (e)=>{
     setsearchdoctor(e.target.value)
@@ -143,7 +197,9 @@ function getpatients(){
         }).then((response) => response.json()) // get response, convert to json
         .then((json) => {
         if(json.appointments){
-          setappointment_list(json.appointments)
+            var b=json.appointments.sort((a,b)=>a.tokenNumber - b.tokenNumber)
+          setappointment_list(b)
+
         }else{setappointment_list([])}
         if(json.error){console.log(json.error)}
       });
@@ -152,6 +208,36 @@ function getpatients(){
     }
 }
 
+const increasetoken=(e)=>{
+    var app=appointment_list.filter(app=>app.doctorName===e.target.id)
+    var f=app.indexOf(currentToken[currentToken.indexOf(currentToken.filter(c=>c.name===e.target.id))].appointment)+1
+    var curr=[...currentToken]
+    if(f<app.length){
+    curr[f]=app[f]
+    setcurrentToken(curr)}
+    else{
+        alert('Already at the last token')
+    }        
+}
+
+const skiptoken=(e)=>{
+    var app=appointment_list
+    var f=appointment_list.indexOf(currentToken[currentToken.indexOf(currentToken.filter(c=>c.name===e.target.id))].appointment)
+    app[f].tokenNumber=app[-1].tokenNumber+1
+    var g=app.sort((a,b)=>a.tokenNumber - b.tokenNumber)
+    
+    
+    var appl=appointment_list.filter(app=>app.doctorName===e.target.id)
+    var fl=appl.indexOf(currentToken[currentToken.indexOf(currentToken.filter(c=>c.name===e.target.id))].appointment)+1
+    var curr=[...currentToken]
+    if(fl<app.length){
+    curr[fl]=appl[fl]
+    
+    setcurrentToken(curr)}
+    setappointment_list(g)
+        alert('Moved token to last')
+
+    }
 return(<>
 <div className="depgray">
 <div id="depexpdiv">
@@ -161,6 +247,8 @@ return(<>
             <h1>+</h1>  
         </div>
     </div>
+
+
     <div id="depexpnav">
 
         <div onClick={()=>{setnav('App')}} className={nav==='App'?'selectednav':''}><h2>Appointments</h2></div>
@@ -168,6 +256,9 @@ return(<>
         <div className={nav==='Doc'?'selectednav':''} onClick={()=>{setnav('Doc')}}><h2>Department Doctors</h2></div>
         <div onClick={()=>{setnav('Prof')}} className={nav==='Prof'?'selectednav':''}><h2>Department Information</h2></div>
     </div>
+
+
+
 {nav==='Doc'&&
     <div id="depexpcontent">
         <div className="searchbar">
@@ -232,7 +323,7 @@ return(<>
                                 <h4 id={index}>{i.Speciality}</h4>
                                 <h3 id={index}>{i.Name}</h3>
                                 <h4 id={index}>{i.email}</h4>
-                                <h4 id={index}>{'Experience: '+i.Experience+' yrs'}</h4>
+                                <h4 id={index}>{'Exp : '+i.Experience}</h4>
                             </div>
                           </div>
 
@@ -307,90 +398,80 @@ return(<>
 {nav==='App'&&
     <div id="depexpcontent" className="appdivdep">
 <div>
-        <div className="docopddiv" >
-            <div id="Doctorappdet">
-                <h1>Doctor Name: </h1>
-                <h2>Alishba Arshad</h2>
-                <h1>Timings</h1>
-                <h2>7:30AM-3:00PM</h2>
-                <h1>Tokens Booked</h1>
-                <h2>20</h2>
-            </div>
+    {displayed_listdoctor.map((i,index)=>{
+        var t=appointment_list.filter(o=>o.doctorName===i.Name)
+        if(t.length>0){
 
-            <div id="tokenpatientstats">
-                <div>
-                    <h2>Previous Patient</h2>
-                    <img src={PatientI}></img>
-                    <h2>Shehla</h2>
-                    <h2>6</h2>
-                    <h2>9:15AM</h2>
-                </div>
-                <div>
-                    <h2>Current Patient</h2>
-                    <img src={PatientI}></img>
-                    <h2>Abdullah</h2>
-                    <h2>Token : 7</h2>
-                    <h2>10:00AM</h2>
-                </div>
-                <div>
-                    <h2>Next Patient</h2>
-                    <img src={PatientI}></img>
-                    <h2>Farah</h2>
-                    <h2>8</h2>
-                    <h2>10:30AM</h2>
-                </div>
+        
+        return(<>
+        <div className="docopddiv" >
+        <div id="Doctorappdet">
+            <h1>Doctor Name: </h1>
+            <h2>{i.Name}</h2>
+            <h1>Timings: </h1>
+            <h2>{i.availability[i.availability.indexOf(i.availability.filter(a=>a.day.toLowerCase()===currentday.toLowerCase()))].time[0]}</h2>
+
+            <h1>Tokens Booked</h1>
+            <h2>{appointment_list.filter(app=>app.doctorName===i.Name).length}</h2>
+        </div>
+
+        <div id="tokenpatientstats">
+            <div>
+                <h2>Previous Patient</h2>
+                <img src={PatientI}></img>
+                <h2>{()=>{
+                    var app=appointment_list.filter(app=>app.doctorName===i.name)
+                    var f=app.indexOf(currentToken[currentToken.indexOf(currentToken.filter(c=>c.name===i.Name))].appointment)-1
+                    return f.patientName
+                }}</h2>
+                <h2>{()=>{
+                    var app=appointment_list.filter(app=>app.doctorName===i.name)
+                    var f=app.indexOf(currentToken[currentToken.indexOf(currentToken.filter(c=>c.name===i.Name))].appointment)-1
+                    return f.tokenNumber
+                }}</h2>
+                <h2>{()=>{
+                    var app=appointment_list.filter(app=>app.doctorName===i.name)
+                    var f=app.indexOf(currentToken[currentToken.indexOf(currentToken.filter(c=>c.name===i.Name))].appointment)-1
+                    return f.time
+                }}</h2>
             </div>
-            <div id="tokencounter">
-                <h1>Starting Appointment Time: </h1>
-                <h2>10:00AM</h2>
-                <h1>Increase Token Number</h1>
-                <h2>7</h2>
-                <h3>+</h3>
-                <h4>Skip</h4>
+            <div>
+                <h2>Current Patient</h2>
+                <img src={PatientI}></img>
+                <h2>{currentToken[currentToken.indexOf(currentToken.filter(c=>c.name===i.Name))].appointment.patientName}</h2>
+                <h2>Token : {currentToken[currentToken.indexOf(currentToken.filter(c=>c.name===i.Name))].appointment.tokenNumber}</h2>
+                <h2>{currentToken[currentToken.indexOf(currentToken.filter(c=>c.name===i.Name))].appointment.time}</h2>
+            </div>
+            <div>
+                <h2>Next Patient</h2>
+                <img src={PatientI}></img>
+                <h2>{()=>{
+                    var app=appointment_list.filter(app=>app.doctorName===i.name)
+                    var f=app.indexOf(currentToken[currentToken.indexOf(currentToken.filter(c=>c.name===i.Name))].appointment)+1
+                    return f.patientName
+                }}</h2>
+                <h2>{currentToken[currentToken.indexOf(currentToken.filter(c=>c.name===i.Name))].value+1}</h2>
+                <h2>{()=>{
+                    var app=appointment_list.filter(app=>app.doctorName===i.name)
+                    var f=app.indexOf(currentToken[currentToken.indexOf(currentToken.filter(c=>c.name===i.Name))].appointment)+1
+                    return f.time
+                }}</h2>
             </div>
         </div>
-        <div className="docopddiv" >
-            <div id="Doctorappdet">
-                <h1>Doctor Name: </h1>
-                <h2>Alishba Arshad</h2>
-                <h1>Timings</h1>
-                <h2>7:30AM-3:00PM</h2>
-                <h1>Tokens Booked</h1>
-                <h2>20</h2>
-            </div>
-
-            <div id="tokenpatientstats">
-                <div>
-                    <h2>Previous Patient</h2>
-                    <img src={PatientI}></img>
-                    <h2>Shehla</h2>
-                    <h2>6</h2>
-                    <h2>9:15AM</h2>
-                </div>
-                <div>
-                    <h2>Current Patient</h2>
-                    <img src={PatientI}></img>
-                    <h2>Abdullah</h2>
-                    <h2>Token : 7</h2>
-                    <h2>10:00AM</h2>
-                </div>
-                <div>
-                    <h2>Next Patient</h2>
-                    <img src={PatientI}></img>
-                    <h2>Farah</h2>
-                    <h2>8</h2>
-                    <h2>10:30AM</h2>
-                </div>
-            </div>
-            <div id="tokencounter">
-                <h1>Starting Appointment Time: </h1>
-                <h2>10:00AM</h2>
-                <h1>Increase Token Number</h1>
-                <h2>7</h2>
-                <h3>+</h3>
-                <h4>Skip</h4>
-            </div>
+        <div id="tokencounter">
+            <h1>Starting Appointment Time: </h1>
+            <h2>{currentToken[currentToken.indexOf(currentToken.filter(c=>c.name===i.Name))].appointment.time}</h2>
+            <h1>Increase Token Number</h1>
+            <h2>{currentToken[currentToken.indexOf(currentToken.filter(c=>c.name===i.Name))].appointment.tokenNumber}</h2>
+            <h3 onClick={increasetoken} id={i.Name}>+</h3>
+            <h4 onClick={skiptoken} id={i.Name}>Skip</h4>
         </div>
+    </div>
+    </>)}
+            }
+    )}
+
+
 </div>
     </div>
 

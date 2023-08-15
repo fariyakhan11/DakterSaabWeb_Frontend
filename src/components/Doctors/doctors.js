@@ -110,7 +110,7 @@ useEffect(()=>{console.log(displayed_list)},[displayed_list])
 
 //activate the delete view
 const deletemodeon=()=>{
-  var cb_o=document.getElementsByClassName('checkbox-selected');
+  var cb_o=document.getElementsByClassName('checkbox-outline');
   var deletebtn=document.getElementById('delMedicines');
   if(viewmode){
 
@@ -156,7 +156,7 @@ const delete_selected=(e)=>{
             res.json();
             console.log("the response is ",res);
             setselected_doctor([])
-            var cb=document.getElementsByClassName('checkbox-selected')
+            var cb=document.getElementsByClassName('checkbox-outline')
             for(var c=0;c<cb.length;c++){
                 cb[c].style.display='none';
             }

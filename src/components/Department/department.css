@@ -413,9 +413,9 @@ margin-bottom: 0.5em;
 .medsdivdep{
   border:3px solid #f2f2f2;
   text-align: center;
-  flex-basis: 10rem;
-  height: 70%;
-  margin:0em 2em 1em 0;
+  flex-basis: 15rem;
+  height: 75%;
+  margin:0em 1rem 1rem 0;
   cursor: pointer;
   border-radius: 2em;
 }
@@ -437,14 +437,15 @@ font-size: 0.8rem;
 
 
 .medsdivdep>.topareamed>.medimg{
-width: 55%;
-
+width: 53%;
+padding: 0;
+margin: 0;
 }
 .depinfofield{
 width: 100%;
 display: flex;
 font-family: Fraunces;
-font-size: 1.1em;
+font-size: 1.1rem;
 
 }
 .depinfofield>input{

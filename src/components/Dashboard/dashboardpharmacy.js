@@ -38,14 +38,13 @@ ChartJS.register(
 
 
 function Dashboardpharmacy(){
-    const currentDate = new Date()
+    
     const [expandedstate,setexpandedstate]=useState(true)
     const [statistics,setstatistics]=useState({todaymed:'',weeksale:'',todaysale:'',totalorder:'',orderpend:'',popmed:''})
     const [tab, settab]=useState('Home');
-    const [order_list,setorder_list]=useState([]);
     const [last_transact,setlast_transact]=useState({date:'',buyer_name:'',amount:'',items:[{name:'',quantity:''}]});
     const [medicine_list,setmedicine_list]=useState([]);
-
+    const [medsold,settodaymedsold]=useState([]);
 //navigate between tabs from the sidenav clicks and transitions
     const handlestate=(msg)=>{
         settab(msg.tab)
@@ -65,26 +64,10 @@ function Dashboardpharmacy(){
           },
         },
       };
+      const [medlabel,setmedlabel]=useState()
+      const [data,setdata]=useState({medlabel,datasets:[]})
       
-      const labels = ['zylex','augmentin','cafka','ponstan','panadol','flagel','gponstan','honad','isbhcbshj','jbcjhc','ksbjcvnvx','lxsbcj','mxscb','motilium','csbhnc','ansaid','honad','isbhcbshj','jbcjhc','ksbjcvnvx','lxsbcj','mxscb','motilium','csbhnc','ansaid'];
       
-      const data = {
-        labels,
-        datasets: [
-          {
-            label: 'Week 1',
-            data: [10,79,25,25,32,1,45,23,56,34,4,20,19,50,27,7,34,4,20,19,50,27,7],
-            borderColor: 'rgb(255, 99, 132)',
-            backgroundColor: 'rgba(255, 99, 132, 0.5)',
-          },
-          {
-            label: 'Week 2',
-            data: [4,47,23,56,5,61,15,8,3,67,34,9,0,3,0,10,34,4,20,19,50,27,7],
-            borderColor: 'rgb(53, 162, 235)',
-            backgroundColor: 'rgba(53, 162, 235, 0.5)',
-          },
-        ],
-      };
 
 
 useEffect(()=>{
@@ -106,7 +89,8 @@ useEffect(()=>{
         fetchlasttransact()
         fetchlowmeds()
         fetchstats()
-        
+        fetchgraphs()
+        fetchtodaymedsold()
     }
 
 },[tab])
@@ -179,6 +163,53 @@ useEffect(()=>{
     sessionStorage.setItem('org_address', '123 Main Street, Gulshan-e-Iqbal');
 },[])
 
+function fetchgraphs(){
+    try{
+        const params=sessionStorage.getItem('org_name')+'/'+sessionStorage.getItem('org_address')
+        const api='http://localhost:5000/api/pharmacy/fetchgraphs/'+params;
+        fetch(api, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        }).then((response) => response.json()) // get response, convert to json
+        .then((json) => {
+
+            setmedlabel(json.medarray)
+            setdata({
+                labels:json.medarray,
+                datasets: [
+                  {
+                    data: json.quantityarray,
+                    borderColor: 'rgb(255, 99, 132)',
+                    backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                  },
+                ],
+              })
+        });
+    }catch(err){
+      console.log(err)
+    }
+}
+
+function fetchtodaymedsold(){
+    try{
+        const params=sessionStorage.getItem('org_name')+'/'+sessionStorage.getItem('org_address')
+        const api='http://localhost:5000/api/pharmacy/todaymedsold/'+params;
+        fetch(api, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        }).then((response) => response.json()) // get response, convert to json
+        .then((json) => {
+
+            settodaymedsold(json.medsold)
+        });
+    }catch(err){
+      console.log(err)
+    }
+}
 return(
 <>
 
@@ -198,51 +229,51 @@ return(
             <div className="subsec1">
                         <div className="Summarybar">
                             <h4>Statistics</h4>
-                            <div id="statisticsdiv">
+                            <div id="statisticsdiv" style={{marginBottom:'1rem'}}>
                                 <div className="summarytilesbloodbank">
                                     <img src={Med}></img>
                                     <div>
                                         <h3 className="tilename">Today <br/> Medicines sold</h3>
-                                        <h2 className="tilevalue">{statistics.todaymed}</h2>
+                                        <h2 className="tilevalue">{statistics.todaymed?statistics.todaymed:0}</h2>
                                     </div>
                                 </div>
                                 <div className="summarytilesbloodbank">
                                     <img src={Week}></img>
                                     <div>
                                         <h3 className="tilename">This Week<br/> Sales(Rupees)</h3>
-                                        <h2 className="tilevalue">{statistics.weeksale}</h2>
+                                        <h2 className="tilevalue">{statistics.weeksale?statistics.weeksale:0}</h2>
                                     </div>
                                 </div> 
                                 <div className="summarytilesbloodbank">
                                     <img src={Profit}></img>
                                     <div>
                                         <h3 className="tilename">Today <br/> Sales(Rupees)</h3>
-                                        <h2 className="tilevalue">{statistics.todaysale}</h2>
+                                        <h2 className="tilevalue">{statistics.todaysale?statistics.todaysale:0}</h2>
                                     </div>
                                 </div>
                                       
                                 
                             </div>
-                            <div id="statisticsdiv">
+                            <div id="statisticsdiv" style={{marginBottom:'1rem'}}>
                                 <div className="summarytilesbloodbank">
                                     <img src={OrdersI}></img>
                                     <div>
                                         <h3 className="tilename">Total <br/>Orders</h3>
-                                        <h2 className="tilevalue">{statistics.totalorder}</h2>
+                                        <h2 className="tilevalue">{statistics.totalorder?statistics.totalorder:0}</h2>
                                     </div>
                                 </div>
                                 <div className="summarytilesbloodbank">
                                     <img src={OrdersP}></img>
                                     <div>
                                         <h3 className="tilename">Orders <br/>Pending </h3>
-                                        <h2 className="tilevalue">{statistics.orderpend}</h2>
+                                        <h2 className="tilevalue">{statistics.orderpend?statistics.orderpend:0}</h2>
                                     </div>
                                 </div> 
                                 <div className="summarytilesbloodbank">
                                     <img src={MedP}></img>
                                     <div>
                                         <h3 className="tilename">Popular<br/> Medicine</h3>
-                                        <h2 className="tilevalue">{statistics.popmed}</h2>
+                                        <h2 className="tilevalue">{statistics.popmed?statistics.popmed:'None'}</h2>
                                     </div>
                                 </div>
                                       
@@ -266,31 +297,16 @@ return(
                         <h3>Price</h3>
                     </div>
                     <div id="contentinfopharmacy">
-                    {!order_list.length>0&&
+                    {!medsold.length>0&&
     <div className="inventorycontent">
                     <h6 className="nolowmed">No medicines sold today</h6>
                     </div>
 }
-{order_list.map((i,index)=>{return(<>
+{medsold.map((i,index)=>{return(<>
                         <div className="pharmacyinfo pharmacycontent">
-                            <h3>{i.buyer_name}</h3>
-                            <h3>Rs {i.amount}</h3>
-<h3>
-
-                            {i.items.map((item,ind)=>{return(<>
-                                                        {item.name}
-                            <br/>
-                                                        
-                            </>)})}
-                            </h3>
-                            <h3>
-
-                            {i.items.map((item,ind)=>{return(<>
-                                                        {item.quantity}
-                            <br/>
-                                                        
-                            </>)})}
-                            </h3>
+                            <h3>{i.name}</h3>
+                            <h3>{i.quantity}</h3>
+                            <h3>{i.price}</h3>
 
                         </div>
 

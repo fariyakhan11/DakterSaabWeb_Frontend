@@ -39,7 +39,8 @@ function Dashboardbloodbank(){
     const [expandedstate,setexpandedstate]=useState(false);
     const [selectedDate, setSelectedDate] = useState(currentDate);
     const [tab, settab]=useState('Home');
-    
+ 
+    const [bloodsold,settodaybloodsold]=useState([]);
     const [last_transact,setlast_transact]=useState({date:'',buyer_name:'',amount:'',items:[{name:'',quantity:''}]});
     const options = {
         responsive: true,
@@ -180,6 +181,25 @@ try{
     }catch(err){
       console.log(err)
     }
+}
+
+function fetchtodaymedsold(){
+  try{
+      const params=sessionStorage.getItem('org_name')+'/'+sessionStorage.getItem('org_address')
+      const api='http://localhost:5000/api/pharmacy/todaymedsold/'+params;
+      fetch(api, {
+          method: 'GET',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+      }).then((response) => response.json()) // get response, convert to json
+      .then((json) => {
+
+          settodaybloodsold(json.bloodsold)
+      });
+  }catch(err){
+    console.log(err)
+  }
 }
 
 //fetch blood groups from the database
