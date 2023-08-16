@@ -241,8 +241,6 @@ return(
                                 
                             </div>
                             <div className="depinfo" id={index +'depinfo'} onClick={opendepart}>
-                                <h4 id={index}>Admin Name : {i.admin_name}</h4>
-                                <h4 id={index}>Phone : {(i.phone==='')?'-':i.phone}</h4>
                             </div>
                         </div>
 )})}
