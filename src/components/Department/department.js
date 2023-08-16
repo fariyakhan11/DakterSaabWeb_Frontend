@@ -235,7 +235,7 @@ return(
 {displayed_list.map((i,index)=>{return(
                         <div className="depsdiv" id={index+'depsdiv'} >
                             <div className="deptitle" id={index+'deptitle'}>
-                                <h3 id={index}>{i.name}</h3>
+                                <h3 id={index}   onClick={opendepart}  >{i.name}</h3>
                                 <AiOutlineDelete className="icondep" id={index+'deldep'} onClick={deleteselect}/>
                                     
                                 
