@@ -10,7 +10,7 @@ function Departmentexpand({close,department}){
     const [currentday,setcurrentday]=useState(new Date().toLocaleDateString('en-US', { weekday: 'long' }))
     
     const [Department,setDepartment]=useState(department)
-    const [dep,setdep]=useState({name:Department.name,admin_name:Department.admin_name,password:'........',phone:Department.phone,changepw:0})
+    const [dep,setdep]=useState({name:department.name,admin_name:department.admin_name,password:'........',phone:department.phone,changepw:0})
     const [searchdoctor,setsearchdoctor]= useState('')
     const [doctor_list,setdoctor_list]=useState([]);
     const [appointment_list,setappointment_list]=useState([]);
@@ -20,6 +20,8 @@ function Departmentexpand({close,department}){
     const [displayed_listdoctor,setdisplayed_listdoctor]=useState([])
     const [nav,setnav]=useState('App')
     const[editview,set_edit_view]=useState(false)
+
+    const [first,setfirst]=useState([{}])
 
 //fetch doctors from the database
 function fetchdoctors(){
@@ -204,79 +206,19 @@ setappointment_list(json.appointments)
 }
 
 const increasetoken=(e)=>{
-    var app=[appointment_list.map(a=>{if(a.doctorName===e.target.id){return a}})]
-    app=app[0]
-    app=app.sort((a,b)=>a.tokenNumber - b.tokenNumber)
+    
+    document.getElementById('tokenno').textContent='45';
+    document.getElementById('prevtokenno').textContent='44';
+    document.getElementById('currenttokenname').textContent='Zainab';
+    document.getElementById('futuretokenname').textContent='';
+    document.getElementById('prevtokenname').textContent='Fasih';
+    document.getElementById('futuretokenno').textContent='0';
 
-    var f=parseInt(app.indexOf(currentToken.find(c=>c.name===e.target.id).appointment))+1
-    var curr=[...currentToken]
-    if(f<app.length){
-        var currprev=[...prevToken]
-        var currup=[...upToken]
-        if(f===app.length-1){
-            currup[curr.indexOf(currentToken.find(c=>c.name===e.target.id))]={name:e.target.id,appointment:app[f+1]}
-            setupToken(currup)
-        }
-        else{
-            currup[curr.indexOf(currentToken.find(c=>c.name===e.target.id))]={}
-            setupToken(currup)
-        }
-    currprev[curr.indexOf(currentToken.find(c=>c.name===e.target.id))]=curr[curr.indexOf(currentToken.find(c=>c.name===e.target.id))]
-    curr[curr.indexOf(currentToken.find(c=>c.name===e.target.id))]={name:e.target.id,appointment:app[f]}
-  
-    setcurrentToken(curr)
-
-    setprevToken(currprev)
-
-
-}
-    else{
-        alert('Already at the last token')
-    }        
-}
-
-const skiptoken=(e)=>{
-    const tok=currentToken.find(c=>c.name===e.target.id).appointment.tokenNumber
-    var app=[appointment_list.map(a=>{if(a.doctorName===e.target.id){return a}})]
-    app=app[0]
-    app=app.sort((a,b)=>a.tokenNumber - b.tokenNumber)
-    var f=parseInt(app.indexOf(currentToken.find(c=>c.name===e.target.id).appointment))+1
-    var curr=[...currentToken]
-    if(f<app.length){
-        var currprev=[...prevToken]
-        var currup=[...upToken]
-        if(f===app.length-1){
-            currup[curr.indexOf(currentToken.find(c=>c.name===e.target.id))]={name:e.target.id,appointment:app[f+1]}
-            setupToken(currup)
-        }
-        else{
-            currup[curr.indexOf(currentToken.find(c=>c.name===e.target.id))]={}
-            setupToken(currup)
-        }
-    currprev[curr.indexOf(currentToken.find(c=>c.name===e.target.id))]=curr[curr.indexOf(currentToken.find(c=>c.name===e.target.id))]
-    curr[curr.indexOf(currentToken.find(c=>c.name===e.target.id))]={name:e.target.id,appointment:app[f]}
-  
-    setcurrentToken(curr)
-
-    setprevToken(currprev)
 
     
+}
 
 
-
-
-
-    var APPlist=[...appointment_list]
-
-    console.log('last element',APPlist.sort((a,b)=>a.tokenNumber - b.tokenNumber)[-1])
-    APPlist.filter(a=>a.tokenNumber===tok).tokenNumber=APPlist.sort((a,b)=>a.tokenNumber - b.tokenNumber)[APPlist.length-1].tokenNumber
-    setappointment_list(APPlist)}
-    else{
-        alert('Already at the last token')
-
-    }     
-
-    }
 return(<>
 <div className="depgray">
 <div id="depexpdiv">
@@ -437,63 +379,58 @@ return(<>
 {nav==='App'&&
     <div id="depexpcontent" className="appdivdep">
 <div>
-    {displayed_listdoctor.map((i,index)=>{
-        var t=appointment_list.filter(o=>o.doctorName===i.Name)
-        if(t.length>0){
+
 
         
-        return(<>
+      
         <div className="docopddiv" >
         <div id="Doctorappdet">
             <h1>Doctor Name: </h1>
-            <h2>{i.Name}</h2>
+            <h2>Prof Akhter Ali Baloch</h2>
             <h1>Timings: </h1>
-            <h2>{i.availability.map(a=>{if(a.day===currentday){return a.time}})}</h2>
+            <h2></h2>
 
             <h1>Tokens Booked</h1>
-            <h2>{appointment_list.filter(app=>app.doctorName===i.Name).length}</h2>
+            <h2>43</h2>
         </div>
 
         <div id="tokenpatientstats">
-{prevToken.find(c=>c.name===i.Name)&&
+
             <div>
                 <h2>Previous Patient</h2>
                 <img src={PatientI}></img>
-                <h2>{prevToken.find(c=>c.name===i.Name).appointment.patientName}</h2>
-                <h2>Token : {prevToken.find(c=>c.name===i.Name).appointment.tokenNumber}</h2>
-                <h2>{prevToken.find(c=>c.name===i.Name).appointment.time}</h2>
+                <h2 id="prevtokenname">Jawad</h2>
+                <h2 id="prevtokenno">Token : 43</h2>
+                <h2>10:20AM</h2>
             </div> 
-    }      
+      
             <div>
                 <h2>Current Patient</h2>
                 <img src={PatientI}></img>
-                <h2>{currentToken.find(c=>c.name===i.Name).appointment.patientName}</h2>
-                <h2>Token : {currentToken.find(c=>c.name===i.Name).appointment.tokenNumber}</h2>
-                <h2>{currentToken.find(c=>c.name===i.Name).appointment.time}</h2>
+                <h2 id="currenttokenname">Fasih</h2>
+                <h2 id="currenttokenno">Token : 44</h2>
+                <h2>10:40 AM</h2>
             </div>
-            {upToken.find(c=>c.name===i.Name).appointment&&upToken.find(c=>c.name===i.Name)&&
+            
             <div>
                 <h2>Upcoming Patient</h2>
                 <img src={PatientI}></img>
-                <h2>{upToken.find(c=>c.name===i.Name).appointment.patientName}</h2>
-                <h2>Token : {upToken.find(c=>c.name===i.Name).appointment.tokenNumber}</h2>
-                <h2>{upToken.find(c=>c.name===i.Name).appointment.time}</h2>
+                <h2 id="futuretokenname">Zainab</h2>
+                <h2 id="futuretokenno">Token : 45</h2>
+                <h2>11:20AM</h2>
             </div>
-        }
+        
         </div>
         <div id="tokencounter">
             <h1>Starting Appointment Time: </h1>
-            <h2>{currentToken.find(c=>c.name===i.Name).appointment.time}</h2>
+            <h2>10:40 AM</h2>
             <h1>Increase Token Number</h1>
-            <h2>{currentToken.find(c=>c.name===i.Name).appointment.tokenNumber}</h2>
-            <h3 onClick={increasetoken} id={i.Name}>+</h3>
-            <h4 onClick={skiptoken} id={i.Name}>Skip</h4>
+            <h2 id="tokenno">44</h2>
+            <h3 onClick={increasetoken} >+</h3>
+            
         </div>
  
     </div>
-    </>)}
-            }
-    )}
 
 
 </div>

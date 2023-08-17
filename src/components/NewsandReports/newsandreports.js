@@ -58,7 +58,7 @@ const handleentryformvalue = (e) => {
 
 
 useEffect(() => {
-  console.log(entryform);
+  
 }, [entryform]);
 
 const close_resolution_area=()=>{
@@ -73,7 +73,7 @@ const show_details_and_resolution=(e)=>{
 }
 
 const filterNCR = (e) => {
-    alert(e.target.id)
+    
   if (e.target.id === 'All') {
     setCNRlist(fetched_list)
     document.getElementsByClassName('selectedformtype')[0].classList.remove('selectedformtype');
@@ -137,7 +137,7 @@ function fetchforms(){
         }).then((response) => response.json()) // get response, convert to json
         .then((json) => {
         if(json.forms){
-            console.log(json.forms)
+            
           setCNRlist(json.forms);
           setfetched_list(json.forms);
 

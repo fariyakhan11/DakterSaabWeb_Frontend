@@ -97,52 +97,17 @@ function Dashboarddoctor(){
       labels,
       datasets: [
           {
-            label: 'Component A',
+            label: 'Clinics ',
             data: [15, 2, 11, 7, 0, 3,2],
             backgroundColor: 'rgba(75, 192, 192, 0.6)',
           },
-          {
-              label: 'Component B',
-              data: [9, 18, 0, 0, 5, 10,4],
-              backgroundColor: 'rgba(53, 162, 235, 0.5)',
-            },
-            {
-              label: 'Component C',
-              data: [15, 17, 9, 11, 0, 5,6],
-              backgroundColor: 'rgba(75, 192, 192, 0.6)',
-            },
+
         ],}
     )
 
-useEffect(()=>{
-    setworkinghours({
-        labels,
-        datasets: [
-            {
-              
-              data: schedulehours,
-              backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)',
-              ],
-              borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)',
-              ],
-              borderWidth: 1,
-            },
-            
-          ],
-      })
-},[schedulehours])
+
+    
+
 
 
       
@@ -152,85 +117,7 @@ function timeToMinutes(time) {
     return hours * 60 + minutes;
 }
 
-function getschedule(){
 
-    try{
-        const params=sessionStorage.getItem('org_name')+'/'+sessionStorage.getItem('email')
-        const api='http://localhost:5000/api/doctor/getschedule/'+params;
-        fetch(api, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-        }).then((response) => response.json()) // get response, convert to json
-        .then((json) => {
-        if(json.schedule){
-            var sch=json.schedule
-            
-            if(sch.length){
-
-                // Initialize an empty array to store the new formatted data
-                var formattedSchedule = [0,0,0,0,0,0,0];
-                sch.forEach(s=>{
-                    ['Monday','Tuesday','Wednesday','Thursday',"Friday",'Saturday',"Sunday"].forEach((dayt,index) =>{
-                        s.availability.map((a)=>{
-                            if(a.day===dayt){
-                                a.time.forEach(timeslot=>{
-                                    const [startTime, endTime] = timeslot.split('-')
-                                    const startMinutes = timeToMinutes(startTime);
-                                    const endMinutes = timeToMinutes(endTime);
-
-                                    const timeDifferenceInMinutes = endMinutes - startMinutes;
-                                    formattedSchedule[index]=formattedSchedule+(timeDifferenceInMinutes/60)
-                                })
-
-                            }})
-
-                    })
-                })
-                setworkinghours({
-                    labels,
-                    datasets: [
-                        {
-                          
-                          data: formattedSchedule,
-                          backgroundColor: [
-                            'rgba(255, 99, 132, 0.2)',
-                            'rgba(54, 162, 235, 0.2)',
-                            'rgba(255, 206, 86, 0.2)',
-                            'rgba(75, 192, 192, 0.2)',
-                            'rgba(153, 102, 255, 0.2)',
-                            'rgba(255, 159, 64, 0.2)',
-                          ],
-                          borderColor: [
-                            'rgba(255, 99, 132, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(255, 206, 86, 1)',
-                            'rgba(75, 192, 192, 1)',
-                            'rgba(153, 102, 255, 1)',
-                            'rgba(255, 159, 64, 1)',
-                          ],
-                          borderWidth: 1,
-                        },
-                        
-                      ],
-                  })
-
-                
-
-            }
-            else{
-                var formattedSchedule = [0,0,0,0,0,0,0];
-            }
-          setschedulehours(formattedSchedule)
-            
-        }else{setschedulehours([0,0,0,0,0,0,0]);}
-        if(json.error){console.log(json.error)}
-      });
-    }catch(err){
-      console.log(err)
-    }
-}
 
 useEffect(()=>{
 
@@ -281,7 +168,7 @@ useEffect(()=>{
     if(tab==='Home'){
     getappointments()
     geteditschedule()
-    getschedule()
+    
 }
 },[tab])
 
@@ -320,9 +207,7 @@ function getappointments(){
                 clinic_and_appointment.push(apps.length)
             })
             
-            setappointmentweek({
-                distinctClinicNames,
-                datasets: clinic_and_appointment})
+      
 
             
         }else{setappointment_list([])}

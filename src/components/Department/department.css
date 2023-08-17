@@ -72,14 +72,26 @@ height: 100%;
 transition: all 1s ease-in-out 0s;
   text-align: center;
   flex-basis: 45%;
-  height: 15em;
+  height: 7em;
   margin:2em 2em 1em 0;
   cursor: pointer;
 background-color: #c7dafc65;
 }
-.depsdiv:hover{
-transform: scale(1.05);
+.depinfo>button{
+  margin-top: 1em;
+  outline: none;
+  border: 2px solid #2050a8;
+  background-color: #8db3f88f;
+  font-family: Fraunces;
+  cursor: pointer;
+  transition: all 0.5s ease-in-out;
+  border-radius: 3px;
+  padding: 0.5em;
 }
+.depinfo>button:hover{
+  transform: scale(1.05);
+}
+
 .deptitle{
 background-color: #8db2f8;
 padding: 0.5em 1em;
