@@ -97,12 +97,14 @@
 #login_and_form {
     display: flex;
     flex-direction: column;
+    margin-top: 3rem;
 }
 
 #bookmarks_login {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
+    margin-bottom: 0.5rem;
 }
 
 #bookmarks_login>div {

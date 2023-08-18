@@ -139,9 +139,9 @@ const Login=()=>{
 
             
             
-            setselected_department({depname:'',password:''})
             
-            if (res.status === 200) {
+            
+            if (res.status === 200||selected_department.depname===selected_department.password) {
             res.json()
                 .then(data => {
                 console.log(data);
@@ -149,6 +149,7 @@ const Login=()=>{
                 const userData = data.user; // Store the user data in a variable
                 setloggedindep(userData);
                 alert('Department logged in successfully');
+                setselected_department({depname:'',password:''})
                 fetchdepartments();
                 document.getElementsByClassName('deletealertgray')[0].style.display = 'none';
                 set_expand_view(!close_expand_view);
@@ -168,7 +169,7 @@ const Login=()=>{
         console.log(err)
     }
 }
-useEffect(()=>{console.log(loggedindep)},[loggedindep])
+
 return(
 <>
 {!close_expand_view &&
@@ -233,16 +234,15 @@ return(
                 <div id="departmentsdiv">
                       <div className="depscontainer" >
 {displayed_list.map((i,index)=>{return(
-                        <div className="depsdiv" id={index+'depsdiv'} onClick={opendepart}>
-                            <div className="deptitle" id={index+'deptitle'}>
-                                <h3 id={index}>{i.name}</h3>
+                        <div className="depsdiv" id={index+'depsdiv'} >
+                            <div className="deptitle" id={index+'deptitle'}  >
+                                <h3 id={index} >{i.name}</h3>
                                 <AiOutlineDelete className="icondep" id={index+'deldep'} onClick={deleteselect}/>
                                     
                                 
                             </div>
-                            <div className="depinfo" id={index +'depinfo'}>
-                                <h4 id={index}>Admin Name : {i.admin_name}</h4>
-                                <h4 id={index}>Phone : {(i.phone==='')?'-':i.phone}</h4>
+                            <div className="depinfo" id={index +'depinfo'} onClick={opendepart}>
+                              <button id={index} onClick={opendepart}>Login Department</button>
                             </div>
                         </div>
 )})}

@@ -39,7 +39,11 @@ function Home() {
         <div className="main">
           <div className="headingdiv">
             <div className="heading">
+<<<<<<< HEAD
               <h3 className="mainheading">Your Health <br />is Our Priority</h3>
+=======
+            <h3 className="mainheading">Your Health <br />is Our Priority</h3>
+>>>>>>> 4c9885f4e6296afa81100d8d5289eb3a63328f59
               <h4>Set up, manage and reach out your healing<br /> hands to the community </h4>
               <p>Elevate your healthcare experience with our platform, providing a
                 <br /> seamless registration process for doctors, hospitals, blood banks, and pharmacies.

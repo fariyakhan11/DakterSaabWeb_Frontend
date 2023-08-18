@@ -5,22 +5,109 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { useState } from "react";
 import Blood from '../../images/blood.png'
 import Profit from '../../images/profits.png'
-import {GrHelp} from "react-icons/gr";
+
 import BloodGroup from '../../images/bloodgroup.png'
 import { useEffect } from "react";
 import Transactions from "../Transactions/transactions";
 import Bloodgroup from "../BloodGroup/bloodgroup";
-import Week from '../../images/week.png';
+
 import Profilebloodbank from '../Profile/profilebloodbank'
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import { Pie } from 'react-chartjs-2';
+
+import {  
+    CategoryScale,
+    LinearScale,
+    BarElement,
+    Title,
+  } from 'chart.js';
+
+  import { Bar } from 'react-chartjs-2';
+  ChartJS.register(
+    CategoryScale,
+    LinearScale,
+    BarElement,
+    Title,
+    Tooltip,
+    Legend,
+    ArcElement
+  );
 
 
 function Dashboardbloodbank(){
     const currentDate = new Date()
     const [expandedstate,setexpandedstate]=useState(false);
-    const [selectedDate, setSelectedDate] = useState(currentDate);
+ 
     const [tab, settab]=useState('Home');
-    
+
     const [last_transact,setlast_transact]=useState({date:'',buyer_name:'',amount:'',items:[{name:'',quantity:''}]});
+    const options = {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: 'top'
+        },
+        title: {
+          display: true,
+          text: 'Sales This Week',
+        },
+      },
+    };
+    const optionsweek = {
+      // The `legend` configuration to position the labels on the side
+      labels: {
+        position: 'right',
+        labels: {
+          boxWidth: 6, // Adjust the box width for the colored squares next to the labels
+        },
+      },
+    };
+
+    const labels = ['A-positive', 'B-Positive', 'O-Negative', 'AB-Positive', 'O-negative', 'A-negative','AB-negative','B-Negative','O-Positive'];
+
+    const [dataweek,setdataweek]=useState({
+      labels,
+      datasets: [
+          {
+            
+            data: [15,9,20, 4,35,17,0,9,11],
+            backgroundColor: '#f79e9e88',
+            borderColor: '#f78e8eda',
+            borderWidth: 2,
+          },
+          
+        ],
+    })
+   
+  const  data = {
+      labels: ['A-positive', 'B-Positive', 'O-Negative', 'AB-Positive', 'O-negative', 'A-negative','AB-Negative','O-Positive'],
+      datasets: [
+        {
+    
+          data: [12, 19, 3, 5, 2, 3,0,35],
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(255, 159, 64, 0.2)',
+          ],
+          borderColor: [
+            'rgba(255, 99, 132, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(153, 102, 255, 1)',
+            'rgba(255, 159, 64, 1)',
+          ],
+          borderWidth: 1,
+        },
+      ],
+    }; 
+      
+      
+
 
 //dashboard content
 
@@ -36,7 +123,6 @@ function Dashboardbloodbank(){
         setexpandedstate(msg.expanded)
     }
 
-
 useEffect(()=>{
 
     if(!expandedstate){
@@ -47,22 +133,13 @@ useEffect(()=>{
     }
 })
 
-useEffect(()=>{
-sessionStorage.setItem('org_name', 'Hussani Blood Bank'); 
-sessionStorage.setItem('org_address', '12 Rojhan Street, Block 5 Block 3 Clifton, South City Hospital');
-sessionStorage.setItem('email', 'Hbb.south@gmail.com'); 
-sessionStorage.setItem('phone', '021-32237734');  
-sessionStorage.setItem('password','********')
-
-
-
-},[])
 
 useEffect(()=>{
     if(tab==='Home'){
         fetchblood()
         fetchstats()
         fetchlasttransact()
+   
     }
 
 },[tab])
@@ -109,6 +186,8 @@ try{
     }
 }
 
+
+
 //fetch blood groups from the database
 function fetchblood(){
     try{
@@ -132,6 +211,7 @@ function fetchblood(){
     }
 }
 
+
 return(
 
 <>
@@ -145,10 +225,10 @@ return(
 {(tab==='Home') && 
             <>
                 <div className="section1">
-                    <div className="subsec1">
+                    <div className="subsec1blood">
                         <div className="Summarybar">
                             <h4>Statistics</h4>
-                            <div id="statisticsdiv">
+                            <div id="statisticsdiv" style={{height:'8rem'}}>
                                 <div className="summarytilesbloodbank">
                                     <img src={Blood}></img>
                                     <div>
@@ -163,13 +243,7 @@ return(
                                         <h2 className="tilevalue">{statistics.todaysale}</h2>
                                     </div>
                                 </div>
-                                <div className="summarytilesbloodbank">
-                                    <img src={Week}></img>
-                                    <div>
-                                        <h3 className="tilename">This Week<br/> Sales(Rupees)</h3>
-                                        <h2 className="tilevalue">{statistics.weeksale}</h2>
-                                    </div>
-                                </div> 
+ 
                                 <div className="summarytilesbloodbank">
                                     <img src={BloodGroup}></img>
                                     <div>
@@ -181,15 +255,20 @@ return(
                             </div>
                             
                         </div>
-                        <h2 className="performacetitle">Performance and Operations</h2>
+                        
                         <div className="performancegraphbloodbank">
+                        <Bar
+                            data={dataweek}
+                            options={options}
+                        />
                         </div>
                     </div>
                     <div className="subsec2bloodbank">
                         
 
                         <div className="bookdiv">
-                       
+                        <h2 className="booktitledivbloodbank">Sales Today</h2>
+                            <Pie data={data} options={optionsweek}/>;
                         </div>
                         <div id='bottomcontentbloodbank'>
                         <div className="section2subbloodbank">
@@ -216,7 +295,7 @@ return(
                                 <h5>{last_transact.date}</h5>
                                 <h3>{last_transact.buyer_name}</h3>
                                 
-                                <h4>Rs {last_transact.amount}</h4>
+                                <h4>Rs {last_transact.amount?last_transact.amount:0}</h4>
                                 <div id="itemblooddiv">
 
                                     <div><h5>Item</h5><h5>Quantity</h5></div>

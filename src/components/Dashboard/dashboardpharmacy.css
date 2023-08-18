@@ -68,22 +68,20 @@ font-size: 1.4em;
 padding-top: 0.5em;
 margin-bottom: 1em;
 }
-#statisticsdiv:nth-child(3){
-margin: 0.5em 0;
-}
+
 #statisticsdiv{
-padding: 2em 0;
+padding: 1.3rem 0;
 box-shadow: 2px 2px 7px rgba(66, 65, 65, 0.541);
 display: flex;
-flex-direction: row;
+flex-wrap: wrap;
 width: 100%;
 justify-content: space-evenly;
 align-items: center;
 
 }
 #statisticsdiv>div>img{
-width: 3.5em;
-height: 3.5em;
+width: 30%;
+height: 30%;
 margin-right: 1em;
 }
 .summarytilespharmacy{
@@ -95,7 +93,7 @@ box-shadow: 0 2px 30px rgba(53, 52, 52, 0.13);
 height:100%;
 width:18%;
 padding: 0 2em;
-font-size: 0.8em;
+font-size: 0.8rem;
 text-align: center;
 font-family: Fraunces;
 margin: 0 0.3%;
@@ -103,7 +101,7 @@ margin: 0 0.3%;
 .tilename{
 display: flex;
 letter-spacing: 0.05em;
-font-size: 1em;
+font-size: 0.7rem;
 font-family: Raleway;
 }
 .bookdiv2{
@@ -115,6 +113,15 @@ height: 40%;
 overflow-y: scroll;
 overflow-x: hidden;
 }
+.bookdiv10{
+    padding: 0 0;
+    margin: 0 0.3em 0 0.9em;
+    box-shadow: 2px 2px 7px rgba(53, 52, 52, 0.247);
+    font-family: Raleway;
+    height: 33%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    }
 .bookdiv3{
 padding: 0 0;
 margin: 0 0.3em 0 0.9em;
@@ -129,7 +136,8 @@ padding: 0 0;
 margin: 0 0.3em 0 0.9em;
 box-shadow: 2px 2px 7px rgba(53, 52, 52, 0.247);
 font-family: Raleway;
-height: 22%;
+height: 30%;
+border-bottom-right-radius: 2em;
 }
 .bookdiv3>div{
 padding: 2em;
@@ -181,7 +189,7 @@ font-size: 1.2em;
 font-family: Fraunces;
 }
 .tilevalue{
-font-size: 1.4em;
+font-size: 1.1rem;
 width: 100%;
 height:50%;
 }
@@ -200,8 +208,13 @@ width: 70%;
 .performancegraphpharmacy{
 border: 3px solid #75c5c08a;
 align-items: center;
+border-bottom-left-radius: 2em;
 box-shadow: 0 2px 30px rgba(53, 52, 52, 0.089);
-height:53%;
+height:59%;
+display: flex;
+align-items: center;
+justify-content: center;
+overflow: scroll;
 width:99.4%;
 margin: 0.3em 0.1em;
 }
@@ -222,20 +235,24 @@ border-top-right-radius: 2em;
 }
 
 .booktitledivpharmacy{
-font-size: 1.4em;
+font-size: 1.2rem;
 font-family: Fraunces;
 text-align: center;
 padding:  0.4em 0;
 width: 100%;
 }
-
+.linechart{
+width: 90% !important;
+height: 90% !important;
+overflow: scroll !important;
+}
 #headpharmacy{
 display: flex;
 flex-direction: row;
 padding: 1em 2em;
 width: 92%;
 font-size: 0.8em;
-
+background-color: #75c5c08a;
 color: whitesmoke;
 font-weight: bolder !important;
 font-family: Raleway;
@@ -246,7 +263,7 @@ border-bottom: 3px solid rgba(190, 174, 174, 0.37);
 font-weight: lighter;
 }
 .pharmacyinfo>h3:nth-child(1){
-width: 35%;
+width: 45%;
 }
 .pharmacyinfo>h3:nth-child(2){
 width: 20%;
@@ -257,10 +274,7 @@ text-align: center;
 width: 35%;
 text-align: center;
 }
-.pharmacyinfo>h3:nth-child(4){
-width: 17%;
-text-align: center;
-}
+
 .pharmacycontent{
 display: flex;
 flex-direction: row;
@@ -270,12 +284,6 @@ font-size: 0.8em;
 align-items: center;
 font-weight: lighter !important;
 border-bottom: 3px solid rgba(190, 174, 174, 0.37);
-}
-.pharmacycontent:nth-child(1){
-background-color: rgba(252, 213, 234, 0.39);
-}
-.pharmacycontent:nth-child(2){
-background-color: rgba(175, 195, 238, 0.39);
 }
 .pharmacycontent>h3{
 font-size: 1.3em;
@@ -287,35 +295,19 @@ font-family: Ysabeau;
 .pharmacycontent>h3:nth-child(3){
 font-family: Ysabeau;
 }
-.pharmacycontent>h3:nth-child(4){
-font-family: Ysabeau;
-letter-spacing: 0.1em;
-}
+
 #contentinfopharmacy{
 overflow-y: scroll;
 overflow-x: hidden;
 }
-#colorcodeboxes{
-display: flex;
-flex-direction: row;
-padding: 0.5em 1em;
-justify-content: flex-end;
-font-size: 0.7em;
-font-family: Fraunces;
-}
-#pendingbox{
-width: 1em;
-height: 1em;
-border: 2px solid black;
-background-color: #e697afc0;
-margin: 0 0.7em ;
-}
-#filledbox{
-width: 1em;
-height: 1em;
-border: 2px solid black;
-background-color: #a7e6c8c0;
-margin:0 0.7em;
+.nolowmed{
+    width: 10rem;
+    height: 5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    font-family: Fraunces;
 }
 #headinventory{
 display: flex;
@@ -356,7 +348,7 @@ display: flex;
 flex-direction: column;
 padding: 0;
 width: 100%;
-
+border-bottom-right-radius: 2em;
 }
 .inventorycontent{
 border-bottom: 2px solid rgba(116, 115, 115, 0.377);

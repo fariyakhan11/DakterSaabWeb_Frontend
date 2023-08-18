@@ -3,6 +3,7 @@ import './bloodgroup.css';
 import BloodP from '../../images/blood1.png';
 import Addbloodgroup from './addbloodgroup';
 import { useState,useEffect } from "react";
+import {AiOutlineDelete} from "react-icons/ai";
 
 
 
@@ -147,10 +148,10 @@ const select_delete = (event) => {
   check.checked = !check.checked;
   
   if (check.checked) {
-    document.getElementById('cb' + id).style.display = 'block';
+    document.getElementById('cb' + id).style.backgroundColor = 'red';
     setselected_blood((prevState) => [...prevState, check.value]);
   } else {
-    document.getElementById('cb' + id).style.display = 'none';
+    document.getElementById('cb' + id).style.backgroundColor = 'transparent';
     setselected_blood((prevState) => prevState.filter((item) => item !== check.value));
   }  
 };
@@ -269,7 +270,8 @@ return(
                       <h2 onClick={deletemodeon}>Cancel</h2>
                     </div>
                 <div id="bloodgroupsdiv">
-                      <div className="medscontainer">
+                <div id="scrollablecont">
+                      <div className="medscontainerdisplay">
 
 
 {
@@ -284,8 +286,9 @@ return(
                                 </div>
                                 <div className="sideareamed" id={index}>
                                     
-                                    <div className="checkbox-outline" id={'co'+index}>
-                                        <div className="checkbox-selected" id={'cb'+index}></div>
+                                <div className="checkbox-outline" id={'co'+index}>
+                                      <AiOutlineDelete className="icondep checkbox-selected" id={'cb'+index} />
+                                        
                                     </div>
                                     <input type="checkbox" value={i.AvailableBloodGroup} name="selected-delete" id={'cbd'+index} className="selectedcbd"/>
                                     
@@ -323,6 +326,7 @@ return(
                         !bloodgroup_list.length&&
                         <h2 className="no_med">No blood units available right now</h2>
 }
+                      </div>
                       </div>
 
                 </div>

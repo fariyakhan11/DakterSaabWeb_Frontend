@@ -1,9 +1,8 @@
 import React from "react";
 import './appointments.css';
-import {BiEditAlt } from "react-icons/bi";
+
 import { useState,useEffect } from "react";
-
-
+import io from 'socket.io-client';
 function Appointments(){
     const workplaceplaceno=['first','second','third','fourth','fifth']
     const workplaceplacenum=['firstdiv','seconddiv','thirddiv','fourthdiv','fifthdiv']
@@ -73,12 +72,27 @@ useEffect(()=>{
 },[selected])
 
 useEffect(()=>{
-    
+    // Connect to the server's socket.io
+    const socket = io('http://localhost:5000'); 
+    // Listen for order updates
+    socket.on('appointmentUpdate', data => {
+        // Handle the updated order data received from the server
+        console.log('Received updated appointment data:', data);
+        // Update the order list with the new data
+        if(data.doctorId===sessionStorage.getItem('id')){
+            setappointmentlist(prev=>[...prev,data])
+          }
+        
+      });
     var today=new Date();
     generateyears();
     setselected({date:today.getDate(),month:months[today.getMonth()].name ,year:today.getFullYear()})
     getschedule()
     getappointments()
+
+    // Cleanup: Disconnect the socket when the component unmounts
+    return () => socket.disconnect();
+  
 },[])
 
 useEffect(()=>{
@@ -90,10 +104,7 @@ useEffect(()=>{
     sethospitals(distinctHospitalNames)
 },[schedule])
 
-const intervalInMilliseconds = 2 * 60 * 1000; // 30 minutes
-setInterval(() => {
-  getappointments();// Call the function that fetches data
-}, intervalInMilliseconds);
+
 
 function getschedule(){
 
@@ -117,7 +128,6 @@ function getschedule(){
       console.log(err)
     }
 }
-
 
 function generatedays(){
 
@@ -156,6 +166,7 @@ function generateyears(){
         yearDropdown.appendChild(option);
       }
 }
+
 const changehandler=(e)=>{
     if(e.target.id==="dateDropdown"){
        setselected((prev) => {
@@ -201,8 +212,7 @@ function getappointments(){
 }
 
 const filterworkplace=(e)=>{
-    setselectedworkplace(e.target.value)
-    
+    setselectedworkplace(e.target.value)   
 }
 
 useEffect(()=>{
@@ -233,6 +243,7 @@ useEffect(()=>{
         });
     }
 },[selectedworkplace])
+
 return(
 <>
         <div id="Appointmentsdashboard">

@@ -23,6 +23,7 @@ function Login() {
   const [identitypic, setidentitypic] = useState('');
   //locations for the organizations
   const [hospitalbranches, setbranches] = useState('');
+
   //to set the initial identity title and empty the input fields
   useEffect(() => {
     setidentitypic(DocP)
@@ -38,7 +39,9 @@ function Login() {
       org: identitytitle
     })
     emptyfields()
+    sessionStorage.clear()
   }, [])
+
   //for constant dynamic changes 
   useEffect(() => {
     document.getElementById('signin_mark').classList.add('selected_bookmark');
@@ -62,7 +65,7 @@ function Login() {
 
   // to validate the form values while entering
   function handleUserInput(e) {
-    console.log("the form values are ", formValue)
+    
     document.getElementById("nameerr").style.display = 'none';
     setformValue({
       ...formValue,
@@ -96,6 +99,7 @@ function Login() {
 
 
   }
+
   //signin form submission
   const SignIn = (e) => {
     e.preventDefault();
@@ -117,7 +121,7 @@ function Login() {
     }
     else {
       document.getElementById("nameerr").style.display = 'none';
-      console.log("the info is ", formValue);
+      
       try {
         fetch("http://localhost:5000/api/" + identitytitle.toLowerCase() + '/login/', {
           method: "POST",
@@ -126,18 +130,44 @@ function Login() {
           },
           body: JSON.stringify(formValue),
         })
-          .then((response) => {
-                if(response.status===200){alert('Login success')}
-                response.json()})
+          .then((response) => 
+              
+                response.json())
           .then((json) => {
+            if(json.user){
+            sessionStorage.clear()
+            setformValue({password:'',branch:'',email:'',org:'',name:''})
             document.getElementById("nameerr").innerHTML = json.error;
             document.getElementById("nameerr").style.display = 'flex';
-            if (!json.error) {
+            if(identitytitle.toLowerCase()==='doctor'){
+              sessionStorage.setItem('org_name',json.user.Name); 
+              sessionStorage.setItem('email', json.user.Email); 
+              sessionStorage.setItem('phone', json.user.Phone);  
+            }
+            else{
+              if(identitytitle.toLowerCase()==='pharmacy'){
+                sessionStorage.setItem('org_name', json.user.pharmacyname); 
+              }
+              else{
+                sessionStorage.setItem('org_name', json.user.name);
+              }
+              sessionStorage.setItem('org_address', json.user.address);
+              sessionStorage.setItem('email', json.user.email); 
+              sessionStorage.setItem('phone', json.user.phone); 
+            }
+            sessionStorage.setItem('password','********')
+        
+            const rout='/'+identitytitle.toLowerCase()
+            navigate(rout)
+            }if (!json.error) {
               emptyfields();
               document.getElementById("nameerr").innerHTML = "";
               document.getElementById("nameerr").style.display = 'none';
-              console.log(json.user)
+      
 
+            }
+            else{
+              alert('Problem signing in . Please provide correct credentials')
             }
           });
       } catch (err) {
@@ -270,9 +300,7 @@ function Login() {
                       {showPassword ? <FaEye /> : <FaEyeSlash />}
                     </button>
                   </div>
-                  <div className='fplink'>
-                    <a href="" className='fplink' onClick={forget_password}>Forgot password?</a>
-                  </div>
+
                 </div>
               </form>
               <div className="btndiv">

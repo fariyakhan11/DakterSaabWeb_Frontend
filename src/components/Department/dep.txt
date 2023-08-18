@@ -1,0 +1,85 @@
+<div>
+    {displayed_listdoctor.map((i,index)=>{
+        var t=appointment_list.filter(o=>o.doctorName===i.Name)
+        if(t.length>0){
+
+        
+        return(<>
+        <div className="docopddiv" >
+        <div id="Doctorappdet">
+            <h1>Doctor Name: </h1>
+            <h2>{i.Name}</h2>
+            <h1>Timings: </h1>
+            <h2>{i.availability[i.availability.indexOf(i.availability.filter(a=>a.day.toLowerCase()===currentday.toLowerCase()))]?i.availability[i.availability.indexOf(i.availability.filter(a=>a.day.toLowerCase()===currentday.toLowerCase()))].time[0]:''}</h2>
+
+            <h1>Tokens Booked</h1>
+            <h2>{appointment_list.filter(app=>app.doctorName===i.Name).length}</h2>
+        </div>
+
+        <div id="tokenpatientstats">
+            <div>
+                <h2>Previous Patient</h2>
+                <img src={PatientI}></img>
+                <h2>{()=>{
+                    var app=appointment_list.filter(app=>app.doctorName===i.name)
+                    var f=app.indexOf(currentToken[currentToken.indexOf(currentToken.filter(c=>c.name===i.Name))].appointment)-1
+                    return f.patientName
+                }}</h2>
+                <h2>{()=>{
+                    var app=appointment_list.filter(app=>app.doctorName===i.name)
+                    var f=app.indexOf(currentToken[currentToken.indexOf(currentToken.filter(c=>c.name===i.Name))].appointment)-1
+                    return f.tokenNumber
+                }}</h2>
+                <h2>{()=>{
+                    var app=appointment_list.filter(app=>app.doctorName===i.name)
+                    var f=app.indexOf(currentToken[currentToken.indexOf(currentToken.filter(c=>c.name===i.Name))].appointment)-1
+                    if(f>app.length){
+                    return f.time}
+                    else{
+                        return ''
+                    }
+                }}</h2>
+            </div>
+            <div>
+                <h2>Current Patient</h2>
+                <img src={PatientI}></img>
+                <h2>{currentToken[currentToken.indexOf(currentToken.filter(c=>c.name===i.Name))].appointment.patientName}</h2>
+                <h2>Token : {currentToken[currentToken.indexOf(currentToken.filter(c=>c.name===i.Name))].appointment.tokenNumber}</h2>
+                <h2>{currentToken[currentToken.indexOf(currentToken.filter(c=>c.name===i.Name))].appointment?currentToken[currentToken.indexOf(currentToken.filter(c=>c.name===i.Name))].appointment.time:''}</h2>
+            </div>
+            <div>
+                <h2>Next Patient</h2>
+                <img src={PatientI}></img>
+                <h2>{()=>{
+                    var app=appointment_list.filter(app=>app.doctorName===i.name)
+                    var f=app.indexOf(currentToken[currentToken.indexOf(currentToken.filter(c=>c.name===i.Name))].appointment)+1
+                    return f.patientName
+                }}</h2>
+                <h2>{currentToken[currentToken.indexOf(currentToken.filter(c=>c.name===i.Name))].value+1}</h2>
+                <h2>{()=>{
+                    var app=appointment_list.filter(app=>app.doctorName===i.name)
+                    var f=app.indexOf(currentToken[currentToken.indexOf(currentToken.filter(c=>c.name===i.Name))].appointment)+1
+                    if(f>app.length){
+                    return f.time
+                    }
+                    else{
+                        return ''
+                    }
+                }}</h2>
+            </div>
+        </div>
+        <div id="tokencounter">
+            <h1>Starting Appointment Time: </h1>
+            <h2>{currentToken[currentToken.indexOf(currentToken.filter(c=>c.name===i.Name))].appointment?currentToken[currentToken.indexOf(currentToken.filter(c=>c.name===i.Name))].appointment.time:''}</h2>
+            <h1>Increase Token Number</h1>
+            <h2>{currentToken[currentToken.indexOf(currentToken.filter(c=>c.name===i.Name))].appointment.tokenNumber?currentToken[currentToken.indexOf(currentToken.filter(c=>c.name===i.Name))].appointment.tokenNumber:''}</h2>
+            <h3 onClick={increasetoken} id={i.Name}>+</h3>
+            <h4 onClick={skiptoken} id={i.Name}>Skip</h4>
+        </div>
+    </div>
+    </>)}
+            }
+    )}
+
+
+</div>

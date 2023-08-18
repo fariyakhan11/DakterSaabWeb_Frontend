@@ -28,6 +28,11 @@ function Signup() {
         document.getElementById('signin_mark').classList.remove('selected_bookmark');
         document.getElementById('signup_mark').classList.add('selected_bookmark');
     })
+
+    useEffect(() => {
+        sessionStorage.clear()
+    },[])
+
     //to show doctor specific fields
     useEffect(() => {
         if (identitytitle === 'Doctor') {
@@ -39,7 +44,7 @@ function Signup() {
             document.getElementById('spe-div').style.display = 'flex';
             document.getElementById('24open').style.display = 'none';
             document.getElementById('coordinates').style.display = 'none';
-
+            document.getElementById('coordinates1').style.display = 'none';
         }
         else {
             document.getElementById('exp-div').style.display = 'none';
@@ -50,7 +55,7 @@ function Signup() {
             document.getElementById('city-div').style.display = 'flex';
             document.getElementById('time-div').style.display = 'flex';
             document.getElementById('coordinates').style.display = 'flex';
-
+            document.getElementById('coordinates1').style.display = 'flex';
         }
     }, [identitytitle])
     //
@@ -82,7 +87,7 @@ function Signup() {
 
     // to validate the form values while entering
     function handleUserInput(e) {
-        console.log(formValue)
+        
         document.getElementsByClassName('errordescription')[0].style.display = "none";
 
         if (!(e.target.name === 'time')) {
@@ -167,11 +172,40 @@ function Signup() {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(dataset)
-            }).then(res => {
-                if (res.status === 200) {
+            }).then((response) => 
+              
+            response.json())
+            .then(json => {
+                if(json.user){
+                    sessionStorage.clear()
+                    
+                    if(identitytitle.toLowerCase()==='doctor'){
+                      sessionStorage.setItem('org_name',json.user.Name); 
+                      sessionStorage.setItem('email', json.user.Email); 
+                      sessionStorage.setItem('phone', json.user.Phone);  
+                      sessionStorage.setItem('education', json.user.Education); 
+                      sessionStorage.setItem('speciality', json.user.
+                      Speciality); 
+                      sessionStorage.setItem('experience', json.user.Experience);
+                      sessionStorage.setItem('ratings', json.user.Ratings);  
+                    }
+                    else{
+                      if(identitytitle.toLowerCase()==='pharmacy'){
+                        sessionStorage.setItem('org_name', json.user.pharmacyname); 
+                      }
+                      else{
+                        sessionStorage.setItem('org_name', json.user.name);
+                      }
+                      sessionStorage.setItem('org_address', json.user.address);
+                      sessionStorage.setItem('email', json.user.email); 
+                      sessionStorage.setItem('phone', json.user.phone); 
+                      sessionStorage.setItem('time', json.user.time);
+                    }
+                    sessionStorage.setItem('password','********')
+                
                     document.getElementsByClassName('errordescription')[0].textContent = "";
                     document.getElementsByClassName('errordescription')[0].style.display = 'none';
-
+                
                     alert("Sign up Success");
                     //to empty the input values after the successful submission of signup form
 
@@ -193,14 +227,16 @@ function Signup() {
                         }
 
                     )
+                    const rout='/'+identitytitle.toLowerCase()
+                    navigate(rout)
                 }
-                else if (res.status === 430) {
+                else if (json.error === "This org already exist") {
                     document.getElementsByClassName('errordescription')[0].textContent = "This " + identitytitle + " already exist.";
                     document.getElementsByClassName('errordescription')[0].style.display = 'block';
                 }
 
                 else {
-                    console.log("error in sending data", res.error)
+                    
                     document.getElementsByClassName('errordescription')[0].textContent = 'Some problem occurred while saving data. Please try again';
                     document.getElementsByClassName('errordescription')[0].style.display = 'block';
                 }
@@ -326,7 +362,7 @@ function Signup() {
                                             <label>Longitude: </label>
                                             <input className="inputf time" type="text" name="longitude" onChange={handleUserInput} />
                                         </div>
-                                        <div className="form-fields" id="coordinates">
+                                        <div className="form-fields" id="coordinates1">
                                             <label>Latitude: </label>
                                             <input className="inputf time" type="text" name="latitude" onChange={handleUserInput} />
                                         </div>

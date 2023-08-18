@@ -5,6 +5,7 @@ import { useState,useEffect } from "react";
 import Adddoctors from "./adddoctors";
 import FrontP from '../../images/front.png'
 import BackP from '../../images/back.png'
+import {AiOutlineDelete} from "react-icons/ai";
 
 function Doctors(){
     const [searchdoctor,setsearchdoctor]= useState('')
@@ -26,7 +27,7 @@ function Doctors(){
 //initial tasks on page load
 useEffect(()=>{
   fetchdoctors()
-  fetchdepartments()
+  
   },[])
 
 //close the add view tab
@@ -96,7 +97,8 @@ function fetchdoctors(){
         if(json.doctors){
           setdoctor_list(json.doctors);
           setdisplayed_list(json.doctors);
-        }else{setdoctor_list([]);setdisplayed_list([])}
+          fetchdepartments()
+        }else{setdoctor_list([]);setdisplayed_list([]);fetchdepartments([])}
         if(json.error){console.log(json.error)}
       });
     }catch(err){
@@ -140,6 +142,7 @@ const deletemodeon=()=>{
 //delete the selected medicines
 const delete_selected=(e)=>{
     e.preventDefault();
+    console.log(sessionStorage.getItem('org_name'),sessionStorage.getItem('org_address'),selected_doctor)
     try{
       let data={name:sessionStorage.getItem('org_name'),address:sessionStorage.getItem('org_address'),doc_list:selected_doctor}
         
@@ -153,10 +156,12 @@ const delete_selected=(e)=>{
             res.json();
             console.log("the response is ",res);
             setselected_doctor([])
-            var cb=document.getElementsByClassName('checkbox-selected')
+            var cb=document.getElementsByClassName('checkbox-outline')
             for(var c=0;c<cb.length;c++){
                 cb[c].style.display='none';
             }
+            var btn=document.getElementById('cancel-delete-btn')
+            btn.click()
             if(res.status===200){
                 fetchdoctors()    
                 alert('Doctors deleted successfully')
@@ -176,16 +181,17 @@ const delete_selected=(e)=>{
 const select_delete = (event) => {
   event.preventDefault();
   let id = parseInt(event.target.id);
+  if(id!=null){
   let check = document.getElementById('cbd' + id);
   check.checked = !check.checked;
 
   if (check.checked) {
-    document.getElementById('cb' + id).style.display = 'block';
+    document.getElementById('cb' + id).style.backgroundColor = 'red';
     setselected_doctor((prevState) => [...prevState, {name:check.value,department:check.name}]);
   } else {
-    document.getElementById('cb' + id).style.display = 'none';
+    document.getElementById('cb' + id).style.backgroundColor = 'transparent';
     setselected_doctor((prevState) => prevState.filter((item) => item.name !== check.value&&item.department!==check.name ));
-  }  
+  } } 
 };
 
 //which medicines are selected for deletion
@@ -210,8 +216,9 @@ function fetchdepartments(){
         }).then((response) => response.json()) // get response, convert to json
         .then((json) => {
         if(json.department){
-          setdepartment_list(json.department);
           
+          
+        setdepartment_list(json.department)
         }else{setdepartment_list([]);}
         if(json.error){console.log(json.error)}
       });
@@ -404,7 +411,7 @@ return(
                     <hr/>
                     <div id="hiddendiv">
                       <h2  onClick={delete_selected}>Delete</h2>
-                      <h2 onClick={deletemodeon}>Cancel</h2>
+                      <h2 onClick={deletemodeon} id="cancel-delete-btn">Cancel</h2>
                     </div>
                     <div className="searchbar">
 
@@ -442,10 +449,11 @@ return(
                                   <img id={index} src={DocP}></img>
                                 </div>
                                 <div className="sideareamed" id={index}>
-                                    
-                                    <div className="checkbox-outline" id={'co'+index}>
-                                        <div className="checkbox-selected" id={'cb'+index}></div>
+                                <div className="checkbox-outline" id={'co'+index}>
+                                      <AiOutlineDelete className="icondep checkbox-selected" id={'cb'+index} />
+                                        
                                     </div>
+                              
                                     <input type="checkbox" value={i.Name} name={i.Department} id={'cbd'+index} className="selectedcbd"/>
                                     
                                 </div>

@@ -24,6 +24,9 @@ height: 96%;
 width: 100%;
 
 }
+.selectedformtype{
+    border:4px solid #294f96;
+}
 
 #NRC>div{
 display: flex;
@@ -44,6 +47,10 @@ height:100%;
 
 #NRC>div>div>.bookdiv6{
 height: 91%;
+}
+#CNRstats{
+font-family: Fraunces;
+
 }
 #NRC>div>div>.bookdiv6>#CNRstats>div{
 transition: all 0.5s ease-in-out;
@@ -189,6 +196,13 @@ height: 70%;
 padding-top: 5%;
 background-color: transparent;
 }
+.formkadiv{
+    border: 1px solid rgb(138, 136, 136) !important;
+border-radius: 1em;
+height: 70%;
+padding-top: 5%;
+background-color: transparent;
+}
 #NRC_formAreaFormContainer>div:nth-last-child(1)>button{
 padding: 0.4em 1.5em;
 border-radius:1em;
@@ -278,7 +292,7 @@ height: 52%;
 font-family: Raleway;
 display: flex;
 justify-content: space-evenly;
-font-size: 1em;
+font-size: 1rem;
 }
 #form-des-det>div{
 border: 2px solid #8db2f8;
@@ -295,7 +309,7 @@ display: flex;
 flex-direction: row;
 width: 90%;
 padding: 0.8% 3%;
-margin: 0.2em 0;
+margin: 0.2rem 0;
 align-items: center;
 }
 #entry-form-det>div:nth-child(2) , #entry-form-det>div:nth-child(3){
@@ -304,7 +318,7 @@ border-bottom: 2px solid rgba(185, 184, 184, 0.637);
 #entry-form-det>div>label{
 width: 20%;
 margin-right: 2em;
-font-size: 1.1em;
+font-size: 1.1rem;
 
 }
 #entry-form-det>div>h2{
@@ -316,8 +330,9 @@ font-size: 1.1em;
 }
 #entry-form-det>div:nth-last-child(1)>h2{
 height: 5rem;
+display: flex;
+align-items: center;
 overflow: scroll !important;
-
 }
 #ResolutionForm{
 height: 43%;

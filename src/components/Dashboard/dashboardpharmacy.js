@@ -9,21 +9,44 @@ import Transactions from "../Transactions/transactions";
 import Profit from '../../images/profits.png'
 import Med from '../../images/drugs1.png';
 import MedP from '../../images/medicine.png';
-import Week from '../../images/week.png';
+
 import OrdersI from '../../images/order (1).png'
 import OrdersP from '../../images/box.png'
 import Trans from '../../images/card-payment.png'
 import Profilepharmacy from "../Profile/profilepharmacy";
+import {
+    Chart as ChartJS,
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Title,
+    Tooltip,
+    Legend,
+  } from 'chart.js';
+import { Line } from 'react-chartjs-2';
+
+ChartJS.register(
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Title,
+    Tooltip,
+    Legend
+);
+
 
 function Dashboardpharmacy(){
-    const currentDate = new Date()
+    
     const [expandedstate,setexpandedstate]=useState(true)
     const [statistics,setstatistics]=useState({todaymed:'',weeksale:'',todaysale:'',totalorder:'',orderpend:'',popmed:''})
     const [tab, settab]=useState('Home');
-    const [order_list,setorder_list]=useState([]);
     const [last_transact,setlast_transact]=useState({date:'',buyer_name:'',amount:'',items:[{name:'',quantity:''}]});
     const [medicine_list,setmedicine_list]=useState([]);
-
+    const [medsold,settodaymedsold]=useState([]);
+    const [todaysale,settodaysale]=useState(0)
+    const [todayquantity,settodayquantity]=useState(0)
 //navigate between tabs from the sidenav clicks and transitions
     const handlestate=(msg)=>{
         settab(msg.tab)
@@ -31,6 +54,40 @@ function Dashboardpharmacy(){
         setexpandedstate(msg.expanded)
     }
 
+    const options = {
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'top' ,
+          },
+          title: {
+            display: true,
+            text: 'Medicines sold in Week',
+          },
+        },
+      };
+      const labels = ['zylex','augmentin','cafka','Cytopan','Bekson Forte HFA','flagel','ponstan','panadol','Covam Plus','Covam','Fexet','Daclaget','Lipanthyl','motilium','polyflex','ansaid'];
+      
+      const data = {
+        labels,
+        datasets: [
+          {
+            label: 'Week 1',
+            data: [10,79,25,25,32,1,45,23,56,34,4,20,19,50,27,7,34,4,20,19,50,27,7],
+            borderColor: 'rgb(255, 99, 132)',
+            backgroundColor: 'rgba(255, 99, 132, 0.5)',
+          },
+          {
+            label: 'Week 2',
+            data: [4,47,23,56,5,61,15,8,3,67,34,9,0,3,0,10,34,4,20,19,50,27,7],
+            borderColor: 'rgb(53, 162, 235)',
+            backgroundColor: 'rgba(53, 162, 235, 0.5)',
+          },
+        ],
+      };
+
+      
+      
 
 
 useEffect(()=>{
@@ -45,31 +102,15 @@ useEffect(()=>{
 
 })
 
-useEffect(()=>{
-sessionStorage.setItem('org_name', 'ABC Pharma'); 
-sessionStorage.setItem('org_address', 'R 143 sector 9 North Karachi, Karachi');
-sessionStorage.setItem('email', 'abcpharmacy@gmail.com'); 
-sessionStorage.setItem('phone', '03232626789');  
-sessionStorage.setItem('password','********')
 
-
-
-},[])
 
 useEffect(()=>{
     if(tab==='Home'){
         fetchlasttransact()
         fetchlowmeds()
         fetchstats()
-        fetchorders()
-
-        // Set the interval to fetch/update the data every 5 minutes
-        const interval = setInterval(fetchorders, 5 * 60 * 1000);
-
-        // Clean up the interval when the component unmounts
-        return () => {
-        clearInterval(interval);
-        };
+    
+        fetchtodaymedsold()
     }
 
 },[tab])
@@ -89,28 +130,6 @@ function fetchlasttransact(){
         if(json.transaction){
           setlast_transact(json.transaction);
         }else{setlast_transact();}
-        if(json.error){console.log(json.error)}
-      });
-    }catch(err){
-      console.log(err)
-    }
-}
-
-//fetch orders from the database
-function fetchorders(){
-    try{
-        const params=sessionStorage.getItem('org_name')+'/'+sessionStorage.getItem('org_address')
-        const api='http://localhost:5000/api/transactionandorder/getorders/'+params;
-        fetch(api, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-        }).then((response) => response.json()) // get response, convert to json
-        .then((json) => {
-        if(json.order){
-          setorder_list(json.order);
-        }else{setorder_list([]);}
         if(json.error){console.log(json.error)}
       });
     }catch(err){
@@ -160,6 +179,32 @@ try{
 }
 
 
+
+function fetchtodaymedsold(){
+    try{
+        const params=sessionStorage.getItem('org_name')+'/'+sessionStorage.getItem('org_address')
+        const api='http://localhost:5000/api/pharmacy/todaymedsold/'+params;
+        fetch(api, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        }).then((response) => response.json()) // get response, convert to json
+        .then((json) => {
+            var amount=0
+            var quantity=0
+            settodaymedsold(json.medsold)
+            json.medsold.forEach(element => {
+                amount=amount+(element.totalQuantitySold*element.totalPrice)
+                quantity=quantity+element.totalQuantitySold
+            });
+            settodaysale(amount)
+            settodayquantity(quantity)
+        });
+    }catch(err){
+      console.log(err)
+    }
+}
 return(
 <>
 
@@ -179,51 +224,45 @@ return(
             <div className="subsec1">
                         <div className="Summarybar">
                             <h4>Statistics</h4>
-                            <div id="statisticsdiv">
+                            <div id="statisticsdiv" style={{marginBottom:'1rem'}}>
                                 <div className="summarytilesbloodbank">
                                     <img src={Med}></img>
                                     <div>
                                         <h3 className="tilename">Today <br/> Medicines sold</h3>
-                                        <h2 className="tilevalue">{statistics.todaymed}</h2>
+                                        <h2 className="tilevalue">{todayquantity}</h2>
                                     </div>
                                 </div>
-                                <div className="summarytilesbloodbank">
-                                    <img src={Week}></img>
-                                    <div>
-                                        <h3 className="tilename">This Week<br/> Sales(Rupees)</h3>
-                                        <h2 className="tilevalue">{statistics.weeksale}</h2>
-                                    </div>
-                                </div> 
+
                                 <div className="summarytilesbloodbank">
                                     <img src={Profit}></img>
                                     <div>
                                         <h3 className="tilename">Today <br/> Sales(Rupees)</h3>
-                                        <h2 className="tilevalue">{statistics.todaysale}</h2>
+                                        <h2 className="tilevalue">{todaysale}</h2>
                                     </div>
                                 </div>
                                       
                                 
                             </div>
-                            <div id="statisticsdiv">
+                            <div id="statisticsdiv" style={{marginBottom:'1rem'}}>
                                 <div className="summarytilesbloodbank">
                                     <img src={OrdersI}></img>
                                     <div>
                                         <h3 className="tilename">Total <br/>Orders</h3>
-                                        <h2 className="tilevalue">{statistics.totalorder}</h2>
+                                        <h2 className="tilevalue">{statistics.totalorder?statistics.totalorder:0}</h2>
                                     </div>
                                 </div>
                                 <div className="summarytilesbloodbank">
                                     <img src={OrdersP}></img>
                                     <div>
                                         <h3 className="tilename">Orders <br/>Pending </h3>
-                                        <h2 className="tilevalue">{statistics.orderpend}</h2>
+                                        <h2 className="tilevalue">{statistics.orderpend?statistics.orderpend:0}</h2>
                                     </div>
                                 </div> 
                                 <div className="summarytilesbloodbank">
                                     <img src={MedP}></img>
                                     <div>
                                         <h3 className="tilename">Popular<br/> Medicine</h3>
-                                        <h2 className="tilevalue">{statistics.popmed}</h2>
+                                        <h2 className="tilevalue">{statistics.popmed?statistics.popmed:'None'}</h2>
                                     </div>
                                 </div>
                                       
@@ -232,41 +271,31 @@ return(
                             
                         </div>
                 <div className="performancegraphpharmacy">
+                    <Line options={options} data={data} className="linechart"/>;
+
                 </div>
             </div>
             <div className="subsec2pharmacy">
                 
-                <h2 className="booktitledivpharmacy">Medicines booking</h2>
-                <div id="colorcodeboxes"><div id="pendingbox"></div><h2>Pending</h2><div id="filledbox"></div><h2>Fulfilled</h2></div>                
-                <div className="bookdiv2">
+                <h2 className="booktitledivpharmacy">Medicines Sold Today</h2>
+                <div className="bookdiv10">
 
                     <div id='headpharmacy' className="pharmacyinfo">
-                        <h3>Customer Name</h3>
-                        <h3>Amount</h3>
-                        <h3>Item</h3>
+                        <h3>Medicine Name</h3>
                         <h3>Quantity</h3>
+                        <h3>Price</h3>
                     </div>
                     <div id="contentinfopharmacy">
-{order_list.map((i,index)=>{return(<>
+                    {!medsold.length>0&&
+    <div className="inventorycontent">
+                    <h6 className="nolowmed">No medicines sold today</h6>
+                    </div>
+}
+{medsold.filter(m=>m.totalQuantitySold>0).map((i,index)=>{return(<>
                         <div className="pharmacyinfo pharmacycontent">
-                            <h3>{i.buyer_name}</h3>
-                            <h3>Rs {i.amount}</h3>
-<h3>
-
-                            {i.items.map((item,ind)=>{return(<>
-                                                        {item.name}
-                            <br/>
-                                                        
-                            </>)})}
-                            </h3>
-                            <h3>
-
-                            {i.items.map((item,ind)=>{return(<>
-                                                        {item.quantity}
-                            <br/>
-                                                        
-                            </>)})}
-                            </h3>
+                            <h3>{i.name}</h3>
+                            <h3>{i.totalQuantitySold}</h3>
+                            <h3>{i.totalPrice}</h3>
 
                         </div>
 
@@ -274,7 +303,7 @@ return(
                     </div>
 
                 </div>
-                <h2 className="booktitledivpharmacy">Last Transaction</h2>
+                <h2 className="booktitledivpharmacy" style={{marginTop:'2rem'}}>Last Transaction</h2>
                 <div className="bookdiv3">
 {last_transact&&
                     <div>
@@ -283,7 +312,7 @@ return(
                             <div>
                                 <h2>{last_transact.buyer_name}</h2>
                                 <h3>{last_transact.date}</h3>
-                                <h4>Rs {last_transact.amount}</h4>
+                                <h4>Rs {last_transact.amount?last_transact.amount:0}</h4>
                             </div>
                         </div>
                         <div>
@@ -312,6 +341,11 @@ return(
 
 
 </>)})}
+{!medicine_list.length>0&&
+    <div className="inventorycontent">
+                    <h6 className="nolowmed">No medicines below 5 units</h6>
+                    </div>
+}
 
                     </div>
                 </div>

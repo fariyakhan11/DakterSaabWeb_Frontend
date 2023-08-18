@@ -14,16 +14,26 @@ function Scheduleenter({close}){
         {day:"Saturday",time:['']},
         {day:"Sunday",time:['']}
     ]})
-    const [editschedule,seteditschedule]=useState([])
+    const [editschedule,seteditschedule]=useState([{name:'Unnamed',address:'',fee:'',longitude:'',latitude:'',coordinates:{},availability:[{day:"Monday",time:['']},
+    {day:"Tuesday",time:['']},
+    {day:"Wednesday",time:['']},
+    {day:"Thursday",time:['']},
+    {day:"Friday",time:['']},
+    {day:"Saturday",time:['']},
+    {day:"Sunday",time:['']}]}])
     const [selectedindex,setselectedindex]=useState(0)
+    
 
-
-useEffect(() => {geteditschedule()
+useEffect(() => {
+    geteditschedule()
 }, []);
 
 useEffect(() => {
+    console.log(editschedule)
+    
 }, [editschedule]);
 
+//get schedule for editing
 function geteditschedule() {
     try {
         const params = sessionStorage.getItem('org_name') + '/' + sessionStorage.getItem('email');
@@ -36,7 +46,7 @@ function geteditschedule() {
         }).then(res=>res.json())
         .then(json=>{
 
-            if (json.schedule) {
+            if (json.schedule.length) {
                 seteditschedule(json.schedule);
                 const daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
                 const selectedAvailability = {};
@@ -49,6 +59,7 @@ function geteditschedule() {
                 // Set the availability for the current day
                 selectedAvailability[day] = filteredAvailability.length ? filteredAvailability[0].time : [''];
                 });
+
                 // Construct the selected schedule object with availability for each day
                 setselectedschedule({
                     name: json.schedule[0].name,
@@ -62,7 +73,13 @@ function geteditschedule() {
                 });
                 setselectedindex(0)
                 } else {
-                seteditschedule([{name:'Unnamed',address:'',fee:'',longitude:'',latitude:'',coordinates:{},availability:[]}]);
+                seteditschedule([{name:'Unnamed',address:'',fee:'',longitude:'',latitude:'',coordinates:{},availability:[{day:"Monday",time:['']},
+                {day:"Tuesday",time:['']},
+                {day:"Wednesday",time:['']},
+                {day:"Thursday",time:['']},
+                {day:"Friday",time:['']},
+                {day:"Saturday",time:['']},
+                {day:"Sunday",time:['']}]}]);
                 setselectedschedule({ name: 'Unnamed', address: '', fee: '',longitude:'',latitude:'',coordinates:{}, availability: [
                     {day:"Monday",time:['']},
                     {day:"Tuesday",time:['']},
@@ -87,12 +104,20 @@ function geteditschedule() {
     }
 }
 
+//add more hospitals
 const addhospital=()=>{
     
-    seteditschedule([...editschedule,{name:'Unnamed',address:'',fee:'',longitude:'',latitude:'',coordinates:{},availability:[]} ]);
+    seteditschedule([...editschedule,{name:'Unnamed',address:'',fee:'',longitude:'',latitude:'',coordinates:{},availability:[{day:"Monday",time:['']},
+    {day:"Tuesday",time:['']},
+    {day:"Wednesday",time:['']},
+    {day:"Thursday",time:['']},
+    {day:"Friday",time:['']},
+    {day:"Saturday",time:['']},
+    {day:"Sunday",time:['']}]} ]);
 
 }
 
+//change hospital main information
 const hospitalinfochange = (e) => {
     setselectedschedule(prevSelectedSchedule => {
         const updatedSchedule = { ...prevSelectedSchedule }; // Make a shallow copy of the existing state
@@ -172,10 +197,10 @@ setselectedschedule({
   ],
 });
     
-    setselectedindex(e.target.id)   
+setselectedindex(e.target.id)   
 }
 
-//handle inputs for time
+//handle inputs for time availability
 const handleinput = (e) => {
     const day = e.target.name;
     const index = selectedschedule.availability.findIndex(a => a.day === day);
@@ -188,38 +213,16 @@ const handleinput = (e) => {
 }
 
 
-// Define a function to refine the editschedule array
-const refineSchedule = () => {
-  const refinedSchedule = editschedule.map((item) => {
-    const refinedAvailability = item.availability
-      .filter((slot) => slot.time.length > 0) // Remove slots with empty time
-      .reduce((acc, slot) => {
-        // Merge adjacent slots with a non-empty slot
-        if (acc.length > 0 && slot.time.length > 0) {
-          const prevSlot = acc[acc.length - 1];
-          if (prevSlot.time.length === 1 && prevSlot.time[0] === '' && slot.time[0] !== '') {
-            prevSlot.time[0] = slot.time[0];
-          } else {
-            acc.push(slot);
-          }
-        } else {
-          acc.push(slot);
-        }
-        return acc;
-      }, []);
 
-    return { ...item, availability: refinedAvailability };
-  });
 
-  seteditschedule(refinedSchedule);
-};
 
 const submitscheduledata=()=>{
-    alert('hi')
-    refineSchedule()
-    console.log('mmmmmmmmmmmmmmmmmmmm',editschedule)
+    
+    sendupdatedschedule()
+    
 }
 
+//send updated schedule to db
 function sendupdatedschedule(){
     
     try{
@@ -234,7 +237,7 @@ function sendupdatedschedule(){
         }).then(res => {
                 if (res.status === 200) {
                     
-                    seteditschedule([])
+                    seteditschedule([{name:'Unnamed',address:'',fee:'',longitude:'',latitude:'',coordinates:{},availability:[]}])
                     setselectedindex(0)
                     setselectedschedule({name:'',address:'',fee:'',availability: [
                         {day:"Monday",time:['']},
@@ -259,6 +262,49 @@ function sendupdatedschedule(){
 
 }
 
+//remove the hospital 
+const deletehospital=()=>{
+    if(editschedule.length>1){
+        var s=[...editschedule]
+        s.splice(selectedindex,1)
+        seteditschedule(s)
+        const daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+        const selectedAvailability = {};
+
+        // Iterate over each day of the week
+        daysOfWeek.forEach(day => {
+        const lowercaseDay = day.toLowerCase();
+        const filteredAvailability = s[0].availability.filter(a => a.day.toLowerCase() === lowercaseDay);
+        
+        // Set the availability for the current day
+        selectedAvailability[day] = filteredAvailability.length ? filteredAvailability[0].time : [''];
+        });
+
+        // Construct the selected schedule object with availability for each day
+        setselectedschedule({
+            name: s[0].name,
+            address: s[0].address,
+            fee: s[0].fee,
+            longitude:s[0].longitude,latitude:s[0].latitude,coordinates:s[0].coordinates,
+            availability: daysOfWeek.map(day => ({
+            day,
+            time: selectedAvailability[day],
+            })),
+        });
+        
+        setselectedindex(0)
+    
+    }
+
+}
+
+useEffect(()=>{
+    var x='displayhospitalname'+ selectedindex
+    if(document.getElementsByClassName('actiivehospitaltab')[0]){
+    document.getElementsByClassName('actiivehospitaltab')[0].classList.remove('actiivehospitaltab')}
+    document.getElementsByClassName(x)[0].classList.add('actiivehospitaltab')
+},[selectedindex])
+
 return(<>
 <div className="grayareaschedule">
     <div id="scheduleenterdiv">
@@ -270,7 +316,7 @@ return(<>
 {editschedule.map((i,index)=>{
     
         return(<>
-                        <div className={i.name===selectedschedule.name?"actiivehospitaltab":''} onClick={changehospital} id={index}><h2 id={index}>{i.name}</h2></div>
+                        <div className={'displayhospitalname'+index} onClick={changehospital} id={index}><h2 id={index}>{i.name}</h2></div>
 
         </>)
 })}
@@ -278,7 +324,7 @@ return(<>
                     </div>
                     <div id="morehosbtn" onClick={addhospital}><h2>+</h2></div>
                 </div>
-                <button id="removehospital">Remove Hospital</button>
+                <button id="removehospital" className={(editschedule.length>1)?'':'onediv'} onClick={deletehospital}>Remove Hospital</button>
                 <div className="hospitalenterinfo">
                     <div>
                     <h3>Name:</h3>

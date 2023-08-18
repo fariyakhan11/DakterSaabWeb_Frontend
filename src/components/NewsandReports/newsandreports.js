@@ -1,15 +1,13 @@
 import React from "react";
 import './newsandreports.css';
 import Complaints from '../../images/chat.png'
-import News from '../../images/newspaper.png'
 import Requests from '../../images/request.png'
 import { useState,useEffect } from "react";
 import { Label } from "reactstrap";
 import All from '../../images/all.png'
 
 function Newsandreports(){
-    const [entryform,setentryform]=useState()
-    //const [entryform ,setentryform]=useState({form_no:'',form_date:'',form_type:'',entree_name:'',form_title:'',form_description:'',form_department:'',resolution_description:'',resolution_date:'',resolver_name:''})
+    const [entryform,setentryform]=useState({form_no:'',form_date:generatenowdate(),form_type:'',entree_name:'',form_title:'',form_description:'',form_department:'',resolution_description:'',resolution_date:generatenowdate(),resolver_name:''})
     const [department_list,setdepartment_list]=useState([]);
     const [CNRlist ,setCNRlist ]=useState([
     //    {form_no:'',form_date:'',form_type:'',name:'',form_title:'',form_description:'',form_department:'',resolution_description:'',resolution_date:'',resolver_name:''},
@@ -57,8 +55,10 @@ const handleentryformvalue = (e) => {
   setentryform((prevform) => ({ ...prevform, [e.target.id]: e.target.value }));
  
 };
+
+
 useEffect(() => {
-  console.log(entryform);
+  
 }, [entryform]);
 
 const close_resolution_area=()=>{
@@ -68,17 +68,18 @@ const close_resolution_area=()=>{
 
 const show_details_and_resolution=(e)=>{
     var id=e.target.id
-    setentryform({form_no:CNRlist[id].form_no,form_date:CNRlist[id].form_date,form_type:CNRlist[id].form_type,entree_name:CNRlist[id].name,form_title:CNRlist[id].form_title,form_description:CNRlist[id].form_description,form_department:CNRlist[id].form_department,resolution_description:CNRlist[id].resolution_description,resolution_date:CNRlist[id].resolver_name!=''?CNRlist[id].resolution_date:generatenowdate(),resolver_name:CNRlist[id].resolver_name})
+    setentryform({form_no:CNRlist[id].form_no,form_date:CNRlist[id].form_date,form_type:CNRlist[id].form_type,entree_name:CNRlist[id].entree_name,form_title:CNRlist[id].form_title,form_description:CNRlist[id].form_description,form_department:CNRlist[id].form_department,resolution_description:CNRlist[id].resolution_description,resolution_date:CNRlist[id].resolver_name!=''?CNRlist[id].resolution_date:generatenowdate(),resolver_name:CNRlist[id].resolver_name})
     set_resolution_window(true)
 }
 
 const filterNCR = (e) => {
+    
   if (e.target.id === 'All') {
     setCNRlist(fetched_list)
     document.getElementsByClassName('selectedformtype')[0].classList.remove('selectedformtype');
     document.getElementsByClassName(e.target.id+'div')[0].classList.add('selectedformtype');
   } else {
-    var filteredForms = fetched_list.filter((o) => o.formtype === e.target.id);
+    var filteredForms = fetched_list.filter((o) => o.form_type === e.target.id);
     setCNRlist(filteredForms);
     document.getElementsByClassName('selectedformtype')[0].classList.remove('selectedformtype');
     document.getElementsByClassName(e.target.id+'div')[0].classList.add('selectedformtype');
@@ -123,15 +124,6 @@ const filterbyyear =(e)=>{
       } 
 }
 
-const filterbyname =(e)=>{
-    if (e.target.value === '') {
-        setCNRlist(fetched_list)
-      } else {
-        var filteredForms = fetched_list.filter((o) => o.entree_name === e.target.value);
-        setCNRlist(filteredForms);
-      } 
-}
-
 //fetch orders from the database
 function fetchforms(){
     try{
@@ -145,16 +137,16 @@ function fetchforms(){
         }).then((response) => response.json()) // get response, convert to json
         .then((json) => {
         if(json.forms){
-            console.log(json.forms)
+            
           setCNRlist(json.forms);
           setfetched_list(json.forms);
 
-          const formNumbers = fetched_list.map(item => item.form_no); // Extract form_no values
+          const formNumbers = json.forms.map(item => item.form_no); // Extract form_no values
         
-          setentryform((prevform) => ({ ...prevform, ['form_no']: Math.max(...formNumbers) }));
+          setentryform((prevform) => ({ form_date:generatenowdate(),form_type:'',entree_name:'',form_title:'',form_description:'',form_department:'',resolution_description:'',resolution_date:generatenowdate(),resolver_name:'', form_no: Math.max(...formNumbers)+1 }));
 
         }else{
-            setentryform((prevform) => ({ ...prevform, ['form_no']: 1 }));
+            setentryform((prevform) => ({form_date:generatenowdate(),form_type:'',entree_name:'',form_title:'',form_description:'',form_department:'',resolution_description:'',resolution_date:generatenowdate(),resolver_name:'', form_no: 1 }));
             setCNRlist([]);setfetched_list([])}
         if(json.error){console.log(json.error)}
       });
@@ -166,10 +158,10 @@ function fetchforms(){
 const submitNCRform=(e)=>{
     
     
-    alert(entryform.form_date,entryform.form_department,entryform.form_no,entryform.form_type,entryform.form_title)
+    if(entryform.form_date!=''&&entryform.form_department!=''&&entryform.form_no!=''&&entryform.form_title!=''){
     
         try{
-            alert('ok')    
+            
             const api='http://localhost:5000/api/hospital/storeforms';
             let data={org_name:sessionStorage.getItem('org_name'),org_address:sessionStorage.getItem('org_address'),depinfo:entryform}
             fetch(api, {
@@ -181,7 +173,6 @@ const submitNCRform=(e)=>{
             }).then(res => {
                     if (res.status === 200) {
                         alert('Form added successfully')
-                        setentryform({form_no:'',form_date:generatenowdate(),form_type:'',entree_name:'',form_title:'',form_description:'',form_department:'',resolution_description:'',resolution_date:'',resolver_name:''})
                         fetchforms()
                     }
                     
@@ -191,9 +182,13 @@ const submitNCRform=(e)=>{
         }catch(err){
             console.log(err);
         }      
-    
+    }
+    else{
+        alert("Please fill in all the fields of the form")
+    }
 
 }
+
 return(
 <>
         <div id="Newsandreportsdashboard">
@@ -223,7 +218,7 @@ return(
                                 </div>
                             </div>
                             <div>
-                                <Label>Name of Person filling the entry form</Label>
+                                <Label>Name of Person</Label>
                                 <h2>{entryform.entree_name}</h2>
                             </div>
                             <div>
@@ -247,14 +242,14 @@ return(
                                 </div>
                                 <div>
                                     <label>Name </label>
-                                    <input type="text" placeholder="Your Name" value={entryform.resolver_name} onChange={handleentryformvalue} id="name"></input>
+                                    <input type="text"  value={entryform.resolver_name} onChange={handleentryformvalue} id="resolver_name"></input>
                                 </div>
                                 <div>
                                     <label>Description </label>
-                                    <input type="textarea" value={entryform.resolution_description} onChange={handleentryformvalue} id="form_description"></input>
+                                    <input type="textarea" value={entryform.resolution_description} onChange={handleentryformvalue} id="resolution_description"></input>
                                 </div>
                                 <div>
-                                    <button>Submit</button>
+                                    <button onClick={submitNCRform}>Submit</button>
                                 </div>
                             </div>
                         </div>
@@ -288,7 +283,7 @@ return(
                                 <div id="date-options" className="options_cont">
                                     <select onChange={filterbydate} >
                                         <option value='' >Date</option>
-                                        <option>All</option>
+                                        
 {[...Array(31).keys()].map((num) => num + 1).map((i,index)=>{
                                         return(
                                             <option id={index} value={i}>{i}</option>
@@ -300,10 +295,10 @@ return(
                                 <div id="date-options" className="options_cont">
                                     <select onChange={filterbymonth}>
                                         <option value='' > Month</option>
-                                        <option>All</option>
+                                        
 {['January','February','March','April','May','June','July','August','September','October','November','December'].map((i,index)=>{
                                         return(
-                                            <option id={index} value={index+1}>{i}</option>
+                                            <option id={index+1} value={index+1}>{i}</option>
                                         )
 
 
@@ -314,7 +309,7 @@ return(
                                 <div id="date-options" className="options_cont">
                                     <select onChange={filterbyyear}>
                                         <option value='' >Year</option>
-                                        <option>All</option>
+                                
 {[...Array(2034-1990+1).keys()].map((num) => num + 1990).map((i,index)=>{
                                         return(
                                             <option id={index} value={i}>{i}</option>
@@ -328,7 +323,7 @@ return(
                                 
                                 
                                 <div className="bookdiv6">
-                                    <div id="CNRstats">
+                                    <div id="CNRstats" className="formkadiv">
 {CNRlist.map((i,index)=>{return(
                                         <div className={i.form_type=='Complaint'?"complaintstats":'requeststats'} id={index} onClick={show_details_and_resolution} >
                                             <img src={i.form_type=='Complaint'?Complaints:Requests}id={index}></img>
@@ -337,7 +332,7 @@ return(
                                                 <h2 id={index} >{i.form_title}</h2>
                                             </div>
                                             <div className="depnamestats" id={index}>
-                                                <h4 id={index}>{i.form_department+' Department'}</h4>
+                                                <h4 id={index}>{i.form_department}</h4>
                                                 <h4 id={index}>{i.form_date}</h4>
                                                 <h4 id={index}>{i.entree_name}</h4>
                                             </div>
@@ -357,7 +352,7 @@ return(
                                 <div id='All' className="Alldiv selectedformtype" onClick={filterNCR}><img src={All} id='All'></img></div>
                                 <div id='Complaint' className="Complaintdiv" onClick={filterNCR}><img src={Complaints} id='Complaint'></img></div>
 
-                                <div id="Request" className="Requestdiv" onClick={filterNCR}><img src={News} id="Requests"></img></div>
+                                <div id="Request" className="Requestdiv" onClick={filterNCR}><img src={Requests} id="Request"></img></div>
                             </div>
                             <div id="NRC_formArea">
                                 <h1>Entry Form</h1>

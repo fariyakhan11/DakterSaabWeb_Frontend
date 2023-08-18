@@ -3,7 +3,7 @@ import './medicines.css';
 import { useState,useEffect } from "react";
 import MedImg from '../../images/medicine.png'
 import Addmedicines from "./addmedicines";
-
+import {AiOutlineDelete} from "react-icons/ai";
 function Medicines(){
     const [searchmed, setSearchmed] = useState("");
     const [selectedCategory, setSelectedCategory] = useState("");
@@ -74,7 +74,7 @@ const handle_update=(e)=>{
           [title]: e.target.value,
         })
       )
-    if(e.target.value===''&&e.target.name!='category-update'){
+    if(e.target.value===''&&e.target.name!=='category-update'){
       document.getElementById('update-ok').classList.add('disabledbtn')
     }else{
       document.getElementById('update-ok').classList.remove('disabledbtn')
@@ -166,25 +166,7 @@ const handle_add=(close)=>{
   
 }
 
-//open the add view tab
-const open_add=(e)=>{
-        set_add_view(false)
-        var cb_o=document.getElementsByClassName('checkbox-outline');
-        var deletebtn=document.getElementById('delMedicines');
-        document.getElementById('deletetitle').style.display='flex';
-        document.getElementsByClassName('stockoptitle1')[0].style.display='none';
-        deletebtn.style.transform='rotate(-45deg)';
-        deletebtn.classList.remove('delMedicinesactive');
-        for(var c=0;c<cb_o.length;c++){
-            cb_o[c].style.display='none';
-        }
-        setselected_medicine([])
-        var cb=document.getElementsByClassName('checkbox-selected')
-        for(var c=0;c<cb.length;c++){
-            cb[c].style.display='none';
-        }
-        setviewmode(true)
-}
+
 //add to the selected medicines array when the delete mode is on
 const select_delete = (event) => {
   event.preventDefault();
@@ -193,10 +175,10 @@ const select_delete = (event) => {
   check.checked = !check.checked;
 
   if (check.checked) {
-    document.getElementById('cb' + id).style.display = 'block';
+    document.getElementById('cb' + id).style.backgroundColor = 'red';
     setselected_medicine((prevState) => [...prevState, check.value]);
   } else {
-    document.getElementById('cb' + id).style.display = 'none';
+    document.getElementById('cb' + id).style.backgroundColor = 'transparent';
     setselected_medicine((prevState) => prevState.filter((item) => item !== check.value));
   }  
 };
@@ -225,13 +207,13 @@ const deletemodeon=()=>{
         document.getElementById('hiddendiv').style.display='none';
         deletebtn.style.transform='rotate(-45deg)';
         deletebtn.classList.remove('delMedicinesactive');
-        for(var c=0;c<cb_o.length;c++){
-            cb_o[c].style.display='none';
+        for(var j=0;j<cb_o.length;j++){
+            cb_o[j].style.display='none';
         }
         setselected_medicine([])
         var cb=document.getElementsByClassName('checkbox-selected')
-        for(var c=0;c<cb.length;c++){
-            cb[c].style.display='none';
+        for(var y=0;y<cb.length;y++){
+            cb[y].style.display='none';
         }
     }
     setviewmode(!viewmode)
@@ -251,7 +233,7 @@ const delete_selected=(e)=>{
             res.json();
             console.log("the response is ",res);
             setselected_medicine([])
-            var cb=document.getElementsByClassName('checkbox-selected')
+            var cb=document.getElementsByClassName('checkbox-outline')
             for(var c=0;c<cb.length;c++){
                 cb[c].style.display='none';
             }
@@ -324,7 +306,8 @@ return(
                         
                     </div>
                     <div className="infomeds">
-                      <div className="medscontainer">
+                    <div id="scrollablecont">
+                      <div className="medscontainerdisplay">
 
 
 {
@@ -340,7 +323,8 @@ return(
                                 <div className="sideareamed" id={index}>
                                     
                                     <div className="checkbox-outline" id={'co'+index}>
-                                        <div className="checkbox-selected" id={'cb'+index}></div>
+                                      <AiOutlineDelete className="icondep checkbox-selected" id={'cb'+index} />
+                                        
                                     </div>
                                     <input type="checkbox" value={i.name} name="selected-delete" id={'cbd'+index} className="selectedcbd"/>
                                     
@@ -377,6 +361,7 @@ return(
                         !medicine_list.length&&
                         <h2 className="no_med">No medicines added yet</h2>
 }
+                      </div>
                       </div>
                     </div>    
           </div>

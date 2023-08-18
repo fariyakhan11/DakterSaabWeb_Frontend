@@ -1,7 +1,7 @@
 import React from 'react';
 import Home from './components/Home/home'
 import './App.css';
-import { BrowserRouter as Router, Route, Routes, Link, Outlet } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import Signup from './components/Signup/signup'
 import Login from './components/Login/login';
 import Dashboardpharmacy from './components/Dashboard/dashboardpharmacy';

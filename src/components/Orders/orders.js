@@ -3,23 +3,23 @@ import './orders.css';
 import {FiPackage} from "react-icons/fi";
 import { useState,useEffect } from "react";
 import {AiFillCaretDown} from "react-icons/ai";
-import {GrTransaction} from "react-icons/gr";
-import {BsCalendar2Date} from "react-icons/bs";
-import DatePicker from 'react-datepicker';
+
+import {BsSave} from "react-icons/bs";
+
 import 'react-datepicker/dist/react-datepicker.css';
 import OrdersI from '../../images/order (1).png'
 import OrdersP from '../../images/box.png'
 import MedP from '../../images/medicine.png';
+import io from 'socket.io-client';
 
 function Orders(){
     const [searchcustomer,setsearchcustomer]=useState('')
     const [selectedstatus,setselectedstatus]=useState('')
     const [selectedDate, setSelectedDate] = useState('');
-    const [filters,setfilters]=useState({time:''});
     const [order_list,setorder_list]=useState([]);
     const [displayed_list,setdisplayed_list]=useState([])
     const [statistics,setstatistics]=useState({todaymed:'',weeksale:'',todaysale:'',totalorder:'',orderpend:'',popmed:''})
-
+    
 
 //fetch orders from the database
 function fetchorders(){
@@ -35,8 +35,6 @@ function fetchorders(){
         .then((json) => {
         if(json.order){
           setorder_list(json.order);
-          
-          
         }else{setorder_list([]);setdisplayed_list([])}
         if(json.error){console.log(json.error)}
       });
@@ -45,22 +43,35 @@ function fetchorders(){
     }
 }
 
-useEffect(()=>{
-    fetchorders()
-})
+useEffect(() => {
+    const socket = io('http://localhost:5000'); // Replace with your server URL
+    fetchorders();
+    fetchstats();
+    // Listen for the 'entryAdded' event
+    socket.on('entryAdded', newEntry => {
+      
+      if(newEntry.org_name===sessionStorage.getItem('org_name')&&newEntry.org_address===sessionStorage.getItem('org_address')){
+        setorder_list(prev=>[...prev,newEntry])
+      }
+    });
+
+    // Cleanup: Disconnect the socket when the component unmounts
+    return () => socket.disconnect();
+    // Fetch orders and stats
+
+
+}, []);
 
 useEffect(()=>{
-    fetchorders()
-    fetchstats()
+    
+filter()
 
-    setdisplayed_list(order_list)
-},[])
-
+},[order_list])
 
 //data filter toggle on/off
 const handledatefilter = (e) => {
   var currentDate = new Date(); // Get the current date
-alert('djn')
+
   if (selectedDate==='') {
     e.target.classList.add('activetogglebtn');
     e.target.classList.remove('idletogglebtn');
@@ -107,9 +118,6 @@ const filterorders = (e) => {
   }
 };
 
-const movetotransact=(e)=>{
-
-}
 
 function fetchstats(){
 try{
@@ -140,27 +148,87 @@ const handleSearchCustomer=(e)=>{
 
     setsearchcustomer(e.target.value)
 }
-
-function filteringorders() {
-
-    
-    var filteredOrders = order_list.filter((o) => o.status === selectedstatus && o.buyer_name.toLowerCase().includes(searchcustomer.toLowerCase()));
-    setdisplayed_list(filteredOrders);
+function filter(){
+    var dL=[...order_list]
+    if(searchcustomer!==''){
+        dL=dL.filter(f=>f.buyer_name.toLowerCase().includes(searchcustomer.toLowerCase()))
+    }
+    if(selectedstatus!==''){
+        dL=dL.filter(f=>f.status===selectedstatus)
+    }
+    if(selectedDate!==''){
+        var d=selectedDate('/')+'-'+selectedDate.split('/')[1]+'-'+selectedDate.split('/')[0]
+        dL=dL.filter(f=>f.date===d)
+    }
+    setdisplayed_list(dL)
 }
 
+function updateorder(id){
+    try{
+        var api='http://localhost:5000/api/transactionandorder/updateorder';
+        
+        var transactioninfo={date:displayed_list[id].date,buyer_name:displayed_list[id].buyer_name,items:displayed_list[id].items,discount:displayed_list[id].discount,amount:displayed_list[id].amount,status:'delivered'}
+        let data={org_name:sessionStorage.getItem('org_name'),address:sessionStorage.getItem('org_address'),transactioninfo:transactioninfo}
+        fetch(api, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        }).then(res => {
+                if (res.status === 200) {
+                    alert('order is updated')
+                    fetchorders()
+
+                }
+                else if (res.status === 430) { alert(res.error) }
+
+                else {  alert('Problem adding medicines', res.error) }
+            });
+    }catch(err){
+        console.log(err);
+    }
+}
+const savetrans=(e)=>{
+    const id=e.target.id;
+    console.log(order_list[id])
+    try{
+        var api='http://localhost:5000/api/transactionandorder/transactionmeds';
+        
+        var transactioninfo={date:displayed_list[id].date,buyer_name:displayed_list[id].buyer_name,items:displayed_list[id].items,discount:displayed_list[id].discount,amount:displayed_list[id].amount}
+        let data={org_name:sessionStorage.getItem('org_name'),address:sessionStorage.getItem('org_address'),transactioninfo:transactioninfo}
+        fetch(api, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        }).then(res => {
+                if (res.status === 200) {
+                    
+                    updateorder(id)
+
+                }
+                else if (res.status === 430) { alert(res.error) }
+
+                else {  alert('Problem adding medicines', res.error) }
+            });
+    }catch(err){
+        console.log(err);
+    }
+}
 
 useEffect(()=>{
-    filteringorders()
-
-},[displayed_list])
-
-useEffect(()=>{
-    filteringorders()
+filter()
 },[selectedstatus])
 
 useEffect(()=>{
-    filteringorders()
+    filter()
 },[searchcustomer])
+
+useEffect(()=>{
+    filter()
+},[selectedDate])
 return(
 <>
         <div id="Ordersdashboard">
@@ -207,10 +275,12 @@ return(
                             <div className={"order_container"+i.status} id={index}>
                                 <FiPackage className="tabsicon Order_symbol" id={index}/>
                                 <h2 className="order_title" id={index}>{i.buyer_name}</h2>
-
+                                <div className="orderchangestatus" onClick={savetrans} id={index}>
+                                    <BsSave className="tabsicon " id={index} onClick={savetrans}/>
+                                </div>
                                 <h2 className="order_date" id={index}>{format_date(i.date)}</h2>
                                 <h2 className="status" id={index}>{i.status}</h2>
-                                <GrTransaction  className="tabsicon transact_icon" id={index} onClick={movetotransact}/>
+                                
                                 <div className="expand_icon" onClick={orderdetailhandler} id={index}>
                                     <AiFillCaretDown className="tabsicon " id={index}/>
                                 </div>
@@ -265,7 +335,7 @@ return(
                             </div>
 
                             
-                            <input type="date" id="datepicker" className="calendar-containerfilter" value={selectedDate} onChange={(e) => setSelectedDate(e.target.value)}></input>                                
+                            <input type="date" id="datepicker" className="calendar-containerfilter" value={selectedDate} onChange={(e) =>{ setSelectedDate(e.target.value)}}></input>                                
 
                             <h6>Order Status:</h6>
                                 <h5 id="all" className="selectedstatus" onClick={filterorders} >All</h5>
