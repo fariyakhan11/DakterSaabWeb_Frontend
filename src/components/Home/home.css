@@ -9,111 +9,125 @@
   background-size: cover;
   background-attachment: fixed;
 }
-.main{
+
+.main {
   padding-top: 70px;
 }
-.headingdiv{
+
+.headingdiv {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-around;
-  border-radius:15px ;
-  margin:0 20px;
-  padding: 20px 0 30px 40px;
+  justify-content: space-between;
+  padding: 20px 0 20px 60px;
 }
+
 .heading {
   display: flex;
   flex-direction: column;
 }
-.mainheading{
+
+.mainheading {
   text-shadow: 2px 2px 7px rgba(112, 111, 111, 0.5);
   color: rgb(36, 42, 100);
   letter-spacing: 0.1em;
   font-size: 2.5em;
   font-family: Fraunces;
 }
+
 .heading>h4 {
   font-family: Raleway;
   font-size: 1.5em;
   font-weight: lighter;
   margin-top: 30px;
 }
+
 .heading>p {
   font-family: Raleway;
   font-size: 1em;
   font-weight: lighter;
-  margin-top: 30px;
+  margin-top: 10px;
 }
+
 /* ---login button */
-.btnsdiv{
+.btnsdiv {
   margin-top: 20px;
-  width: 35%;
+  width: 40%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
+
 .btnsdiv>h5 {
   font-size: 1em;
-  margin:5px;
+  margin: 0 5px;
   display: flex;
   justify-content: center;
   align-items: center;
   font-family: Fraunces;
 }
+
 .btnsdiv>button {
   border-width: 0;
   border-radius: 10px;
-  padding: 15px 30px;
+  padding: 12px 25px;
   font-family: Fraunces;
   cursor: pointer;
   background-color: rgb(36, 42, 100);
   color: white;
   font-size: 0.85rem;
-  font-weight: bold;
   transition: all 0.5s ease-in-out;
 }
+
 .btnsdiv>button:hover {
   background-color: rgb(205, 229, 252);
   color: black;
 }
 
-.docimg{
+.docimg {
   width: 90%;
 }
+
 /* Responsive Styles */
 @media (max-width: 768px) {
   .heading>h3 {
-    font-size: 2rem;
+    font-size: 1.5rem;
   }
+
   .heading>h4 {
-    font-size: 1.25em;
-    font-weight: lighter;
+    font-size: 1rem;
   }
+  .heading>p {
+    font-size: 0.7rem;
+  }
+
   .btnsdiv>button {
     padding: 10px 20px;
     font-size: 0.75rem;
   }
 }
+
 /* ---------------------------modules----------- */
 
 .modules {
-  padding: 2rem;
-  /* margin-top: 1rem; */
+  padding: 1.5rem;
   background-color: rgb(205, 229, 252);
   font-family: Fraunces;
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
 }
-.module1{
+
+.module1 {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
+
 .modules>div>img {
- width: 2.5rem;
- height: 2.5rem;
+  width: 2.5rem;
+  height: 2.5rem;
 }
 
 .modules>div>h4 {
@@ -144,10 +158,12 @@
   letter-spacing: 0.1em;
   margin-bottom: 2rem;
 }
+
 /* ----------------process------------- */
 #processContainer {
   margin-top: 3.5rem;
 }
+
 #worksdiv {
   display: flex;
   flex-direction: row;
@@ -156,6 +172,7 @@
   padding-left: 30px;
   padding-right: 30px;
 }
+
 #worksdiv>div {
   border-radius: 15px;
   border: 3px solid rgb(247, 186, 247);
@@ -166,30 +183,37 @@
   align-items: center;
   margin-bottom: 10px;
 }
+
 #worksdiv>div:nth-child(1) {
   border: 3px solid rgb(155, 199, 240);
   box-shadow: 2px 2px 14px rgba(59, 59, 59, 0.678);
 }
+
 #worksdiv>div:nth-child(2) {
   border: 3px solid #fdbecb;
   box-shadow: 2px 2px 14px rgba(59, 59, 59, 0.678);
 }
+
 #worksdiv>div:nth-child(3) {
   border: 3px solid rgba(210, 172, 241, 0.945);
   box-shadow: 2px 2px 14px rgba(59, 59, 59, 0.678);
 }
+
 #worksdiv>div>h2 {
   font-size: 5rem;
   text-align: center;
 }
+
 #worksdiv>div:nth-child(1)>h2 {
   color: rgb(166, 211, 253);
   text-shadow: 5px 2px 14px rgb(26, 26, 97);
 }
+
 #worksdiv>div:nth-child(2)>h2 {
   color: #fcb9c6;
   text-shadow: 5px 2px 14px rgb(100, 16, 75);
 }
+
 #worksdiv>div:nth-child(3)>h2 {
   color: rgba(210, 172, 241, 0.973);
   text-shadow: 5px 2px 14px rgb(60, 28, 87);
@@ -204,10 +228,12 @@
   text-align: left;
   margin-left: 10px;
 }
+
 #worksdiv>div:nth-child(1)>p {
   color: rgb(26, 26, 97);
   text-shadow: 5px 2px 14px rgb(166, 211, 253);
 }
+
 #worksdiv>div:nth-child(2)>p {
   color: rgb(100, 16, 75);
   text-shadow: 5px 2px 14px #fcb9c6;
@@ -225,6 +251,7 @@
     flex-direction: column;
   }
 }
+
 /* ---------------------download app------------*/
 #downloadcontainer {
   margin-top: 3.5rem;
@@ -232,16 +259,19 @@
   flex-direction: column;
   align-items: center;
 }
+
 #appdiv {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
 }
+
 .dbtndiv {
   display: flex;
   flex-direction: column;
 }
+
 .dbtndiv>h3 {
   font-size: 2em;
   font-weight: bolder;
@@ -251,6 +281,7 @@
   font-family: Fraunces;
   text-align: center;
 }
+
 .dbtndiv>h4 {
   font-family: Raleway;
   font-size: 1em;
@@ -258,20 +289,23 @@
   margin-top: 2em;
   font-weight: lighter;
 }
+
 .dbtndiv>button {
   cursor: pointer;
   transition: all 0.5s ease-in-out;
   background-color: transparent;
   border-width: 0;
 }
+
 .dbtndiv>button>img {
   width: 200px;
   height: 170px;
 }
+
 .dbtndiv>button:hover {
   transform: scale(1.1);
 }
-.mobimg{
+
+.mobimg {
   width: 35%;
 }
-

@@ -237,7 +237,7 @@ function Signup() {
                 </a>
 
                 <div className="initials">
-                    <h1 >Signup with us </h1>
+                    <h1 >Register</h1>
                     <h2>as a</h2>
                     <div className="optcont">
                         {options.map((i, index) => {
@@ -245,34 +245,34 @@ function Signup() {
                                 <div className="optdivs" id={index} onClick={opt_select}>
                                     <img src={i.opt_imgs} id={index}></img>
                                     <h3 id={index}>{i.opt_titles}</h3>
-
                                 </div>
                             )
                         })}
                     </div>
                     <h2>Already a member?</h2>
-                    <button id="login_btn" className="buttons" onClick={() => { navigate('/Login') }}>Sign In</button>
+                    <button id="login_btn" className="buttons" onClick={() => { navigate('/Login') }}>Login</button>
                 </div>
 
                 <div id="authscreen">
 
                     <div id="authorization_forms">
-                        <h1>Signup with us </h1>
+                        <h1>Register</h1>
                         <div className="as">
                             <h2>as a </h2>
                             <img src={identitypic} id="identitypic"></img>
                             <h3 id="identity">{identitytitle}</h3>
                         </div>
-                        <div id="book_and_form">
-                            <div id="bookmarks">
+                        <div id="bookmarks">
                                 <div id="signup_mark" className="selected_bookmark" >
-                                    <h1>Sign Up</h1>
+                                    <h1>Register</h1>
                                 </div>
                                 <div id="signin_mark" onClick={() => { navigate('/Login') }}>
-                                    <h1>Sign In</h1>
+                                    <h1>Login</h1>
                                 </div>
 
                             </div>
+                        <div id="book_and_form">
+                            
                             <div className="signupform">
                                 <form>
                                     <div className="inputsdiv">
@@ -344,7 +344,7 @@ function Signup() {
                                         </div>
                                     </div>
                                     <div className="btndiv">
-                                        <button id="signupsubmit" className="formbtn" onClick={submitRegisterForm}>Signup</button>
+                                        <button id="signupsubmit" className="formbtn" onClick={submitRegisterForm}>Register</button>
                                     </div>
                                 </form>
                             </div>

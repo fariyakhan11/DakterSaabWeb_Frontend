@@ -39,16 +39,17 @@ function Home() {
         <div className="main">
           <div className="headingdiv">
             <div className="heading">
-              <h3 className="mainheading">Your Health is Our Priority</h3>
-              <h4>Set up , manage and reach out your healing hands to the community </h4>
-              <p>This is your content that comes after the fixed navbar.<br />
-                This is your content that comes after the fixed navbar.<br />
-                This is your content that comes after the fixed navbar.
+              <h3 className="mainheading">Your Health <br />is Our Priority</h3>
+              <h4>Set up, manage and reach out your healing<br /> hands to the community </h4>
+              <p>Elevate your healthcare experience with our platform, providing a
+                <br /> seamless registration process for doctors, hospitals, blood banks, and pharmacies.
+                <br />Join a connected network dedicated to delivering efficient and 
+                <br />comprehensive medical services.
               </p>
               <div className="btnsdiv" ref={homeSectionRef}>
                 <button onClick={() => { navigate('/Login') }}>Login</button>
                 <h5>OR</h5>
-                <button onClick={() => { navigate('/Signup') }}>Signup</button>
+                <button onClick={() => { navigate('/Signup') }}>Register</button>
               </div>
             </div>
             <div>
@@ -61,16 +62,16 @@ function Home() {
               <img src={HospitalP} />
               <h4>Hospitals</h4>
               <h5>Cater Appointments , Manage Departments Doctors and Services </h5></div>
-              <div className="module1">
+            <div className="module1">
               <img src={BloodP} />
               <h4>Blood Banks</h4>
               <h5>Help provide people with instant desired blood services</h5></div>
-            
+
             <div className="module1">
               <img src={PharmP} />
               <h4>Pharmacies</h4>
               <h5>Manage medicine inventory and help people book medicines online</h5></div>
-              <div className="module1">
+            <div className="module1">
               <img src={DocP} />
               <h4>Doctors</h4>
               <h5>Manage your clinic appointments and schedule over the internet</h5></div>

@@ -204,7 +204,7 @@ function Login() {
         </a>
 
         <div id="login_forms">
-          <h1>Sign In</h1>
+          <h1>Login</h1>
           <div className="optcont">
             {options.map((i, index) => {
               return (
@@ -218,10 +218,10 @@ function Login() {
           <div id="login_and_form">
             <div id="bookmarks_login">
               <div id="signin_mark">
-                <h1>Sign In</h1>
+                <h1>Login</h1>
               </div>
               <div id="signup_mark" onClick={() => { navigate('/Signup') }}>
-                <h1>Sign Up</h1>
+                <h1>Register</h1>
               </div>
             </div>
             <div className="loginform">
@@ -276,7 +276,7 @@ function Login() {
                 </div>
               </form>
               <div className="btndiv">
-                <button id="signupsubmit" className="formbtn" onClick={SignIn}>Sign In</button>
+                <button id="signupsubmit" className="formbtn" onClick={SignIn}>Login</button>
               </div>
             </div>
           </div>
